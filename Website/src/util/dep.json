@@ -1,0 +1,241 @@
+[
+    {
+        "name": "@emotion/react",
+        "author": "Emotion Contributors",
+        "version": "11.10.0",
+        "license": "MIT",
+        "repository": "https://www.npmjs.com/package/@emotion/react"
+    },
+    {
+        "name": "@emotion/styled",
+        "description": "styled API for emotion",
+        "version": "11.10.0",
+        "license": "MIT",
+        "repository": "https://www.npmjs.com/package/@emotion/styled"
+    },
+    {
+        "name": "@mui/icons-material",
+        "description": "Material Design icons distributed as SVG React components.",
+        "author": "MUI Team",
+        "version": "5.8.4",
+        "license": "MIT",
+        "homepage": "https://mui.com/material-ui/material-icons/",
+        "repository": "https://www.npmjs.com/package/@mui/icons-material"
+    },
+    {
+        "name": "@mui/material",
+        "description": "React components that implement Google's Material Design.",
+        "author": "MUI Team",
+        "version": "5.10.0",
+        "license": "MIT",
+        "homepage": "https://mui.com/material-ui/getting-started/overview/",
+        "repository": "https://www.npmjs.com/package/@mui/material"
+    },
+    {
+        "name": "ace-builds",
+        "description": "Ace (Ajax.org Cloud9 Editor)",
+        "author": "",
+        "version": "1.9.5",
+        "license": "BSD-3-Clause",
+        "homepage": "https://github.com/ajaxorg/ace-builds",
+        "repository": "https://www.npmjs.com/package/ace-builds"
+    },
+    {
+        "name": "axios",
+        "description": "Promise based HTTP client for the browser and node.js",
+        "author": "Matt Zabriskie",
+        "version": "0.27.2",
+        "license": "MIT",
+        "homepage": "https://axios-http.com",
+        "repository": "https://www.npmjs.com/package/axios"
+    },
+    {
+        "name": "file-saver",
+        "description": "An HTML5 saveAs() FileSaver implementation",
+        "author": "Eli Grey <me@eligrey.com>",
+        "version": "2.0.5",
+        "license": "MIT",
+        "homepage": "https://github.com/eligrey/FileSaver.js#readme",
+        "repository": "https://www.npmjs.com/package/file-saver"
+    },
+    {
+        "name": "googlers-tools",
+        "description": "My own tools / scripts that I use.",
+        "author": "Der_Googler <jimmyboehm@dergoogler.com>",
+        "version": "1.4.2",
+        "license": "GPL-3.0",
+        "homepage": "https://dergoogler.com/Der_Googler/googlers-tools",
+        "repository": "https://www.npmjs.com/package/googlers-tools"
+    },
+    {
+        "name": "jss",
+        "description": "A lib for generating Style Sheets with JavaScript.",
+        "author": "JSS Team",
+        "version": "10.9.2",
+        "license": "MIT",
+        "homepage": "https://cssinjs.org/",
+        "repository": "https://www.npmjs.com/package/jss"
+    },
+    {
+        "name": "jss-preset-default",
+        "description": "Default preset for JSS with selected plugins.",
+        "author": "JSS Team",
+        "version": "10.9.2",
+        "license": "MIT",
+        "homepage": "https://cssinjs.org/jss-preset-default",
+        "repository": "https://www.npmjs.com/package/jss-preset-default"
+    },
+    {
+        "name": "markdown-to-jsx",
+        "description": "Convert markdown to JSX with ease for React and React-like projects. Super lightweight and highly configurable.",
+        "author": "Evan Jacobs <probablyup@gmail.com>",
+        "version": "7.1.7",
+        "license": "MIT",
+        "homepage": "https://probablyup.github.io/markdown-to-jsx",
+        "repository": "https://www.npmjs.com/package/markdown-to-jsx"
+    },
+    {
+        "name": "onsenui",
+        "description": "HTML5 Mobile Framework & UI Components",
+        "version": "2.12.2",
+        "license": "Apache-2.0",
+        "homepage": "https://onsen.io/",
+        "repository": "https://www.npmjs.com/package/onsenui"
+    },
+    {
+        "name": "package-depend-list",
+        "description": "",
+        "author": "Der_Googler <jimmyboehm@dergoogler.com>",
+        "version": "1.0.3",
+        "homepage": "https://github.com/DerGoogler/package-depend-list#README",
+        "repository": "https://www.npmjs.com/package/package-depend-list"
+    },
+    {
+        "name": "print-html-block",
+        "description": "Print Html Block",
+        "author": "Denisoed",
+        "version": "2.0.0",
+        "license": "MIT",
+        "homepage": "https://github.com/denisoed/print-html-block",
+        "repository": "https://www.npmjs.com/package/print-html-block"
+    },
+    {
+        "name": "print-js",
+        "description": "A tiny javascript library to help printing from the web.",
+        "author": "Rodrigo Vieira <rodrigo@crabbly.com>",
+        "version": "1.6.0",
+        "license": "MIT",
+        "homepage": "http://printjs.crabbly.com",
+        "repository": "https://www.npmjs.com/package/print-js"
+    },
+    {
+        "name": "react",
+        "description": "React is a JavaScript library for building user interfaces.",
+        "version": "18.2.0",
+        "license": "MIT",
+        "homepage": "https://reactjs.org/",
+        "repository": "https://www.npmjs.com/package/react"
+    },
+    {
+        "name": "react-ace",
+        "description": "A react component for Ace Editor",
+        "author": "James Hrisho",
+        "version": "10.1.0",
+        "license": "MIT",
+        "repository": "https://www.npmjs.com/package/react-ace"
+    },
+    {
+        "name": "react-device-detect",
+        "description": "Detect device type and render your component according to it",
+        "author": {
+            "name": "Michael Laktionov",
+            "email": "duskload@gmail.com"
+        },
+        "version": "2.2.2",
+        "license": "MIT",
+        "repository": "https://www.npmjs.com/package/react-device-detect"
+    },
+    {
+        "name": "react-disappear",
+        "description": "Detects if the inner children are visible",
+        "author": "Der_Googler",
+        "version": "1.1.0",
+        "license": "MIT",
+        "homepage": "https://dergoogler.com/Der_Googler/react-disappear#README",
+        "repository": "https://www.npmjs.com/package/react-disappear"
+    },
+    {
+        "name": "react-dom",
+        "description": "React package for working with the DOM.",
+        "version": "18.2.0",
+        "license": "MIT",
+        "homepage": "https://reactjs.org/",
+        "repository": "https://www.npmjs.com/package/react-dom"
+    },
+    {
+        "name": "react-frame",
+        "description": "React components within an iframe for isolated css styling",
+        "author": "Wang Zuo",
+        "version": "2.2.22",
+        "license": "MIT",
+        "homepage": "https://github.com/swiftcarrot/react-frame#readme",
+        "repository": "https://www.npmjs.com/package/react-frame"
+    },
+    {
+        "name": "react-onsenui",
+        "description": "Onsen UI - React Components for Hybrid Cordova/PhoneGap Apps with Material Design and iOS UI components",
+        "author": "Onsen UI Team <team@monaca.io>",
+        "version": "1.13.0",
+        "license": "Apache-2.0",
+        "homepage": "https://onsen.io/react/",
+        "repository": "https://www.npmjs.com/package/react-onsenui"
+    },
+    {
+        "name": "react-string-replace",
+        "description": "String#replace for React components",
+        "author": {
+            "name": "Ian Sinnott",
+            "email": "ian@iansinnott.com",
+            "url": "https://github.com/iansinnott"
+        },
+        "version": "1.1.0",
+        "license": "MIT",
+        "repository": "https://www.npmjs.com/package/react-string-replace"
+    },
+    {
+        "name": "react-to-print",
+        "description": "Print React components in the browser",
+        "author": "gregnb <gregnb@gmail.com>",
+        "version": "2.14.7",
+        "license": "MIT",
+        "homepage": "https://github.com/gregnb/react-to-print#readme",
+        "repository": "https://www.npmjs.com/package/react-to-print"
+    },
+    {
+        "name": "styled-components",
+        "description": "Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress",
+        "author": "Glen Maddern",
+        "version": "5.3.5",
+        "license": "MIT",
+        "homepage": "https://styled-components.com",
+        "repository": "https://www.npmjs.com/package/styled-components"
+    },
+    {
+        "name": "textarea-markdown-editor",
+        "description": "UI headless React markdown editor using only textarea",
+        "author": "Resetand",
+        "version": "1.0.1",
+        "license": "MIT",
+        "homepage": "https://github.com/Resetand/markdown-textarea",
+        "repository": "https://www.npmjs.com/package/textarea-markdown-editor"
+    },
+    {
+        "name": "web-shared-preferences",
+        "description": "An simple class to manage the loacal storage",
+        "author": "Der_Googler <jimmyboehm@dergoogler.com>",
+        "version": "1.1.2",
+        "license": "GPL-3.0",
+        "homepage": "https://repo.dergoogler.com/DerGoogler/SharedPreferences",
+        "repository": "https://www.npmjs.com/package/web-shared-preferences"
+    }
+]

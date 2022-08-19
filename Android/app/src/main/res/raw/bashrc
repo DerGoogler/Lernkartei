@@ -1,0 +1,3 @@
+#!/system/bin/sh
+
+getProp() { sed -n "s|^$1=||p" ${2:-$2}; }
