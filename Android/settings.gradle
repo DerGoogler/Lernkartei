@@ -1,2 +1,2 @@
 rootProject.name = "Kartei"
-include ':app'
+include ":app"

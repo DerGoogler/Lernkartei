@@ -1,0 +1,5 @@
+- Fix groups link/cdn
+- Fixed many links
+- Added color themes
+- Added back dark mode
+- Bump Dependencies

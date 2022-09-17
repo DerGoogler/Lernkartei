@@ -1,7 +1,10 @@
 import { BackButton, ListHeader, ListItem, Page, Toolbar } from "react-onsenui";
 import saveAs from "file-saver";
-import Material3 from "../components/Material3";
 import webview from "../native/WebView";
+import { ConfirmationDialogRaw } from "../components/ConfirmationDialogRaw";
+import React from "react";
+import { accent_colors, default_scheme, IsDarkmode } from "../theme";
+import Material3 from "../components/Material3";
 
 interface Props extends PushProps<{}> {}
 
@@ -10,7 +13,7 @@ function SettingsActivity({ pageTools }: Props) {
 
   const renderToolbar = () => {
     return (
-      <Toolbar>
+      <Toolbar modifier="noshadow">
         <div className="left">
           <BackButton onClick={pageTools.popPage}>Back</BackButton>
         </div>
@@ -22,9 +25,9 @@ function SettingsActivity({ pageTools }: Props) {
   return (
     <Page renderToolbar={renderToolbar}>
       <ListHeader>Aussehen</ListHeader>
-      {/* <ListItem>
+      <ListItem>
         <div className="center">
-          <span className="list-item__title">Dunkler Modus</span>
+          <span className="list-item__title">Dunkler Modus (Beta)</span>
           <span className="list-item__subtitle">Design könnte nicht auf dem neuesten stand sein</span>
         </div>
         <div className="right">
@@ -35,7 +38,9 @@ function SettingsActivity({ pageTools }: Props) {
             }}
           ></Material3.Switch>
         </div>
-      </ListItem> */}
+      </ListItem>
+      {!IsDarkmode && <AccentColorPickerItem />}
+
       <ListHeader>Karten / Gruppen</ListHeader>
       <ListItem
         tappable
@@ -64,7 +69,7 @@ function SettingsActivity({ pageTools }: Props) {
         tappable
         modifier="chevron"
         onClick={() => {
-          webview.open("https://dergoogler.com/Der_Googler/Kartei/issues", "_blank");
+          webview.open("https://github.com/DerGoogler/Lernkartei/issues", "_blank");
         }}
       >
         <div className="center">
@@ -73,6 +78,44 @@ function SettingsActivity({ pageTools }: Props) {
         </div>
       </ListItem>
     </Page>
+  );
+}
+
+function AccentColorPickerItem() {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState<typeof accent_colors[0]>(default_scheme);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (val: any) => {
+    setOpen(false);
+
+    if (val.name && val.value) {
+      setValue(val);
+      webview.pref.setJSON<typeof accent_colors>("accent_scheme", val);
+    }
+  };
+
+  return (
+    <>
+      <ListItem onClick={handleOpen}>
+        <div className="center">
+          <span className="list-item__title">Akzentfarbe</span>
+          <span className="list-item__subtitle">{value.name}</span>
+        </div>
+      </ListItem>
+      <ConfirmationDialogRaw
+        id="accent-menu"
+        title="Farbakzent auswählen"
+        keepMounted
+        open={open}
+        contentMap={accent_colors}
+        onClose={handleClose}
+        value={value}
+      />
+    </>
   );
 }
 

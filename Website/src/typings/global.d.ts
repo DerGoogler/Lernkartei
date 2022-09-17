@@ -3,6 +3,10 @@ import { DefaultKeys } from "web-shared-preferences";
 export {};
 
 declare global {
+  interface Window {
+    buildconfig: any;
+  }
+
   interface GlobalEventHandlersEventMap {
     onbackbutton: Event;
   }
@@ -103,7 +107,7 @@ declare global {
       "license-card-infos": HTMLAttributes<HTMLDivElement>;
       "license-card-version": HTMLAttributes<HTMLSpanElement>;
       "license-card-license": HTMLAttributes<HTMLSpanElement>;
-      "karteilink": HTMLAttributes<HTMLDivElement>;
+      karteilink: HTMLAttributes<HTMLDivElement>;
       "kartei-link-wrapper": HTMLAttributes<HTMLDivElement>;
     }
   }

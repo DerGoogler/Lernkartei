@@ -16,7 +16,7 @@ function DescriptonActivity({ pageTools, extra }: Props) {
 
   const renderToolbar = () => {
     return (
-      <Toolbar>
+      <Toolbar modifier="noshadow">
         <div className="left">
           <BackButton onClick={pageTools.popPage}>Back</BackButton>
         </div>

@@ -1,3 +1,5 @@
+import { theme } from "../theme";
+
 const light_theme: any = {
   "@global": {
     ":root": {},
@@ -56,16 +58,7 @@ const light_theme: any = {
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
-      backgroundColor: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          // @ts-ignore
-          webkitFontSmoothing: "antialiased",
-        },
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
+      backgroundColor: theme.palette.background.default,
       position: "absolute",
       top: "0",
       left: "0",
@@ -80,18 +73,7 @@ const light_theme: any = {
       display: "none",
     },
     ".page__content": {
-      backgroundColor: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          bottom: "0",
-        },
-        {
-          top: "0",
-        },
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
+      backgroundColor: theme.palette.background.default,
       position: "absolute",
       top: "0",
       left: "0",
@@ -101,12 +83,7 @@ const light_theme: any = {
       paddingTop: "0",
     },
     ".page__background": {
-      backgroundColor: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
+      backgroundColor: theme.palette.background.default,
       position: "absolute",
       top: "0",
       left: "0",
@@ -118,22 +95,12 @@ const light_theme: any = {
       fontFamily: '"Roboto", "Noto", sans-serif',
       webkitFontSmoothing: "antialiased",
       fontWeight: "400",
-      backgroundColor: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
+      backgroundColor: theme.palette.background.default,
     },
     ".page--material__content": {
       fontFamily: '"Roboto", "Noto", sans-serif',
       webkitFontSmoothing: "antialiased",
       fontWeight: "400",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
     },
     // ".page__content h1, .page__content h2, .page__content h3, .page__content h4, .page__content h5": {
     //   fontFamily: '"Roboto", "Noto", sans-serif',
@@ -179,10 +146,10 @@ const light_theme: any = {
     //   fontSize: "20px",
     // },
     ".page--material__background": {
-      backgroundColor: "rgba(255, 255, 255, 1)",
+      backgroundColor: theme.palette.background.default,
       fallbacks: [
         {
-          backgroundColor: "#ffffff",
+          backgroundColor: theme.palette.background.default,
         },
       ],
     },
@@ -328,7 +295,7 @@ const light_theme: any = {
     },
     ":checked + .switch--material__toggle > .switch--material__handle": {
       left: "16px",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       boxShadow:
         "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
     },
@@ -455,7 +422,7 @@ const light_theme: any = {
     },
     ".range__input::-ms-fill-lower": {
       height: "2px",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
     },
     ".range__input::-ms-tooltip": {
       display: "none",
@@ -521,7 +488,7 @@ const light_theme: any = {
       height: "14px",
       border: "none",
       boxShadow: "0 0 0 9px #4a148c",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "50%",
       opacity: "0",
       transition: "opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out",
@@ -675,7 +642,7 @@ const light_theme: any = {
       fontFamily: '"Roboto", "Noto", sans-serif',
       webkitFontSmoothing: "antialiased",
       fontWeight: "500",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       fontSize: "16px",
       fallbacks: [
         {
@@ -789,7 +756,7 @@ const light_theme: any = {
         backgroundImage: "linear-gradient(180deg, #ccc, #ccc 50%, transparent 50%)",
       },
       ".list-item--material__left:empty, .list-item--material__center": {
-        backgroundImage: "linear-gradient(0deg, #eee, #eee 50%, transparent 50%)",
+        backgroundImage: theme.palette.background.default,
       },
       ".list-item--material__right": {
         backgroundImage: "linear-gradient(0deg, #eee, #eee 50%, transparent 50%)",
@@ -1041,7 +1008,7 @@ const light_theme: any = {
       borderBottom: "0",
       boxShadow: "0 1px 5px rgba(0, 0, 0, 0.3)",
       padding: "0",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       backgroundSize: "0",
     },
     ".toolbar--noshadow": {
@@ -1149,7 +1116,7 @@ const light_theme: any = {
       fontSize: "17px",
       letterSpacing: "0",
       verticalAlign: "middle",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "3px",
       transition: "none",
     },
@@ -1160,7 +1127,7 @@ const light_theme: any = {
       transition: "none",
     },
     ".button:active": {
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       transition: "none",
       opacity: "0.2",
     },
@@ -1254,7 +1221,7 @@ const light_theme: any = {
       fontSize: "17px",
       letterSpacing: "0",
       verticalAlign: "middle",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "3px",
       transition: "none",
       boxShadow: "none",
@@ -1307,7 +1274,7 @@ const light_theme: any = {
           color: "white",
         },
         {
-          backgroundColor: "#4a148c",
+          backgroundColor: theme.palette.primary.main,
         },
         {
           border: "0 solid currentColor",
@@ -1358,7 +1325,7 @@ const light_theme: any = {
       textAlign: "center",
     },
     ".button--large:active": {
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       transition: "none",
       opacity: "0.2",
       fallbacks: [
@@ -1443,7 +1410,7 @@ const light_theme: any = {
       fontSize: "17px",
       letterSpacing: "0",
       verticalAlign: "middle",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "3px",
       transition: "none",
       width: "100%",
@@ -1513,7 +1480,7 @@ const light_theme: any = {
           color: "white",
         },
         {
-          backgroundColor: "#4a148c",
+          backgroundColor: theme.palette.primary.main,
         },
         {
           border: "0 solid currentColor",
@@ -1595,9 +1562,6 @@ const light_theme: any = {
           color: "white",
         },
         {
-          backgroundColor: "#4a148c",
-        },
-        {
           fontSize: "17px",
         },
         {
@@ -1631,11 +1595,11 @@ const light_theme: any = {
       fontSize: "14px",
       letterSpacing: "0",
       verticalAlign: "middle",
-      backgroundColor: "#4a148c",
-      borderRadius: "8px",
+      backgroundColor: theme.palette.primary.main,
+      borderRadius: theme.shape.borderRadius,
       transition: "all 0.25s linear",
-      boxShadow:
-        "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+      // boxShadow:
+      //   "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
       minHeight: "36px",
       textAlign: "center",
       webkitTransform: "translate3d(0, 0, 0)",
@@ -1647,9 +1611,9 @@ const light_theme: any = {
       transition: "all 0.25s linear",
     },
     ".button--material:active": {
-      boxShadow:
-        "0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 5px -1px rgba(0, 0, 0, 0.4)",
-      backgroundColor: "#4a148c",
+      // boxShadow:
+      //   "0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 5px -1px rgba(0, 0, 0, 0.4)",
+      backgroundColor: theme.palette.primary.main,
       opacity: "0.9",
       transition: "all 0.25s linear",
     },
@@ -1696,11 +1660,7 @@ const light_theme: any = {
           color: "#ffffff",
         },
         {
-          backgroundColor: "#4a148c",
-        },
-        {
-          boxShadow:
-            "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+          backgroundColor: theme.palette.primary.main,
         },
         {
           transition: "none",
@@ -1712,7 +1672,7 @@ const light_theme: any = {
           color: "white",
         },
         {
-          backgroundColor: "#4a148c",
+          backgroundColor: theme.palette.primary.main,
         },
         {
           fontSize: "17px",
@@ -1860,7 +1820,7 @@ const light_theme: any = {
       outline: "0",
     },
     ":checked + .button-bar__button": {
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       color: "#fff",
       transition: "none",
     },
@@ -1990,7 +1950,7 @@ const light_theme: any = {
       transition: "none",
     },
     ":checked + .segment__button": {
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       color: "#fff",
       transition: "none",
     },
@@ -2245,11 +2205,11 @@ const light_theme: any = {
       left: "0",
       width: "0",
       height: "4px",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
     },
     ".tabbar--material": {
       background: "none",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderBottomWidth: "0",
       boxShadow:
         "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
@@ -2719,7 +2679,7 @@ const light_theme: any = {
     },
     ":checked + .checkbox--material__checkmark:before": {
       border: "2px solid #4a148c",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       transition: "background-color 0.1s linear, border-color 0.1s linear",
     },
     ".checkbox--material__checkmark:after": {
@@ -2787,7 +2747,7 @@ const light_theme: any = {
     },
     ".checkbox--material__input:checked:before": {
       boxShadow: "0 0 0 11px #4a148c",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
     },
     ".checkbox--material__input:active:before": {
       opacity: "0.15",
@@ -2959,7 +2919,7 @@ const light_theme: any = {
     },
     ".radio-button--material__input:checked:before": {
       boxShadow: "0 0 0 14px #4a148c",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
     },
     ".radio-button--material__input:active:before": {
       opacity: "0.15",
@@ -3063,14 +3023,6 @@ const light_theme: any = {
       listStyle: "none",
       boxSizing: "border-box",
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
       webkitBoxOrient: "horizontal",
       webkitBoxDirection: "normal",
       webkitFlexDirection: "row",
@@ -3083,7 +3035,8 @@ const light_theme: any = {
       alignItems: "center",
       padding: "0 0 0 14px",
       margin: "0 0 -1px 0",
-      color: "#1f1f21",
+      // color: "#1f1f21",
+      color: theme.palette.primary.contrastText,
       transition: "background-color 0.2s linear",
     },
     ".list-item__top": {
@@ -3319,7 +3272,7 @@ const light_theme: any = {
       webkitFontSmoothing: "antialiased",
       fontWeight: "400",
       backgroundImage: "none",
-      backgroundColor: "#fff",
+      backgroundColor: theme.palette.background.default,
     },
     ".list-item--material": {
       border: "0",
@@ -3345,7 +3298,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
-      backgroundImage: "linear-gradient(0deg, #eee, #eee 100%)",
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
       minHeight: "48px",
     },
     ".list-item--material__right": {
@@ -3356,7 +3309,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
-      backgroundImage: "linear-gradient(0deg, #eee, #eee 100%)",
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
       minHeight: "48px",
     },
     ".list-item--material.list-item--expandable": {
@@ -3369,7 +3322,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
-      backgroundImage: "linear-gradient(0deg, #eee, #eee 100%)",
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
       backgroundPositionX: "16px",
     },
     ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider": {
@@ -3382,10 +3335,10 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
-      backgroundImage: "linear-gradient(0deg, #eee, #eee 100%)",
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
     },
     ".list-header--material": {
-      background: "#fff",
+      background: theme.palette.background.default,
       border: "none",
       fontSize: "14px",
       textTransform: "none",
@@ -3399,7 +3352,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "top",
-      backgroundImage: "linear-gradient(180deg, #eee, #eee 100%)",
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
       paddingTop: "16px",
     },
     ".list-item--material__thumbnail": {
@@ -4571,7 +4524,7 @@ const light_theme: any = {
     },
     ".progress-bar__primary, .progress-bar__secondary": {
       position: "absolute",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       top: "0",
       bottom: "0",
       transition: "width 0.3s linear",
@@ -4585,7 +4538,7 @@ const light_theme: any = {
     ".progress-bar--indeterminate:before": {
       content: '""',
       position: "absolute",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       top: "0",
       left: "0",
       bottom: "0",
@@ -4597,7 +4550,7 @@ const light_theme: any = {
     ".progress-bar--indeterminate:after": {
       content: '""',
       position: "absolute",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       top: "0",
       left: "0",
       bottom: "0",
@@ -4642,7 +4595,7 @@ const light_theme: any = {
       borderRadius: "0",
     },
     ".progress-bar--material__primary, .progress-bar--material__secondary": {
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "0",
     },
     ".progress-bar--material__secondary": {
@@ -4650,11 +4603,11 @@ const light_theme: any = {
       zIndex: "0",
     },
     ".progress-bar--material.progress-bar--indeterminate:before": {
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "0",
     },
     ".progress-bar--material.progress-bar--indeterminate:after": {
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "0",
     },
     ".progress-circular": {
@@ -4773,7 +4726,7 @@ const light_theme: any = {
       letterSpacing: "0",
       verticalAlign: "middle",
       textAlign: "center",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "30%",
       overflow: "hidden",
       boxShadow: "0 3px 6px rgba(0, 0, 0, 0.12)",
@@ -4842,7 +4795,7 @@ const light_theme: any = {
           boxShadow: "0 3px 6px rgba(0, 0, 0, 0.12)",
         },
         {
-          backgroundColor: "#4a148c",
+          backgroundColor: theme.palette.primary.main,
         },
         {
           color: "#ffffff",
@@ -4887,7 +4840,7 @@ const light_theme: any = {
       letterSpacing: "0",
       verticalAlign: "middle",
       textAlign: "center",
-      backgroundColor: "#4a148c",
+      backgroundColor: theme.palette.primary.main,
       // borderRadius: "50%",
       overflow: "hidden",
       boxShadow:

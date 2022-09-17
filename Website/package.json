@@ -10,7 +10,7 @@
     "start:dev": "webpack-dev-server --open --config webpack.dev.ts",
     "start:prod": "webpack-dev-server --open --config webpack.prod.ts",
     "web:dev": "bun run util:dep && webpack --config webpack.dev.ts",
-    "web:prod": "bun run util:dep && bun run web:dev && webpack --config webpack.prod.ts && rm ./../Android/app/src/main/assets/**/*.map",
+    "web:prod": "bun run util:dep && bun run web:dev && webpack --config webpack.prod.ts && rm ./../Android/app/src/main/assets/web/**/*.map",
     "app:dev": "bun run web:dev && cd ../Android && ./gradlew installDebug",
     "util:dep": "bun dep.ts > ./src/util/dep.json && cd ../Android && ./gradlew app:printSolvedDepsTreeInJson"
   },

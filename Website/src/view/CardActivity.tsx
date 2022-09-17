@@ -1,8 +1,6 @@
 import { Add, Edit, EditRounded } from "@mui/icons-material";
 
 import {
-  Alert,
-  AlertTitle,
   Button,
   Card,
   CardActions,
@@ -22,8 +20,8 @@ import {
 import reactStringReplace from "react-string-replace";
 import * as React from "react";
 import { Disappear } from "react-disappear";
-import { Ripple, ToolbarButton } from "react-onsenui";
-import { BackButton, Page, Toolbar } from "react-onsenui";
+import { Ripple, ToolbarButton, Toolbar } from "react-onsenui";
+import { BackButton, Page } from "react-onsenui";
 import { Icon } from "../components/Icon";
 import Material3 from "../components/Material3";
 import AddCardToGroupActivity from "./AddCardToGroupActivity";
@@ -32,6 +30,7 @@ import webview from "../native/WebView";
 import Const from "../util/Const";
 import { Searchbar } from "../components/Searchbar";
 import { rct } from "googlers-tools";
+import { StyledCard } from "../App";
 
 interface Props extends PushProps<any> {}
 
@@ -43,7 +42,7 @@ function CardListBuilder({ pageTools, extra }: Props) {
     const filteredCards = map.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
     return filteredCards.map((card, index) => {
       return (
-        <Card style={{ margin: 8 }} key={`item_${index}`} variant="outlined">
+        <StyledCard key={`item_${index}`} variant="outlined">
           <CardContent
             onClick={() => {
               pageTools.pushPage<typeof extra>({
@@ -91,7 +90,7 @@ function CardListBuilder({ pageTools, extra }: Props) {
               <EditRounded />
             </IconButton>
           </CardActions>
-        </Card>
+        </StyledCard>
       );
     });
   };
@@ -236,13 +235,12 @@ function CardActivity({ pageTools, extra }: Props) {
   const [fabShow, setFabShow] = rct.useState(true);
   const [titleShow, setTitleShow] = rct.useState(true);
   const [search, setSearch] = rct.useState("");
-  const [toolbarModifier, setToolbarModifier] = rct.useState("noshadow");
 
   const { card, cards, index, title, desc } = extra;
 
   const renderToolbar = () => {
     return (
-      <Toolbar modifier={toolbarModifier}>
+      <Toolbar modifier="noshadow">
         <div className="left">
           <BackButton onClick={pageTools.popPage}>Back</BackButton>
         </div>
@@ -295,13 +293,7 @@ function CardActivity({ pageTools, extra }: Props) {
 
   return (
     <Page renderToolbar={renderToolbar} renderFixed={renderFixed}>
-      <Header
-        wrapper="div"
-        onDisappear={(visible) => {
-          setToolbarModifier(visible ? "noshadow" : "");
-          setFabShow(visible);
-        }}
-      >
+      <Header>
         <HeaderTitle
           wrapper="div"
           onDisappear={(visible) => {
@@ -318,13 +310,14 @@ function CardActivity({ pageTools, extra }: Props) {
   );
 }
 
-const Header = styled(Disappear)(({ theme }) => ({
+const Header = styled("div")(({ theme }) => ({
   padding: "50px",
   paddingTop: "6px",
   textAlign: "center",
   backgroundColor: theme.palette.primary.main,
+
   color: "white",
-  boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
+  // boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
 }));
 
 const HeaderTitle = styled(Disappear)(({ theme }) => ({

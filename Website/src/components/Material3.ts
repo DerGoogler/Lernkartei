@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
 import { Button, Fab, Switch } from "react-onsenui";
-import { isDarkmode } from "..";
+import { isDarkmode } from "../theme";
 
 const Material3 = {
   Switch: styled(Switch)(({ theme }) => ({
@@ -81,7 +81,7 @@ const Material3 = {
       letterSpacing: "0",
       verticalAlign: "middle",
       textAlign: "center",
-      backgroundColor: isDarkmode(theme.palette.primary.main, theme.palette.primary.dark),
+      backgroundColor: theme.palette.primary.main,
       borderRadius: "20%",
       overflow: "hidden",
       boxShadow:

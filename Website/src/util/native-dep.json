@@ -9,11 +9,11 @@
     },
     {
         "name": "androidx.appcompat:appcompat",
-        "description": "androidx.appcompat:appcompat:1.4.2",
-        "version": "1.4.2",
+        "description": "androidx.appcompat:appcompat:1.5.1",
+        "version": "1.5.1",
         "license": "null",
         "author": "null",
-        "repository": "https://mvnrepository.com/artifact/androidx.appcompat/appcompat/1.4.2"
+        "repository": "https://mvnrepository.com/artifact/androidx.appcompat/appcompat/1.5.1"
     },
     {
         "name": "androidx.exifinterface:exifinterface",

@@ -4,7 +4,7 @@ import dep from "./../util/dep.json";
 import { Packages } from "package-depend-list";
 import { Card, CardContent, Typography } from "@mui/material";
 import webview from "../native/WebView";
-import { Page } from "../onsenui/Page";
+import { Page } from "../components/onsenui/Page";
 
 interface Props extends PushProps<{}> {}
 

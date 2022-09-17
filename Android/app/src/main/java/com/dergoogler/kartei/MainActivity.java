@@ -5,18 +5,19 @@ import android.app.DownloadManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.component.ModuleView;
+import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.WebViewOS;
 import com.dergoogler.core.WebViewPrefs;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ModuleView view;
+
 
     @Override
     @SuppressLint("SetJavaScriptEnabled")
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         // Core
         view.addJavascriptInterface(new WebViewOS(this), Native.getNosString);
         view.addJavascriptInterface(new WebViewPrefs(this), Native.getSharedPrefString);
+        view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
 
         view.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
             DownloadManager.Request request = new DownloadManager.Request(

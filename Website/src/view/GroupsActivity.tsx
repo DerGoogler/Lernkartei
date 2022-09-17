@@ -12,7 +12,7 @@ function SetBuilder(): JSX.Element {
   const [getSets, setSets] = rct.useState<Array<KarteiSetRoot>>([]);
 
   React.useEffect(() => {
-    axios.get("https://dergoogler.com/fds/internal/kartei/index/sets.json").then((response) => {
+    axios.get("https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/index/sets.json").then((response) => {
       setSets(response.data);
     });
   });

@@ -7,12 +7,32 @@ import CardActivity from "./view/CardActivity";
 import AlertDialog from "./buildrs/AlertDialog";
 import Material3 from "./components/Material3";
 import webview from "./native/WebView";
-import { Alert, AlertTitle, Card, CardActions, CardContent, IconButton, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Card,
+  CardActions,
+  CardContent,
+  IconButton,
+  Paper,
+  styled,
+  Typography,
+} from "@mui/material";
 import { Ripple } from "react-onsenui";
 import { ArrayMap } from "./components/ArrayMap";
 import { isMobile } from "react-device-detect";
+import { BuildConfig } from "./native/BuildConfig";
 
 interface Props extends PushProps<{}> {}
+
+export const StyledCard = styled(Paper)(({ theme }) => ({
+  margin: 8,
+  "&.MuiPaper-root": {
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.secondary.main}`,
+    borderRadius: theme.shape.borderRadius,
+  },
+}));
 
 function CardRenderer({ pageTools, extra }: Props) {
   const getCards = webview.pref.getJSON<Array<Kartei>>("katei", []);
@@ -83,7 +103,7 @@ function CardRenderer({ pageTools, extra }: Props) {
                 builder.show();
               }}
             >
-              <Card key={`item_card_${card.group}`} variant="outlined" style={{ margin: 8 }}>
+              <StyledCard elevation={0} key={`item_card_${card.group}`}>
                 <CardContent
                   key={`item_card_${card.group}_content`}
                   onClick={() => {
@@ -127,7 +147,7 @@ function CardRenderer({ pageTools, extra }: Props) {
                     <EditRounded />
                   </IconButton>
                 </CardActions> */}
-              </Card>
+              </StyledCard>
             </GestureDetector>
           );
         }}
@@ -147,7 +167,7 @@ function App({ pageTools, extra }: Props) {
 
   const renderToolbar = () => {
     return (
-      <Toolbar>
+      <Toolbar modifier="noshadow">
         <div className="left">
           <ToolbarButton
             onClick={() => {
@@ -157,7 +177,7 @@ function App({ pageTools, extra }: Props) {
             <Icon icon={Menu} keepLight />
           </ToolbarButton>
         </div>
-        <div className="center">Kartei</div>
+        <div className="center">Kartei {BuildConfig.DEBUG ? "Debug" : ""}</div>
       </Toolbar>
     );
   };

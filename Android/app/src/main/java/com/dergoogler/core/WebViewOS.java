@@ -21,6 +21,7 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
+import com.dergoogler.kartei.BuildConfig;
 import com.dergoogler.kartei.Native;
 import com.dergoogler.kartei.R;
 

@@ -100,7 +100,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
 
   const renderToolbar = () => {
     return (
-      <Toolbar>
+      <Toolbar modifier="noshadow">
         <div className="left">
           <BackButton onClick={pageTools.popPage}>Back</BackButton>
         </div>
@@ -315,19 +315,19 @@ const Preview = styled("div")(({ theme }) => ({
   },
 }));
 
-const StyledTextField = styled(TextField)({
+const StyledTextField = styled(TextField)(({ theme }) => ({
   "& label.Mui-focused": {
-    color: "#4a148c",
+    color: theme.palette.primary.main,
   },
   "& .MuiInput-underline:after": {
-    borderBottomColor: "#4a148c",
+    borderBottomColor: theme.palette.primary.main,
   },
   "& .MuiOutlinedInput-root": {
     height: "100%",
     "&.Mui-focused fieldset": {
-      borderColor: "#4a148c",
+      borderColor: theme.palette.primary.main,
     },
   },
-});
+}));
 
 export default AddCardToGroupActivity;

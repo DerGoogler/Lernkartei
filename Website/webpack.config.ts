@@ -1,5 +1,6 @@
 import { resolve, join } from "path";
 import { Configuration } from "webpack";
+// Keep that for typings
 import webpackDevServer from "webpack-dev-server";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
@@ -89,6 +90,7 @@ const config: Configuration = {
       directory: join(__dirname, "./../Android/app/src/main/assets"),
     },
     compress: true,
+    historyApiFallback: true,
     port: 9000,
   },
 };

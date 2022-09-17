@@ -1,10 +1,39 @@
 import * as React from "react";
 import { SearchRounded } from "@mui/icons-material";
 import { Button, SearchInput } from "react-onsenui";
+import { styled } from "@mui/material";
+
 type SearchbarProps = {
   onSearchClick: (value: string) => void;
   placeholder: string;
 };
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  textAlign: "center",
+  display: "flex",
+  justifyContent: "center",
+  marginLeft: "4px",
+
+  "& > div": {
+    textAlign: "center",
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+}));
+
+const StyledSearchInput = styled(SearchInput)(({ theme }) => ({
+  width: "100%",
+  marginRight: "4px",
+  "& .search-input--material": {
+    border: `1px solid ${theme.palette.secondary.main}`,
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.background.default,
+  },
+}));
 
 export const Searchbar = ({ placeholder, onSearchClick }: SearchbarProps) => {
   const [value, setVaule] = React.useState<string>("");
@@ -23,13 +52,8 @@ export const Searchbar = ({ placeholder, onSearchClick }: SearchbarProps) => {
         width: "100%",
       }}
     >
-      <SearchInput
+      <StyledSearchInput
         placeholder={placeholder}
-        style={{
-          borderRadius: "8px",
-          width: "100%",
-          marginRight: "4px",
-        }}
         onKeyDown={(e: KeyboardEvent) => {
           if (e.key === "Enter") {
             onSearchClick(value);
@@ -38,34 +62,16 @@ export const Searchbar = ({ placeholder, onSearchClick }: SearchbarProps) => {
         // @ts-ignore
         onChange={handleChange}
       />
-      <Button
+      <StyledButton
         // @ts-ignore
         onClick={() => {
           onSearchClick(value);
         }}
-        style={{
-          textAlign: "center",
-          display: "flex",
-          justifyContent: "center",
-          marginLeft: "4px",
-          borderRadius: "8px",
-          boxShadow: "none",
-        }}
       >
-        <div
-          style={{
-            textAlign: "center",
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <div>
           <SearchRounded sx={{ color: "white" }} />
         </div>
-      </Button>
+      </StyledButton>
     </div>
   );
 };
