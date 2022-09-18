@@ -1,7 +1,6 @@
 import { colors } from "@mui/material";
 import ons from "onsenui";
 import React from "react";
-import { theme } from "../theme";
 import { NativeBase } from "./NativeBase";
 
 export namespace Os {
@@ -27,7 +26,7 @@ class Os extends NativeBase {
 
   public open(url?: string | URL | undefined, options?: Os.OpenOptions): Window | null {
     if (this.isAndroid) {
-      return this.interface.open(url, options?.features?.color || theme.palette.primary.main);
+      return this.interface.open(url, options?.features?.color || "#fffddd");
     } else {
       return window.open(url, options?.target, options?.features?.window);
     }

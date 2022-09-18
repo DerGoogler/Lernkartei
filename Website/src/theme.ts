@@ -6,7 +6,7 @@ export function isDarkmode<T = any>(def: { light: T; dark: T }): T {
   return !IsDarkmode ? def.light : def.dark;
 }
 
-type AccentColors = Array<{
+export type AccentColors = Array<{
   name: string;
   value: any;
 }>;
@@ -106,6 +106,11 @@ export const colors = {
   teal: kolors.teal,
   yellow: kolors.yellow,
 };
+
+export function useDefaultScheme() {
+  const [scheme, setScheme] = sharedpreferences.useJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
+  return scheme;
+}
 
 export const default_scheme = sharedpreferences.getJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
 

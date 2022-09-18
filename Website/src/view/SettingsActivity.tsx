@@ -1,19 +1,23 @@
 import { BackButton, ListHeader, ListItem, Page, Toolbar } from "react-onsenui";
 import { ConfirmationDialogRaw } from "../components/ConfirmationDialogRaw";
 import React from "react";
-import { accent_colors, default_scheme, IsDarkmode } from "../theme";
 import Material3 from "../components/Material3";
 import { File } from "../native/File";
 import { sharedpreferences } from "../native/SharedPreferences";
 import { Environment } from "../native/Environment";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
+import { AccentColors, accent_colors, default_scheme } from "../theme";
 
 interface Props extends PushProps<{}> {}
 
 function SettingsActivity({ pageTools }: Props) {
   const confirm = useConfirm();
   os.useOnBackPressed(pageTools.popPage);
+
+  // Prefs
+  const [darkmode, setDarkmode] = sharedpreferences.useBoolean("darkmode", false);
+  const [cards, setCards] = sharedpreferences.useJSON("katei", []);
 
   const renderToolbar = () => {
     return (
@@ -36,14 +40,14 @@ function SettingsActivity({ pageTools }: Props) {
         </div>
         <div className="right">
           <Material3.Switch
-            checked={sharedpreferences.getBoolean("darkmode", false)}
+            checked={darkmode}
             onChange={(e: any) => {
-              sharedpreferences.setBoolean("darkmode", e.target.checked);
+              setDarkmode(e.target.checked);
             }}
           ></Material3.Switch>
         </div>
       </ListItem>
-      {!IsDarkmode && <AccentColorPickerItem />}
+      {!darkmode && <AccentColorPickerItem />}
 
       <ListHeader>Karten / Gruppen</ListHeader>
       <ListItem
@@ -62,14 +66,13 @@ function SettingsActivity({ pageTools }: Props) {
           }
 
           const file = new File("karten.json");
-          const content = sharedpreferences.getJSON<Array<Kartei>>("katei", []);
           if (file.exists()) {
             os.toast(
               "Es exestiert bereits ein Backup deiner Karten! Lösche das alte Backup um ein neues zu erstellen.",
               "short"
             );
           } else {
-            file.createJSON(content, 4);
+            file.createJSON(cards, 4);
           }
         }}
       >
@@ -106,7 +109,8 @@ function SettingsActivity({ pageTools }: Props) {
 
 function AccentColorPickerItem() {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState<typeof accent_colors[0]>(default_scheme);
+  const [value, setValue] = React.useState<AccentColors[0]>(default_scheme);
+  const [scheme, setScheme] = sharedpreferences.useJSON<AccentColors[0]>("accent_scheme", default_scheme);
 
   const handleOpen = () => {
     setOpen(true);
@@ -117,7 +121,7 @@ function AccentColorPickerItem() {
 
     if (val.name && val.value) {
       setValue(val);
-      sharedpreferences.setJSON<typeof accent_colors>("accent_scheme", val);
+      setScheme(val);
     }
   };
 

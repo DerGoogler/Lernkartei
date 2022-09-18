@@ -1,34 +1,16 @@
 import * as React from "react";
-import { GestureDetector, List, Page, ProgressCircular, Toolbar, ToolbarButton } from "react-onsenui";
+import { Page, ProgressCircular, Toolbar, ToolbarButton } from "react-onsenui";
 import { Icon } from "./components/Icon";
-import { Add, DeleteRounded, EditRounded, Menu } from "@mui/icons-material";
+import { Add, DeleteRounded, Menu } from "@mui/icons-material";
 import AddActivity from "./view/AddActivity";
 import CardActivity from "./view/CardActivity";
-import AlertDialog from "./buildrs/AlertDialog";
 import Material3 from "./components/Material3";
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  Chip,
-  Divider,
-  IconButton,
-  Paper,
-  Stack,
-  styled,
-  Typography,
-} from "@mui/material";
-import { Ripple } from "react-onsenui";
-import { ArrayMap } from "./components/ArrayMap";
-import { isMobile } from "react-device-detect";
+import { Alert, AlertTitle, Box, Chip, Divider, IconButton, Paper, Stack, styled, Typography } from "@mui/material";
 import { BuildConfig } from "./native/BuildConfig";
-import { Environment } from "./native/Environment";
 import { sharedpreferences } from "./native/SharedPreferences";
 import { os } from "./native/Os";
 import { useConfirm } from "material-ui-confirm";
+import { useState } from "react";
 
 interface Props extends PushProps<{}> {}
 
@@ -79,49 +61,42 @@ export const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 function CardRenderer({ pageTools, extra }: Props) {
-  const getCards = sharedpreferences.getJSON<Array<Kartei>>("katei", []);
+  const [cards, setCards] = sharedpreferences.useJSON<Kartei[]>("katei", []);
 
   const confirm = useConfirm();
 
   return (
     <React.Fragment>
-      <ArrayMap.fromObject
-        map={getCards}
-        whenError={(error) => {
-          return <>{error.message}</>;
-        }}
-        whenEmpty={() => {
-          return (
-            <div
+      {cards.length === 0 ? (
+        <div
+          style={{
+            textAlign: "center",
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <span
+            style={{
+              color: "#757575",
+            }}
+          >
+            Druecke auf das{" "}
+            <Icon
+              icon={Add}
               style={{
-                textAlign: "center",
-                height: "100%",
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
+                verticalAlign: "middle",
               }}
-            >
-              <span
-                style={{
-                  color: "#757575",
-                }}
-              >
-                Druecke auf das{" "}
-                <Icon
-                  icon={Add}
-                  style={{
-                    verticalAlign: "middle",
-                  }}
-                />{" "}
-                um dir neue Gruppen zu erstellen
-              </span>
-            </div>
-          );
-        }}
-        render={(card, index) => {
-          return (
+            />{" "}
+            um dir neue Gruppen zu erstellen
+          </span>
+        </div>
+      ) : (
+        <>
+          {cards.map((card, index) => (
             <StyledCard elevation={0}>
               <Box sx={{ p: 2, display: "flex" }}>
                 <Stack
@@ -163,11 +138,8 @@ function CardRenderer({ pageTools, extra }: Props) {
                       .then(() => {
                         let tmp = [];
                         try {
-                          tmp = sharedpreferences.getJSON<Kartei[]>("katei", []);
-                          sharedpreferences.setJSON<Kartei[]>(
-                            "katei",
-                            tmp.filter((remv) => remv.group != card.group)
-                          );
+                          tmp = cards;
+                          setCards(tmp.filter((remv) => remv.group != card.group));
                           os.toast(`${card.name} wurde gelöscht.`, "short");
                         } catch (error) {
                           os.toast((error as Error).message, "short");
@@ -191,14 +163,15 @@ function CardRenderer({ pageTools, extra }: Props) {
                 />
               </Stack>
             </StyledCard>
-          );
-        }}
-      />
+          ))}
+        </>
+      )}
     </React.Fragment>
   );
 }
 
 function App({ pageTools, extra }: Props) {
+  const [open, setOpen] = useState(true);
   // webview.useOnBackPressed(() => {
   //   if (pageTools.splitter.state()) {
   //     pageTools.splitter.hide();
@@ -248,6 +221,7 @@ function App({ pageTools, extra }: Props) {
       </Material3.Fab>
     );
   };
+
   return (
     <Page renderToolbar={renderToolbar} renderFixed={renderFixed}>
       {!os.isAndroid && (
