@@ -1,8 +1,5 @@
-import { ContentCopy, OpenInNewRounded } from "@mui/icons-material";
-import { Box, Dialog, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import { util } from "googlers-tools";
-import React from "react";
-import webview from "../../native/WebView";
 
 type Props = JSX.IntrinsicElements["img"] & {
   shadow?: string;

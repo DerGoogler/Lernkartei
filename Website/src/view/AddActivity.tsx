@@ -1,9 +1,8 @@
 import { TextField } from "@mui/material";
-import ons from "onsenui";
 import * as React from "react";
-import { BackButton, Button, Input, Page, Toolbar } from "react-onsenui";
-import AlertDialog from "../buildrs/AlertDialog";
-import webview from "../native/WebView";
+import { BackButton, Button, Page, Toolbar } from "react-onsenui";
+import { sharedpreferences } from "../native/SharedPreferences";
+import { os } from "../native/Os";
 
 interface Props extends PushProps<{}> {}
 
@@ -12,11 +11,11 @@ function AddActivity({ pageTools, extra }: Props) {
   const [name, setName] = React.useState("Lernfeld 1");
   const [description, setDescription] = React.useState("Güter annehmen und kontrolieren");
 
-  webview.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(pageTools.popPage);
 
   const renderToolbar = () => {
     return (
-      <Toolbar>
+      <Toolbar modifier="noshadow">
         <div className="left">
           <BackButton onClick={pageTools.popPage}>Back</BackButton>
         </div>
@@ -42,7 +41,7 @@ function AddActivity({ pageTools, extra }: Props) {
   };
 
   const handleSave = () => {
-    const getBefore = webview.pref.getJSON<Array<Kartei>>("katei", []);
+    const getBefore = sharedpreferences.getJSON<Array<Kartei>>("katei", []);
 
     try {
       const obj: Kartei = {
@@ -53,17 +52,17 @@ function AddActivity({ pageTools, extra }: Props) {
       };
 
       if (!validGroup(group)) {
-        ons.notification.alert("Bitte achte drauf, dass keine Leerzeichen verwendet werden, oder bindestriche");
+        os.toast("Bitte achte drauf, dass keine Leerzeichen verwendet werden, oder bindestriche", "short");
       } else {
         if (getBefore.some((elem) => elem?.group === group)) {
-          ons.notification.alert("Diese Gruppe is bereits vorhanden.");
+          os.toast(`Diese Gruppe is bereits vorhanden.`, "short");
         } else {
-          webview.pref.setJSON<Partial<Array<Kartei>>>("katei", [
-            ...webview.pref.getJSON<Partial<Array<Kartei>>>("katei", []),
+          sharedpreferences.setJSON<Partial<Array<Kartei>>>("katei", [
+            ...sharedpreferences.getJSON<Partial<Array<Kartei>>>("katei", []),
             obj,
           ]);
           pageTools.popPage();
-          webview.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
+          os.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
         }
       }
     } catch (error) {

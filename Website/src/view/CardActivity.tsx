@@ -16,6 +16,8 @@ import {
   TextField,
   Typography,
   styled,
+  Box,
+  Stack,
 } from "@mui/material";
 import reactStringReplace from "react-string-replace";
 import * as React from "react";
@@ -26,50 +28,52 @@ import { Icon } from "../components/Icon";
 import Material3 from "../components/Material3";
 import AddCardToGroupActivity from "./AddCardToGroupActivity";
 import DescriptonActivity from "./DescriptonActivity";
-import webview from "../native/WebView";
-import Const from "../util/Const";
 import { Searchbar } from "../components/Searchbar";
 import { rct } from "googlers-tools";
-import { StyledCard } from "../App";
+import { StyledCard, StyledIconButton } from "../App";
+import { sharedpreferences } from "../native/SharedPreferences";
+import { os } from "../native/Os";
 
 interface Props extends PushProps<any> {}
 
 function CardListBuilder({ pageTools, extra }: Props) {
   const { index: iindex } = extra;
-  const getCards = webview.pref.getJSON<Array<Kartei>>("katei", [])[iindex].karten;
+  const getCards = sharedpreferences.getJSON<Array<Kartei>>("katei", [])[iindex].karten;
 
   const Lrender = (map: Array<Karten>, search: string) => {
     const filteredCards = map.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
     return filteredCards.map((card, index) => {
       return (
-        <StyledCard key={`item_${index}`} variant="outlined">
-          <CardContent
-            onClick={() => {
-              pageTools.pushPage<typeof extra>({
-                component: DescriptonActivity,
-                props: {
-                  key: `card_${card.shortDescription}`,
-                  extra: {
-                    desc: card.description,
-                    shortDesc: card.shortDescription,
-                    index: index,
+        <StyledCard key={`item_${index}`} elevation={0}>
+          <Box sx={{ p: 2, display: "flex" }}>
+            <Stack
+              spacing={0.5}
+              style={{ flexGrow: 1 }}
+              onClick={() => {
+                pageTools.pushPage<typeof extra>({
+                  component: DescriptonActivity,
+                  props: {
+                    key: `card_${card.shortDescription}`,
+                    extra: {
+                      desc: card.description,
+                      shortDesc: card.shortDescription,
+                      index: index,
+                    },
                   },
-                },
-              });
-            }}
-          >
-            <Typography key={"cardctntbdy_" + index} variant="body1">
-              {reactStringReplace(card.shortDescription, /\*\*(\w+)\*\*/g, (match, i) => (
-                <strong>{match}</strong>
-              ))}
-            </Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            {/* <IconButton aria-label="delete" onClick={handleClickOpenDelete}>
-              <DeleteRounded />
-            </IconButton> */}
-            <IconButton
-              aria-label="edit"
+                });
+              }}
+            >
+              <Typography fontWeight={700}>
+                {reactStringReplace(card.shortDescription, /\*\*(\w+)\*\*/g, (match, i) => (
+                  <strong>{match}</strong>
+                ))}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                #{index}
+              </Typography>
+            </Stack>
+            <StyledIconButton
+              style={{ width: 30, height: 30 }}
               onClick={() => {
                 pageTools.pushPage({
                   component: AddCardToGroupActivity,
@@ -87,9 +91,9 @@ function CardListBuilder({ pageTools, extra }: Props) {
                 });
               }}
             >
-              <EditRounded />
-            </IconButton>
-          </CardActions>
+              <Edit sx={{ fontSize: 14 }} />
+            </StyledIconButton>
+          </Box>
         </StyledCard>
       );
     });
@@ -106,7 +110,7 @@ function CardListBuilder({ pageTools, extra }: Props) {
   }
 
   const checkDeviceSize = (element: JSX.Element): JSX.Element => {
-    if (webview.isTablet) {
+    if (os.isTablet) {
       return (
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {element}
@@ -146,7 +150,7 @@ function CardListBuilder({ pageTools, extra }: Props) {
             in der Toolbar
           </span>
         </div>
-      ) : webview.isTablet ? (
+      ) : os.isTablet ? (
         resultsRender
       ) : (
         Lrender(getCards, extra.search)
@@ -184,10 +188,10 @@ function GroupEdit({ pageTools, extra, name, desc }: GroupEditProps) {
     const { card, index } = extra;
 
     let groups = [];
-    groups = webview.pref.getJSON<Array<Kartei>>("katei", []);
+    groups = sharedpreferences.getJSON<Array<Kartei>>("katei", []);
     groups[index].name = editName;
     groups[index].description = editDesc;
-    webview.pref.setJSON<Array<Kartei>>("katei", groups);
+    sharedpreferences.setJSON<Array<Kartei>>("katei", groups);
     hideAlertDialog();
     pageTools.popPage();
   };
@@ -230,7 +234,7 @@ function GroupEdit({ pageTools, extra, name, desc }: GroupEditProps) {
 }
 
 function CardActivity({ pageTools, extra }: Props) {
-  webview.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(pageTools.popPage);
 
   const [fabShow, setFabShow] = rct.useState(true);
   const [titleShow, setTitleShow] = rct.useState(true);

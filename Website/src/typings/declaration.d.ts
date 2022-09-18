@@ -21,6 +21,7 @@ declare module "*.txt" {
   export default content;
 }
 
+// declare module "react-onsenui"
 declare module "react-onsenui" {
   export type HTMLAttributes<K extends keyof React.HTMLAttributes<{}>> = Partial<Pick<React.HTMLAttributes<{}>, K>>;
   export type InputHTMLAttributes<K extends keyof React.InputHTMLAttributes<{}>> = Partial<
@@ -174,7 +175,7 @@ declare module "react-onsenui" {
     {
       children?: React.ReactNode | undefined;
       modifier?: string | undefined;
-      onClick?(navigator?: Navigator): void;
+      onClick?: (event: React.MouseEvent<HTMLElement>, value: any) => void;
       context?: any;
     },
     any

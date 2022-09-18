@@ -3,7 +3,8 @@ import * as React from "react";
 import { Button, Carousel, CarouselItem, Page, Toolbar, ToolbarButton } from "react-onsenui";
 import { App } from "../App";
 import { Icon } from "../components/Icon";
-import webview from "../native/WebView";
+import { os } from "../native/Os";
+import { sharedpreferences } from "../native/SharedPreferences";
 
 interface Props extends PushProps {}
 
@@ -25,7 +26,7 @@ function IntroActivity({ pageTools }: Props) {
     },
   ]);
 
-  webview.useOnBackPressed(() => webview.close());
+  os.useOnBackPressed(() => os.close());
 
   const handleChange = (e: any) => {
     setIndex(e.activeIndex);
@@ -40,7 +41,7 @@ function IntroActivity({ pageTools }: Props) {
             <ToolbarButton
               onClick={() => {
                 if (getIndex === 1) {
-                  webview.pref.setBoolean("introFinised", true);
+                  sharedpreferences.setBoolean("introFinised", true);
                   pageTools.pushPage({
                     component: App,
                     props: {

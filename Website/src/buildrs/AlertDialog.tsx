@@ -74,7 +74,7 @@ class AlertDialogClass implements Builder {
 
   public setMessage(value: string | JSX.Element): BuilderConstructorOmit<"setMessage"> {
     if (isValidElement(value)) {
-      this.dialog.messageHTML = renderToStaticMarkup(value);
+      this.dialog.messageHTML = renderToStaticMarkup(value as any);
     } else {
       this.dialog.messageHTML = value;
     }

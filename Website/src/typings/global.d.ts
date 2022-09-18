@@ -1,17 +1,18 @@
-import { DefaultKeys } from "web-shared-preferences";
-
 export {};
 
 declare global {
   interface Window {
     buildconfig: any;
+    environment: any;
+    file: any;
+    os: any;
   }
 
   interface GlobalEventHandlersEventMap {
     onbackbutton: Event;
   }
 
-  interface SharedPreferencesKeys extends DefaultKeys {
+  interface SharedPreferencesKeys {
     katei: Array<Kartei>;
     introFinised: boolean;
     /**

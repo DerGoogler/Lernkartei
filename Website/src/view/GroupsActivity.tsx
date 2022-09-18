@@ -4,7 +4,8 @@ import { rct } from "googlers-tools";
 import * as React from "react";
 import { BackButton, List, ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
 import { Icon } from "../components/Icon";
-import webview from "../native/WebView";
+import { os } from "../native/Os";
+import { sharedpreferences } from "../native/SharedPreferences";
 
 interface Props extends PushProps {}
 
@@ -12,23 +13,25 @@ function SetBuilder(): JSX.Element {
   const [getSets, setSets] = rct.useState<Array<KarteiSetRoot>>([]);
 
   React.useEffect(() => {
-    axios.get("https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/index/sets.json").then((response) => {
-      setSets(response.data);
-    });
+    axios
+      .get("https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/index/sets.json")
+      .then((response) => {
+        setSets(response.data);
+      });
   });
 
   const setDownloader = (url: string): void => {
     axios.get<Kartei>(url).then((response) => {
       const data = response.data;
       let tmp = [];
-      tmp = webview.pref.getJSON<Array<Kartei>>("katei", []);
+      tmp = sharedpreferences.getJSON<Array<Kartei>>("katei", []);
 
       if (tmp.some((elem) => elem?.group === data.group)) {
-        webview.toast("Diese Gruppe ist bereits vorhanden", "short");
+        os.toast("Diese Gruppe ist bereits vorhanden", "short");
       } else {
         tmp.push(data);
-        webview.pref.setJSON<Array<Kartei>>("katei", tmp);
-        webview.toast(`Erfolgreich heruntergeladen`, "short");
+        sharedpreferences.setJSON<Array<Kartei>>("katei", tmp);
+        os.toast(`Erfolgreich heruntergeladen`, "short");
       }
     });
   };
@@ -61,7 +64,7 @@ function SetBuilder(): JSX.Element {
 }
 
 function GroupsActivity({ pageTools }: Props) {
-  webview.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(pageTools.popPage);
 
   const renderToolbar = () => {
     return (

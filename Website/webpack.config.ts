@@ -89,6 +89,7 @@ const config: Configuration = {
     static: {
       directory: join(__dirname, "./../Android/app/src/main/assets"),
     },
+    open: false,
     compress: true,
     historyApiFallback: true,
     port: 9000,

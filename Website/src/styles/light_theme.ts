@@ -3298,7 +3298,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
-      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.divider}, ${theme.palette.divider} 100%)`,
       minHeight: "48px",
     },
     ".list-item--material__right": {
@@ -3309,7 +3309,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
-      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.divider}, ${theme.palette.divider} 100%)`,
       minHeight: "48px",
     },
     ".list-item--material.list-item--expandable": {
@@ -3322,7 +3322,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
-      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.divider}, ${theme.palette.divider} 100%)`,
       backgroundPositionX: "16px",
     },
     ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider": {
@@ -3335,7 +3335,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
-      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.divider}, ${theme.palette.divider} 100%)`,
     },
     ".list-header--material": {
       background: theme.palette.background.default,
@@ -3352,7 +3352,7 @@ const light_theme: any = {
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "top",
-      backgroundImage: `linear-gradient(0deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main} 100%)`,
+      backgroundImage: `linear-gradient(0deg, ${theme.palette.divider}, ${theme.palette.divider} 100%)`,
       paddingTop: "16px",
     },
     ".list-item--material__thumbnail": {

@@ -3,15 +3,15 @@ import { BackButton, Toolbar } from "react-onsenui";
 import dep from "./../util/dep.json";
 import { Packages } from "package-depend-list";
 import { Card, CardContent, Typography } from "@mui/material";
-import webview from "../native/WebView";
 import { Page } from "../components/onsenui/Page";
+import { os } from "../native/Os";
 
 interface Props extends PushProps<{}> {}
 
 function Acknowledgements({ pageTools, extra }: Props) {
   const [libs, setLibs] = React.useState<Array<Packages>>([]);
 
-  webview.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(pageTools.popPage);
 
   React.useEffect(() => {
     setLibs(dep as any);
@@ -40,7 +40,9 @@ function Acknowledgements({ pageTools, extra }: Props) {
             <Card
               variant="outlined"
               onClick={() => {
-                window.open(item.repository);
+                os.open(item.repository, {
+                  target: "_blank",
+                });
               }}
               style={{ margin: 8 }}
             >

@@ -14,7 +14,8 @@ import {
   ToolbarButton,
 } from "react-onsenui";
 import { App } from "../App";
-import webview from "../native/WebView";
+import { os } from "../native/Os";
+import { sharedpreferences } from "../native/SharedPreferences";
 import { colors, default_scheme } from "../theme";
 import drawerItems from "../util/drawerItem";
 import { IntroActivity } from "../view/IntroActivity";
@@ -33,7 +34,7 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     super(props);
 
     const Intro = () => {
-      if (webview.pref.getBoolean("introFinised", false)) {
+      if (sharedpreferences.getBoolean("introFinised", false)) {
         return App;
       } else {
         return IntroActivity;
@@ -70,7 +71,7 @@ class RoutedApp<A = {}> extends Component<Props, States> {
   public componentDidMount() {
     // This depends on createTheme
     // @ts-ignore
-    webview.setStatusBarColor(colors[default_scheme.value][900], false);
+    os.setStatusBarColor(colors[default_scheme.value][900], false);
   }
 
   private pushPage<A = {}>(props: PushPropsCore<A>): void {

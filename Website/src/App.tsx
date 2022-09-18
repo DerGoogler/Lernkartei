@@ -6,15 +6,18 @@ import AddActivity from "./view/AddActivity";
 import CardActivity from "./view/CardActivity";
 import AlertDialog from "./buildrs/AlertDialog";
 import Material3 from "./components/Material3";
-import webview from "./native/WebView";
 import {
   Alert,
   AlertTitle,
+  Box,
   Card,
   CardActions,
   CardContent,
+  Chip,
+  Divider,
   IconButton,
   Paper,
+  Stack,
   styled,
   Typography,
 } from "@mui/material";
@@ -22,6 +25,10 @@ import { Ripple } from "react-onsenui";
 import { ArrayMap } from "./components/ArrayMap";
 import { isMobile } from "react-device-detect";
 import { BuildConfig } from "./native/BuildConfig";
+import { Environment } from "./native/Environment";
+import { sharedpreferences } from "./native/SharedPreferences";
+import { os } from "./native/Os";
+import { useConfirm } from "material-ui-confirm";
 
 interface Props extends PushProps<{}> {}
 
@@ -34,8 +41,47 @@ export const StyledCard = styled(Paper)(({ theme }) => ({
   },
 }));
 
+export const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  display: "inline-flex",
+  MozBoxAlign: "center",
+  alignItems: "center",
+  MozBoxPack: "center",
+  justifyContent: "center",
+  position: "relative",
+  boxSizing: "border-box",
+  backgroundColor: "transparent",
+  outline: "currentcolor none 0px",
+  margin: "0px",
+  cursor: "pointer",
+  userSelect: "none",
+  verticalAlign: "middle",
+  appearance: "none",
+  textDecoration: "none",
+  textAlign: "center",
+  flex: "0 0 auto",
+  fontSize: "1.5rem",
+  padding: "8px",
+  overflow: "visible",
+  transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+  border: "1px solid rgb(238, 238, 238)",
+  borderTopColor: "rgb(238, 238, 238)",
+  borderRightColor: "rgb(238, 238, 238)",
+  borderBottomColor: "rgb(238, 238, 238)",
+  borderLeftColor: "rgb(238, 238, 238)",
+  color: "rgb(66, 66, 66)",
+  borderRadius: theme.shape.borderRadius,
+  alignSelf: "flex-start",
+  ":hover": {
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.main,
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+  },
+}));
+
 function CardRenderer({ pageTools, extra }: Props) {
-  const getCards = webview.pref.getJSON<Array<Kartei>>("katei", []);
+  const getCards = sharedpreferences.getJSON<Array<Kartei>>("katei", []);
+
+  const confirm = useConfirm();
 
   return (
     <React.Fragment>
@@ -76,36 +122,11 @@ function CardRenderer({ pageTools, extra }: Props) {
         }}
         render={(card, index) => {
           return (
-            <GestureDetector
-              onHold={() => {
-                const builder = AlertDialog.Builder;
-                builder.setTitle("Löschen");
-                builder.setMessage(
-                  <span>
-                    Möchtest Du die <strong>{card.name}</strong>-Gruppe löschen?
-                  </span>
-                );
-                builder.setPositiveButton("Ja", () => {
-                  let tmp = [];
-                  try {
-                    tmp = webview.pref.getJSON<Kartei[]>("katei", []);
-                    webview.pref.setJSON<Kartei[]>(
-                      "katei",
-                      tmp.filter((remv) => remv.group != card.group)
-                    );
-                    webview.toast(`${card.name} wurde gelöscht.`, "short");
-                  } catch (error) {
-                    webview.toast((error as Error).message, "short");
-                  }
-                });
-                builder.setNegativeButtom("Nein");
-                builder.setCancelable(false);
-                builder.show();
-              }}
-            >
-              <StyledCard elevation={0} key={`item_card_${card.group}`}>
-                <CardContent
-                  key={`item_card_${card.group}_content`}
+            <StyledCard elevation={0}>
+              <Box sx={{ p: 2, display: "flex" }}>
+                <Stack
+                  spacing={0.5}
+                  style={{ flexGrow: 1 }}
                   onClick={() => {
                     pageTools.pushPage<any>({
                       component: CardActivity,
@@ -121,34 +142,55 @@ function CardRenderer({ pageTools, extra }: Props) {
                     });
                   }}
                 >
-                  <Typography
-                    key={`item_card_${card.group}_card_count`}
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {card.karten.length != 0 && card.karten.length <= 2
-                      ? `${card.karten.length} Karte`
-                      : `${card.karten.length} Karten`}
-                  </Typography>
-                  <Typography key={`item_card_${card.group}_name`} variant="h5" component="div">
-                    {card.name}
-                  </Typography>
-
-                  <Typography key={`item_card_${card.group}_desc`} variant="body2">
+                  <Typography fontWeight={700}>{card.name}</Typography>
+                  <Typography variant="body2" color="text.secondary">
                     {card.description}
                   </Typography>
-                </CardContent>
-                {/* <CardActions disableSpacing>
-                  <IconButton aria-label="delete">
-                    <DeleteRounded />
-                  </IconButton>
-                  <IconButton aria-label="edit">
-                    <EditRounded />
-                  </IconButton>
-                </CardActions> */}
-              </StyledCard>
-            </GestureDetector>
+                </Stack>
+                <StyledIconButton
+                  style={{ width: 30, height: 30 }}
+                  onClick={() => {
+                    confirm({
+                      title: "Löschen",
+                      description: (
+                        <span>
+                          Möchtest Du die <strong>{card.name}</strong>-Gruppe löschen?
+                        </span>
+                      ),
+                      confirmationText: "Ja",
+                      cancellationText: "Nein",
+                    })
+                      .then(() => {
+                        let tmp = [];
+                        try {
+                          tmp = sharedpreferences.getJSON<Kartei[]>("katei", []);
+                          sharedpreferences.setJSON<Kartei[]>(
+                            "katei",
+                            tmp.filter((remv) => remv.group != card.group)
+                          );
+                          os.toast(`${card.name} wurde gelöscht.`, "short");
+                        } catch (error) {
+                          os.toast((error as Error).message, "short");
+                        }
+                      })
+                      .catch(() => {});
+                  }}
+                >
+                  <DeleteRounded sx={{ fontSize: 14 }} />
+                </StyledIconButton>
+              </Box>
+              <Divider />
+              <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
+                <Chip
+                  size="small"
+                  label={
+                    card.karten.length != 0 && card.karten.length <= 2
+                      ? `${card.karten.length} Karte`
+                      : `${card.karten.length} Karten`
+                  }
+                />
+              </Stack>
+            </StyledCard>
           );
         }}
       />
@@ -208,7 +250,7 @@ function App({ pageTools, extra }: Props) {
   };
   return (
     <Page renderToolbar={renderToolbar} renderFixed={renderFixed}>
-      {!webview.isAndroid && (
+      {!os.isAndroid && (
         <Alert
           sx={{
             margin: "8px 8px 8px",

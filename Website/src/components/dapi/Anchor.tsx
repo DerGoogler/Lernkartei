@@ -1,16 +1,8 @@
-import { ContentCopy, OpenInNewRounded } from "@mui/icons-material";
-import { Dialog, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled } from "@mui/material";
-import React from "react";
-import webview from "../../native/WebView";
+import { styled } from "@mui/material";
+import { os } from "../../native/Os";
 
 function Anchor(props: JSX.IntrinsicElements["a"]) {
   const { href, children, ...rest } = props;
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = (event: React.MouseEvent) => {
-    event.preventDefault();
-  };
 
   const StyledAnchor = styled("div")(({ theme }) => ({
     display: "inline-block",
@@ -33,7 +25,11 @@ function Anchor(props: JSX.IntrinsicElements["a"]) {
         href={href}
         // @ts-ignore
         onClick={() => {
-          href ? webview.open(href, "_blank") : null;
+          href
+            ? os.open(href, {
+                target: "_blank",
+              })
+            : null;
         }}
         {...rest}
       >

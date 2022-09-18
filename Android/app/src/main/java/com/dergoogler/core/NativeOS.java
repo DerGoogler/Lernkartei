@@ -1,17 +1,11 @@
 package com.dergoogler.core;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.Settings;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -21,15 +15,12 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
-import com.dergoogler.kartei.BuildConfig;
-import com.dergoogler.kartei.Native;
-import com.dergoogler.kartei.R;
 
-public class WebViewOS {
+public class NativeOS {
     private static final String TAG = "WebViewOS";
     private final Context ctx;
 
-    public WebViewOS(Context ctx) {
+    public NativeOS(Context ctx) {
         this.ctx = ctx;
     }
 
@@ -55,54 +46,12 @@ public class WebViewOS {
         return isTablet;
     }
 
-    @Deprecated
     @JavascriptInterface
-    public void log(String TAG, String message) {
-        Log.i(TAG, message);
-    }
-
-    @JavascriptInterface
-    public void logi(String TAG, String message) {
-        Log.i(TAG, message);
-    }
-
-    @JavascriptInterface
-    public void logw(String TAG, String message) {
-        Log.w(TAG, message);
-    }
-
-    @JavascriptInterface
-    public void loge(String TAG, String message) {
-        Log.e(TAG, message);
-    }
-
-    @JavascriptInterface
-    public boolean hasStoragePermission() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            return Environment.isExternalStorageManager();
-        } else {
-            return this.ctx.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED;
-        }
-    }
-
-    @JavascriptInterface
-    public void requestStoargePermission() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-            Uri uri = Uri.fromParts("package", this.ctx.getPackageName(), null);
-            intent.setData(uri);
-            this.ctx.startActivity(intent);
-        } else {
-            ((Activity) this.ctx).requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
-        }
-    }
-
-    @JavascriptInterface
-    public void open(String link) {
+    public void open(String link, String color) {
         Uri uriUrl = Uri.parse(link);
         CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
         CustomTabColorSchemeParams params = new CustomTabColorSchemeParams.Builder()
-                .setToolbarColor(Color.parseColor(Native.getGlobalColor))
+                .setToolbarColor(Color.parseColor(color))
                 .build();
         intentBuilder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, params);
         CustomTabsIntent customTabsIntent = intentBuilder.build();

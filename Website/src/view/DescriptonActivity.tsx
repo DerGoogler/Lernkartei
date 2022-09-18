@@ -1,9 +1,6 @@
-import { BackButton, Page, Toolbar, ToolbarButton } from "react-onsenui";
-import { Edit } from "@mui/icons-material";
-import { Icon } from "../components/Icon";
-import AddCardToGroupActivity from "./AddCardToGroupActivity";
-import webview from "../native/WebView";
+import { BackButton, Page, Toolbar } from "react-onsenui";
 import { Markup } from "../components/Markdown";
+import { os } from "../native/Os";
 
 type PP = { shortDesc: string; desc: string; index: number | string; cardIndex: number };
 
@@ -12,7 +9,7 @@ interface Props extends PushProps<PP> {}
 function DescriptonActivity({ pageTools, extra }: Props) {
   const { desc, index, shortDesc, cardIndex } = extra;
 
-  webview.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(pageTools.popPage);
 
   const renderToolbar = () => {
     return (

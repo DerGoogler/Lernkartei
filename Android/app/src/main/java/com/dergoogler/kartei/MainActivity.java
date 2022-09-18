@@ -5,13 +5,18 @@ import android.app.DownloadManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
+import android.webkit.ConsoleMessage;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dergoogler.component.ModuleChromeClient;
 import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.NativeBuildConfig;
-import com.dergoogler.core.WebViewOS;
+import com.dergoogler.core.NativeEnvironment;
+import com.dergoogler.core.NativeFile;
+import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.WebViewPrefs;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,9 +45,36 @@ public class MainActivity extends AppCompatActivity {
         view.loadHTML(Native.getBaseURL, Native.getPage);
 
         // Core
-        view.addJavascriptInterface(new WebViewOS(this), Native.getNosString);
+        view.addJavascriptInterface(new NativeOS(this), "os");
         view.addJavascriptInterface(new WebViewPrefs(this), Native.getSharedPrefString);
         view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
+        view.addJavascriptInterface(new NativeEnvironment(this), "environment");
+        view.addJavascriptInterface(new NativeFile(), "file");
+
+        view.setModuleChromeClient(new ModuleChromeClient() {
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+
+                switch (consoleMessage.messageLevel()) {
+                    case TIP:
+                        Log.v(TAG, consoleMessage.message());
+                        break;
+                    case LOG:
+                        Log.i(TAG, consoleMessage.message());
+                        break;
+                    case WARNING:
+                        Log.w(TAG, consoleMessage.message());
+                        break;
+                    case ERROR:
+                        Log.e(TAG, consoleMessage.message());
+                        break;
+                    case DEBUG:
+                        Log.d(TAG, consoleMessage.message());
+                        break;
+                }
+                return super.onConsoleMessage(consoleMessage);
+            }
+        });
 
         view.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
             DownloadManager.Request request = new DownloadManager.Request(

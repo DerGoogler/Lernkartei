@@ -21,7 +21,7 @@ const drawerItems: DrawerListItems[] = [
         },
       },
       {
-        children: "Settings",
+        children: "Einstellungen",
         tappable: true,
         modifier: "chevron",
         onClick(hide, pushPage, event) {

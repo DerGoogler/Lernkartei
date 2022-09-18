@@ -20,9 +20,11 @@ import {
   WarningAmberRounded,
 } from "@mui/icons-material";
 import DescriptonActivity from "./DescriptonActivity";
-import webview from "../native/WebView";
 import { Markup } from "../components/Markdown";
 import { isDesktop, isMobile } from "react-device-detect";
+import { sharedpreferences } from "../native/SharedPreferences";
+import { useConfirm } from "material-ui-confirm";
+import { os } from "../native/Os";
 
 type PP = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
@@ -96,13 +98,22 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
 
-  webview.useOnBackPressed(pageTools.popPage);
+  const confirm = useConfirm();
+  const handleBackButtonClick = (event?: React.MouseEvent<HTMLElement>) => {
+    event?.preventDefault();
+    confirm({
+      title: "Verlassen?",
+      description: "Bist Du dir sicher, dass Du die Bearbeitung aufgeben willst?",
+    }).then(() => pageTools.popPage());
+  };
+
+  os.useOnBackPressed(handleBackButtonClick);
 
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={pageTools.popPage}>Back</BackButton>
+          <BackButton onClick={handleBackButtonClick}>Back</BackButton>
         </div>
         <div className="center">{edit ? "Karte bearbeiten" : "Neue Karte"}</div>
       </Toolbar>
@@ -141,29 +152,29 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
         };
 
         let tmp: Kartei[] = [];
-        tmp = webview.pref.getJSON<Kartei[]>("katei", []);
+        tmp = sharedpreferences.getJSON<Kartei[]>("katei", []);
         tmp[index].karten.push(obj);
-        webview.pref.setJSON<Kartei[]>("katei", tmp);
+        sharedpreferences.setJSON<Kartei[]>("katei", tmp);
         pageTools.popPage();
-        webview.toast("Deine Karte wurde gespeichert.", "short");
+        os.toast("Deine Karte wurde gespeichert.", "short");
       } catch (error) {
         alert((error as Error).message);
       }
     } else {
-      webview.toast("Kurz Beschreibung darf nicht leer sein!", "short");
+      os.toast("Kurz Beschreibung darf nicht leer sein!", "short");
     }
   };
 
   const handleEdit = () => {
     let tmp: Kartei[] = [];
-    tmp = webview.pref.getJSON<Kartei[]>("katei", []);
+    tmp = sharedpreferences.getJSON<Kartei[]>("katei", []);
     tmp[cardIndex].karten[index].shortDescription = shortDescription;
     tmp[cardIndex].karten[index].description = description;
 
     if (shortDescription === "") {
       ons.notification.alert("Kurz Beschreibung darf nicht leer sein!");
     } else {
-      webview.pref.setJSON<Kartei[]>("katei", tmp);
+      sharedpreferences.setJSON<Kartei[]>("katei", tmp);
       pageTools.popPage();
     }
   };
@@ -201,16 +212,17 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
             overflow: "auto",
           }}
         >
-          {formatTXT.map((el) => (
+          {formatTXT.map((El) => (
             <ToggleButton
               style={{
                 border: "1px solid rgb(196, 196, 196)",
               }}
-              value={el.name}
-              key={el.name}
-              onClick={() => markdownRef.current?.trigger(el.name)}
+              value={El.name}
+              key={El.name}
+              onClick={() => markdownRef.current?.trigger(El.name)}
             >
-              <el.icon style={el.iconStyle} />
+              {/* @ts-ignore */}
+              <El.icon style={El.iconStyle} />
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
@@ -247,7 +259,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
                 onChange={handleDescriptionChange}
               />
             </TextareaMarkdown.Wrapper>
-            {!webview.isAndroid && isDesktop && (
+            {!os.isAndroid && isDesktop && (
               <Preview className="preview">
                 <Markup children={description} />
               </Preview>
@@ -269,7 +281,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
           <Material3.Button
             modifier="large"
             onClick={() => {
-              if (!webview.isAndroid && isDesktop) {
+              if (!os.isAndroid && isDesktop) {
                 printHtmlBlock(".preview", {
                   importStyle: true,
                 });
@@ -289,7 +301,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
               }
             }}
           >
-            {!webview.isAndroid && isDesktop ? "Drucken" : "Ansicht"}
+            {!os.isAndroid && isDesktop ? "Drucken" : "Ansicht"}
           </Material3.Button>
         </Stack>
       </section>

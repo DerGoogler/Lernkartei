@@ -1,9 +1,9 @@
 import { createTheme, ThemeOptions, colors as kolors } from "@mui/material";
-import webview from "./native/WebView";
+import { sharedpreferences } from "./native/SharedPreferences";
 
-export const IsDarkmode = webview.pref.getBoolean("darkmode", false);
+export const IsDarkmode = sharedpreferences.getBoolean("darkmode", false);
 export function isDarkmode<T = any>(def: { light: T; dark: T }): T {
-  return !webview.pref.getBoolean("darkmode", false) ? def.light : def.dark;
+  return !IsDarkmode ? def.light : def.dark;
 }
 
 type AccentColors = Array<{
@@ -107,7 +107,7 @@ export const colors = {
   yellow: kolors.yellow,
 };
 
-export const default_scheme = webview.pref.getJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
+export const default_scheme = sharedpreferences.getJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
 
 export const theme = createTheme({
   shape: {
@@ -122,6 +122,7 @@ export const theme = createTheme({
           main: colors[default_scheme.value][900],
           contrastText: colors.grey[900],
         },
+        divider: "#e5e8ec",
         secondary: {
           main: "#e5e8ec",
           contrastText: "",
@@ -135,6 +136,7 @@ export const theme = createTheme({
           main: colors.grey[900],
           contrastText: colors.grey.A200,
         },
+        divider: colors.grey[700],
         secondary: {
           main: colors.grey[700],
           contrastText: "",

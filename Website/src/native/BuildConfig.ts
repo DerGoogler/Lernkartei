@@ -1,17 +1,26 @@
-export class BuildConfig {
-  public static get DEBUG(): boolean {
-    return window.buildconfig ? window.buildconfig.DEBUG() : false;
+import { NativeBase } from "./NativeBase";
+
+export class BuildConfigBase extends NativeBase {
+  public constructor() {
+    super();
+    this.interfaceType = "buildconfig";
   }
-  public static get APPLICATION_ID(): string {
-    return window.buildconfig ? window.buildconfig.APPLICATION_ID() : "";
+
+  public get DEBUG(): boolean {
+    return this.isAndroid ? this.interface.DEBUG() : false;
   }
-  public static get BUILD_TYPE(): string {
-    return window.buildconfig ? window.buildconfig.BUILD_TYPE() : "";
+  public get APPLICATION_ID(): string {
+    return this.isAndroid ? this.interface.APPLICATION_ID() : "";
   }
-  public static get VERSION_CODE(): string {
-    return window.buildconfig ? window.buildconfig.VERSION_CODE() : 0;
+  public get BUILD_TYPE(): string {
+    return this.isAndroid ? this.interface.BUILD_TYPE() : "";
   }
-  public static get VERSION_NAME(): string {
-    return window.buildconfig ? window.buildconfig.VERSION_NAME() : "";
+  public get VERSION_CODE(): string {
+    return this.isAndroid ? this.interface.VERSION_CODE() : 0;
+  }
+  public get VERSION_NAME(): string {
+    return this.isAndroid ? this.interface.VERSION_NAME() : "";
   }
 }
+
+export const BuildConfig = new BuildConfigBase();

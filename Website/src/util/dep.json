@@ -2,14 +2,14 @@
     {
         "name": "@emotion/react",
         "author": "Emotion Contributors",
-        "version": "11.10.0",
+        "version": "11.10.4",
         "license": "MIT",
         "repository": "https://www.npmjs.com/package/@emotion/react"
     },
     {
         "name": "@emotion/styled",
         "description": "styled API for emotion",
-        "version": "11.10.0",
+        "version": "11.10.4",
         "license": "MIT",
         "repository": "https://www.npmjs.com/package/@emotion/styled"
     },
@@ -17,7 +17,7 @@
         "name": "@mui/icons-material",
         "description": "Material Design icons distributed as SVG React components.",
         "author": "MUI Team",
-        "version": "5.8.4",
+        "version": "5.10.3",
         "license": "MIT",
         "homepage": "https://mui.com/material-ui/material-icons/",
         "repository": "https://www.npmjs.com/package/@mui/icons-material"
@@ -26,19 +26,10 @@
         "name": "@mui/material",
         "description": "React components that implement Google's Material Design.",
         "author": "MUI Team",
-        "version": "5.10.0",
+        "version": "5.10.5",
         "license": "MIT",
         "homepage": "https://mui.com/material-ui/getting-started/overview/",
         "repository": "https://www.npmjs.com/package/@mui/material"
-    },
-    {
-        "name": "ace-builds",
-        "description": "Ace (Ajax.org Cloud9 Editor)",
-        "author": "",
-        "version": "1.9.5",
-        "license": "BSD-3-Clause",
-        "homepage": "https://github.com/ajaxorg/ace-builds",
-        "repository": "https://www.npmjs.com/package/ace-builds"
     },
     {
         "name": "axios",
@@ -62,7 +53,7 @@
         "name": "googlers-tools",
         "description": "My own tools / scripts that I use.",
         "author": "Der_Googler <jimmyboehm@dergoogler.com>",
-        "version": "1.4.2",
+        "version": "1.4.5",
         "license": "GPL-3.0",
         "homepage": "https://dergoogler.com/Der_Googler/googlers-tools",
         "repository": "https://www.npmjs.com/package/googlers-tools"
@@ -93,6 +84,15 @@
         "license": "MIT",
         "homepage": "https://probablyup.github.io/markdown-to-jsx",
         "repository": "https://www.npmjs.com/package/markdown-to-jsx"
+    },
+    {
+        "name": "material-ui-confirm",
+        "description": "Higher order component for straightforward use of @material-ui/core confirmation dialogs.",
+        "author": "Jonatan Kłosko",
+        "version": "3.0.5",
+        "license": "MIT",
+        "homepage": "https://github.com/jonatanklosko/material-ui-confirm",
+        "repository": "https://www.npmjs.com/package/material-ui-confirm"
     },
     {
         "name": "onsenui",
@@ -137,14 +137,6 @@
         "repository": "https://www.npmjs.com/package/react"
     },
     {
-        "name": "react-ace",
-        "description": "A react component for Ace Editor",
-        "author": "James Hrisho",
-        "version": "10.1.0",
-        "license": "MIT",
-        "repository": "https://www.npmjs.com/package/react-ace"
-    },
-    {
         "name": "react-device-detect",
         "description": "Detect device type and render your component according to it",
         "author": {
@@ -171,15 +163,6 @@
         "license": "MIT",
         "homepage": "https://reactjs.org/",
         "repository": "https://www.npmjs.com/package/react-dom"
-    },
-    {
-        "name": "react-frame",
-        "description": "React components within an iframe for isolated css styling",
-        "author": "Wang Zuo",
-        "version": "2.2.22",
-        "license": "MIT",
-        "homepage": "https://github.com/swiftcarrot/react-frame#readme",
-        "repository": "https://www.npmjs.com/package/react-frame"
     },
     {
         "name": "react-onsenui",
@@ -232,10 +215,10 @@
     {
         "name": "web-shared-preferences",
         "description": "An simple class to manage the loacal storage",
-        "author": "Der_Googler <jimmyboehm@dergoogler.com>",
-        "version": "1.1.2",
+        "author": "Der_Googler",
+        "version": "1.1.5",
         "license": "GPL-3.0",
-        "homepage": "https://repo.dergoogler.com/DerGoogler/SharedPreferences",
+        "homepage": "https://dergoogler.com/dergoogler/SharedPreferences",
         "repository": "https://www.npmjs.com/package/web-shared-preferences"
     }
 ]
