@@ -21,7 +21,7 @@ declare module "*.txt" {
   export default content;
 }
 
-declare module "react-onsenui"
+declare module "react-onsenui";
 declare module "react-onsenui" {
   export type HTMLAttributes<K extends keyof React.HTMLAttributes<{}>> = Partial<Pick<React.HTMLAttributes<{}>, K>>;
   export type InputHTMLAttributes<K extends keyof React.InputHTMLAttributes<{}>> = Partial<

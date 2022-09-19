@@ -13,7 +13,7 @@ import {
   Toolbar,
   ToolbarButton,
 } from "react-onsenui";
-import { App } from "../App";
+import { App } from "../view/App";
 import { os } from "../native/Os";
 import { sharedpreferences } from "../native/SharedPreferences";
 import { colors, default_scheme } from "../theme";

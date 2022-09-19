@@ -1,5 +1,4 @@
-import React, { DependencyList } from "react";
-import { SharedPreferences as LocalStorage } from "web-shared-preferences";
+import { SharedPreferences as LocalStorage, usePref } from "web-shared-preferences";
 import { NativeBase } from "./NativeBase";
 
 declare const nsharedpreferences: any;
@@ -15,31 +14,6 @@ class SharedPreferences extends NativeBase {
     super();
     this._pref = new LocalStorage();
     this.interfaceType = "nsharedpreferences";
-  }
-
-  private useForceRender() {
-    const [, forceRender] = React.useReducer((x) => x + 1, 0);
-    return forceRender;
-  }
-
-  private usePrefCore<T = any>(
-    key: string,
-    defValue: T,
-    core_getter: (key: string, defValue: T) => T,
-    core_setter: (key: string, value: T) => void
-  ): [T, (value: T) => void] {
-    const forceRender = this.useForceRender();
-    // @ts-ignore
-    const getter: T = core_getter(key, defValue);
-
-    const setter = (value: T) => {
-      core_setter(key, value);
-      if (getter !== value) {
-        forceRender();
-      }
-    };
-
-    return [getter, setter];
   }
 
   public setString(key: string, value: string): void {
@@ -82,30 +56,12 @@ class SharedPreferences extends NativeBase {
     }
   }
 
-  public useString(key: string, defValue: string): [string, (value: string) => void] {
-    return this.usePrefCore<string>(
-      key,
-      defValue,
-      (key, defValue) => this.getString(key, defValue),
-      (key, value) => this.setString(key, value)
-    );
-  }
-
   public getBoolean(key: string, defValue: boolean): boolean {
     if (this.isAndroid) {
       return this.interface.getBoolean(key, defValue);
     } else {
       return this._pref.getBoolean(key, defValue);
     }
-  }
-
-  public useBoolean(key: string, defValue: boolean): [boolean, (value: boolean) => void] {
-    return this.usePrefCore<boolean>(
-      key,
-      defValue,
-      (key, defValue) => this.getBoolean(key, defValue),
-      (key, value) => this.setBoolean(key, value)
-    );
   }
 
   public getNumber(key: string, defValue: number): number {
@@ -116,30 +72,12 @@ class SharedPreferences extends NativeBase {
     }
   }
 
-  public useNumber(key: string, defValue: number): [number, (value: number) => void] {
-    return this.usePrefCore<number>(
-      key,
-      defValue,
-      (key, defValue) => this.getNumber(key, defValue),
-      (key, value) => this.setNumber(key, value)
-    );
-  }
-
   public getJSON<T = any>(key: string, defValue: T): T {
     if (this.isAndroid) {
-      return JSON.parse(nsharedpreferences.getString(key, JSON.stringify(defValue)));
+      return JSON.parse(this.interface.getString(key, JSON.stringify(defValue)));
     } else {
       return this._pref.getJSON<T>(key, defValue);
     }
-  }
-
-  public useJSON<T = any>(key: string, defValue: T): [T, (value: T) => void] {
-    return this.usePrefCore<T>(
-      key,
-      defValue,
-      (key, defValue) => this.getJSON(key, defValue),
-      (key, value) => this.setJSON(key, value)
-    );
   }
 
   public removePref(key: string): void {
@@ -157,6 +95,46 @@ class SharedPreferences extends NativeBase {
       this._pref.clearPrefs();
     }
   }
+}
+
+export function useString(key: string, defValue: string): [string, (value: string) => void] {
+  const pref = new SharedPreferences();
+  return usePref<string>(
+    key,
+    defValue,
+    (key, defValue) => pref.getString(key, defValue),
+    (key, value) => pref.setString(key, value)
+  );
+}
+
+export function useBoolean(key: string, defValue: boolean): [boolean, (value: boolean) => void] {
+  const pref = new SharedPreferences();
+  return usePref<boolean>(
+    key,
+    defValue,
+    (key, defValue) => pref.getBoolean(key, defValue),
+    (key, value) => pref.setBoolean(key, value)
+  );
+}
+
+export function useNumber(key: string, defValue: number): [number, (value: number) => void] {
+  const pref = new SharedPreferences();
+  return usePref<number>(
+    key,
+    defValue,
+    (key, defValue) => pref.getNumber(key, defValue),
+    (key, value) => pref.setNumber(key, value)
+  );
+}
+
+export function useJSON<T = any>(key: string, defValue: T): [T, (value: T) => void] {
+  const pref = new SharedPreferences();
+  return usePref<T>(
+    key,
+    defValue,
+    (key, defValue) => pref.getJSON(key, defValue),
+    (key, value) => pref.setJSON(key, value)
+  );
 }
 
 const sharedpreferences: SharedPreferences = new SharedPreferences();

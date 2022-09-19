@@ -3,7 +3,7 @@ import { ConfirmationDialogRaw } from "../components/ConfirmationDialogRaw";
 import React from "react";
 import Material3 from "../components/Material3";
 import { File } from "../native/File";
-import { sharedpreferences } from "../native/SharedPreferences";
+import { sharedpreferences, useBoolean, useJSON } from "../native/SharedPreferences";
 import { Environment } from "../native/Environment";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
@@ -16,8 +16,8 @@ function SettingsActivity({ pageTools }: Props) {
   os.useOnBackPressed(pageTools.popPage);
 
   // Prefs
-  const [darkmode, setDarkmode] = sharedpreferences.useBoolean("darkmode", false);
-  const [cards, setCards] = sharedpreferences.useJSON("katei", []);
+  const [darkmode, setDarkmode] = useBoolean("darkmode", false);
+  const [cards, setCards] = useJSON("katei", []);
 
   const renderToolbar = () => {
     return (
@@ -33,7 +33,7 @@ function SettingsActivity({ pageTools }: Props) {
   return (
     <Page renderToolbar={renderToolbar}>
       <ListHeader>Aussehen</ListHeader>
-      <ListItem>
+      {/* <ListItem>
         <div className="center">
           <span className="list-item__title">Dunkler Modus (Beta)</span>
           <span className="list-item__subtitle">Design könnte nicht auf dem neuesten stand sein</span>
@@ -46,7 +46,7 @@ function SettingsActivity({ pageTools }: Props) {
             }}
           ></Material3.Switch>
         </div>
-      </ListItem>
+      </ListItem> */}
       {!darkmode && <AccentColorPickerItem />}
 
       <ListHeader>Karten / Gruppen</ListHeader>
@@ -110,7 +110,7 @@ function SettingsActivity({ pageTools }: Props) {
 function AccentColorPickerItem() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<AccentColors[0]>(default_scheme);
-  const [scheme, setScheme] = sharedpreferences.useJSON<AccentColors[0]>("accent_scheme", default_scheme);
+  const [scheme, setScheme] = useJSON<AccentColors[0]>("accent_scheme", default_scheme);
 
   const handleOpen = () => {
     setOpen(true);

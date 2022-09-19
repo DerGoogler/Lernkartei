@@ -12,7 +12,6 @@ import Image from "./dapi/Image";
 import { Box, Chip, Container, Divider, Grid, Paper, Stack } from "@mui/material";
 import { StyledMarkdown } from "../styles/StyledMarkdon";
 import styled from "@emotion/styled";
-import { StyledAccordion } from "./StyledAccordion";
 
 type Props = {
   children: string;
@@ -82,9 +81,6 @@ export function Markup(props: Props) {
             },
             warnmark: {
               component: Warnmark,
-            },
-            dion: {
-              component: StyledAccordion,
             },
           },
         }}

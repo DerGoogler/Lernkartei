@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import * as React from "react";
 import { BackButton, Button, Page, Toolbar } from "react-onsenui";
-import { sharedpreferences } from "../native/SharedPreferences";
+import { sharedpreferences, useJSON } from "../native/SharedPreferences";
 import { os } from "../native/Os";
 
 interface Props extends PushProps<{}> {}
@@ -10,6 +10,7 @@ function AddActivity({ pageTools, extra }: Props) {
   const [group, setGroup] = React.useState("lernfeld_1");
   const [name, setName] = React.useState("Lernfeld 1");
   const [description, setDescription] = React.useState("Güter annehmen und kontrolieren");
+  const [cards, setCards] = useJSON<Kartei[]>("katei", []);
 
   os.useOnBackPressed(pageTools.popPage);
 
@@ -41,8 +42,6 @@ function AddActivity({ pageTools, extra }: Props) {
   };
 
   const handleSave = () => {
-    const getBefore = sharedpreferences.getJSON<Array<Kartei>>("katei", []);
-
     try {
       const obj: Kartei = {
         group: group,
@@ -54,13 +53,10 @@ function AddActivity({ pageTools, extra }: Props) {
       if (!validGroup(group)) {
         os.toast("Bitte achte drauf, dass keine Leerzeichen verwendet werden, oder bindestriche", "short");
       } else {
-        if (getBefore.some((elem) => elem?.group === group)) {
+        if (cards.some((elem) => elem?.group === group)) {
           os.toast(`Diese Gruppe is bereits vorhanden.`, "short");
         } else {
-          sharedpreferences.setJSON<Partial<Array<Kartei>>>("katei", [
-            ...sharedpreferences.getJSON<Partial<Array<Kartei>>>("katei", []),
-            obj,
-          ]);
+          setCards([...cards, obj]);
           pageTools.popPage();
           os.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
         }

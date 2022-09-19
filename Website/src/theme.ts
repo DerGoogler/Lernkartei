@@ -1,5 +1,5 @@
 import { createTheme, ThemeOptions, colors as kolors } from "@mui/material";
-import { sharedpreferences } from "./native/SharedPreferences";
+import { sharedpreferences, useJSON } from "./native/SharedPreferences";
 
 export const IsDarkmode = sharedpreferences.getBoolean("darkmode", false);
 export function isDarkmode<T = any>(def: { light: T; dark: T }): T {
@@ -108,7 +108,7 @@ export const colors = {
 };
 
 export function useDefaultScheme() {
-  const [scheme, setScheme] = sharedpreferences.useJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
+  const [scheme, setScheme] = useJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
   return scheme;
 }
 
@@ -126,6 +126,9 @@ export const theme = createTheme({
           // @ts-ignore
           main: colors[default_scheme.value][900],
           contrastText: colors.grey[900],
+        },
+        background: {
+          default: "#fafafa",
         },
         divider: "#e5e8ec",
         secondary: {

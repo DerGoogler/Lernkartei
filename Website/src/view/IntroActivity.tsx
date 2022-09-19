@@ -1,10 +1,10 @@
 import { Done } from "@mui/icons-material";
 import * as React from "react";
 import { Button, Carousel, CarouselItem, Page, Toolbar, ToolbarButton } from "react-onsenui";
-import { App } from "../App";
+import { App } from "./App";
 import { Icon } from "../components/Icon";
 import { os } from "../native/Os";
-import { sharedpreferences } from "../native/SharedPreferences";
+import { sharedpreferences, useBoolean } from "../native/SharedPreferences";
 
 interface Props extends PushProps {}
 
@@ -25,6 +25,7 @@ function IntroActivity({ pageTools }: Props) {
       bg: "#D7BDE2",
     },
   ]);
+  const [introFinised, setIntroFinised] = useBoolean("introFinised", false);
 
   os.useOnBackPressed(() => os.close());
 
@@ -41,7 +42,7 @@ function IntroActivity({ pageTools }: Props) {
             <ToolbarButton
               onClick={() => {
                 if (getIndex === 1) {
-                  sharedpreferences.setBoolean("introFinised", true);
+                  setIntroFinised(true);
                   pageTools.pushPage({
                     component: App,
                     props: {

@@ -22,7 +22,7 @@ import {
 import DescriptonActivity from "./DescriptonActivity";
 import { Markup } from "../components/Markdown";
 import { isDesktop, isMobile } from "react-device-detect";
-import { sharedpreferences } from "../native/SharedPreferences";
+import { sharedpreferences, useJSON } from "../native/SharedPreferences";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
 
@@ -96,17 +96,21 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
   const [description, setDescription] = React.useState(edit ? desc : "");
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
+  const [cards, setCards] = useJSON<Kartei[]>("katei", []);
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
 
   const confirm = useConfirm();
-  const handleBackButtonClick = (event?: React.MouseEvent<HTMLElement>) => {
-    event?.preventDefault();
-    confirm({
-      title: "Verlassen?",
-      description: "Bist Du dir sicher, dass Du die Bearbeitung aufgeben willst?",
-    }).then(() => pageTools.popPage());
-  };
+  // **** Experimental
+  // const handleBackButtonClick = (event?: React.MouseEvent<HTMLElement>) => {
+  //   event?.preventDefault();
+  //   confirm({
+  //     title: "Verlassen?",
+  //     description: "Bist Du dir sicher, dass Du die Bearbeitung aufgeben willst?",
+  //   }).then(() => pageTools.popPage());
+  // };
+  // os.useOnBackPressed(handleBackButtonClick);
 
+  const handleBackButtonClick = pageTools.popPage;
   os.useOnBackPressed(handleBackButtonClick);
 
   const renderToolbar = () => {
@@ -152,9 +156,9 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
         };
 
         let tmp: Kartei[] = [];
-        tmp = sharedpreferences.getJSON<Kartei[]>("katei", []);
+        tmp = cards;
         tmp[index].karten.push(obj);
-        sharedpreferences.setJSON<Kartei[]>("katei", tmp);
+        setCards(tmp);
         pageTools.popPage();
         os.toast("Deine Karte wurde gespeichert.", "short");
       } catch (error) {
@@ -167,14 +171,14 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
 
   const handleEdit = () => {
     let tmp: Kartei[] = [];
-    tmp = sharedpreferences.getJSON<Kartei[]>("katei", []);
+    tmp = cards;
     tmp[cardIndex].karten[index].shortDescription = shortDescription;
     tmp[cardIndex].karten[index].description = description;
 
     if (shortDescription === "") {
       ons.notification.alert("Kurz Beschreibung darf nicht leer sein!");
     } else {
-      sharedpreferences.setJSON<Kartei[]>("katei", tmp);
+      setCards(tmp);
       pageTools.popPage();
     }
   };
