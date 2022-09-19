@@ -13,7 +13,7 @@ class SharedPreferences extends NativeBase {
   public constructor() {
     super();
     this._pref = new LocalStorage();
-    this.interfaceType = "nsharedpreferences";
+    this.interfaceType = "sharedpreferences";
   }
 
   public setString(key: string, value: string): void {

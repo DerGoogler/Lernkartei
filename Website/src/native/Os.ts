@@ -53,6 +53,14 @@ class Os extends NativeBase {
     }
   }
 
+  public getMonetColor(id: string): string {
+    if (this.isAndroid) {
+      return this.interface.getMonetColor(id);
+    } else {
+      return "#ffffff";
+    }
+  }
+
   /**
    * Changes the status bar color
    * @param color Your color

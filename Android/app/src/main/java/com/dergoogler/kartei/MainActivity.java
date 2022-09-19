@@ -39,14 +39,14 @@ public class MainActivity extends AppCompatActivity {
         view.setAllowUniversalAccessFromFileURLs(true);
         view.setDatabaseEnabled(true);
         view.setDomStorageEnabled(false);
-        view.setUserAgentString(Native.getUserAgent);
+        view.setUserAgentString("KARTEI");
 
         // Content
-        view.loadHTML(Native.getBaseURL, Native.getPage);
+        view.loadUrl("file:///android_asset/web/index.html");
 
         // Core
         view.addJavascriptInterface(new NativeOS(this), "os");
-        view.addJavascriptInterface(new WebViewPrefs(this), Native.getSharedPrefString);
+        view.addJavascriptInterface(new WebViewPrefs(this), "sharedpreferences");
         view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
         view.addJavascriptInterface(new NativeEnvironment(this), "environment");
         view.addJavascriptInterface(new NativeFile(), "file");

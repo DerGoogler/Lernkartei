@@ -3,19 +3,17 @@ package com.dergoogler.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import androidx.annotation.NonNull;
 
-import com.dergoogler.kartei.Native;
 
 
 public class WebViewPrefs {
     private final SharedPreferences localstorage;
 
     public WebViewPrefs(@NonNull Context ctx) {
-        this.localstorage = ctx.getSharedPreferences(Native.getPrefKey, Activity.MODE_PRIVATE);
+        this.localstorage = ctx.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
     }
 
     @JavascriptInterface

@@ -8,7 +8,7 @@ import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 const defConfig: Configuration = {
   output: {
     filename: "bundle/[name].bundle.js",
-    path: resolve(__dirname, "./../Android/app/src/main/assets"),
+    path: resolve(__dirname, "./../Android/app/src/main/assets/web"),
     assetModuleFilename: "files/[name].[ext]",
   },
 };
@@ -87,7 +87,7 @@ const config: Configuration = {
 
   devServer: {
     static: {
-      directory: join(__dirname, "./../Android/app/src/main/assets"),
+      directory: join(__dirname, "./../Android/app/src/main/assets/web"),
     },
     open: false,
     compress: true,

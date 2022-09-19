@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class ModuleView extends WebView {
     private final WebSettings webSettings;
-    private final Context ctx;
+    public final Context ctx;
 
     public ModuleView(Context context) {
         super(context);
@@ -126,7 +126,7 @@ public class ModuleView extends WebView {
 
     @Override
     public void loadUrl(@NonNull String url) {
-        throw new RuntimeException("Stub!");
+        super.loadUrl(url);
     }
 
     @Override

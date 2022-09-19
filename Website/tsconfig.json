@@ -16,12 +16,13 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["node"]
   },
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
     }
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "./dep.ts", "./make_native.ts"]
 }
