@@ -1,5 +1,5 @@
-import { Edit } from "@mui/icons-material";
-import { Grid, Typography, Box, Stack } from "@mui/material";
+import { DeleteRounded, Edit, EditRounded } from "@mui/icons-material";
+import { Grid, Typography, Box, Stack, Divider, Chip } from "@mui/material";
 import reactStringReplace from "react-string-replace";
 import { useJSON } from "../../../native/SharedPreferences";
 import { StyledCard } from "../../App/components/StyledCard";
@@ -9,11 +9,14 @@ import AddCardToGroupActivity from "../../AddCardToGroupActivity";
 import { os } from "../../../native/Os";
 import { Fragment } from "react";
 import { ViewCardActivityProps } from "..";
+import { useConfirm } from "material-ui-confirm";
 
 export function CardListBuilder({ pageTools, extra }: ViewCardActivityProps) {
   const { index: iindex } = extra;
   const [cards, setCards] = useJSON<Kartei[]>("katei", []);
   const karten = cards[iindex].karten;
+
+  const confirm = useConfirm();
 
   const Lrender = (map: Array<Karten>, search: string) => {
     const filteredCards = map.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
@@ -43,32 +46,80 @@ export function CardListBuilder({ pageTools, extra }: ViewCardActivityProps) {
                   <strong>{match}</strong>
                 ))}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              {/* <Typography variant="body2" color="text.secondary">
                 #{index}
-              </Typography>
+              </Typography> */}
             </Stack>
-            <StyledIconButton
-              style={{ width: 30, height: 30 }}
-              onClick={() => {
-                pageTools.pushPage({
-                  component: AddCardToGroupActivity,
-                  props: {
-                    key: "edit",
-                    extra: {
-                      card: null,
-                      desc: card.description,
-                      shortDesc: card.shortDescription,
-                      index: index,
-                      cardIndex: iindex,
-                      edit: true,
-                    },
-                  },
-                });
-              }}
-            >
-              <Edit sx={{ fontSize: 14 }} />
-            </StyledIconButton>
           </Box>
+          <Divider />
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ px: 2, py: 1, bgcolor: "rgb(255, 255, 255)" }}
+          >
+            <Chip
+              size="small"
+              sx={{
+                bgcolor: "#eeeeee",
+              }}
+              label={`#${index}`}
+            />
+            <Stack spacing={0.8} direction="row">
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  pageTools.pushPage({
+                    component: AddCardToGroupActivity,
+                    props: {
+                      key: `edit_${card.shortDescription}_${index}`,
+                      extra: {
+                        card: null,
+                        desc: card.description,
+                        shortDesc: card.shortDescription,
+                        index: index,
+                        cardIndex: iindex,
+                        edit: true,
+                      },
+                    },
+                  });
+                }}
+              >
+                <EditRounded sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  confirm({
+                    title: "Löschen",
+                    description: (
+                      <span>
+                        Möchtest Du die <strong>Karte Nr.{index}</strong> löschen?
+                      </span>
+                    ),
+                    confirmationText: "Ja",
+                    cancellationText: "Nein",
+                  })
+                    .then(() => {
+                      let tmp = cards;
+                      try {
+                        tmp[iindex].karten = tmp[iindex].karten.filter(
+                          (remv) => remv.shortDescription != card.shortDescription
+                        );
+                        setCards(tmp);
+                        os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
+                      } catch (error) {
+                        os.toast((error as Error).message, "short");
+                      }
+                    })
+                    .catch(() => {});
+                }}
+              >
+                <DeleteRounded sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+            </Stack>
+          </Stack>
         </StyledCard>
       );
     });

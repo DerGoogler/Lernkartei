@@ -11,7 +11,6 @@ import { os } from "../../native/Os";
 import { StyledSection } from "../../components/StyledSection";
 import { useState } from "react";
 import { CardListBuilder } from "./components/CardListBuilder";
-import { GroupEdit } from "../App/components/GroupEdit";
 
 export interface ViewCardActivityProps extends PushProps<any> {}
 
@@ -34,9 +33,6 @@ export function ViewCardActivity({ pageTools, extra }: ViewCardActivityProps) {
           <Fade in={titleShow}>
             <span>{title}</span>
           </Fade>
-        </div>
-        <div className="right">
-          <GroupEdit pageTools={pageTools} name={title} desc={desc} extra={extra} />
         </div>
       </Toolbar>
     );

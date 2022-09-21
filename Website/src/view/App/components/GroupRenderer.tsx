@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Add, DeleteRounded, Menu } from "@mui/icons-material";
+import { Add, DeleteRounded, EditRounded, Menu } from "@mui/icons-material";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useConfirm } from "material-ui-confirm";
 import { useJSON } from "../../../native/SharedPreferences";
@@ -9,6 +9,7 @@ import { StyledIconButton } from "./StyledIconButton";
 import { os } from "../../../native/Os";
 import { Fragment } from "react";
 import { ViewCardActivity } from "../../ViewCardsActivity";
+import AddActivity from "../../AddActivity";
 
 export function CardRenderer({ pageTools, extra }: AppProps) {
   const [cards, setCards] = useJSON<Kartei[]>("katei", []);
@@ -63,14 +64,25 @@ export function CardRenderer({ pageTools, extra }: AppProps) {
               }
             />
             <Stack spacing={0.8} direction="row">
-              {/* <StyledIconButton
+              <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  showAlertDialog();
+                  pageTools.pushPage({
+                    component: AddActivity,
+                    props: {
+                      key: `edit_${card.name}_${index}`,
+                      extra: {
+                        name: card.name,
+                        description: card.description,
+                        editGroup: true,
+                        index: index,
+                      },
+                    },
+                  });
                 }}
               >
                 <EditRounded sx={{ fontSize: 14 }} />
-              </StyledIconButton> */}
+              </StyledIconButton>
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
@@ -85,9 +97,8 @@ export function CardRenderer({ pageTools, extra }: AppProps) {
                     cancellationText: "Nein",
                   })
                     .then(() => {
-                      let tmp = [];
-                      try {
-                        tmp = cards;
+                      let tmp = cards;
+                      try {;
                         setCards(tmp.filter((remv) => remv.group != card.group));
                         os.toast(`${card.name} wurde gelöscht.`, "short");
                       } catch (error) {

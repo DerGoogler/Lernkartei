@@ -4,12 +4,21 @@ import { BackButton, Button, Page, Toolbar } from "react-onsenui";
 import { sharedpreferences, useJSON } from "../native/SharedPreferences";
 import { os } from "../native/Os";
 
-interface Props extends PushProps<{}> {}
+interface Props
+  extends PushProps<{
+    name: string;
+    description: string;
+    editGroup: boolean;
+    index: number;
+  }> {}
 
 function AddActivity({ pageTools, extra }: Props) {
+  const isEditMode = extra.editGroup;
   const [group, setGroup] = React.useState("lernfeld_1");
-  const [name, setName] = React.useState("Lernfeld 1");
-  const [description, setDescription] = React.useState("Güter annehmen und kontrolieren");
+  const [name, setName] = React.useState(!isEditMode ? "Lernfeld 1" : extra.name);
+  const [description, setDescription] = React.useState(
+    !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
+  );
   const [cards, setCards] = useJSON<Kartei[]>("katei", []);
 
   os.useOnBackPressed(pageTools.popPage);
@@ -20,7 +29,7 @@ function AddActivity({ pageTools, extra }: Props) {
         <div className="left">
           <BackButton onClick={pageTools.popPage}>Back</BackButton>
         </div>
-        <div className="center">Neue Gruppe</div>
+        <div className="center">{!isEditMode ? "Neue Gruppe" : "Gruppe Bearbeiten"}</div>
       </Toolbar>
     );
   };
@@ -66,19 +75,31 @@ function AddActivity({ pageTools, extra }: Props) {
     }
   };
 
+  const handleEdit = () => {
+    const { index } = extra;
+
+    let groups = cards;
+    groups[index].name = name;
+    groups[index].description = description;
+    setCards(groups);
+    pageTools.popPage();
+  };
+
   return (
     <Page renderToolbar={renderToolbar}>
       <section style={{ padding: 8 }}>
         <span>
-          <TextField
-            fullWidth
-            // margin="dense"
-            type="text"
-            label="Gruppe"
-            value={group}
-            variant="outlined"
-            onChange={handleGroupChange}
-          />
+          {!isEditMode && (
+            <TextField
+              fullWidth
+              // margin="dense"
+              type="text"
+              label="Gruppe"
+              value={group}
+              variant="outlined"
+              onChange={handleGroupChange}
+            />
+          )}
         </span>
         <span>
           <TextField
@@ -102,7 +123,7 @@ function AddActivity({ pageTools, extra }: Props) {
             onChange={handleDescriptionChange}
           />
         </span>
-        <Button style={{ marginTop: 8 }} modifier="large" onClick={handleSave}>
+        <Button style={{ marginTop: 8 }} modifier="large" onClick={!isEditMode ? handleSave : handleEdit}>
           Speichern
         </Button>
       </section>

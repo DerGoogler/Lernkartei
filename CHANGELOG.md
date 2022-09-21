@@ -3,6 +3,8 @@
 - Fixed many links
 - Added color themes
 - Bump Dependencies
-- Added confirm dialog before exiting the editing process
+<!-- - Added confirm dialog before exiting the editing process -->
 - Native interface reworkings
 - Added backup for cards (beta)
+- Make edit groups better
+- Added support to delete single cards

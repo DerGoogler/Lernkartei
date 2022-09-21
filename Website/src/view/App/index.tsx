@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Page, ProgressCircular, Toolbar, ToolbarButton } from "react-onsenui";
+import { ActionSheet, List, ListItem, Page, ProgressCircular, Toolbar, ToolbarButton } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
@@ -8,11 +8,12 @@ import { BuildConfig } from "../../native/BuildConfig";
 import { useState } from "react";
 import { StyledSection } from "../../components/StyledSection";
 import { CardRenderer } from "./components/GroupRenderer";
+import { Stack, styled, TextField, Theme, Typography } from "@mui/material";
 
 export interface AppProps extends PushProps<{}> {}
 
 export function App({ pageTools, extra }: AppProps) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   // webview.useOnBackPressed(() => {
   //   if (pageTools.splitter.state()) {
   //     pageTools.splitter.hide();
@@ -47,7 +48,7 @@ export function App({ pageTools, extra }: AppProps) {
             component: AddActivity,
             props: {
               key: "add",
-              extra: {},
+              extra: { editGroup: false },
             },
           });
         }}
