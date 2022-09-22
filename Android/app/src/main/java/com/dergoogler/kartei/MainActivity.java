@@ -2,10 +2,7 @@ package com.dergoogler.kartei;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.webkit.ConsoleMessage;
 
@@ -19,19 +16,14 @@ import com.dergoogler.core.NativeFile;
 import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.NativeSharedPreferences;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ModuleView view;
     private static Context mContext;
+    private NativeSharedPreferences nsp;
+    private Server server;
 
 
     @Override
@@ -41,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
         view = findViewById(R.id.mmrl_view);
+
+        nsp = new NativeSharedPreferences(this);
+        try {
+            server = new Server(nsp.getString("katei", "[]"));
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         // Options
         view.setJavaScriptEnabled(true);
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         view.addJavascriptInterface(new NativeOS(this), "os");
         view.addJavascriptInterface(new NativeSharedPreferences(this), "sharedpreferences");
         view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
-        view.addJavascriptInterface(new NativeEnvironment(this), "environment");
+        view.addJavascriptInterface(nsp, "environment");
         view.addJavascriptInterface(new NativeFile(), "file");
 
         view.setModuleChromeClient(new ModuleChromeClient() {
@@ -86,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
                 return super.onConsoleMessage(consoleMessage);
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        server.stop();
     }
 
     @Override

@@ -1,10 +1,8 @@
 import { BackButton, ListHeader, ListItem, Page, Toolbar } from "react-onsenui";
 import { ConfirmationDialogRaw } from "../components/ConfirmationDialogRaw";
 import React from "react";
-import Material3 from "../components/Material3";
 import { File } from "../native/File";
-import { sharedpreferences, useBoolean, useJSON } from "../native/SharedPreferences";
-import { Environment } from "../native/Environment";
+import { useBoolean, useJSON } from "../native/SharedPreferences";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
 import { AccentColors, accent_colors, default_scheme } from "../theme";
@@ -57,8 +55,17 @@ function SettingsActivity({ pageTools }: Props) {
       <ListItem
         tappable
         onClick={() => {
-          const file = new File("karten.json");
-          file.createJSON(cards, 4);
+          if (os.isAndroid) {
+            os.open("http://localhost:4765/cards.json", {
+              target: "_blank",
+              features: {
+                color: theme.palette.primary.main,
+              },
+            });
+          } else {
+            const file = new File("karten.json");
+            file.createJSON(cards, 4);
+          }
         }}
       >
         <div className="center">

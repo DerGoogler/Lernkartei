@@ -30,5 +30,13 @@
         "license": "null",
         "author": "null",
         "repository": "https://mvnrepository.com/artifact/androidx.multidex/multidex/2.0.1"
+    },
+    {
+        "name": "org.nanohttpd:nanohttpd",
+        "description": "org.nanohttpd:nanohttpd:2.3.1",
+        "version": "2.3.1",
+        "license": "null",
+        "author": "null",
+        "repository": "https://mvnrepository.com/artifact/org.nanohttpd/nanohttpd/2.3.1"
     }
 ]

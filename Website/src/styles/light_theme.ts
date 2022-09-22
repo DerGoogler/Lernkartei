@@ -1140,17 +1140,17 @@ const light_theme = (theme: Theme): any => ({
     },
     ".button--outline": {
       backgroundColor: "transparent",
-      border: "1px solid #4a148c",
-      color: "#4a148c",
+      border: `1px solid ${theme.palette.primary.main}`,
+      color: theme.palette.primary.main,
     },
     ".button--outline:active": {
       backgroundColor: "color-mod(#4a148c tint(70%))",
-      border: "1px solid #4a148c",
-      color: "#4a148c",
+      border: `1px solid ${theme.palette.primary.main}`,
+      color: theme.palette.primary.main,
       opacity: "1",
     },
     ".button--outline:hover": {
-      border: "1px solid #4a148c",
+      border: `1px solid ${theme.palette.primary.main}`,
       transition: "0",
     },
     ".button--light": {
@@ -1172,7 +1172,7 @@ const light_theme = (theme: Theme): any => ({
       padding: "4px 10px",
       margin: "0",
       font: "inherit",
-      color: "#4a148c",
+      color: theme.palette.primary.main,
       background: "transparent",
       border: "none",
       lineHeight: "32px",
@@ -1242,7 +1242,7 @@ const light_theme = (theme: Theme): any => ({
       border: "none",
       transition: "none",
       opacity: "0.2",
-      color: "#4a148c",
+      color: theme.palette.primary.main,
     },
     ".button--cta": {
       position: "relative",
@@ -1623,7 +1623,8 @@ const light_theme = (theme: Theme): any => ({
     ".button--material:disabled, .button--material[disabled]": {
       transition: "none",
       boxShadow: "none",
-      backgroundColor: "#330f5e",
+      backgroundColor: theme.palette.primary.main,
+      filter: "brightness(85%)",
       color: "color-mod(black a(26%))",
       opacity: "1",
     },
