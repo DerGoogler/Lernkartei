@@ -72,6 +72,7 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     // This depends on createTheme
     // @ts-ignore
     os.setStatusBarColor(colors[default_scheme.value][900], false);
+    os.setNavigationBarColor("#fafafa")
   }
 
   private pushPage<A = {}>(props: PushPropsCore<A>): void {

@@ -9,10 +9,10 @@ import androidx.annotation.NonNull;
 
 
 
-public class WebViewPrefs {
+public class NativeSharedPreferences {
     private final SharedPreferences localstorage;
 
-    public WebViewPrefs(@NonNull Context ctx) {
+    public NativeSharedPreferences(@NonNull Context ctx) {
         this.localstorage = ctx.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
     }
 

@@ -216,7 +216,7 @@
         "name": "web-shared-preferences",
         "description": "An simple class to manage the loacal storage, including React like useString, useJSON and more!",
         "author": "Der_Googler",
-        "version": "1.2.0",
+        "version": "1.2.4",
         "license": "GPL-3.0",
         "homepage": "https://github.com/DerGoogler/SharedPreferences",
         "repository": "https://www.npmjs.com/package/web-shared-preferences"

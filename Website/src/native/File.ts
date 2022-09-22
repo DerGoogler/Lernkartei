@@ -13,14 +13,14 @@ export class File extends NativeBase {
    * @param content
    */
   public create(content: string): void {
-    if (this.isAndroid) {
-      this.interface.create(this._path, content);
-    } else {
-      const blob_ = new Blob([content], {
-        type: "text/plain;charset=utf-8",
-      });
-      saveAs(blob_, this._path.substring(this._path.lastIndexOf("/") + 1));
-    }
+    // if (this.isAndroid) {
+    // this.interface.create(this._path, content);
+    // } else {
+    const blob_ = new Blob([content], {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(blob_, this._path.substring(this._path.lastIndexOf("/") + 1));
+    // }
   }
   public read(): string {
     return this.isAndroid ? this.interface.read(this._path) : "null";

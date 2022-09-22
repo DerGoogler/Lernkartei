@@ -53,27 +53,8 @@ function SettingsActivity({ pageTools }: Props) {
       <ListItem
         tappable
         onClick={() => {
-          const Env = new Environment();
-          if (!Env.hasStoragePermission()) {
-            confirm({
-              title: "Speicher berechtigung fehlt",
-              description: "Es wird der Zugriff auf den Speicher benötigt.",
-              confirmationText: "Allow",
-              cancellationText: "Disallow",
-            }).then(() => {
-              Env.requestStoargePermission();
-            });
-          }
-
           const file = new File("karten.json");
-          if (file.exists()) {
-            os.toast(
-              "Es exestiert bereits ein Backup deiner Karten! Lösche das alte Backup um ein neues zu erstellen.",
-              "short"
-            );
-          } else {
-            file.createJSON(cards, 4);
-          }
+          file.createJSON(cards, 4);
         }}
       >
         <div className="center">

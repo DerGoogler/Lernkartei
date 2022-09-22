@@ -5,18 +5,12 @@ export class Environment extends NativeBase {
     super();
     this.interfaceType = "environment";
   }
-  /**
-   * Checks if the app has storage permissions, always `true` in web
-   * @returns {boolean}
-   */
-  public hasStoragePermission(): boolean {
-    return this.isAndroid ? this.interface.hasStoragePermission() : true;
+
+  public hasPermission(req: string): boolean {
+    return this.isAndroid ? this.interface.hasPermission(req) : true;
   }
 
-  /**
-   * Requests storage permissions
-   */
-  public requestStoargePermission(): void {
-    this.isAndroid ? this.interface.requestStoargePermission() : null;
+  public requestPermission(req: string): void {
+    this.isAndroid ? this.interface.requestPermission(req) : null;
   }
 }

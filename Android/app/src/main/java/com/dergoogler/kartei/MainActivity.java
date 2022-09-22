@@ -1,13 +1,13 @@
 package com.dergoogler.kartei;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
-import android.net.Uri;
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Environment;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.webkit.ConsoleMessage;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,11 +17,24 @@ import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeEnvironment;
 import com.dergoogler.core.NativeFile;
 import com.dergoogler.core.NativeOS;
-import com.dergoogler.core.WebViewPrefs;
+import com.dergoogler.core.NativeSharedPreferences;
+import com.yanzhenjie.andserver.AndServer;
+import com.yanzhenjie.andserver.Server;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ModuleView view;
+    private Server server;
+    private static Context mContext;
 
 
     @Override
@@ -29,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = getApplicationContext();
         view = findViewById(R.id.mmrl_view);
 
         // Options
@@ -41,12 +55,26 @@ public class MainActivity extends AppCompatActivity {
         view.setDomStorageEnabled(false);
         view.setUserAgentString("KARTEI");
 
+        WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+        int ip = wifiInfo.getIpAddress();
+        String ipAddress = Formatter.formatIpAddress(ip);
+
+        server = AndServer.webServer(this)
+                .port(6969)
+                .timeout(10, TimeUnit.SECONDS)
+                .build();
+        server.startup();
+
+        Log.wtf(TAG, getIPAddress(true) + ":6969");
         // Content
-        view.loadUrl("file:///android_asset/web/index.html");
+        String baseUrl = "http://" + getIPAddress(true) + ":6969";
+        view.loadHTML(baseUrl, pageContent(baseUrl));
+
 
         // Core
         view.addJavascriptInterface(new NativeOS(this), "os");
-        view.addJavascriptInterface(new WebViewPrefs(this), "sharedpreferences");
+        view.addJavascriptInterface(new NativeSharedPreferences(this), "sharedpreferences");
         view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
         view.addJavascriptInterface(new NativeEnvironment(this), "environment");
         view.addJavascriptInterface(new NativeFile(), "file");
@@ -75,24 +103,79 @@ public class MainActivity extends AppCompatActivity {
                 return super.onConsoleMessage(consoleMessage);
             }
         });
+    }
 
-        view.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
-            DownloadManager.Request request = new DownloadManager.Request(
-                    Uri.parse(url));
 
-            request.allowScanningByMediaScanner();
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/Kartei");
-            DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-            dm.enqueue(request);
-            Toast.makeText(getApplicationContext(), "Downloading File", //To notify the Client that the file is being downloaded
-                    Toast.LENGTH_LONG).show();
+    /**
+     * Get IP address from first non-localhost interface
+     *
+     * @param useIPv4 true=return ipv4, false=return ipv6
+     * @return address or empty string
+     */
+    public String getIPAddress(boolean useIPv4) {
+        try {
+            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+                for (InetAddress addr : addrs) {
+                    if (!addr.isLoopbackAddress()) {
+                        String sAddr = addr.getHostAddress();
+                        //boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+                        boolean isIPv4 = sAddr.indexOf(':') < 0;
 
-        });
+                        if (useIPv4) {
+                            if (isIPv4)
+                                return sAddr;
+                        } else {
+                            if (!isIPv4) {
+                                int delim = sAddr.indexOf('%'); // drop ip6 zone suffix
+                                return delim < 0 ? sAddr.toUpperCase() : sAddr.substring(0, delim).toUpperCase();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+        } // for now eat exceptions
+        return "";
+    }
+
+    public String pageContent(String baseUrl) {
+        return "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "  <head>\n" +
+                "    <meta charset=\"utf-8\" />\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n" +
+                "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + baseUrl + "/bundle/vendor.bundle.css\" />\n" +
+                "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + baseUrl + " /bundle/app.bundle.css\" />\n" +
+                "    <link\n" +
+                "      rel=\"stylesheet\"\n" +
+                "      type=\"text/css\"\n" +
+                "      href=\"https://fonts.googleapis.com/icon?family=Material+Icons\"\n" +
+                "    />\n" +
+                "  </head>\n" +
+                "  <body>\n" +
+                "    <script\n" +
+                "      type=\"application/javascript\"\n" +
+                "      src=\"" + baseUrl + "/bundle/vendor.bundle.js\"\n" +
+                "    ></script>\n" +
+                "    <script type=\"application/javascript\" src=\"" + baseUrl + "/bundle/app.bundle.js\"></script>\n" +
+                "  </body>\n" +
+                "</html>\n";
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        server.shutdown();
     }
 
     @Override
     public void onBackPressed() {
         view.eventDispatcher("onbackbutton");
+    }
+
+    public static Context getAppContext() {
+        return mContext;
     }
 }
