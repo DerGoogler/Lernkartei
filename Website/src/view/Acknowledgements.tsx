@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BackButton, Toolbar } from "react-onsenui";
 import dep from "./../util/dep.json";
+import nativeDep from "./../util/native-dep.json";
 import { Packages } from "package-depend-list";
 import { Card, CardContent, Typography, useTheme } from "@mui/material";
 import { Page } from "../components/onsenui/Page";
@@ -16,7 +17,7 @@ function Acknowledgements({ pageTools, extra }: Props) {
   os.useOnBackPressed(pageTools.popPage);
 
   React.useEffect(() => {
-    setLibs(dep as any);
+    setLibs((dep as any[]).concat(nativeDep as any[]));
   });
 
   const renderToolbar = () => {
