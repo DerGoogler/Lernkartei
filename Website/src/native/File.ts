@@ -1,12 +1,12 @@
 import saveAs from "file-saver";
-import { NativeBase } from "./NativeBase";
+import { Native } from "./Native";
 
-export class File extends NativeBase {
+export class File extends Native {
   private _path: string;
   public constructor(path: string) {
     super();
     this._path = path;
-    this.interfaceType = "file";
+    this.interface = "file";
   }
   /**
    * Creates a new file. Supports browser and Android native.
@@ -23,13 +23,13 @@ export class File extends NativeBase {
     // }
   }
   public read(): string {
-    return this.isAndroid ? this.interface.read(this._path) : "null";
+    return this.isAndroid ? this.getInterface.read(this._path) : "null";
   }
   public exists(): boolean {
-    return this.isAndroid ? this.interface.exists(this._path) : true;
+    return this.isAndroid ? this.getInterface.exists(this._path) : true;
   }
   public isDirectory(): boolean {
-    return this.isAndroid ? this.interface.isDirectory(this._path) : true;
+    return this.isAndroid ? this.getInterface.isDirectory(this._path) : true;
   }
   public createJSON<T = any>(content: T, space?: string | number): void {
     this.create(JSON.stringify(content, null, space));

@@ -10,10 +10,11 @@ import { os } from "../../../native/Os";
 import { Fragment } from "react";
 import { ViewCardActivityProps } from "..";
 import { useConfirm } from "material-ui-confirm";
+import { useKartei } from "../../../hooks/useKartei";
 
 export function CardListBuilder({ pageTools, extra }: ViewCardActivityProps) {
   const { index: iindex } = extra;
-  const [cards, setCards] = useJSON<Kartei[]>("katei", []);
+  const [cards, setCards] = useKartei();
   const karten = cards[iindex].karten;
 
   const confirm = useConfirm();
@@ -52,12 +53,7 @@ export function CardListBuilder({ pageTools, extra }: ViewCardActivityProps) {
             </Stack>
           </Box>
           <Divider />
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ px: 2, py: 1, bgcolor: "rgb(255, 255, 255)" }}
-          >
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
             <Chip
               size="small"
               sx={{
@@ -102,12 +98,14 @@ export function CardListBuilder({ pageTools, extra }: ViewCardActivityProps) {
                     cancellationText: "Nein",
                   })
                     .then(() => {
-                      let tmp = cards;
                       try {
-                        tmp[iindex].karten = tmp[iindex].karten.filter(
-                          (remv) => remv.shortDescription != card.shortDescription
-                        );
-                        setCards(tmp);
+                        setCards((tmp) => {
+                          tmp[iindex].karten = tmp[iindex].karten.filter(
+                            (remv) => remv.shortDescription != card.shortDescription
+                          );
+                          return tmp;
+                        });
+
                         os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
                       } catch (error) {
                         os.toast((error as Error).message, "short");

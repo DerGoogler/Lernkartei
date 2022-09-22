@@ -6,6 +6,7 @@ declare global {
     environment: any;
     file: any;
     os: any;
+    sharedpreferences: any;
   }
 
   interface GlobalEventHandlersEventMap {
@@ -22,13 +23,15 @@ declare global {
     length: number;
   }
 
-  interface Karten {
+  interface GroupOptions {}
+
+  interface Karten extends GroupOptions {
     index?: number;
     shortDescription: string;
     description: string;
   }
 
-  interface Kartei {
+  interface Kartei extends GroupOptions {
     group: string;
     name: string;
     description: string;

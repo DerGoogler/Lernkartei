@@ -2,7 +2,7 @@ import * as React from "react";
 import { BackButton, Toolbar } from "react-onsenui";
 import dep from "./../util/dep.json";
 import { Packages } from "package-depend-list";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, useTheme } from "@mui/material";
 import { Page } from "../components/onsenui/Page";
 import { os } from "../native/Os";
 
@@ -10,6 +10,8 @@ interface Props extends PushProps<{}> {}
 
 function Acknowledgements({ pageTools, extra }: Props) {
   const [libs, setLibs] = React.useState<Array<Packages>>([]);
+
+  const theme = useTheme();
 
   os.useOnBackPressed(pageTools.popPage);
 
@@ -19,7 +21,7 @@ function Acknowledgements({ pageTools, extra }: Props) {
 
   const renderToolbar = () => {
     return (
-      <Toolbar>
+      <Toolbar modifier="noshadow">
         <div className="left">
           <BackButton onClick={pageTools.popPage}>Back</BackButton>
         </div>
@@ -42,6 +44,9 @@ function Acknowledgements({ pageTools, extra }: Props) {
               onClick={() => {
                 os.open(item.repository, {
                   target: "_blank",
+                  features: {
+                    color: theme.palette.primary.main,
+                  },
                 });
               }}
               style={{ margin: 8 }}

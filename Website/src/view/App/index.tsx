@@ -8,7 +8,6 @@ import { BuildConfig } from "../../native/BuildConfig";
 import { useState } from "react";
 import { StyledSection } from "../../components/StyledSection";
 import { CardRenderer } from "./components/GroupRenderer";
-import { Stack, styled, TextField, Theme, Typography } from "@mui/material";
 
 export interface AppProps extends PushProps<{}> {}
 

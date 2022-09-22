@@ -3,6 +3,7 @@ import * as React from "react";
 import { BackButton, Button, Page, Toolbar } from "react-onsenui";
 import { sharedpreferences, useJSON } from "../native/SharedPreferences";
 import { os } from "../native/Os";
+import { useKartei } from "../hooks/useKartei";
 
 interface Props
   extends PushProps<{
@@ -19,7 +20,7 @@ function AddActivity({ pageTools, extra }: Props) {
   const [description, setDescription] = React.useState(
     !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
   );
-  const [cards, setCards] = useJSON<Kartei[]>("katei", []);
+  const [cards, setCards] = useKartei();
 
   os.useOnBackPressed(pageTools.popPage);
 

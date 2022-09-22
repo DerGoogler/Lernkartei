@@ -1,7 +1,7 @@
 import { colors } from "@mui/material";
 import ons from "onsenui";
 import React from "react";
-import { NativeBase } from "./NativeBase";
+import { Native } from "./Native";
 
 export namespace Os {
   export type OpenOptions = {
@@ -18,15 +18,15 @@ export namespace Os {
   };
 }
 
-class Os extends NativeBase {
+class Os extends Native {
   public constructor() {
     super();
-    this.interfaceType = "os";
+    this.interface = "os";
   }
 
   public open(url?: string | URL | undefined, options?: Os.OpenOptions): Window | null {
     if (this.isAndroid) {
-      return this.interface.open(url, options?.features?.color || "#fffddd");
+      return this.getInterface.open(url, options?.features?.color || "#fffddd");
     } else {
       return window.open(url, options?.target, options?.features?.window);
     }
@@ -36,7 +36,7 @@ class Os extends NativeBase {
    * Closes the window. On Android closes the App
    */
   public close(): void {
-    this.isAndroid ? this.interface.close() : window.close();
+    this.isAndroid ? this.getInterface.close() : window.close();
   }
 
   /**
@@ -47,7 +47,7 @@ class Os extends NativeBase {
   public toast(text: string, duration: "long" | "short"): void {
     const _duration = duration === "short" ? (this.isAndroid ? 0 : 2000) : this.isAndroid ? 1 : 5000;
     if (this.isAndroid) {
-      this.interface.makeToast(text, _duration);
+      this.getInterface.makeToast(text, _duration);
     } else {
       ons.notification.toast(text, { timeout: _duration, animation: "fall" });
     }
@@ -55,7 +55,7 @@ class Os extends NativeBase {
 
   public getMonetColor(id: string): string {
     if (this.isAndroid) {
-      return this.interface.getMonetColor(id);
+      return this.getInterface.getMonetColor(id);
     } else {
       return "#ffffff";
     }
@@ -67,11 +67,11 @@ class Os extends NativeBase {
    * @param white `true` makes the status bar white
    */
   public setStatusBarColor(color: string, white: boolean): void {
-    this.isAndroid ? this.interface.setStatusBarColor(color, white) : null;
+    this.isAndroid ? this.getInterface.setStatusBarColor(color, white) : null;
   }
 
   public setNavigationBarColor(color: string): void {
-    this.isAndroid ? this.interface.setNavigationBarColor(color) : null;
+    this.isAndroid ? this.getInterface.setNavigationBarColor(color) : null;
   }
 
   public addNativeEventListener<K extends keyof WindowEventMap>(

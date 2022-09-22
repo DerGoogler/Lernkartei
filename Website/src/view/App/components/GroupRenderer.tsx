@@ -10,9 +10,10 @@ import { os } from "../../../native/Os";
 import { Fragment } from "react";
 import { ViewCardActivity } from "../../ViewCardsActivity";
 import AddActivity from "../../AddActivity";
+import { useKartei } from "../../../hooks/useKartei";
 
 export function CardRenderer({ pageTools, extra }: AppProps) {
-  const [cards, setCards] = useJSON<Kartei[]>("katei", []);
+  const [cards, setCards] = useKartei();
 
   const confirm = useConfirm();
 
@@ -46,19 +47,14 @@ export function CardRenderer({ pageTools, extra }: AppProps) {
             </Stack>
           </Box>
           <Divider />
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ px: 2, py: 1, bgcolor: "rgb(255, 255, 255)" }}
-          >
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
             <Chip
               size="small"
               sx={{
                 bgcolor: "#eeeeee",
               }}
               label={
-                card.karten.length != 0 && card.karten.length <= 2
+                card.karten.length != 0 && card.karten.length <= 1
                   ? `${card.karten.length} Karte`
                   : `${card.karten.length} Karten`
               }
@@ -83,6 +79,7 @@ export function CardRenderer({ pageTools, extra }: AppProps) {
               >
                 <EditRounded sx={{ fontSize: 14 }} />
               </StyledIconButton>
+
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
@@ -97,9 +94,8 @@ export function CardRenderer({ pageTools, extra }: AppProps) {
                     cancellationText: "Nein",
                   })
                     .then(() => {
-                      let tmp = cards;
-                      try {;
-                        setCards(tmp.filter((remv) => remv.group != card.group));
+                      try {
+                        setCards((_card) => _card.filter((remv) => remv.group != card.group));
                         os.toast(`${card.name} wurde gelöscht.`, "short");
                       } catch (error) {
                         os.toast((error as Error).message, "short");

@@ -1,24 +1,24 @@
 import { SharedPreferences as LocalStorage, usePref } from "web-shared-preferences";
-import { NativeBase } from "./NativeBase";
+import { Native } from "./Native";
 
 declare const nsharedpreferences: any;
 
 /**
  * Simple class to manage the web local sotrage and the Android native preferences
- * @extends {NativeBase}
+ * @extends {Native}
  */
-class SharedPreferences extends NativeBase {
+class SharedPreferences extends Native {
   private _pref: LocalStorage;
 
   public constructor() {
     super();
     this._pref = new LocalStorage(window.localStorage);
-    this.interfaceType = "sharedpreferences";
+    this.interface = "sharedpreferences";
   }
 
   public setString(key: string, value: string): void {
     if (this.isAndroid) {
-      this.interface.setString(key, value);
+      this.getInterface.setString(key, value);
     } else {
       this._pref.setString(key, value);
     }
@@ -26,7 +26,7 @@ class SharedPreferences extends NativeBase {
 
   public setBoolean(key: string, value: boolean): void {
     if (this.isAndroid) {
-      this.interface.setBoolean(key, value);
+      this.getInterface.setBoolean(key, value);
     } else {
       this._pref.setBoolean(key, value);
     }
@@ -34,7 +34,7 @@ class SharedPreferences extends NativeBase {
 
   public setNumber(key: string, value: number): void {
     if (this.isAndroid) {
-      this.interface.setNumber(key, value);
+      this.getInterface.setNumber(key, value);
     } else {
       this._pref.setNumber(key, value);
     }
@@ -42,7 +42,7 @@ class SharedPreferences extends NativeBase {
 
   public setJSON<T = any>(key: string, value: T): void {
     if (this.isAndroid) {
-      this.interface.setString(key, JSON.stringify(value));
+      this.getInterface.setString(key, JSON.stringify(value));
     } else {
       this._pref.setJSON<T>(key, value);
     }
@@ -50,7 +50,7 @@ class SharedPreferences extends NativeBase {
 
   public getString(key: string, defValue: string): string {
     if (this.isAndroid) {
-      return this.interface.getString(key, defValue);
+      return this.getInterface.getString(key, defValue);
     } else {
       return this._pref.getString(key, defValue);
     }
@@ -58,7 +58,7 @@ class SharedPreferences extends NativeBase {
 
   public getBoolean(key: string, defValue: boolean): boolean {
     if (this.isAndroid) {
-      return this.interface.getBoolean(key, defValue);
+      return this.getInterface.getBoolean(key, defValue);
     } else {
       return this._pref.getBoolean(key, defValue);
     }
@@ -66,7 +66,7 @@ class SharedPreferences extends NativeBase {
 
   public getNumber(key: string, defValue: number): number {
     if (this.isAndroid) {
-      return this.interface.getNumber(key, defValue);
+      return this.getInterface.getNumber(key, defValue);
     } else {
       return this._pref.getNumber(key, defValue);
     }
@@ -74,7 +74,7 @@ class SharedPreferences extends NativeBase {
 
   public getJSON<T = any>(key: string, defValue: T): T {
     if (this.isAndroid) {
-      return JSON.parse(this.interface.getString(key, JSON.stringify(defValue)));
+      return JSON.parse(this.getInterface.getString(key, JSON.stringify(defValue)));
     } else {
       return this._pref.getJSON<T>(key, defValue);
     }
@@ -82,7 +82,7 @@ class SharedPreferences extends NativeBase {
 
   public removePref(key: string): void {
     if (this.isAndroid) {
-      this.interface.removePref(key);
+      this.getInterface.removePref(key);
     } else {
       this._pref.removePref(key);
     }
@@ -90,7 +90,7 @@ class SharedPreferences extends NativeBase {
 
   public clearPrefs(): void {
     if (this.isAndroid) {
-      this.interface.clearPrefs();
+      this.getInterface.clearPrefs();
     } else {
       this._pref.clearPrefs();
     }

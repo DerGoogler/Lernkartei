@@ -8,6 +8,8 @@ import { Environment } from "../native/Environment";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
 import { AccentColors, accent_colors, default_scheme } from "../theme";
+import { useKartei } from "../hooks/useKartei";
+import { useTheme } from "@mui/system";
 
 interface Props extends PushProps<{}> {}
 
@@ -15,9 +17,11 @@ function SettingsActivity({ pageTools }: Props) {
   const confirm = useConfirm();
   os.useOnBackPressed(pageTools.popPage);
 
+  const theme = useTheme();
+
   // Prefs
   const [darkmode, setDarkmode] = useBoolean("darkmode", false);
-  const [cards, setCards] = useJSON("katei", []);
+  const [cards, setCards] = useKartei();
 
   const renderToolbar = () => {
     return (
@@ -76,6 +80,9 @@ function SettingsActivity({ pageTools }: Props) {
         onClick={() => {
           os.open("https://github.com/DerGoogler/Lernkartei/issues", {
             target: "_blank",
+            features: {
+              color: theme.palette.primary.main,
+            },
           });
         }}
       >

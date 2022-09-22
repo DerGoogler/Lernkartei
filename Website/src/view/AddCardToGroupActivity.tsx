@@ -25,6 +25,7 @@ import { isDesktop, isMobile } from "react-device-detect";
 import { sharedpreferences, useJSON } from "../native/SharedPreferences";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
+import { useKartei } from "../hooks/useKartei";
 
 type PP = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
@@ -96,7 +97,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
   const [description, setDescription] = React.useState(edit ? desc : "");
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
-  const [cards, setCards] = useJSON<Kartei[]>("katei", []);
+  const [cards, setCards] = useKartei();
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
 
   const confirm = useConfirm();
