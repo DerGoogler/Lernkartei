@@ -1,4 +1,3 @@
-import { colors } from "@mui/material";
 import ons from "onsenui";
 import React from "react";
 import { Native } from "./Native";

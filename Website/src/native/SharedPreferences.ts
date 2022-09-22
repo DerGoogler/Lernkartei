@@ -1,8 +1,6 @@
 import { SharedPreferences as LocalStorage, usePref } from "web-shared-preferences";
 import { Native } from "./Native";
 
-declare const nsharedpreferences: any;
-
 /**
  * Simple class to manage the web local sotrage and the Android native preferences
  * @extends {Native}

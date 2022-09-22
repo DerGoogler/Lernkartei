@@ -3,8 +3,7 @@ import { Stack, styled, TextField, ToggleButton, ToggleButtonGroup } from "@mui/
 import ons from "onsenui";
 import * as React from "react";
 import { BackButton, Page, Toolbar } from "react-onsenui";
-import TextareaMarkdown, { Command, CommandHandler, TextareaMarkdownRef } from "textarea-markdown-editor";
-import AlertDialog from "../buildrs/AlertDialog";
+import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
 import Material3 from "../components/Material3";
 import {
   CheckRounded,

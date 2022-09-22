@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ActionSheet, List, ListItem, Page, ProgressCircular, Toolbar, ToolbarButton } from "react-onsenui";
+import { Page, ProgressCircular, Toolbar, ToolbarButton } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
@@ -12,7 +12,6 @@ import { CardRenderer } from "./components/GroupRenderer";
 export interface AppProps extends PushProps<{}> {}
 
 export function App({ pageTools, extra }: AppProps) {
-  const [open, setOpen] = useState(false);
   // webview.useOnBackPressed(() => {
   //   if (pageTools.splitter.state()) {
   //     pageTools.splitter.hide();

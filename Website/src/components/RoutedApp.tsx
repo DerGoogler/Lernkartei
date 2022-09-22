@@ -19,7 +19,6 @@ import { sharedpreferences } from "../native/SharedPreferences";
 import { colors, default_scheme } from "../theme";
 import drawerItems from "../util/drawerItem";
 import { IntroActivity } from "../view/IntroActivity";
-import ErrorBoundary from "./ErrorBoundary";
 import { Icon } from "./Icon";
 
 interface States {

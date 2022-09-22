@@ -1,4 +1,4 @@
-import { dom, obj, rct } from "googlers-tools";
+import { dom, rct } from "googlers-tools";
 import jss from "jss";
 import preset from "jss-preset-default";
 import ons from "onsenui";

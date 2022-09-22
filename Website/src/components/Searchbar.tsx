@@ -12,7 +12,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   textAlign: "center",
   display: "flex",
   justifyContent: "center",
-  // marginLeft: "4px",
   borderRadius: `0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px`,
   ".button--material": {},
 
@@ -29,12 +28,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 const StyledSearchInput = styled(SearchInput)(({ theme }) => ({
   width: "100%",
-  // marginRight: "4px",
   borderRight: "none",
   "& .search-input--material": {
     border: `1px solid ${theme.palette.secondary.main}`,
     borderRadius: `${theme.shape.borderRadius}px 0px 0px ${theme.shape.borderRadius}px`,
-    // backgroundColor: theme.palette.background.default,
     backgroundColor: "#fff",
   },
 }));
@@ -49,7 +46,7 @@ export const Searchbar = ({ placeholder, onSearchClick }: SearchbarProps) => {
   return (
     <div
       style={{
-        textAlign: "center", 
+        textAlign: "center",
         display: "inline-flex",
         justifyContent: "center",
         padding: "0px 0px 8px",

@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dergoogler.component.ModuleChromeClient;
 import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.NativeBuildConfig;
-import com.dergoogler.core.NativeEnvironment;
 import com.dergoogler.core.NativeFile;
 import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.NativeSharedPreferences;

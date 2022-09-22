@@ -8,3 +8,4 @@
 - Added backup for cards (beta)
 - Make edit groups better
 - Added support to delete single cards
+- Using now the powerfull api of WSP

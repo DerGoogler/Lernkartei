@@ -1,7 +1,6 @@
 import { TextField } from "@mui/material";
 import * as React from "react";
 import { BackButton, Button, Page, Toolbar } from "react-onsenui";
-import { sharedpreferences, useJSON } from "../native/SharedPreferences";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 

@@ -1,8 +1,6 @@
-import * as React from "react";
-import { Add, DeleteRounded, EditRounded, Menu } from "@mui/icons-material";
+import { DeleteRounded, EditRounded } from "@mui/icons-material";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useConfirm } from "material-ui-confirm";
-import { useJSON } from "../../../native/SharedPreferences";
 import { AppProps } from "..";
 import { StyledCard } from "./StyledCard";
 import { StyledIconButton } from "./StyledIconButton";

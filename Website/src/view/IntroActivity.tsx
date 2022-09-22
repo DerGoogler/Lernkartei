@@ -1,10 +1,10 @@
 import { Done } from "@mui/icons-material";
 import * as React from "react";
-import { Button, Carousel, CarouselItem, Page, Toolbar, ToolbarButton } from "react-onsenui";
+import { Carousel, CarouselItem, Page, Toolbar, ToolbarButton } from "react-onsenui";
 import { App } from "./App";
 import { Icon } from "../components/Icon";
 import { os } from "../native/Os";
-import { sharedpreferences, useBoolean } from "../native/SharedPreferences";
+import { useBoolean } from "../native/SharedPreferences";
 
 interface Props extends PushProps {}
 
