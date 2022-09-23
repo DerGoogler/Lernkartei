@@ -19,12 +19,12 @@ import {
   WarningAmberRounded,
 } from "@mui/icons-material";
 import DescriptonActivity from "./DescriptonActivity";
-import { Markup } from "../components/Markdown";
 import { isDesktop, isMobile } from "react-device-detect";
 import { sharedpreferences, useJSON } from "../native/SharedPreferences";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
+import { Markup } from "../components/Markdown";
 
 type PP = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 

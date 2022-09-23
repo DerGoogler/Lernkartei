@@ -1,15 +1,12 @@
 import { createTheme, ThemeOptions, colors as kolors } from "@mui/material";
+import { AccentColors } from "./hooks/useScheme";
 import { sharedpreferences, useJSON } from "./native/SharedPreferences";
+export { AccentColors } from "./hooks/useScheme";
 
 export const IsDarkmode = sharedpreferences.getBoolean("darkmode", false);
 export function isDarkmode<T = any>(def: { light: T; dark: T }): T {
   return !IsDarkmode ? def.light : def.dark;
 }
-
-export type AccentColors = Array<{
-  name: string;
-  value: any;
-}>;
 
 export const accent_colors: AccentColors = [
   {
@@ -107,52 +104,4 @@ export const colors = {
   yellow: kolors.yellow,
 };
 
-export function useDefaultScheme() {
-  const [scheme, setScheme] = useJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
-  return scheme;
-}
-
 export const default_scheme = sharedpreferences.getJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
-
-export const theme = createTheme({
-  shape: {
-    borderRadius: 8,
-  },
-  ...isDarkmode<ThemeOptions>({
-    light: {
-      palette: {
-        mode: "light",
-        primary: {
-          // @ts-ignore
-          main: colors[default_scheme.value][900],
-          contrastText: colors.grey[900],
-        },
-        background: {
-          default: "#fafafa",
-        },
-        divider: "#e5e8ec",
-        secondary: {
-          main: "#e5e8ec",
-          contrastText: "",
-        },
-      },
-    },
-    dark: {
-      palette: {
-        mode: "dark",
-        primary: {
-          main: colors.grey[900],
-          contrastText: colors.grey.A200,
-        },
-        divider: colors.grey[700],
-        secondary: {
-          main: colors.grey[700],
-          contrastText: "",
-        },
-        background: {
-          default: colors.grey[800],
-        },
-      },
-    },
-  }),
-});

@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
 
-const light_theme = (theme: Theme): any => ({
+export const light_theme = (theme: Theme): any => ({
   "@global": {
     ":root": {},
     html: {
@@ -5916,5 +5916,3 @@ const light_theme = (theme: Theme): any => ({
     },
   },
 });
-
-export default light_theme;

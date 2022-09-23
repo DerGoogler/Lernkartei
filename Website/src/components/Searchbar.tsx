@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SearchRounded } from "@mui/icons-material";
 import { Button, SearchInput } from "react-onsenui";
-import { styled } from "@mui/material";
+import { styled, useTheme } from "@mui/material";
 
 type SearchbarProps = {
   onSearchClick: (value: string) => void;
@@ -12,9 +12,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   textAlign: "center",
   display: "flex",
   justifyContent: "center",
-  borderRadius: `0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px`,
-  ".button--material": {},
-
   "& > div": {
     textAlign: "center",
     height: "100%",
@@ -37,6 +34,8 @@ const StyledSearchInput = styled(SearchInput)(({ theme }) => ({
 }));
 
 export const Searchbar = ({ placeholder, onSearchClick }: SearchbarProps) => {
+  const theme = useTheme();
+
   const [value, setVaule] = React.useState<string>("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +63,9 @@ export const Searchbar = ({ placeholder, onSearchClick }: SearchbarProps) => {
         onChange={handleChange}
       />
       <StyledButton
+        style={{
+          borderRadius: `0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px`,
+        }}
         // @ts-ignore
         onClick={() => {
           onSearchClick(value);

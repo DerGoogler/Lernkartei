@@ -8,6 +8,8 @@ import { os } from "../native/Os";
 import { AccentColors, accent_colors, default_scheme } from "../theme";
 import { useKartei } from "../hooks/useKartei";
 import { useTheme } from "@mui/system";
+import { useScheme } from "../hooks/useScheme";
+import { useDarkmode } from "../hooks/useDarkmode";
 
 interface Props extends PushProps<{}> {}
 
@@ -18,7 +20,7 @@ function SettingsActivity({ pageTools }: Props) {
   const theme = useTheme();
 
   // Prefs
-  const [darkmode, setDarkmode] = useBoolean("darkmode", false);
+  const [darkmode, setDarkmode] = useDarkmode();
   const [cards, setCards] = useKartei();
 
   const renderToolbar = () => {
@@ -104,8 +106,8 @@ function SettingsActivity({ pageTools }: Props) {
 
 function AccentColorPickerItem() {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState<AccentColors[0]>(default_scheme);
-  const [scheme, setScheme] = useJSON<AccentColors[0]>("accent_scheme", default_scheme);
+  const [scheme, setScheme] = useScheme();
+  const [value, setValue] = React.useState<AccentColors[0]>(scheme);
 
   const handleOpen = () => {
     setOpen(true);
