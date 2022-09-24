@@ -3,16 +3,18 @@ import * as React from "react";
 import { BackButton, Button, Page, Toolbar } from "react-onsenui";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
+import { useActivity } from "../components/RoutedApp";
 
-interface Props
-  extends PushProps<{
-    name: string;
-    description: string;
-    editGroup: boolean;
-    index: number;
-  }> {}
+type Extra = {
+  name: string;
+  description: string;
+  editGroup: boolean;
+  index: number;
+};
 
-function AddActivity({ context, extra }: Props) {
+function AddActivity() {
+  const { context, extra } = useActivity<Extra>();
+
   const isEditMode = extra.editGroup;
   const [group, setGroup] = React.useState("lernfeld_1");
   const [name, setName] = React.useState(!isEditMode ? "Lernfeld 1" : extra.name);

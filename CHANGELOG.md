@@ -12,7 +12,4 @@
 - Added support to delete single cards
 - Using now the powerfull api of WSP
 - Improved markdown formatting
-
-# Code/API changes
-
-- Added support for native `RuntimeException` and `Exception`
+- App uses now the new context api

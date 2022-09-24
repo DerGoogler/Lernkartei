@@ -7,11 +7,17 @@ import { StyledIconButton } from "../../App/components/StyledIconButton";
 import AddCardToGroupActivity from "../../AddCardToGroupActivity";
 import { os } from "../../../native/Os";
 import { Fragment } from "react";
-import { ViewCardActivityProps } from "..";
 import { useConfirm } from "material-ui-confirm";
 import { useKartei } from "../../../hooks/useKartei";
+import { useActivity } from "../../../components/RoutedApp";
 
-export function CardListBuilder({ context, extra }: ViewCardActivityProps) {
+type Props = {
+  search: string;
+};
+
+export function CardListBuilder(props: Props) {
+  const { context, extra } = useActivity<any>();
+
   const { index: iindex } = extra;
   const [cards, setCards] = useKartei();
   const karten = cards[iindex].karten;
@@ -127,7 +133,7 @@ export function CardListBuilder({ context, extra }: ViewCardActivityProps) {
   for (var i = 0; i < karten.length; i += 2) {
     resultsRender.push(
       <Grid item xs={6} key={i}>
-        {Lrender(karten.slice(i, i + 2), extra.search)}
+        {Lrender(karten.slice(i, i + 2), props.search)}
       </Grid>
     );
   }
@@ -144,5 +150,5 @@ export function CardListBuilder({ context, extra }: ViewCardActivityProps) {
     }
   };
 
-  return checkDeviceSize(<Fragment>{os.isTablet ? resultsRender : Lrender(karten, extra.search)}</Fragment>);
+  return checkDeviceSize(<Fragment>{os.isTablet ? resultsRender : Lrender(karten, props.search)}</Fragment>);
 }

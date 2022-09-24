@@ -24,10 +24,9 @@ import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 import { Markup } from "../components/Markdown";
+import { useActivity } from "../components/RoutedApp";
 
-type PP = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
-
-interface Props extends PushProps<PP> {}
+type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
 type TXTFormat = {
   name: string;
@@ -90,7 +89,9 @@ const formatTXT: TXTFormat[] = [
   },
 ];
 
-function AddCardToGroupActivity({ context, extra }: Props) {
+function AddCardToGroupActivity() {
+  const { context, extra } = useActivity<Extra>();
+
   const { edit, desc, shortDesc, index, card, cardIndex } = extra;
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
   const [description, setDescription] = React.useState(edit ? desc : "");

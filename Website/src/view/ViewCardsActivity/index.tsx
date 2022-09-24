@@ -11,10 +11,11 @@ import { os } from "../../native/Os";
 import { StyledSection } from "../../components/StyledSection";
 import { useState } from "react";
 import { CardListBuilder } from "./components/CardListBuilder";
+import { useActivity } from "../../components/RoutedApp";
 
-export interface ViewCardActivityProps extends PushProps<any> {}
+export function ViewCardActivity() {
+  const { context, extra } = useActivity<any>();
 
-export function ViewCardActivity({ context, extra }: ViewCardActivityProps) {
   os.useOnBackPressed(context.popPage);
 
   const [fabShow, setFabShow] = useState(true);
@@ -88,7 +89,7 @@ export function ViewCardActivity({ context, extra }: ViewCardActivityProps) {
       </Header>
       <StyledSection>
         <Searchbar placeholder="Karten suchen ..." onSearchClick={(value) => setSearch(value)} />
-        <CardListBuilder context={context} extra={{ ...extra, ...{ search: search } }} />
+        <CardListBuilder search={search} />
       </StyledSection>
     </Page>
   );

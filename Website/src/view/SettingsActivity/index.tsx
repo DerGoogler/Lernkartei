@@ -1,21 +1,15 @@
 import { BackButton, ListHeader, ListItem, Page, Toolbar } from "react-onsenui";
-import { ConfirmationDialogRaw } from "../../components/ConfirmationDialogRaw";
-import React from "react";
 import { File } from "../../native/File";
-import { useConfirm } from "material-ui-confirm";
 import { os } from "../../native/Os";
-import { AccentColors, accent_colors } from "../../theme";
 import { useKartei } from "../../hooks/useKartei";
 import { useTheme } from "@mui/system";
-import { useScheme } from "../../hooks/useScheme";
 import { useDarkmode } from "../../hooks/useDarkmode";
 import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
-import { ImportGroupsItem } from "./components/ImportGroupsItem";
+import { useActivity } from "../../components/RoutedApp";
 
-interface Props extends PushProps<{}> {}
+function SettingsActivity() {
+  const { context, extra } = useActivity();
 
-function SettingsActivity({ context }: Props) {
-  const confirm = useConfirm();
   os.useOnBackPressed(context.popPage);
 
   const theme = useTheme();

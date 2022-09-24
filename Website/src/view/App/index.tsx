@@ -5,13 +5,13 @@ import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
 import Material3 from "../../components/Material3";
 import { BuildConfig } from "../../native/BuildConfig";
-import { useState } from "react";
 import { StyledSection } from "../../components/StyledSection";
 import { CardRenderer } from "./components/GroupRenderer";
+import { useActivity } from "../../components/RoutedApp";
 
-export interface AppProps extends PushProps<{}> {}
+export function App() {
+  const { context } = useActivity();
 
-export function App({ context, extra }: AppProps) {
   // webview.useOnBackPressed(() => {
   //   if (pageTools.splitter.state()) {
   //     pageTools.splitter.hide();
@@ -79,7 +79,7 @@ export function App({ context, extra }: AppProps) {
             />
           }
         >
-          <CardRenderer context={context} extra={extra} />
+          <CardRenderer />
         </React.Suspense>
       </StyledSection>
     </Page>

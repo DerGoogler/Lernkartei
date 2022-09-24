@@ -1,7 +1,6 @@
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
 import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useConfirm } from "material-ui-confirm";
-import { AppProps } from "..";
 import { StyledCard } from "./StyledCard";
 import { StyledIconButton } from "./StyledIconButton";
 import { os } from "../../../native/Os";
@@ -9,8 +8,10 @@ import { Fragment } from "react";
 import { ViewCardActivity } from "../../ViewCardsActivity";
 import AddActivity from "../../AddActivity";
 import { useKartei } from "../../../hooks/useKartei";
+import { useActivity } from "../../../components/RoutedApp";
 
-export function CardRenderer({ context, extra }: AppProps) {
+export function CardRenderer() {
+  const activity = useActivity();
   const [cards, setCards] = useKartei();
 
   const confirm = useConfirm();
@@ -24,7 +25,7 @@ export function CardRenderer({ context, extra }: AppProps) {
               spacing={0.5}
               style={{ flexGrow: 1 }}
               onClick={() => {
-                context.pushPage<any>({
+                activity.context.pushPage<any>({
                   component: ViewCardActivity,
                   props: {
                     key: `card_item_${card.group}`,
@@ -61,7 +62,7 @@ export function CardRenderer({ context, extra }: AppProps) {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  context.pushPage({
+                  activity.context.pushPage({
                     component: AddActivity,
                     props: {
                       key: `edit_${card.name}_${index}`,

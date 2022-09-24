@@ -5,15 +5,11 @@ import { App } from "./App";
 import { Icon } from "../components/Icon";
 import { os } from "../native/Os";
 import { useNativeStorage } from "../native/SharedPreferences";
+import { useActivity } from "../components/RoutedApp";
 
-interface Props extends PushProps {}
+function IntroActivity() {
+  const { context, extra } = useActivity();
 
-interface State {
-  items: any[];
-  index: number;
-}
-
-function IntroActivity({ context }: Props) {
   const [getIndex, setIndex] = React.useState(0);
   const [getItems, setItems] = React.useState<Array<any>>([
     {

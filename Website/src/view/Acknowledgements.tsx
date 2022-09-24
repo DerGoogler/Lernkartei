@@ -6,10 +6,11 @@ import { Packages } from "package-depend-list";
 import { Card, CardContent, Typography, useTheme } from "@mui/material";
 import { Page } from "../components/onsenui/Page";
 import { os } from "../native/Os";
+import { useActivity } from "../components/RoutedApp";
 
-interface Props extends PushProps<{}> {}
+function Acknowledgements() {
+  const { context, extra } = useActivity();
 
-function Acknowledgements({ context, extra }: Props) {
   const [libs, setLibs] = React.useState<Array<Packages>>([]);
 
   const theme = useTheme();

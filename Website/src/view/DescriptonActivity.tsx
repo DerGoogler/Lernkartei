@@ -1,12 +1,13 @@
 import { BackButton, Page, Toolbar } from "react-onsenui";
 import { Markup } from "../components/Markdown";
+import { useActivity } from "../components/RoutedApp";
 import { os } from "../native/Os";
 
-type PP = { shortDesc: string; desc: string; index: number | string; cardIndex: number };
+type Extra = { shortDesc: string; desc: string; index: number | string; cardIndex: number };
 
-interface Props extends PushProps<PP> {}
+function DescriptonActivity() {
+  const { context, extra } = useActivity<Extra>();
 
-function DescriptonActivity({ context, extra }: Props) {
   const { desc, index, shortDesc, cardIndex } = extra;
 
   os.useOnBackPressed(context.popPage);

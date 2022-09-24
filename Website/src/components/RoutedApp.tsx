@@ -1,5 +1,5 @@
 import { CloseRounded } from "@mui/icons-material";
-import { Component, useContext } from "react";
+import { Component } from "react";
 import {
   List,
   ListHeader,
@@ -30,8 +30,10 @@ interface States {
 interface Props {}
 
 const Context = React.createContext({});
+
 export function useActivity<E = {}>() {
-  return React.useContext(Context) as PushProps<E>;
+  const ctx = React.useContext(Context) as PushProps<E>;
+  return { context: ctx.context, extra: ctx.extra };
 }
 
 class RoutedApp<A = {}> extends Component<Props, States> {
@@ -51,12 +53,14 @@ class RoutedApp<A = {}> extends Component<Props, States> {
         component: Intro(),
         props: {
           key: "main",
-          pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
-          splitter: {
-            show: () => this.showSplitter(),
-            hide: () => this.hideSplitter(),
-            state: () => {
-              return this.state.isSplitterOpen;
+          context: {
+            pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
+            splitter: {
+              show: () => this.showSplitter(),
+              hide: () => this.hideSplitter(),
+              state: () => {
+                return this.state.isSplitterOpen;
+              },
             },
           },
         },
@@ -84,13 +88,15 @@ class RoutedApp<A = {}> extends Component<Props, States> {
       props: {
         key: props.props.key,
         extra: props.props?.extra,
-        popPage: () => this.popPage(),
-        pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
-        splitter: {
-          show: () => this.showSplitter(),
-          hide: () => this.hideSplitter(),
-          state: () => {
-            return this.state.isSplitterOpen;
+        context: {
+          popPage: () => this.popPage(),
+          pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
+          splitter: {
+            show: () => this.showSplitter(),
+            hide: () => this.hideSplitter(),
+            state: () => {
+              return this.state.isSplitterOpen;
+            },
           },
         },
       },
@@ -138,7 +144,7 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     const props = route.props || {};
     return (
       <Context.Provider value={props}>
-        <route.component />;
+        <route.component {...props} />
       </Context.Provider>
     );
   };

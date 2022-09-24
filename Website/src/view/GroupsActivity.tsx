@@ -4,10 +4,9 @@ import { rct } from "googlers-tools";
 import * as React from "react";
 import { BackButton, List, ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
 import { Icon } from "../components/Icon";
+import { useActivity } from "../components/RoutedApp";
 import { useKartei } from "../hooks/useKartei";
 import { os } from "../native/Os";
-
-interface Props extends PushProps {}
 
 function SetBuilder(): JSX.Element {
   const [getSets, setSets] = rct.useState<Array<KarteiSetRoot>>([]);
@@ -63,7 +62,9 @@ function SetBuilder(): JSX.Element {
   );
 }
 
-function GroupsActivity({ context }: Props) {
+function GroupsActivity() {
+  const { context, extra } = useActivity();
+
   os.useOnBackPressed(context.popPage);
 
   const renderToolbar = () => {
