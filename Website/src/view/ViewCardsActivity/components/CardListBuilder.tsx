@@ -1,7 +1,6 @@
 import { DeleteRounded, Edit, EditRounded } from "@mui/icons-material";
 import { Grid, Typography, Box, Stack, Divider, Chip } from "@mui/material";
 import reactStringReplace from "react-string-replace";
-import { useJSON } from "../../../native/SharedPreferences";
 import { StyledCard } from "../../App/components/StyledCard";
 import DescriptonActivity from "../../DescriptonActivity";
 import { StyledIconButton } from "../../App/components/StyledIconButton";

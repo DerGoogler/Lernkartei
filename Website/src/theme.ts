@@ -1,12 +1,7 @@
-import { createTheme, ThemeOptions, colors as kolors } from "@mui/material";
+import { colors as kolors } from "@mui/material";
 import { AccentColors } from "./hooks/useScheme";
-import { sharedpreferences, useJSON } from "./native/SharedPreferences";
+import { sharedpreferences } from "./native/SharedPreferences";
 export { AccentColors } from "./hooks/useScheme";
-
-export const IsDarkmode = sharedpreferences.getBoolean("darkmode", false);
-export function isDarkmode<T = any>(def: { light: T; dark: T }): T {
-  return !IsDarkmode ? def.light : def.dark;
-}
 
 export const accent_colors: AccentColors = [
   {

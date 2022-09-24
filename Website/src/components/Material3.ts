@@ -1,6 +1,5 @@
 import { styled } from "@mui/material";
 import { Button, Fab, Switch } from "react-onsenui";
-import { isDarkmode } from "../theme";
 
 const Material3 = {
   Switch: styled(Switch)(({ theme }) => ({

@@ -20,7 +20,6 @@ import {
 } from "@mui/icons-material";
 import DescriptonActivity from "./DescriptonActivity";
 import { isDesktop, isMobile } from "react-device-detect";
-import { sharedpreferences, useJSON } from "../native/SharedPreferences";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";

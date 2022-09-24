@@ -4,13 +4,14 @@ import { rct } from "googlers-tools";
 import * as React from "react";
 import { BackButton, List, ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
 import { Icon } from "../components/Icon";
+import { useKartei } from "../hooks/useKartei";
 import { os } from "../native/Os";
-import { sharedpreferences } from "../native/SharedPreferences";
 
 interface Props extends PushProps {}
 
 function SetBuilder(): JSX.Element {
   const [getSets, setSets] = rct.useState<Array<KarteiSetRoot>>([]);
+  const [cards, setCards] = useKartei();
 
   React.useEffect(() => {
     axios
@@ -23,16 +24,15 @@ function SetBuilder(): JSX.Element {
   const setDownloader = (url: string): void => {
     axios.get<Kartei>(url).then((response) => {
       const data = response.data;
-      let tmp = [];
-      tmp = sharedpreferences.getJSON<Array<Kartei>>("katei", []);
-
-      if (tmp.some((elem) => elem?.group === data.group)) {
-        os.toast("Diese Gruppe ist bereits vorhanden", "short");
-      } else {
-        tmp.push(data);
-        sharedpreferences.setJSON<Array<Kartei>>("katei", tmp);
-        os.toast(`Erfolgreich heruntergeladen`, "short");
-      }
+      setCards((tmp) => {
+        if (tmp.some((elem) => elem?.group === data.group)) {
+          os.toast("Diese Gruppe ist bereits vorhanden", "short");
+        } else {
+          tmp.push(data);
+          os.toast(`Erfolgreich heruntergeladen`, "short");
+        }
+        return tmp;
+      });
     });
   };
 

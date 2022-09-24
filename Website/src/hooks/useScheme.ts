@@ -1,4 +1,4 @@
-import { useJSON } from "../native/SharedPreferences";
+import { useNativeStorage } from "../native/SharedPreferences";
 import { accent_colors } from "../theme";
 
 export type AccentColors = Array<{
@@ -7,5 +7,5 @@ export type AccentColors = Array<{
 }>;
 
 export function useScheme() {
-  return useJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
+  return useNativeStorage.json<AccentColors[0]>("accent_scheme", accent_colors[0]);
 }

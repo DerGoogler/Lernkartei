@@ -4,7 +4,7 @@ import { Carousel, CarouselItem, Page, Toolbar, ToolbarButton } from "react-onse
 import { App } from "./App";
 import { Icon } from "../components/Icon";
 import { os } from "../native/Os";
-import { useBoolean } from "../native/SharedPreferences";
+import { useNativeStorage } from "../native/SharedPreferences";
 
 interface Props extends PushProps {}
 
@@ -25,7 +25,7 @@ function IntroActivity({ pageTools }: Props) {
       bg: "#D7BDE2",
     },
   ]);
-  const [introFinised, setIntroFinised] = useBoolean("introFinised", false);
+  const [introFinised, setIntroFinised] = useNativeStorage.boolean("introFinised", false);
 
   os.useOnBackPressed(() => os.close());
 
