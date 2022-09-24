@@ -3,8 +3,9 @@ import { Stack, styled, TextField, ToggleButton, ToggleButtonGroup } from "@mui/
 import ons from "onsenui";
 import * as React from "react";
 import { BackButton, Page, Toolbar } from "react-onsenui";
+import AceEditor from "react-ace";
 import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
-import Material3 from "../components/Material3";
+import Material3 from "../../components/Material3";
 import {
   CheckRounded,
   CloseRounded,
@@ -18,13 +19,14 @@ import {
   LinkRounded,
   WarningAmberRounded,
 } from "@mui/icons-material";
-import DescriptonActivity from "./DescriptonActivity";
+import DescriptonActivity from "../DescriptonActivity";
 import { isDesktop, isMobile } from "react-device-detect";
 import { useConfirm } from "material-ui-confirm";
-import { os } from "../native/Os";
-import { useKartei } from "../hooks/useKartei";
-import { Markup } from "../components/Markdown";
-import { useActivity } from "../components/RoutedApp";
+import { os } from "../../native/Os";
+import { useKartei } from "../../hooks/useKartei";
+import { Markup } from "../../components/Markdown";
+import { useActivity } from "../../components/RoutedApp";
+import { Editor } from "./components/StyledAceEditor";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 

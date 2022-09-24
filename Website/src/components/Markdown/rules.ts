@@ -1,17 +1,15 @@
-export const rules = [
-  // Headers
-  [/#{6}\s?(([^\n]+)?\s)#{6}(?:\n|$)/g, "<divider><h6>$2</h6></divider>"],
-  [/#{5}\s?(([^\n]+)?\s)#{5}(?:\n|$)/g, "<divider><h5>$2</h5></divider>"],
-  [/#{4}\s?(([^\n]+)?\s)#{4}(?:\n|$)/g, "<divider><h4>$2</h4></divider>"],
-  [/#{3}\s?(([^\n]+)?\s)#{3}(?:\n|$)/g, "<divider><h3>$2</h3></divider>"],
-  [/#{2}\s?(([^\n]+)?\s)#{2}(?:\n|$)/g, "<divider><h2>$2</h2></divider>"],
-  [/#{1}\s?(([^\n]+)?\s)#{1}(?:\n|$)/g, "<divider><h1>$2</h1></divider>"],
+export type ParserPlugin = {
+  id: string;
+  name: string;
+  description: string;
+  rules: Rules;
+};
 
-  // Marks
-  [/{{checkmark}}/g, "<checkmark/>"],
-  [/{{warnmark}}/g, "<warnmark/>"],
-  [/{{dangermark}}/g, "<dangermark/>"],
+export type Rules = Array<[string, string]>;
 
+export const rules: Rules = [
+  // NoParse
+  ["/{3}\\s?([^\\n]+)", "$1"],
   //   //bold, italics and paragragh rules
   //   [/\*\*\s?([^\n]+)\*\*/g, "<b>$1</b>"],
   //   [/\*\s?([^\n]+)\*/g, "<i>$1</i>"],

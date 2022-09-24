@@ -10,9 +10,11 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import Image from "../dapi/Image";
 import { Alert, AlertTitle, Box, Chip, Container, Divider, Grid, Paper, Stack } from "@mui/material";
-import { StyledMarkdown } from "../../styles/StyledMarkdon";
+import { StyledMarkdown } from "./StyledMarkdon";
 import styled from "@emotion/styled";
 import { parser } from "./parser";
+import { useNativeStorage } from "../../native/SharedPreferences";
+import { useMdPlugins } from "../../hooks/useMdPlugins";
 
 type Props = {
   children: string;
@@ -21,6 +23,8 @@ type Props = {
 };
 
 export function Markup(props: Props) {
+  const [mdPlugins, setMdPlugins] = useMdPlugins();
+
   const StyledDivider = styled(Divider)({
     "h1, & h2, & h3, & h4, & h5, & h6": {
       border: "none",
@@ -95,7 +99,7 @@ export function Markup(props: Props) {
             },
           },
         }}
-        children={parser(props.children)}
+        children={parser(props.children, mdPlugins)}
       />
     </StyledMarkdown>
   );
