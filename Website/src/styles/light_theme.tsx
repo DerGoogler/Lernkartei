@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
 
-export const light_theme = (theme: Theme): any => ({
+export const LightTheme = (theme: Theme): any => ({
   "@global": {
     ":root": {},
     html: {
@@ -30,7 +30,7 @@ export const light_theme = (theme: Theme): any => ({
       },
     "input, textarea, select": {
       webkitUserSelect: "auto",
-      msUserSelect: "auto",
+      msUserSelect: "text",
       userSelect: "auto",
       mozUserSelect: "text",
       webkitTouchCallout: "none",
@@ -147,11 +147,6 @@ export const light_theme = (theme: Theme): any => ({
     // },
     ".page--material__background": {
       backgroundColor: theme.palette.background.default,
-      fallbacks: [
-        {
-          backgroundColor: theme.palette.background.default,
-        },
-      ],
     },
     ".switch": {
       display: "inline-block",
@@ -187,11 +182,6 @@ export const light_theme = (theme: Theme): any => ({
       webkitAppearance: "none",
       mozAppearance: "none",
       appearance: "none",
-      fallbacks: [
-        {
-          zIndex: "1",
-        },
-      ],
     },
     ".switch__toggle": {
       backgroundColor: "white",
@@ -274,11 +264,6 @@ export const light_theme = (theme: Theme): any => ({
       webkitAppearance: "none",
       mozAppearance: "none",
       appearance: "none",
-      fallbacks: [
-        {
-          zIndex: "1",
-        },
-      ],
     },
     ".switch--material__handle": {
       backgroundColor: "#f1f1f1",
@@ -450,11 +435,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitAppearance: "none",
       mozAppearance: "none",
       appearance: "none",
-      fallbacks: [
-        {
-          background: "transparent",
-        },
-      ],
+
       height: "30px",
       position: "absolute",
       zIndex: "0",
@@ -463,11 +444,6 @@ export const light_theme = (theme: Theme): any => ({
     ".range--disabled": {
       opacity: "0.3",
       pointerEvents: "none",
-      fallbacks: [
-        {
-          pointerEvents: "none",
-        },
-      ],
     },
     ".range--material": {
       position: "relative",
@@ -492,14 +468,6 @@ export const light_theme = (theme: Theme): any => ({
       borderRadius: "50%",
       opacity: "0",
       transition: "opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out",
-      fallbacks: [
-        {
-          transition: "opacity 0.25s ease-out, transform 0.25s ease-out",
-        },
-        {
-          transition: "opacity 0.25s ease-out, -webkit-transform 0.25s ease-out",
-        },
-      ],
     },
     ".range--material__input.range__input--active + .range--material__focus-ring::-webkit-slider-thumb": {
       opacity: "0.2",
@@ -518,14 +486,7 @@ export const light_theme = (theme: Theme): any => ({
       backgroundImage:
         "radial-gradient(\r\n    circle farthest-corner,\r\n    #4a148c 0%,\r\n    #4a148c 6.6px,\r\n    transparent 7px\r\n  )",
       transition: "transform 0.1s linear, -webkit-transform 0.1s linear",
-      fallbacks: [
-        {
-          transition: "transform 0.1s linear",
-        },
-        {
-          transition: "-webkit-transform 0.1s linear",
-        },
-      ],
+
       overflow: "visible",
     },
     ".range--material__input[_zero]::-webkit-slider-thumb": {
@@ -554,14 +515,6 @@ export const light_theme = (theme: Theme): any => ({
         webkitTransform: "scale(1.5)",
         transform: "scale(1.5)",
         transition: "transform 0.1s linear, -webkit-transform 0.1s linear",
-        fallbacks: [
-          {
-            transition: "transform 0.1s linear",
-          },
-          {
-            transition: "-webkit-transform 0.1s linear",
-          },
-        ],
       },
     ".range--disabled.range--material": {
       opacity: "1",
@@ -589,29 +542,7 @@ export const light_theme = (theme: Theme): any => ({
       backgroundClip: "padding-box",
       padding: "0 4px",
       margin: "0",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          padding: "0",
-        },
-        {
-          margin: "0",
-        },
-        {
-          border: "none",
-        },
-        {
-          font: "inherit",
-        },
-      ],
+
       color: "white",
       background: "transparent",
       lineHeight: "19px",
@@ -644,11 +575,7 @@ export const light_theme = (theme: Theme): any => ({
       fontWeight: "500",
       backgroundColor: theme.palette.primary.main,
       fontSize: "16px",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       color: "white",
     },
     ".toolbar": {
@@ -674,29 +601,7 @@ export const light_theme = (theme: Theme): any => ({
       userSelect: "none",
       zIndex: "2",
       display: "flex",
-      fallbacks: [
-        {
-          boxSizing: "border-box",
-        },
-        {
-          whiteSpace: "nowrap",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          background: "transparent",
-        },
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       webkitBoxAlign: "stretch",
       webkitAlignItems: "stretch",
       alignItems: "stretch",
@@ -846,11 +751,6 @@ export const light_theme = (theme: Theme): any => ({
       maxWidth: "50%",
       width: "27%",
       textAlign: "left",
-      fallbacks: [
-        {
-          lineHeight: "normal",
-        },
-      ],
     },
     ".toolbar__right": {
       boxSizing: "border-box",
@@ -865,11 +765,6 @@ export const light_theme = (theme: Theme): any => ({
       maxWidth: "50%",
       width: "27%",
       textAlign: "right",
-      fallbacks: [
-        {
-          lineHeight: "normal",
-        },
-      ],
     },
     ".toolbar__center": {
       boxSizing: "border-box",
@@ -883,14 +778,7 @@ export const light_theme = (theme: Theme): any => ({
       lineHeight: "44px",
       width: "46%",
       textAlign: "center",
-      fallbacks: [
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-      ],
+
       fontSize: "17px",
       fontWeight: "500",
     },
@@ -932,26 +820,7 @@ export const light_theme = (theme: Theme): any => ({
       height: "44px",
       paddingLeft: "0",
       paddingRight: "0",
-      fallbacks: [
-        {
-          boxSizing: "border-box",
-        },
-        {
-          bottom: "0",
-        },
-        {
-          borderTop: "1px solid #b2b2b2",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          background: "transparent",
-        },
-      ],
+
       boxShadow: "none",
       borderBottom: "none",
       borderTop: "none",
@@ -972,14 +841,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".bottom-bar--aligned": {
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       webkitFlexWrap: "nowrap",
       flexWrap: "nowrap",
       lineHeight: "44px",
@@ -991,14 +853,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".toolbar--material": {
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       webkitFlexWrap: "nowrap",
       flexWrap: "nowrap",
       webkitBoxPack: "justify",
@@ -1021,14 +876,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       fontWeight: "500",
       fontSize: "20px",
-      fallbacks: [
-        {
-          color: "#ffffff",
-        },
-        {
-          fontWeight: "400",
-        },
-      ],
+
       color: "rgba(255, 255, 255, 1)",
       height: "56px",
       minWidth: "72px",
@@ -1040,14 +888,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       fontWeight: "500",
       fontSize: "20px",
-      fallbacks: [
-        {
-          color: "#ffffff",
-        },
-        {
-          fontWeight: "400",
-        },
-      ],
+
       color: "rgba(255, 255, 255, 1)",
       height: "56px",
       width: "auto",
@@ -1099,20 +940,7 @@ export const light_theme = (theme: Theme): any => ({
       overflow: "hidden",
       height: "auto",
       textDecoration: "none",
-      fallbacks: [
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       fontSize: "17px",
       letterSpacing: "0",
       verticalAlign: "middle",
@@ -1189,35 +1017,7 @@ export const light_theme = (theme: Theme): any => ({
       overflow: "hidden",
       height: "auto",
       textDecoration: "none",
-      fallbacks: [
-        {
-          border: "1px solid transparent",
-        },
-        {
-          color: "white",
-        },
-        {
-          background: "transparent",
-        },
-        {
-          border: "0 solid currentColor",
-        },
-        {
-          background: "transparent",
-        },
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       fontSize: "17px",
       letterSpacing: "0",
       verticalAlign: "middle",
@@ -1269,29 +1069,7 @@ export const light_theme = (theme: Theme): any => ({
       overflow: "hidden",
       height: "auto",
       textDecoration: "none",
-      fallbacks: [
-        {
-          color: "white",
-        },
-        {
-          backgroundColor: theme.palette.primary.main,
-        },
-        {
-          border: "0 solid currentColor",
-        },
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       fontSize: "17px",
       letterSpacing: "0",
       verticalAlign: "middle",
@@ -1328,11 +1106,6 @@ export const light_theme = (theme: Theme): any => ({
       backgroundColor: theme.palette.primary.main,
       transition: "none",
       opacity: "0.2",
-      fallbacks: [
-        {
-          transition: "none",
-        },
-      ],
     },
     ".button--large:disabled, .button--large[disabled]": {
       opacity: "0.3",
@@ -1369,44 +1142,7 @@ export const light_theme = (theme: Theme): any => ({
       overflow: "hidden",
       height: "auto",
       textDecoration: "none",
-      fallbacks: [
-        {
-          color: "white",
-        },
-        {
-          border: "0 solid currentColor",
-        },
-        {
-          background: "transparent",
-        },
-        {
-          display: "inline-block",
-        },
-        {
-          padding: "4px 10px",
-        },
-        {
-          lineHeight: "32px",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          fontSize: "17px",
-        },
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       fontSize: "17px",
       letterSpacing: "0",
       verticalAlign: "middle",
@@ -1460,44 +1196,7 @@ export const light_theme = (theme: Theme): any => ({
       overflow: "hidden",
       height: "auto",
       textDecoration: "none",
-      fallbacks: [
-        {
-          display: "inline-block",
-        },
-        {
-          padding: "4px 10px",
-        },
-        {
-          lineHeight: "32px",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          fontSize: "17px",
-        },
-        {
-          color: "white",
-        },
-        {
-          backgroundColor: theme.palette.primary.main,
-        },
-        {
-          border: "0 solid currentColor",
-        },
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       fontSize: "17px",
       letterSpacing: "0",
       verticalAlign: "middle",
@@ -1548,50 +1247,7 @@ export const light_theme = (theme: Theme): any => ({
       overflow: "hidden",
       height: "auto",
       textDecoration: "none",
-      fallbacks: [
-        {
-          transition: "background-color 0.25s linear",
-        },
-        {
-          transition: "none",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          color: "white",
-        },
-        {
-          fontSize: "17px",
-        },
-        {
-          padding: "4px 10px",
-        },
-        {
-          lineHeight: "32px",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          webkitFontSmoothing: "antialiased",
-        },
-        {
-          fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
-        },
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       fontSize: "14px",
       letterSpacing: "0",
       verticalAlign: "middle",
@@ -1653,59 +1309,7 @@ export const light_theme = (theme: Theme): any => ({
       overflow: "hidden",
       height: "auto",
       textDecoration: "none",
-      fallbacks: [
-        {
-          transition: "background-color 0.25s linear",
-        },
-        {
-          color: "#ffffff",
-        },
-        {
-          backgroundColor: theme.palette.primary.main,
-        },
-        {
-          transition: "none",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          color: "white",
-        },
-        {
-          backgroundColor: theme.palette.primary.main,
-        },
-        {
-          fontSize: "17px",
-        },
-        {
-          padding: "4px 10px",
-        },
-        {
-          lineHeight: "32px",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          webkitFontSmoothing: "antialiased",
-        },
-        {
-          fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
-        },
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       fontSize: "14px",
       letterSpacing: "0",
       verticalAlign: "middle",
@@ -1752,14 +1356,7 @@ export const light_theme = (theme: Theme): any => ({
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
       display: "inline-flex",
-      fallbacks: [
-        {
-          display: "-webkit-inline-flex",
-        },
-        {
-          display: "-webkit-inline-box",
-        },
-      ],
+
       webkitBoxAlign: "stretch",
       webkitAlignItems: "stretch",
       alignItems: "stretch",
@@ -1797,11 +1394,7 @@ export const light_theme = (theme: Theme): any => ({
       borderBottomWidth: "1px",
       borderRightWidth: "1px",
       borderLeftWidth: "0",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       padding: "0",
       fontSize: "13px",
       height: "27px",
@@ -1849,14 +1442,7 @@ export const light_theme = (theme: Theme): any => ({
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
       display: "inline-flex",
-      fallbacks: [
-        {
-          display: "-webkit-inline-flex",
-        },
-        {
-          display: "-webkit-inline-box",
-        },
-      ],
+
       webkitBoxAlign: "stretch",
       webkitAlignItems: "stretch",
       alignItems: "stretch",
@@ -1916,11 +1502,6 @@ export const light_theme = (theme: Theme): any => ({
       borderBottomWidth: "1px",
       borderRightWidth: "1px",
       borderLeftWidth: "0",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
       padding: "0",
       fontSize: "13px",
       height: "29px",
@@ -2005,14 +1586,7 @@ export const light_theme = (theme: Theme): any => ({
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       position: "absolute",
       bottom: "0",
       left: "0",
@@ -2082,20 +1656,7 @@ export const light_theme = (theme: Theme): any => ({
       position: "relative",
       display: "inline-block",
       textDecoration: "none",
-      fallbacks: [
-        {
-          lineHeight: "normal",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       height: "49px",
       letterSpacing: "0",
       verticalAlign: "top",
@@ -2218,14 +1779,7 @@ export const light_theme = (theme: Theme): any => ({
     ".tabbar--material__button": {
       backgroundColor: "transparent",
       color: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          fontWeight: "500",
-        },
-        {
-          color: "#ffffff",
-        },
-      ],
+
       textTransform: "uppercase",
       fontSize: "14px",
       fontWeight: "400",
@@ -2241,11 +1795,6 @@ export const light_theme = (theme: Theme): any => ({
       position: "absolute",
       marginTop: "-2px",
       backgroundColor: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
     },
     ":checked + .tabbar--material__button:after": {
       width: "100%",
@@ -2254,28 +1803,13 @@ export const light_theme = (theme: Theme): any => ({
     ":checked + .tabbar--material__button": {
       backgroundColor: "transparent",
       color: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          color: "#ffffff",
-        },
-      ],
     },
     ".tabbar--material__item:not([ripple]):active": {
       backgroundColor: "rgba(49, 49, 58, 0.1)",
-      fallbacks: [
-        {
-          backgroundColor: "#31313a",
-        },
-      ],
     },
     ".tabbar--material__border": {
       height: "2px",
       backgroundColor: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
     },
     ".tabbar--material__icon": {
       fontSize: "22px !important",
@@ -2291,11 +1825,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       fontWeight: "500",
       letterSpacing: "0.015em",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       fontSize: "14px",
     },
     ".tabbar--material__icon + .tabbar--material__label": {
@@ -2310,14 +1840,7 @@ export const light_theme = (theme: Theme): any => ({
       letterSpacing: "0",
       color: "#4a148c",
       backgroundColor: "rgba(0, 0, 0, 0)",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-        {
-          backgroundColor: "#000000",
-        },
-      ],
+
       borderRadius: "2px",
       border: "1px solid transparent",
       fontSize: "17px",
@@ -2325,11 +1848,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".toolbar-button:active": {
       backgroundColor: "rgba(0, 0, 0, 0)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
+
       transition: "none",
       opacity: "0.2",
     },
@@ -2353,14 +1872,7 @@ export const light_theme = (theme: Theme): any => ({
     ".toolbar-button--material": {
       fontSize: "22px",
       color: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          verticalAlign: "baseline",
-        },
-        {
-          color: "#ffffff",
-        },
-      ],
+
       display: "inline-block",
       height: "100%",
       margin: "0",
@@ -2385,11 +1897,7 @@ export const light_theme = (theme: Theme): any => ({
       paddingLeft: "8px",
       color: "#4a148c",
       backgroundColor: "rgba(0, 0, 0, 0)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
+
       display: "inline-block",
     },
     ".back-button:active": {
@@ -2406,14 +1914,7 @@ export const light_theme = (theme: Theme): any => ({
     ".back-button__icon": {
       marginRight: "6px",
       display: "inline-flex",
-      fallbacks: [
-        {
-          display: "-webkit-inline-flex",
-        },
-        {
-          display: "-webkit-inline-box",
-        },
-      ],
+
       fill: "#4a148c",
       webkitBoxAlign: "center",
       webkitAlignItems: "center",
@@ -2423,14 +1924,7 @@ export const light_theme = (theme: Theme): any => ({
     ".back-button--material": {
       fontSize: "22px",
       color: "rgba(255, 255, 255, 1)",
-      fallbacks: [
-        {
-          verticalAlign: "baseline",
-        },
-        {
-          color: "#ffffff",
-        },
-      ],
+
       display: "inline-block",
       padding: "0 12px",
       height: "100%",
@@ -2446,14 +1940,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".back-button--material__icon": {
       display: "inline-flex",
-      fallbacks: [
-        {
-          display: "-webkit-inline-flex",
-        },
-        {
-          display: "-webkit-inline-box",
-        },
-      ],
+
       fill: "rgba(255, 255, 255, 1)",
       webkitBoxAlign: "center",
       webkitAlignItems: "center",
@@ -2491,11 +1978,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
-      fallbacks: [
-        {
-          position: "relative",
-        },
-      ],
+
       height: "22px",
       width: "22px",
       pointerEvents: "none",
@@ -2575,11 +2058,6 @@ export const light_theme = (theme: Theme): any => ({
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
       lineHeight: "22px",
-      fallbacks: [
-        {
-          position: "relative",
-        },
-      ],
     },
     ".checkbox--noborder__input": {
       position: "absolute",
@@ -2686,14 +2164,7 @@ export const light_theme = (theme: Theme): any => ({
     ".checkbox--material__checkmark:after": {
       borderColor: "#ffffff",
       transition: "transform 0.2s ease 0, -webkit-transform 0.2s ease 0",
-      fallbacks: [
-        {
-          transition: "transform 0.2s ease 0",
-        },
-        {
-          transition: "-webkit-transform 0.2s ease 0",
-        },
-      ],
+
       width: "10px",
       height: "5px",
       top: "4px",
@@ -2704,14 +2175,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ":checked + .checkbox--material__checkmark:after": {
       transition: "transform 0.2s ease 0.2s, -webkit-transform 0.2s ease 0.2s",
-      fallbacks: [
-        {
-          transition: "transform 0.2s ease 0.2s",
-        },
-        {
-          transition: "-webkit-transform 0.2s ease 0.2s",
-        },
-      ],
+
       width: "10px",
       height: "5px",
       top: "4px",
@@ -2737,14 +2201,6 @@ export const light_theme = (theme: Theme): any => ({
       webkitTransform: "scale3d(0.2, 0.2, 0.2)",
       transform: "scale3d(0.2, 0.2, 0.2)",
       transition: "opacity 0.25s ease-out, transform 0.1s ease-out, -webkit-transform 0.1s ease-out",
-      fallbacks: [
-        {
-          transition: "opacity 0.25s ease-out, transform 0.1s ease-out",
-        },
-        {
-          transition: "opacity 0.25s ease-out, -webkit-transform 0.1s ease-out",
-        },
-      ],
     },
     ".checkbox--material__input:checked:before": {
       boxShadow: "0 0 0 11px #4a148c",
@@ -2798,11 +2254,7 @@ export const light_theme = (theme: Theme): any => ({
       mozUserSelect: "none",
       msUserSelect: "none",
       userSelect: "none",
-      fallbacks: [
-        {
-          position: "relative",
-        },
-      ],
+
       lineHeight: "24px",
       textAlign: "left",
     },
@@ -2816,11 +2268,7 @@ export const light_theme = (theme: Theme): any => ({
       height: "22px",
       background: "transparent",
       border: "none",
-      fallbacks: [
-        {
-          borderRadius: "100%",
-        },
-      ],
+
       left: "0",
     },
     ".radio-button__checkmark": {
@@ -2837,14 +2285,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
-      fallbacks: [
-        {
-          position: "relative",
-        },
-        {
-          position: "relative",
-        },
-      ],
+
       width: "24px",
       height: "24px",
       background: "transparent",
@@ -2868,11 +2309,6 @@ export const light_theme = (theme: Theme): any => ({
     },
     ":checked + .radio-button__checkmark": {
       background: "rgba(0, 0, 0, 0)",
-      fallbacks: [
-        {
-          background: "#000000",
-        },
-      ],
     },
     ":checked + .radio-button__checkmark:after": {
       opacity: "1",
@@ -2909,14 +2345,6 @@ export const light_theme = (theme: Theme): any => ({
       webkitTransform: "scale3d(0.2, 0.2, 0.2)",
       transform: "scale3d(0.2, 0.2, 0.2)",
       transition: "opacity 0.25s ease-out, transform 0.1s ease-out, -webkit-transform 0.1s ease-out",
-      fallbacks: [
-        {
-          transition: "opacity 0.25s ease-out, transform 0.1s ease-out",
-        },
-        {
-          transition: "opacity 0.25s ease-out, -webkit-transform 0.1s ease-out",
-        },
-      ],
     },
     ".radio-button--material__input:checked:before": {
       boxShadow: "0 0 0 14px #4a148c",
@@ -2943,14 +2371,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".radio-button--material__checkmark:after": {
       transition: "background 0.2s ease, transform 0.2s ease, -webkit-transform 0.2s ease",
-      fallbacks: [
-        {
-          transition: "background 0.2s ease, transform 0.2s ease",
-        },
-        {
-          transition: "background 0.2s ease, -webkit-transform 0.2s ease",
-        },
-      ],
+
       top: "5px",
       left: "5px",
       width: "10px",
@@ -3011,11 +2432,7 @@ export const light_theme = (theme: Theme): any => ({
       backgroundSize: "100% 1px, 100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom, top",
-      fallbacks: [
-        {
-          border: "none",
-        },
-      ],
+
       backgroundColor: "#fff",
     },
     ".list-item": {
@@ -3042,14 +2459,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".list-item__top": {
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       webkitBoxOrient: "horizontal",
       webkitBoxDirection: "normal",
       webkitFlexDirection: "row",
@@ -3067,14 +2477,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".list-item--expandable": {
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       webkitBoxOrient: "vertical",
       webkitBoxDirection: "normal",
       webkitFlexDirection: "column",
@@ -3103,14 +2506,7 @@ export const light_theme = (theme: Theme): any => ({
     ".list-item__left": {
       boxSizing: "border-box",
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       padding: "12px 14px 12px 0",
       webkitBoxOrdinalGroup: "1",
       webkitOrder: "0",
@@ -3132,14 +2528,7 @@ export const light_theme = (theme: Theme): any => ({
     ".list-item__center": {
       boxSizing: "border-box",
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       webkitBoxFlex: "1",
       webkitFlexGrow: "1",
       flexGrow: "1",
@@ -3171,14 +2560,7 @@ export const light_theme = (theme: Theme): any => ({
     ".list-item__right": {
       boxSizing: "border-box",
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       marginLeft: "auto",
       padding: "12px 12px 12px 0",
       webkitBoxOrdinalGroup: "3",
@@ -3315,11 +2697,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".list-item--material.list-item--expandable": {
       borderBottom: "none",
-      fallbacks: [
-        {
-          borderBottom: "1px solid #eee",
-        },
-      ],
+
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
@@ -3328,11 +2706,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider": {
       borderBottom: "none",
-      fallbacks: [
-        {
-          borderBottom: "1px solid #eee",
-        },
-      ],
+
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
@@ -3400,11 +2774,7 @@ export const light_theme = (theme: Theme): any => ({
       },
     ".list-item--longdivider": {
       borderBottom: "none",
-      fallbacks: [
-        {
-          borderBottom: "1px solid #ccc",
-        },
-      ],
+
       backgroundSize: "100% 1px",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "bottom",
@@ -3439,23 +2809,7 @@ export const light_theme = (theme: Theme): any => ({
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "500",
       display: "block",
-      fallbacks: [
-        {
-          lineHeight: "normal",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          margin: "0",
-        },
-        {
-          padding: "0",
-        },
-        {
-          color: "inherit",
-        },
-      ],
+
       textAlign: "left",
       boxSizing: "border-box",
       fontSize: "13px",
@@ -3470,11 +2824,7 @@ export const light_theme = (theme: Theme): any => ({
       fontSize: "14px",
       margin: "0",
       padding: "12px 0 12px 16px",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       lineHeight: "24px",
     },
     ".search-input": {
@@ -3497,29 +2847,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitAppearance: "textfield",
       mozAppearance: "textfield",
       appearance: "textfield",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-        {
-          margin: "0",
-        },
-        {
-          padding: "0",
-        },
-        {
-          lineHeight: "1",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          backgroundColor: "#030303",
-        },
-        {
-          boxSizing: "border-box",
-        },
-      ],
+
       height: "28px",
       fontSize: "14px",
       backgroundColor: "rgba(3, 3, 3, 0.09)",
@@ -3603,26 +2931,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
-      fallbacks: [
-        {
-          boxSizing: "border-box",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          margin: "0",
-        },
-        {
-          padding: "0",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          border: "none",
-        },
-      ],
+
       backgroundColor: "transparent",
       letterSpacing: "0",
       boxShadow: "none",
@@ -3690,32 +2999,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-        {
-          boxSizing: "border-box",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          margin: "0",
-        },
-        {
-          padding: "0",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          border: "none",
-        },
-      ],
+
       backgroundColor: "transparent",
       letterSpacing: "0",
       boxShadow: "none",
@@ -3736,66 +3020,27 @@ export const light_theme = (theme: Theme): any => ({
       border: "none",
       backgroundColor: "transparent",
       color: "#999",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
     },
     ".text-input--underbar:disabled:-ms-input-placeholder": {
       border: "none",
       backgroundColor: "transparent",
       color: "#999",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
     },
     ".text-input--underbar:disabled::-ms-input-placeholder": {
       border: "none",
       backgroundColor: "transparent",
       color: "#999",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
     },
     ".text-input--underbar:disabled::placeholder": {
       border: "none",
       backgroundColor: "transparent",
       color: "#999",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
     },
     ".text-input--underbar:invalid": {
       border: "none",
       backgroundColor: "transparent",
       color: "#1f1f21",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
+
       borderBottom: "1px solid #ccc",
     },
     ".text-input--material": {
@@ -3814,29 +3059,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
-      fallbacks: [
-        {
-          verticalAlign: "top",
-        },
-        {
-          border: "none",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          webkitFontSmoothing: "antialiased",
-        },
-        {
-          fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
-        },
-      ],
+
       backgroundImage: "linear-gradient(to top, transparent 1px, #afafaf 1px)",
       backgroundSize: "100% 2px",
       backgroundRepeat: "no-repeat",
@@ -3857,11 +3080,7 @@ export const light_theme = (theme: Theme): any => ({
       left: "0",
       top: "2px",
       fontSize: "16px",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       pointerEvents: "none",
     },
     ".text-input--material__label--active": {
@@ -3871,14 +3090,6 @@ export const light_theme = (theme: Theme): any => ({
       webkitTransformOrigin: "left top",
       transformOrigin: "left top",
       transition: "transform 0.1s ease-in, color 0.1s ease-in, -webkit-transform 0.1s ease-in",
-      fallbacks: [
-        {
-          transition: "transform 0.1s ease-in, color 0.1s ease-in",
-        },
-        {
-          transition: "color 0.1s ease-in, -webkit-transform 0.1s ease-in",
-        },
-      ],
     },
     ".text-input--material:focus": {
       backgroundImage:
@@ -3927,23 +3138,7 @@ export const light_theme = (theme: Theme): any => ({
       verticalAlign: "top",
       resize: "none",
       outline: "none",
-      fallbacks: [
-        {
-          color: "inherit",
-        },
-        {
-          backgroundColor: "#ffffff",
-        },
-        {
-          border: "none",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       fontSize: "16px",
       borderRadius: "4px",
       backgroundColor: "rgba(255, 255, 255, 1)",
@@ -3987,20 +3182,7 @@ export const light_theme = (theme: Theme): any => ({
       verticalAlign: "top",
       resize: "none",
       outline: "none",
-      fallbacks: [
-        {
-          color: "inherit",
-        },
-        {
-          border: "none",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          padding: "0",
-        },
-      ],
+
       paddingLeft: "0",
       paddingRight: "0",
       fontSize: "16px",
@@ -4052,11 +3234,7 @@ export const light_theme = (theme: Theme): any => ({
       left: "50%",
       webkitTransform: "translate(-50%, -50%)",
       transform: "translate(-50%, -50%)",
-      fallbacks: [
-        {
-          margin: "0",
-        },
-      ],
+
       overflow: "hidden",
       minWidth: "270px",
       minHeight: "100px",
@@ -4090,11 +3268,6 @@ export const light_theme = (theme: Theme): any => ({
       left: "0",
       bottom: "0",
       backgroundColor: "rgba(0, 0, 0, 0.2)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
     },
     ".dialog--material": {
       fontFamily: '"Roboto", "Noto", sans-serif',
@@ -4111,11 +3284,6 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".dialog-mask--material": {
       backgroundColor: "rgba(0, 0, 0, 0.3)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
     },
     ".alert-dialog": {
       boxSizing: "border-box",
@@ -4141,14 +3309,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitTransform: "translate(-50%, -50%)",
       transform: "translate(-50%, -50%)",
       width: "270px",
-      fallbacks: [
-        {
-          color: "inherit",
-        },
-        {
-          margin: "0",
-        },
-      ],
+
       backgroundColor: "#f4f4f4",
       borderRadius: "8px",
       overflow: "visible",
@@ -4165,11 +3326,7 @@ export const light_theme = (theme: Theme): any => ({
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "500",
       fontSize: "17px",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       padding: "0 8px",
       textAlign: "center",
       color: "#1f1f21",
@@ -4210,23 +3367,7 @@ export const light_theme = (theme: Theme): any => ({
       textDecoration: "none",
       letterSpacing: "0",
       verticalAlign: "middle",
-      fallbacks: [
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-        {
-          margin: "0",
-        },
-        {
-          padding: "0",
-        },
-        {
-          border: "none",
-        },
-      ],
+
       borderTop: "1px solid #ddd",
       fontSize: "16px",
       display: "block",
@@ -4238,11 +3379,6 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".alert-dialog-button:active": {
       backgroundColor: "rgba(0, 0, 0, 0.05)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
     },
     ".alert-dialog-button--primal": {
       fontWeight: "500",
@@ -4250,14 +3386,7 @@ export const light_theme = (theme: Theme): any => ({
     ".alert-dialog-footer--rowfooter": {
       whiteSpace: "nowrap",
       display: "flex",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-      ],
+
       webkitFlexWrap: "wrap",
       flexWrap: "wrap",
     },
@@ -4290,11 +3419,6 @@ export const light_theme = (theme: Theme): any => ({
       left: "0",
       bottom: "0",
       backgroundColor: "rgba(0, 0, 0, 0.2)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
     },
     ".alert-dialog--material": {
       borderRadius: "25px",
@@ -4312,11 +3436,7 @@ export const light_theme = (theme: Theme): any => ({
       fontWeight: "500",
       textAlign: "left",
       fontSize: "20px",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       padding: "0 24px",
       color: "#31313a",
     },
@@ -4326,14 +3446,7 @@ export const light_theme = (theme: Theme): any => ({
       fontWeight: "400",
       textAlign: "left",
       fontSize: "16px",
-      fallbacks: [
-        {
-          color: "#31313a",
-        },
-        {
-          fontWeight: "400",
-        },
-      ],
+
       lineHeight: "20px",
       padding: "0 24px",
       margin: "24px 0 10px 0",
@@ -4360,11 +3473,7 @@ export const light_theme = (theme: Theme): any => ({
       border: "none",
       borderRadius: "2px",
       fontSize: "14px",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       outline: "none",
       height: "36px",
       lineHeight: "36px",
@@ -4376,11 +3485,6 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".alert-dialog-button--material:active": {
       backgroundColor: "initial",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-      ],
     },
     ".alert-dialog-button--rowfooter--material, .alert-dialog-button--rowfooter--material:first-child": {
       border: "0",
@@ -4390,11 +3494,6 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".alert-dialog-mask--material": {
       backgroundColor: "rgba(0, 0, 0, 0.3)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
     },
     ".popover": {
       position: "absolute",
@@ -4418,11 +3517,7 @@ export const light_theme = (theme: Theme): any => ({
       top: "0",
       bottom: "0",
       backgroundColor: "rgba(0, 0, 0, 0.2)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
+
       position: "absolute",
       zIndex: "19999",
     },
@@ -4451,11 +3546,7 @@ export const light_theme = (theme: Theme): any => ({
       maxHeight: "100%",
       backgroundColor: "white",
       borderRadius: "8px",
-      fallbacks: [
-        {
-          color: "inherit",
-        },
-      ],
+
       pointerEvents: "auto",
     },
     ".popover--top__content": {},
@@ -4713,17 +3804,7 @@ export const light_theme = (theme: Theme): any => ({
       height: "56px",
       textDecoration: "none",
       fontSize: "25px",
-      fallbacks: [
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-      ],
+
       letterSpacing: "0",
       verticalAlign: "middle",
       textAlign: "center",
@@ -4737,11 +3818,6 @@ export const light_theme = (theme: Theme): any => ({
       boxShadow: "0 0 6 rgba(0, 0, 0, 0.12)",
       backgroundColor: "color-mod(#4a148c a(70%))",
       transition: "all 0.2s ease",
-      fallbacks: [
-        {
-          boxShadow: "0 3px 6 rgba(0, 0, 0, 0.12)",
-        },
-      ],
     },
     "ons-fab.fab:focus, ons-speed-dial-item.fab:focus, button.fab:focus": {
       outline: "0",
@@ -4788,56 +3864,7 @@ export const light_theme = (theme: Theme): any => ({
       height: "56px",
       textDecoration: "none",
       fontSize: "25px",
-      fallbacks: [
-        {
-          transition: "all 0.1s linear",
-        },
-        {
-          boxShadow: "0 3px 6px rgba(0, 0, 0, 0.12)",
-        },
-        {
-          backgroundColor: theme.palette.primary.main,
-        },
-        {
-          color: "#ffffff",
-        },
-        {
-          color: "#ffffff",
-        },
-        {
-          lineHeight: "56px",
-        },
-        {
-          fontSize: "25px",
-        },
-        {
-          textDecoration: "none",
-        },
-        {
-          height: "56px",
-        },
-        {
-          width: "56px",
-        },
-        {
-          fontWeight: "400",
-        },
-        {
-          webkitFontSmoothing: "antialiased",
-        },
-        {
-          fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
-        },
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "normal",
-        },
-      ],
+
       letterSpacing: "0",
       verticalAlign: "middle",
       textAlign: "center",
@@ -4852,11 +3879,7 @@ export const light_theme = (theme: Theme): any => ({
       boxShadow:
         "0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12),\r\n    0 5px 5px -3px rgba(0, 0, 0, 0.4)",
       backgroundColor: "rgba(255, 255, 255, 0.75)",
-      fallbacks: [
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
+
       transition: "all 0.2s ease",
     },
     "ons-fab.fab--material:focus, ons-speed-dial-item.fab--material:focus, button.fab--material:focus": {
@@ -4950,20 +3973,7 @@ export const light_theme = (theme: Theme): any => ({
       background: "transparent",
       border: "none",
       lineHeight: "normal",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-        {
-          overflow: "hidden",
-        },
-        {
-          backgroundClip: "padding-box",
-        },
-        {
-          boxSizing: "border-box",
-        },
-      ],
+
       fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
@@ -4992,20 +4002,7 @@ export const light_theme = (theme: Theme): any => ({
       background: "transparent",
       border: "none",
       lineHeight: "normal",
-      fallbacks: [
-        {
-          whiteSpace: "nowrap",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          backgroundClip: "padding-box",
-        },
-        {
-          boxSizing: "border-box",
-        },
-      ],
+
       fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
@@ -5030,26 +4027,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          padding: "0",
-        },
-        {
-          border: "none",
-        },
-        {
-          color: "inherit",
-        },
-        {
-          lineHeight: "1",
-        },
-        {
-          border: "none",
-        },
-      ],
+
       backgroundColor: "transparent",
       position: "relative",
       fontSize: "17px",
@@ -5127,11 +4105,7 @@ export const light_theme = (theme: Theme): any => ({
       backgroundRepeat: "no-repeat",
       backgroundPosition: "right center, left bottom",
       border: "none",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       webkitTransform: "translate3d(0, 0, 0)",
       transform: "translate3d(0, 0, 0)",
     },
@@ -5140,11 +4114,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       fontWeight: "400",
       color: "rgba(0, 0, 0, 0.81)",
-      fallbacks: [
-        {
-          color: "#000000",
-        },
-      ],
+
       position: "absolute",
       left: "0",
       top: "2px",
@@ -5153,17 +4123,7 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".select-input--material__label--active": {
       color: "rgba(0, 0, 0, 0.15)",
-      fallbacks: [
-        {
-          transition: "transform 0.1s ease-in, color 0.1s ease-in",
-        },
-        {
-          transition: "color 0.1s ease-in, -webkit-transform 0.1s ease-in",
-        },
-        {
-          color: "#000000",
-        },
-      ],
+
       webkitTransform: "translate(0, -75%) scale(0.75)",
       transform: "translate(0, -75%) scale(0.75)",
       webkitTransformOrigin: "left top",
@@ -5172,38 +4132,22 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".select-input--material::-webkit-input-placeholder": {
       color: "rgba(0, 0, 0, 0.81)",
-      fallbacks: [
-        {
-          color: "#000000",
-        },
-      ],
+
       lineHeight: "20px",
     },
     ".select-input--material:-ms-input-placeholder": {
       color: "rgba(0, 0, 0, 0.81)",
-      fallbacks: [
-        {
-          color: "#000000",
-        },
-      ],
+
       lineHeight: "20px",
     },
     ".select-input--material::-ms-input-placeholder": {
       color: "rgba(0, 0, 0, 0.81)",
-      fallbacks: [
-        {
-          color: "#000000",
-        },
-      ],
+
       lineHeight: "20px",
     },
     ".select-input--material::placeholder": {
       color: "rgba(0, 0, 0, 0.81)",
-      fallbacks: [
-        {
-          color: "#000000",
-        },
-      ],
+
       lineHeight: "20px",
     },
     "@keyframes material-select-input-animate": {
@@ -5223,80 +4167,34 @@ export const light_theme = (theme: Theme): any => ({
       pointerEvents: "none",
       border: "none",
       backgroundColor: "transparent",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
+
       borderBottom: "1px solid #ccc",
     },
     ".select-input--underbar:disabled::-webkit-input-placeholder": {
       border: "none",
       backgroundColor: "transparent",
       color: "#999",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
     },
     ".select-input--underbar:disabled:-ms-input-placeholder": {
       border: "none",
       backgroundColor: "transparent",
       color: "#999",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
     },
     ".select-input--underbar:disabled::-ms-input-placeholder": {
       border: "none",
       backgroundColor: "transparent",
       color: "#999",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
     },
     ".select-input--underbar:disabled::placeholder": {
       border: "none",
       backgroundColor: "transparent",
       color: "#999",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
     },
     ".select-input--underbar:invalid": {
       border: "none",
       backgroundColor: "transparent",
       color: "#1f1f21",
-      fallbacks: [
-        {
-          backgroundColor: "transparent",
-        },
-        {
-          border: "none",
-        },
-      ],
+
       borderBottom: "1px solid #ccc",
     },
     ".action-sheet": {
@@ -5317,11 +4215,7 @@ export const light_theme = (theme: Theme): any => ({
       textAlign: "center",
       color: "#4a148c",
       backgroundColor: "rgba(255, 255, 255, 0.9)",
-      fallbacks: [
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
+
       borderRadius: "0",
       lineHeight: "56px",
       border: "none",
@@ -5374,11 +4268,7 @@ export const light_theme = (theme: Theme): any => ({
       color: "#8f8e94",
       textAlign: "center",
       backgroundColor: "rgba(255, 255, 255, 0.9)",
-      fallbacks: [
-        {
-          backgroundColor: "#ffffff",
-        },
-      ],
+
       lineHeight: "56px",
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
@@ -5402,11 +4292,7 @@ export const light_theme = (theme: Theme): any => ({
       right: "0",
       bottom: "0",
       backgroundColor: "rgba(0, 0, 0, 0.1)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
+
       zIndex: "1",
     },
     ".action-sheet--material": {
@@ -5429,11 +4315,6 @@ export const light_theme = (theme: Theme): any => ({
       padding: "0 0 0 16px",
       color: "#686868",
       backgroundColor: "white",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
     },
     ".action-sheet-title--material:first-child": {
       borderRadius: "0",
@@ -5450,11 +4331,7 @@ export const light_theme = (theme: Theme): any => ({
       fontSize: "16px",
       padding: "0 0 0 16px",
       color: "#686868",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       backgroundColor: "white",
     },
     ".action-sheet-button--material:first-child": {
@@ -5480,11 +4357,6 @@ export const light_theme = (theme: Theme): any => ({
     },
     ".action-sheet-mask--material": {
       backgroundColor: "rgba(0, 0, 0, 0.2)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
     },
     ".card": {
       fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
@@ -5512,11 +4384,7 @@ export const light_theme = (theme: Theme): any => ({
       webkitFontSmoothing: "antialiased",
       mozOsxFontSmoothing: "grayscale",
       fontWeight: "400",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
+
       fontSize: "20px",
       margin: "4px 0 8px 0",
       padding: "0",
@@ -5536,11 +4404,6 @@ export const light_theme = (theme: Theme): any => ({
       fontSize: "14px",
       lineHeight: "1.4",
       color: "rgba(0, 0, 0, 0.54)",
-      fallbacks: [
-        {
-          color: "#000000",
-        },
-      ],
     },
     ".card--material__title": {
       fontFamily: '"Roboto", "Noto", sans-serif',
@@ -5562,17 +4425,7 @@ export const light_theme = (theme: Theme): any => ({
       margin: "8px 0",
       borderRadius: "8px",
       backgroundColor: "rgba(0, 0, 0, 0.8)",
-      fallbacks: [
-        {
-          display: "-webkit-flex",
-        },
-        {
-          display: "-webkit-box",
-        },
-        {
-          backgroundColor: "#000000",
-        },
-      ],
+
       display: "flex",
       minHeight: "48px",
       lineHeight: "1.5",
@@ -5614,11 +4467,6 @@ export const light_theme = (theme: Theme): any => ({
       bottom: "0",
       margin: "0",
       backgroundColor: "rgba(0, 0, 0, 0.8)",
-      fallbacks: [
-        {
-          backgroundColor: "#000000",
-        },
-      ],
       borderRadius: "0",
       padding: "16px 24px",
     },

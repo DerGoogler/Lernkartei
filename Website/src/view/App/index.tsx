@@ -9,9 +9,12 @@ import { StyledSection } from "../../components/StyledSection";
 import { CardRenderer } from "./components/GroupRenderer";
 import { useActivity } from "../../components/RoutedApp";
 import { os } from "../../native/Os";
+import { useKPlugin } from "../../plugin/kplugin";
+import evil from "../../plugin/evil";
 
 export function App() {
   const { context } = useActivity();
+  const [kplugins, setPlugins] = useKPlugin();
 
   // These are native Android call, they won't be called on browsers
   // os.useOnBackPressed(() => {
@@ -25,6 +28,13 @@ export function App() {
   os.useOnResume(() => {
     console.log("User has been returned to the app");
   });
+
+  React.useEffect(() => {
+    // Plugins
+    kplugins.forEach((kplugin) => {
+      evil(kplugin.exec);
+    });
+  }, []);
 
   const renderToolbar = () => {
     return (

@@ -4,40 +4,37 @@ import axios from "axios";
 import * as React from "react";
 import { BackButton, List, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
 import { Icon } from "../components/Icon";
-import { ParserPlugin } from "../components/Markdown/rules";
 import { useActivity } from "../components/RoutedApp";
 import { StyledSection } from "../components/StyledSection";
-import { useMdPlugins } from "../hooks/useMdPlugins";
 import { os } from "../native/Os";
-
-interface MDPlugins {
-  id: string;
-  name: string;
-  description: string;
-  cdn: string;
-}
+import { KPlugin, useKPlugin } from "../plugin/kplugin";
 
 function SetBuilder(): JSX.Element {
-  const [getSets, setSets] = React.useState<MDPlugins[]>([]);
-  const [mdPlugins, setMdPlugins] = useMdPlugins();
+  const [plugins, setPlugins] = React.useState<KPlugin.Request[]>([]);
+  const [kPlugins, setKPlugins] = useKPlugin();
 
   React.useEffect(() => {
     axios
-      .get<MDPlugins[]>("https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/md-plugin/index.json")
+      .get<KPlugin.Request[]>(
+        "https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/md-plugin/index.json"
+      )
       .then((response) => {
-        setSets(response.data);
+        setPlugins(response.data);
       });
   });
 
-  const setDownloader = (url: string): void => {
-    axios.get<ParserPlugin>(url).then((response) => {
+  const setDownloader = (id: string, url: string): void => {
+    axios.get<string>(url).then((response) => {
       const data = response.data;
-      setMdPlugins((tmp) => {
-        if (tmp.some((elem) => elem?.id === data.id)) {
+      setKPlugins((tmp) => {
+        if (tmp.some((elem) => elem?.id === id)) {
           os.toast("Dieses Plugin ist bereits vorhanden", "short");
         } else {
-          tmp.push(data);
-          os.toast(`Erfolgreich "${data.name}"  heruntergeladen`, "short");
+          tmp.push({
+            id: id,
+            exec: data,
+          });
+          os.toast(`Erfolgreich "${id}"  heruntergeladen`, "short");
         }
         return tmp;
       });
@@ -46,12 +43,12 @@ function SetBuilder(): JSX.Element {
 
   return (
     <React.Fragment>
-      {getSets.map((plugin) => (
+      {plugins.map((plugin) => (
         <>
           <ListItem
             tappable
             onClick={() => {
-              setDownloader(plugin.cdn);
+              setDownloader(plugin.id, plugin.plugin);
             }}
           >
             <div className="center">
@@ -68,7 +65,7 @@ function SetBuilder(): JSX.Element {
   );
 }
 
-export function MdpluginsActivity() {
+export function KPluginsActivity() {
   const { context, extra } = useActivity();
 
   os.useOnBackPressed(context.popPage);
@@ -79,7 +76,7 @@ export function MdpluginsActivity() {
         <div className="left">
           <BackButton onClick={context.popPage}>Back</BackButton>
         </div>
-        <div className="center">MD-Plugins</div>
+        <div className="center">KPlugins</div>
       </Toolbar>
     );
   };

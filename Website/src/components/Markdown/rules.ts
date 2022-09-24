@@ -1,10 +1,3 @@
-export type ParserPlugin = {
-  id: string;
-  name: string;
-  description: string;
-  rules: Rules;
-};
-
 export type Rules = Array<[string, string]>;
 
 export const rules: Rules = [

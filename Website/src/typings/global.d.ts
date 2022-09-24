@@ -7,6 +7,7 @@ declare global {
     file: any;
     os: any;
     sharedpreferences: any;
+    utils: any;
   }
 
   interface GlobalEventHandlersEventMap {

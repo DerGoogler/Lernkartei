@@ -9,6 +9,7 @@ import "./styles/default.scss";
 
 dom.preventer(["contextmenu"]);
 ons.platform.select("android");
+
 ons.ready(() => {
   rct.render(
     <React.StrictMode>

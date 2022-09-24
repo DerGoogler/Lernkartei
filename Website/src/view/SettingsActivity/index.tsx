@@ -6,9 +6,14 @@ import { useTheme } from "@mui/system";
 import { useDarkmode } from "../../hooks/useDarkmode";
 import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
 import { useActivity } from "../../components/RoutedApp";
+import { useConfirm } from "material-ui-confirm";
+import { useKPlugin, useMdPlugin } from "../../plugin/kplugin";
 
 function SettingsActivity() {
+  const confirm = useConfirm();
   const { context, extra } = useActivity();
+  const [mdplugin, setMdPlugin] = useMdPlugin();
+  const [kplugins, setKPlugin] = useKPlugin();
 
   os.useOnBackPressed(context.popPage);
 
@@ -88,6 +93,49 @@ function SettingsActivity() {
         <div className="center">
           <span className="list-item__title">Issues</span>
           <span className="list-item__subtitle">Track our issues</span>
+        </div>
+      </ListItem>
+      <ListHeader>Plugins</ListHeader>
+      <ListItem
+        tappable
+        modifier="chevron"
+        onClick={() => {
+          confirm({
+            title: "Delete plugins?",
+            description: "All plugins will be deleted",
+          })
+            .then(() => {
+              setKPlugin([]);
+            })
+            .catch(() => {
+              /* ... */
+            });
+        }}
+      >
+        <div className="center">
+          <span className="list-item__title">Remove All Plugins</span>
+          <span className="list-item__subtitle">Removes all plugins from this device</span>
+        </div>
+      </ListItem>
+      <ListItem
+        tappable
+        modifier="chevron"
+        onClick={() => {
+          confirm({
+            title: "Delete rules?",
+            description: "All rules will be deleted",
+          })
+            .then(() => {
+              setMdPlugin([]);
+            })
+            .catch(() => {
+              /* ... */
+            });
+        }}
+      >
+        <div className="center">
+          <span className="list-item__title">Remove All Md-Rules</span>
+          <span className="list-item__subtitle">This action is useless when the current plugin is saved</span>
         </div>
       </ListItem>
     </Page>

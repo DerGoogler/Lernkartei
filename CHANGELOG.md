@@ -13,4 +13,3 @@
 - Using now the powerfull api of WSP
 - Improved markdown formatting
 - App uses now the new context api
-- Added plugin support for Markdown formatting

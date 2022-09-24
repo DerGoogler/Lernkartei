@@ -9,12 +9,11 @@ import Icon from "@mui/material/Icon";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import Image from "../dapi/Image";
-import { Alert, AlertTitle, Box, Chip, Container, Divider, Grid, Paper, Stack } from "@mui/material";
+import { Alert, Box, Chip, Container, Divider, Grid, Paper, Stack } from "@mui/material";
 import { StyledMarkdown } from "./StyledMarkdon";
 import styled from "@emotion/styled";
 import { parser } from "./parser";
-import { useNativeStorage } from "../../native/SharedPreferences";
-import { useMdPlugins } from "../../hooks/useMdPlugins";
+import { useMdPlugin } from "../../plugin/kplugin";
 
 type Props = {
   children: string;
@@ -23,7 +22,7 @@ type Props = {
 };
 
 export function Markup(props: Props) {
-  const [mdPlugins, setMdPlugins] = useMdPlugins();
+  const [mdPlugins, setMdPlugins] = useMdPlugin();
 
   const StyledDivider = styled(Divider)({
     "h1, & h2, & h3, & h4, & h5, & h6": {

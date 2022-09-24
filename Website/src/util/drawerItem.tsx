@@ -1,6 +1,6 @@
 import Acknowledgements from "../view/Acknowledgements";
 import { GroupsActivity } from "../view/GroupsActivity";
-import { MdpluginsActivity } from "../view/MdPluginsActivity";
+import { KPluginsActivity } from "../view/KPluginsActivity";
 import SettingsActivity from "../view/SettingsActivity";
 const drawerItems: DrawerListItems[] = [
   {
@@ -52,12 +52,12 @@ const drawerItems: DrawerListItems[] = [
         },
       },
       {
-        children: "MD-Plugins",
+        children: "KPlugins",
         tappable: true,
         modifier: "chevron",
         onClick(hide, pushPage, event) {
           pushPage<{}>({
-            component: MdpluginsActivity,
+            component: KPluginsActivity,
             props: {
               key: "md-plugins",
               extra: {},

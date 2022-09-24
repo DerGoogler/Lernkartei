@@ -27,6 +27,7 @@ import { useKartei } from "../../hooks/useKartei";
 import { Markup } from "../../components/Markdown";
 import { useActivity } from "../../components/RoutedApp";
 import { Editor } from "./components/StyledAceEditor";
+import evil from "../../plugin/evil";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
@@ -231,6 +232,15 @@ function AddCardToGroupActivity() {
               <El.icon style={El.iconStyle} />
             </ToggleButton>
           ))}
+          <ToggleButton
+            style={{
+              border: "1px solid rgb(196, 196, 196)",
+            }}
+            value="Exec"
+            onClick={() => evil(description)}
+          >
+            Exec
+          </ToggleButton>
         </ToggleButtonGroup>
         <span style={{ flex: 1, display: "flex", marginTop: 4 }}>
           <Stack

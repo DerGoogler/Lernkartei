@@ -1,5 +1,6 @@
 declare module "react-dom";
 declare module "print-html-block";
+declare module 'safer-eval';
 
 declare module "*.css" {
   const content: Record<string, string>;
