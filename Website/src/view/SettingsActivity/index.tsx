@@ -1,20 +1,22 @@
 import { BackButton, ListHeader, ListItem, Page, Toolbar } from "react-onsenui";
-import { ConfirmationDialogRaw } from "../components/ConfirmationDialogRaw";
+import { ConfirmationDialogRaw } from "../../components/ConfirmationDialogRaw";
 import React from "react";
-import { File } from "../native/File";
+import { File } from "../../native/File";
 import { useConfirm } from "material-ui-confirm";
-import { os } from "../native/Os";
-import { AccentColors, accent_colors } from "../theme";
-import { useKartei } from "../hooks/useKartei";
+import { os } from "../../native/Os";
+import { AccentColors, accent_colors } from "../../theme";
+import { useKartei } from "../../hooks/useKartei";
 import { useTheme } from "@mui/system";
-import { useScheme } from "../hooks/useScheme";
-import { useDarkmode } from "../hooks/useDarkmode";
+import { useScheme } from "../../hooks/useScheme";
+import { useDarkmode } from "../../hooks/useDarkmode";
+import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
+import { ImportGroupsItem } from "./components/ImportGroupsItem";
 
 interface Props extends PushProps<{}> {}
 
-function SettingsActivity({ pageTools }: Props) {
+function SettingsActivity({ context }: Props) {
   const confirm = useConfirm();
-  os.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(context.popPage);
 
   const theme = useTheme();
 
@@ -26,7 +28,7 @@ function SettingsActivity({ pageTools }: Props) {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={pageTools.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage}>Back</BackButton>
         </div>
         <div className="center">Einstellungen</div>
       </Toolbar>
@@ -74,12 +76,7 @@ function SettingsActivity({ pageTools }: Props) {
           <span className="list-item__subtitle">Alle Gruppen und Karten in einer Datei sichern</span>
         </div>
       </ListItem>
-      <ListItem style={{ display: "none" }}>
-        <div className="center">
-          <span className="list-item__title">Wiederherstellen</span>
-          <span className="list-item__subtitle">Alle Gruppen und Karten wiederherstellen</span>
-        </div>
-      </ListItem>
+      {/* <ImportGroupsItem /> */}
 
       <ListHeader>Development</ListHeader>
       <ListItem
@@ -100,45 +97,6 @@ function SettingsActivity({ pageTools }: Props) {
         </div>
       </ListItem>
     </Page>
-  );
-}
-
-function AccentColorPickerItem() {
-  const [open, setOpen] = React.useState(false);
-  const [scheme, setScheme] = useScheme();
-  const [value, setValue] = React.useState<AccentColors[0]>(scheme);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (val: any) => {
-    setOpen(false);
-
-    if (val.name && val.value) {
-      setValue(val);
-      setScheme(val);
-    }
-  };
-
-  return (
-    <>
-      <ListItem onClick={handleOpen}>
-        <div className="center">
-          <span className="list-item__title">Akzentfarbe</span>
-          <span className="list-item__subtitle">{value.name}</span>
-        </div>
-      </ListItem>
-      <ConfirmationDialogRaw
-        id="accent-menu"
-        title="Farbakzent auswählen"
-        keepMounted
-        open={open}
-        contentMap={accent_colors}
-        onClose={handleClose}
-        value={value}
-      />
-    </>
   );
 }
 

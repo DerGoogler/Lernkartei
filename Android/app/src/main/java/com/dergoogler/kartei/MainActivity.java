@@ -14,6 +14,7 @@ import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeFile;
 import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.NativeSharedPreferences;
+import com.dergoogler.core.NativeUtils;
 
 import java.io.IOException;
 
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
         // Options
         view.setJavaScriptEnabled(true);
         view.setAllowFileAccess(true);
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
         view.addJavascriptInterface(nsp, "environment");
         view.addJavascriptInterface(new NativeFile(), "file");
+        view.addJavascriptInterface(new NativeUtils(), "utils");
 
         view.setModuleChromeClient(new ModuleChromeClient() {
             @Override

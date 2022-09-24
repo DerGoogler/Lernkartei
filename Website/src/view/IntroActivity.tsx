@@ -13,7 +13,7 @@ interface State {
   index: number;
 }
 
-function IntroActivity({ pageTools }: Props) {
+function IntroActivity({ context }: Props) {
   const [getIndex, setIndex] = React.useState(0);
   const [getItems, setItems] = React.useState<Array<any>>([
     {
@@ -43,7 +43,7 @@ function IntroActivity({ pageTools }: Props) {
               onClick={() => {
                 if (getIndex === 1) {
                   setIntroFinised(true);
-                  pageTools.pushPage({
+                  context.pushPage({
                     component: App,
                     props: {
                       key: "app",

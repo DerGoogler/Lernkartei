@@ -1,0 +1,33 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["group", "name", "description"],
+    "properties": {
+      "group": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "karten": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["shortDescription", "description"],
+          "properties": {
+            "shortDescription": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

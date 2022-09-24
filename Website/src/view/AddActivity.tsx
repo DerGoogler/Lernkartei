@@ -12,7 +12,7 @@ interface Props
     index: number;
   }> {}
 
-function AddActivity({ pageTools, extra }: Props) {
+function AddActivity({ context, extra }: Props) {
   const isEditMode = extra.editGroup;
   const [group, setGroup] = React.useState("lernfeld_1");
   const [name, setName] = React.useState(!isEditMode ? "Lernfeld 1" : extra.name);
@@ -21,13 +21,13 @@ function AddActivity({ pageTools, extra }: Props) {
   );
   const [cards, setCards] = useKartei();
 
-  os.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(context.popPage);
 
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={pageTools.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage}>Back</BackButton>
         </div>
         <div className="center">{!isEditMode ? "Neue Gruppe" : "Gruppe Bearbeiten"}</div>
       </Toolbar>
@@ -66,7 +66,7 @@ function AddActivity({ pageTools, extra }: Props) {
           os.toast(`Diese Gruppe is bereits vorhanden.`, "short");
         } else {
           setCards([...cards, obj]);
-          pageTools.popPage();
+          context.popPage();
           os.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
         }
       }
@@ -82,7 +82,7 @@ function AddActivity({ pageTools, extra }: Props) {
     groups[index].name = name;
     groups[index].description = description;
     setCards(groups);
-    pageTools.popPage();
+    context.popPage();
   };
 
   return (

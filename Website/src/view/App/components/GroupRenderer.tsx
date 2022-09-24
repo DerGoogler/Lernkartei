@@ -10,7 +10,7 @@ import { ViewCardActivity } from "../../ViewCardsActivity";
 import AddActivity from "../../AddActivity";
 import { useKartei } from "../../../hooks/useKartei";
 
-export function CardRenderer({ pageTools, extra }: AppProps) {
+export function CardRenderer({ context, extra }: AppProps) {
   const [cards, setCards] = useKartei();
 
   const confirm = useConfirm();
@@ -24,7 +24,7 @@ export function CardRenderer({ pageTools, extra }: AppProps) {
               spacing={0.5}
               style={{ flexGrow: 1 }}
               onClick={() => {
-                pageTools.pushPage<any>({
+                context.pushPage<any>({
                   component: ViewCardActivity,
                   props: {
                     key: `card_item_${card.group}`,
@@ -61,7 +61,7 @@ export function CardRenderer({ pageTools, extra }: AppProps) {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  pageTools.pushPage({
+                  context.pushPage({
                     component: AddActivity,
                     props: {
                       key: `edit_${card.name}_${index}`,

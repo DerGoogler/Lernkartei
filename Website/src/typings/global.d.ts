@@ -50,14 +50,12 @@ declare global {
 
   interface PushProps<E = {}> {
     readonly extra: E;
-    readonly pageTools: {
-      readonly popPage: () => void;
-      readonly pushPage: <T>(props: PushPropsCore<T>) => void;
-      readonly splitter: {
-        readonly show: () => void;
-        readonly hide: () => void;
-        readonly state: () => boolean;
-      };
+    readonly popPage: () => void;
+    readonly pushPage: <T>(props: PushPropsCore<T>) => void;
+    readonly splitter: {
+      readonly show: () => void;
+      readonly hide: () => void;
+      readonly state: () => boolean;
     };
   }
 

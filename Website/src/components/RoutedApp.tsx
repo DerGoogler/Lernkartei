@@ -1,5 +1,5 @@
 import { CloseRounded } from "@mui/icons-material";
-import { Component } from "react";
+import { Component, useContext } from "react";
 import {
   List,
   ListHeader,
@@ -20,6 +20,7 @@ import { colors, default_scheme } from "../theme";
 import drawerItems from "../util/drawerItem";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
+import React from "react";
 
 interface States {
   isSplitterOpen: boolean;
@@ -27,6 +28,11 @@ interface States {
 }
 
 interface Props {}
+
+const Context = React.createContext({});
+export function useActivity<E = {}>() {
+  return React.useContext(Context) as PushProps<E>;
+}
 
 class RoutedApp<A = {}> extends Component<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
@@ -45,14 +51,12 @@ class RoutedApp<A = {}> extends Component<Props, States> {
         component: Intro(),
         props: {
           key: "main",
-          pageTools: {
-            pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
-            splitter: {
-              show: () => this.showSplitter(),
-              hide: () => this.hideSplitter(),
-              state: () => {
-                return this.state.isSplitterOpen;
-              },
+          pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
+          splitter: {
+            show: () => this.showSplitter(),
+            hide: () => this.hideSplitter(),
+            state: () => {
+              return this.state.isSplitterOpen;
             },
           },
         },
@@ -71,7 +75,7 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     // This depends on createTheme
     // @ts-ignore
     os.setStatusBarColor(colors[default_scheme.value][900], false);
-    os.setNavigationBarColor("#fafafa")
+    os.setNavigationBarColor("#fafafa");
   }
 
   private pushPage<A = {}>(props: PushPropsCore<A>): void {
@@ -80,15 +84,13 @@ class RoutedApp<A = {}> extends Component<Props, States> {
       props: {
         key: props.props.key,
         extra: props.props?.extra,
-        pageTools: {
-          popPage: () => this.popPage(),
-          pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
-          splitter: {
-            show: () => this.showSplitter(),
-            hide: () => this.hideSplitter(),
-            state: () => {
-              return this.state.isSplitterOpen;
-            },
+        popPage: () => this.popPage(),
+        pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
+        splitter: {
+          show: () => this.showSplitter(),
+          hide: () => this.hideSplitter(),
+          state: () => {
+            return this.state.isSplitterOpen;
           },
         },
       },
@@ -134,7 +136,11 @@ class RoutedApp<A = {}> extends Component<Props, States> {
 
   private renderPage = (route: any) => {
     const props = route.props || {};
-    return <route.component {...props} />;
+    return (
+      <Context.Provider value={props}>
+        <route.component />;
+      </Context.Provider>
+    );
   };
 
   private hideSplitter() {

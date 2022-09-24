@@ -14,8 +14,8 @@ import { CardListBuilder } from "./components/CardListBuilder";
 
 export interface ViewCardActivityProps extends PushProps<any> {}
 
-export function ViewCardActivity({ pageTools, extra }: ViewCardActivityProps) {
-  os.useOnBackPressed(pageTools.popPage);
+export function ViewCardActivity({ context, extra }: ViewCardActivityProps) {
+  os.useOnBackPressed(context.popPage);
 
   const [fabShow, setFabShow] = useState(true);
   const [titleShow, setTitleShow] = useState(true);
@@ -27,7 +27,7 @@ export function ViewCardActivity({ pageTools, extra }: ViewCardActivityProps) {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={pageTools.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage}>Back</BackButton>
         </div>
         <div className="center">
           <Fade in={titleShow}>
@@ -47,7 +47,7 @@ export function ViewCardActivity({ pageTools, extra }: ViewCardActivityProps) {
           <Material3.Fab
             position="bottom right"
             onClick={() => {
-              pageTools.pushPage({
+              context.pushPage({
                 component: AddCardToGroupActivity,
                 props: {
                   key: "add",
@@ -88,7 +88,7 @@ export function ViewCardActivity({ pageTools, extra }: ViewCardActivityProps) {
       </Header>
       <StyledSection>
         <Searchbar placeholder="Karten suchen ..." onSearchClick={(value) => setSearch(value)} />
-        <CardListBuilder pageTools={pageTools} extra={{ ...extra, ...{ search: search } }} />
+        <CardListBuilder context={context} extra={{ ...extra, ...{ search: search } }} />
       </StyledSection>
     </Page>
   );

@@ -1,3 +1,5 @@
+# What's new
+
 - Big design changes
 - Fix groups link/cdn
 - Fixed many links
@@ -10,3 +12,7 @@
 - Added support to delete single cards
 - Using now the powerfull api of WSP
 - Improved markdown formatting
+
+# Code/API changes
+
+- Added support for native `RuntimeException` and `Exception`

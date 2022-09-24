@@ -6,16 +6,16 @@ type PP = { shortDesc: string; desc: string; index: number | string; cardIndex: 
 
 interface Props extends PushProps<PP> {}
 
-function DescriptonActivity({ pageTools, extra }: Props) {
+function DescriptonActivity({ context, extra }: Props) {
   const { desc, index, shortDesc, cardIndex } = extra;
 
-  os.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(context.popPage);
 
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={pageTools.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage}>Back</BackButton>
         </div>
         <div className="center">#{index}</div>
       </Toolbar>

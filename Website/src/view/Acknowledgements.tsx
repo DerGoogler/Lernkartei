@@ -9,12 +9,12 @@ import { os } from "../native/Os";
 
 interface Props extends PushProps<{}> {}
 
-function Acknowledgements({ pageTools, extra }: Props) {
+function Acknowledgements({ context, extra }: Props) {
   const [libs, setLibs] = React.useState<Array<Packages>>([]);
 
   const theme = useTheme();
 
-  os.useOnBackPressed(pageTools.popPage);
+  os.useOnBackPressed(context.popPage);
 
   React.useEffect(() => {
     setLibs((dep as any[]).concat(nativeDep as any[]));
@@ -24,7 +24,7 @@ function Acknowledgements({ pageTools, extra }: Props) {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={pageTools.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage}>Back</BackButton>
         </div>
         <div className="center">Acknowledgements</div>
       </Toolbar>

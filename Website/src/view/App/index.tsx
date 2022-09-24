@@ -11,7 +11,7 @@ import { CardRenderer } from "./components/GroupRenderer";
 
 export interface AppProps extends PushProps<{}> {}
 
-export function App({ pageTools, extra }: AppProps) {
+export function App({ context, extra }: AppProps) {
   // webview.useOnBackPressed(() => {
   //   if (pageTools.splitter.state()) {
   //     pageTools.splitter.hide();
@@ -26,7 +26,7 @@ export function App({ pageTools, extra }: AppProps) {
         <div className="left">
           <ToolbarButton
             onClick={() => {
-              pageTools.splitter.show();
+              context.splitter.show();
             }}
           >
             <Icon icon={Menu} keepLight />
@@ -42,7 +42,7 @@ export function App({ pageTools, extra }: AppProps) {
       <Material3.Fab
         position="bottom right"
         onClick={() => {
-          pageTools.pushPage({
+          context.pushPage({
             component: AddActivity,
             props: {
               key: "add",
@@ -79,7 +79,7 @@ export function App({ pageTools, extra }: AppProps) {
             />
           }
         >
-          <CardRenderer pageTools={pageTools} extra={extra} />
+          <CardRenderer context={context} extra={extra} />
         </React.Suspense>
       </StyledSection>
     </Page>

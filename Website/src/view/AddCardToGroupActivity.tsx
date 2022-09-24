@@ -90,7 +90,7 @@ const formatTXT: TXTFormat[] = [
   },
 ];
 
-function AddCardToGroupActivity({ pageTools, extra }: Props) {
+function AddCardToGroupActivity({ context, extra }: Props) {
   const { edit, desc, shortDesc, index, card, cardIndex } = extra;
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
   const [description, setDescription] = React.useState(edit ? desc : "");
@@ -109,7 +109,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
   // };
   // os.useOnBackPressed(handleBackButtonClick);
 
-  const handleBackButtonClick = pageTools.popPage;
+  const handleBackButtonClick = context.popPage;
   os.useOnBackPressed(handleBackButtonClick);
 
   const renderToolbar = () => {
@@ -158,7 +158,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
         tmp = cards;
         tmp[index].karten.push(obj);
         setCards(tmp);
-        pageTools.popPage();
+        context.popPage();
         os.toast("Deine Karte wurde gespeichert.", "short");
       } catch (error) {
         alert((error as Error).message);
@@ -178,7 +178,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
       ons.notification.alert("Kurz Beschreibung darf nicht leer sein!");
     } else {
       setCards(tmp);
-      pageTools.popPage();
+      context.popPage();
     }
   };
 
@@ -289,7 +289,7 @@ function AddCardToGroupActivity({ pageTools, extra }: Props) {
                   importStyle: true,
                 });
               } else {
-                pageTools.pushPage<any>({
+                context.pushPage<any>({
                   component: DescriptonActivity,
                   props: {
                     key: `preview_${shortDescription}`,

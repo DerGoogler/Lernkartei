@@ -63,14 +63,14 @@ function SetBuilder(): JSX.Element {
   );
 }
 
-function GroupsActivity({ pageTools }: Props) {
-  os.useOnBackPressed(pageTools.popPage);
+function GroupsActivity({ context }: Props) {
+  os.useOnBackPressed(context.popPage);
 
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={pageTools.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage}>Back</BackButton>
         </div>
         <div className="center">Gruppen</div>
       </Toolbar>

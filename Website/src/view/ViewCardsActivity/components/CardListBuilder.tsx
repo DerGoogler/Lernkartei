@@ -11,7 +11,7 @@ import { ViewCardActivityProps } from "..";
 import { useConfirm } from "material-ui-confirm";
 import { useKartei } from "../../../hooks/useKartei";
 
-export function CardListBuilder({ pageTools, extra }: ViewCardActivityProps) {
+export function CardListBuilder({ context, extra }: ViewCardActivityProps) {
   const { index: iindex } = extra;
   const [cards, setCards] = useKartei();
   const karten = cards[iindex].karten;
@@ -28,7 +28,7 @@ export function CardListBuilder({ pageTools, extra }: ViewCardActivityProps) {
               spacing={0.5}
               style={{ flexGrow: 1 }}
               onClick={() => {
-                pageTools.pushPage<typeof extra>({
+                context.pushPage<typeof extra>({
                   component: DescriptonActivity,
                   props: {
                     key: `card_${card.shortDescription}`,
@@ -64,7 +64,7 @@ export function CardListBuilder({ pageTools, extra }: ViewCardActivityProps) {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  pageTools.pushPage({
+                  context.pushPage({
                     component: AddCardToGroupActivity,
                     props: {
                       key: `edit_${card.shortDescription}_${index}`,
