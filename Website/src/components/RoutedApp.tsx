@@ -33,7 +33,10 @@ const Context = React.createContext({});
 
 export function useActivity<E = {}>() {
   const ctx = React.useContext(Context) as PushProps<E>;
-  return { context: ctx.context, extra: ctx.extra };
+  return {
+    context: ctx.context,
+    extra: ctx.extra,
+  };
 }
 
 class RoutedApp<A = {}> extends Component<Props, States> {

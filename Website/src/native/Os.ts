@@ -100,6 +100,15 @@ class Os extends Native {
       };
     }, []);
   }
+  public useOnResume(callback: () => void): void {
+    React.useEffect(() => {
+      this.addNativeEventListener("onresume", callback, false);
+
+      return () => {
+        this.removeNativeEventListener("onresume", callback, false);
+      };
+    }, []);
+  }
 }
 
 export const os: Os = new Os();

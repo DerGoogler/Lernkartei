@@ -8,17 +8,23 @@ import { BuildConfig } from "../../native/BuildConfig";
 import { StyledSection } from "../../components/StyledSection";
 import { CardRenderer } from "./components/GroupRenderer";
 import { useActivity } from "../../components/RoutedApp";
+import { os } from "../../native/Os";
 
 export function App() {
   const { context } = useActivity();
 
-  // webview.useOnBackPressed(() => {
-  //   if (pageTools.splitter.state()) {
-  //     pageTools.splitter.hide();
+  // These are native Android call, they won't be called on browsers
+  // os.useOnBackPressed(() => {
+  //   if (context.splitter.state()) {
+  //     context.splitter.hide();
   //   } else {
-  //     webview.close();
+  //     os.close();
   //   }
   // });
+
+  os.useOnResume(() => {
+    console.log("User has been returned to the app");
+  });
 
   const renderToolbar = () => {
     return (

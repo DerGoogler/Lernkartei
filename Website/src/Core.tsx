@@ -1,13 +1,13 @@
 import { createTheme, CssBaseline, ThemeOptions, ThemeProvider, useTheme } from "@mui/material";
 import { ConfirmProvider } from "material-ui-confirm";
 import { useEffect, useState } from "react";
-import { colors } from "./theme";
+import { accent_colors, colors } from "./theme";
 import { useDarkmode } from "./hooks/useDarkmode";
 import { light_theme } from "./styles/light_theme";
 import RoutedApp from "./components/RoutedApp";
 import jss from "jss";
 import preset from "jss-preset-default";
-import { useScheme } from "./hooks/useScheme";
+import { AccentColors, useScheme } from "./hooks/useScheme";
 
 export function Core() {
   const theme = useTheme();

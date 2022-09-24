@@ -32,6 +32,15 @@
         "repository": "https://www.npmjs.com/package/@mui/material"
     },
     {
+        "name": "ajv",
+        "description": "Another JSON Schema Validator",
+        "author": "Evgeny Poberezkin",
+        "version": "8.11.0",
+        "license": "MIT",
+        "homepage": "https://ajv.js.org",
+        "repository": "https://www.npmjs.com/package/ajv"
+    },
+    {
         "name": "axios",
         "description": "Promise based HTTP client for the browser and node.js",
         "author": "Matt Zabriskie",
@@ -137,6 +146,14 @@
         "repository": "https://www.npmjs.com/package/react"
     },
     {
+        "name": "react-ace",
+        "description": "A react component for Ace Editor",
+        "author": "James Hrisho",
+        "version": "10.1.0",
+        "license": "MIT",
+        "repository": "https://www.npmjs.com/package/react-ace"
+    },
+    {
         "name": "react-device-detect",
         "description": "Detect device type and render your component according to it",
         "author": {
@@ -213,10 +230,19 @@
         "repository": "https://www.npmjs.com/package/textarea-markdown-editor"
     },
     {
+        "name": "use-file-picker",
+        "description": "Simple react hook to open browser file selector.",
+        "author": "Milosz Jankiewicz",
+        "version": "1.5.1",
+        "license": "MIT",
+        "homepage": "https://github.com/Jaaneek/useFilePicker",
+        "repository": "https://www.npmjs.com/package/use-file-picker"
+    },
+    {
         "name": "web-shared-preferences",
         "description": "An simple class to manage the loacal storage, including React like useString, useJSON and more!",
         "author": "Der_Googler",
-        "version": "1.2.8",
+        "version": "1.3.1",
         "license": "GPL-3.0",
         "homepage": "https://github.com/DerGoogler/SharedPreferences",
         "repository": "https://www.npmjs.com/package/web-shared-preferences"

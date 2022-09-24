@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        view.eventDispatcher("onresume");
+    }
+
+    @Override
     public void onBackPressed() {
         view.eventDispatcher("onbackbutton");
     }

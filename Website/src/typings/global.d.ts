@@ -11,6 +11,7 @@ declare global {
 
   interface GlobalEventHandlersEventMap {
     onbackbutton: Event;
+    onresume: Event;
   }
 
   interface SharedPreferencesKeys {
@@ -58,9 +59,11 @@ declare global {
         readonly hide: () => void;
         readonly state: () => boolean;
       };
+      readonly onBackPressed: (callback: () => void) => void;
+      readonly onResume: (callback: () => void) => void;
     };
   }
-  
+
   interface UseActivity<E = {}> {
     readonly context: {
       readonly popPage: () => void;

@@ -27,7 +27,7 @@ function SetBuilder(): JSX.Element {
           os.toast("Diese Gruppe ist bereits vorhanden", "short");
         } else {
           tmp.push(data);
-          os.toast(`Erfolgreich heruntergeladen`, "short");
+          os.toast(`Erfolgreich "${data.name}" heruntergeladen`, "short");
         }
         return tmp;
       });
