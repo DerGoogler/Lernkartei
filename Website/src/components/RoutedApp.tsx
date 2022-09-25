@@ -147,7 +147,7 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     const props = route.props || {};
     return (
       <Context.Provider value={props}>
-        <route.component {...props} />
+        <route.component />
       </Context.Provider>
     );
   };

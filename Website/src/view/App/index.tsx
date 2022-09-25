@@ -12,12 +12,15 @@ import { os } from "../../native/Os";
 import { useKPlugin } from "../../plugin/kplugin";
 import evil from "../../plugin/evil";
 import { LoadingScreen } from "../../components/LoadingScreen";
+import { useKartei } from "../../hooks/useKartei";
 
 const CardRenderer = React.lazy(() => import("./components/GroupRenderer"));
 
 export function App() {
   const { context } = useActivity();
   const [kplugins, setPlugins] = useKPlugin();
+  const [, forceRender] = React.useReducer((x) => x + 1, 0);
+  const [cards, setCards] = useKartei();
 
   // These are native Android call, they won't be called on browsers
   // os.useOnBackPressed(() => {

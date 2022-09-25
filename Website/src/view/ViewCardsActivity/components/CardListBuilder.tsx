@@ -16,7 +16,7 @@ type Props = {
   search: string;
 };
 
-const CardListBuilder = React.memo((props: Props) => {
+const CardListBuilder = (props: Props) => {
   const { context, extra } = useActivity<any>();
 
   const { index: iindex } = extra;
@@ -150,6 +150,6 @@ const CardListBuilder = React.memo((props: Props) => {
   };
 
   return checkDeviceSize(<Fragment>{os.isTablet ? resultsRender : Lrender(karten, props.search)}</Fragment>);
-});
+};
 
 export default CardListBuilder;

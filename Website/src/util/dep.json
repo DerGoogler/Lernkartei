@@ -168,9 +168,9 @@
         "name": "react-disappear",
         "description": "Detects if the inner children are visible",
         "author": "Der_Googler",
-        "version": "1.1.0",
+        "version": "1.0.4",
         "license": "MIT",
-        "homepage": "https://dergoogler.com/Der_Googler/react-disappear#README",
+        "homepage": "https://github.com/DerGoogler/react-disappear#README",
         "repository": "https://www.npmjs.com/package/react-disappear"
     },
     {
