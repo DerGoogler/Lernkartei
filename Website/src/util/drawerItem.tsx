@@ -2,6 +2,7 @@ import Acknowledgements from "../view/Acknowledgements";
 import { GroupsActivity } from "../view/GroupsActivity";
 import { KPluginsActivity } from "../view/KPluginsActivity";
 import SettingsActivity from "../view/SettingsActivity";
+import TestPluginActivity from "../view/TestPluginActivity";
 const drawerItems: DrawerListItems[] = [
   {
     title: "Others",
@@ -60,6 +61,21 @@ const drawerItems: DrawerListItems[] = [
             component: KPluginsActivity,
             props: {
               key: "md-plugins",
+              extra: {},
+            },
+          });
+          hide();
+        },
+      },
+      {
+        children: "Plugin tester",
+        tappable: true,
+        modifier: "chevron",
+        onClick(hide, pushPage, event) {
+          pushPage<{}>({
+            component: TestPluginActivity,
+            props: {
+              key: "test-plugins",
               extra: {},
             },
           });

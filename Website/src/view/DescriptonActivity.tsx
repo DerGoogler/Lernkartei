@@ -1,6 +1,6 @@
 import { BackButton, Page, Toolbar } from "react-onsenui";
 import { Markup } from "../components/Markdown";
-import { useActivity } from "../components/RoutedApp";
+import { useActivity } from "../hooks/useActivity";
 import { os } from "../native/Os";
 
 type Extra = { shortDesc: string; desc: string; index: number | string; cardIndex: number };

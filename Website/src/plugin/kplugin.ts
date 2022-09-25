@@ -1,4 +1,6 @@
+import ons from "onsenui";
 import { Rules } from "../components/Markdown/rules";
+import { os } from "../native/Os";
 import { sharedpreferences, useNativeStorage } from "../native/SharedPreferences";
 
 export namespace KPlugin {
@@ -26,12 +28,30 @@ export namespace MdPlugin {
 }
 
 export interface KPlugin {
-  name: string;
+  id: string;
+  require: (module: string) => any;
 }
 
-export function KPlugin(name: string): KPlugin {
+export function KPlugin(id: string): KPlugin {
   return {
-    name: name,
+    id: id,
+    require: (module: string) => {
+      switch (module) {
+        case "os":
+          return os;
+        case "ons":
+          return {
+            notification: ons.notification,
+          };
+        case "mdplugin":
+          return {
+            addRules: MdPlugin(id).addRules,
+          };
+
+        default:
+          return undefined;
+      }
+    },
   };
 }
 

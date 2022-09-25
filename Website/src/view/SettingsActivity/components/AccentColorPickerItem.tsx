@@ -1,12 +1,14 @@
 import React from "react";
 import { ListItem } from "react-onsenui";
 import { ConfirmationDialogRaw } from "../../../components/ConfirmationDialogRaw";
+import { useActivity } from "../../../hooks/useActivity";
 import { AccentColors, useScheme } from "../../../hooks/useScheme";
 import { accent_colors } from "../../../theme";
 
 export function AccentColorPickerItem() {
+  const { context, extra, settings } = useActivity();
   const [open, setOpen] = React.useState(false);
-  const [scheme, setScheme] = useScheme();
+  const [scheme, setScheme] = settings.useScheme();
   const [value, setValue] = React.useState<AccentColors[0]>(scheme);
 
   const handleOpen = () => {

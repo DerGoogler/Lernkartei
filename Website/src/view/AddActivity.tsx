@@ -3,7 +3,7 @@ import * as React from "react";
 import { BackButton, Button, Page, Toolbar } from "react-onsenui";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
-import { useActivity } from "../components/RoutedApp";
+import { useActivity } from "../hooks/useActivity";
 
 type Extra = {
   name: string;

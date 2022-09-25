@@ -1,4 +1,4 @@
-import { colors as kolors, ThemeOptions } from "@mui/material";
+import { colors as kolors, Theme, ThemeOptions, createTheme } from "@mui/material";
 import { AccentColors } from "./hooks/useScheme";
 import { sharedpreferences } from "./native/SharedPreferences";
 export { AccentColors } from "./hooks/useScheme";
@@ -101,18 +101,19 @@ export const colors = {
 
 export const default_scheme = sharedpreferences.getJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
 
-export const theme: ThemeOptions = {
+export const theme = createTheme({
   shape: {
     borderRadius: 8,
   },
   palette: {
     mode: "light",
     primary: {
-      // @ts-ignore
+      light: colors[default_scheme.value][300],
       main: colors[default_scheme.value][900],
+      // @ts-ignore
+      // dark: colors[default_scheme.value][800],
       contrastText: colors.grey[900],
     },
-
     background: {
       default: "#fafafa",
     },
@@ -122,4 +123,4 @@ export const theme: ThemeOptions = {
       contrastText: "",
     },
   },
-};
+});

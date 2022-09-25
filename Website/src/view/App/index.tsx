@@ -7,12 +7,12 @@ import Material3 from "../../components/Material3";
 import { BuildConfig } from "../../native/BuildConfig";
 import { StyledSection } from "../../components/StyledSection";
 // import { CardRenderer } from "./components/GroupRenderer";
-import { useActivity } from "../../components/RoutedApp";
 import { os } from "../../native/Os";
 import { useKPlugin } from "../../plugin/kplugin";
 import evil from "../../plugin/evil";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useKartei } from "../../hooks/useKartei";
+import { useActivity } from "../../hooks/useActivity";
 
 const CardRenderer = React.lazy(() => import("./components/GroupRenderer"));
 

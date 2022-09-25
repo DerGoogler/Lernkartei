@@ -3,7 +3,7 @@ import axios from "axios";
 import * as React from "react";
 import { BackButton, List, ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
 import { Icon } from "../components/Icon";
-import { useActivity } from "../components/RoutedApp";
+import { useActivity } from "../hooks/useActivity";
 import { useKartei } from "../hooks/useKartei";
 import { os } from "../native/Os";
 

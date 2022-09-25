@@ -30,6 +30,10 @@ const config: Configuration = {
         exclude: /node_modules/,
       },
       {
+        test: /\.d.ts$/i,
+        use: 'raw-loader',
+      },
+      {
         test: /\.yaml$/,
         use: "js-yaml-loader",
       },

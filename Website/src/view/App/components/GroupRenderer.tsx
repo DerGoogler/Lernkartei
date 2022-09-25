@@ -8,9 +8,8 @@ import { Fragment } from "react";
 import { ViewCardActivity } from "../../ViewCardsActivity";
 import AddActivity from "../../AddActivity";
 import { useKartei } from "../../../hooks/useKartei";
-import { useActivity } from "../../../components/RoutedApp";
 import { TransitionGroup } from "react-transition-group";
-import React from "react";
+import { useActivity } from "../../../hooks/useActivity";
 
 const GroupRenderer = () => {
   const activity = useActivity();
@@ -22,10 +21,11 @@ const GroupRenderer = () => {
     <List>
       <TransitionGroup>
         {cards.map((card, index) => (
-          <Fade key={"col_" + index} unmountOnExit>
-            <StyledCard elevation={0}>
-              <Box sx={{ p: 2, display: "flex" }}>
+          <Fade key={index} unmountOnExit>
+            <StyledCard key={index + 1} elevation={0}>
+              <Box key={index + 2} sx={{ p: 2, display: "flex" }}>
                 <Stack
+                  key={index + 3}
                   spacing={0.5}
                   style={{ flexGrow: 1 }}
                   onClick={() => {
@@ -43,15 +43,24 @@ const GroupRenderer = () => {
                     });
                   }}
                 >
-                  <Typography fontWeight={700}>{card.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography key={index + 4} fontWeight={700}>
+                    {card.name}
+                  </Typography>
+                  <Typography key={index + 5} variant="body2" color="text.secondary">
                     {card.description}
                   </Typography>
                 </Stack>
               </Box>
-              <Divider />
-              <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
+              <Divider key={index + 6} />
+              <Stack
+                key={index + 7}
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{ px: 2, py: 1 }}
+              >
                 <Chip
+                  key={index + 7}
                   size="small"
                   sx={{
                     bgcolor: "#eeeeee",
@@ -62,8 +71,9 @@ const GroupRenderer = () => {
                       : `${card.karten.length} Karten`
                   }
                 />
-                <Stack spacing={0.8} direction="row">
+                <Stack key={index + 8} spacing={0.8} direction="row">
                   <StyledIconButton
+                    key={index + 9}
                     style={{ width: 30, height: 30 }}
                     onClick={() => {
                       activity.context.pushPage({
@@ -80,10 +90,11 @@ const GroupRenderer = () => {
                       });
                     }}
                   >
-                    <EditRounded sx={{ fontSize: 14 }} />
+                    <EditRounded key={index + 10} sx={{ fontSize: 14 }} />
                   </StyledIconButton>
 
                   <StyledIconButton
+                    key={index + 11}
                     style={{ width: 30, height: 30 }}
                     onClick={() => {
                       confirm({
@@ -107,7 +118,7 @@ const GroupRenderer = () => {
                         .catch(() => {});
                     }}
                   >
-                    <DeleteRounded sx={{ fontSize: 14 }} />
+                    <DeleteRounded key={index + 12} sx={{ fontSize: 14 }} />
                   </StyledIconButton>
                 </Stack>
               </Stack>

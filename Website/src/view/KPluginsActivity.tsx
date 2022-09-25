@@ -4,8 +4,8 @@ import axios from "axios";
 import * as React from "react";
 import { BackButton, List, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
 import { Icon } from "../components/Icon";
-import { useActivity } from "../components/RoutedApp";
 import { StyledSection } from "../components/StyledSection";
+import { useActivity } from "../hooks/useActivity";
 import { os } from "../native/Os";
 import { KPlugin, useKPlugin } from "../plugin/kplugin";
 

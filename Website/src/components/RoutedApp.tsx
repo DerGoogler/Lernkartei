@@ -16,11 +16,12 @@ import {
 import { App } from "../view/App";
 import { os } from "../native/Os";
 import { sharedpreferences } from "../native/SharedPreferences";
-import { colors, default_scheme } from "../theme";
 import drawerItems from "../util/drawerItem";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
 import React from "react";
+import { Context } from "../hooks/useActivity";
+import { colors, default_scheme } from "../theme";
 
 interface States {
   isSplitterOpen: boolean;
@@ -28,16 +29,6 @@ interface States {
 }
 
 interface Props {}
-
-const Context = React.createContext({});
-
-export function useActivity<E = {}>() {
-  const ctx = React.useContext(Context) as PushProps<E>;
-  return {
-    context: ctx.context,
-    extra: ctx.extra,
-  };
-}
 
 class RoutedApp<A = {}> extends Component<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
@@ -80,7 +71,6 @@ class RoutedApp<A = {}> extends Component<Props, States> {
 
   public componentDidMount() {
     // This depends on createTheme
-    // @ts-ignore
     os.setStatusBarColor(colors[default_scheme.value][900], false);
     os.setNavigationBarColor("#fafafa");
   }

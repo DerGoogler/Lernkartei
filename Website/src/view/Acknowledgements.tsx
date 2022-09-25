@@ -6,7 +6,7 @@ import { Packages } from "package-depend-list";
 import { Card, CardContent, Typography, useTheme } from "@mui/material";
 import { Page } from "../components/onsenui/Page";
 import { os } from "../native/Os";
-import { useActivity } from "../components/RoutedApp";
+import { useActivity } from "../hooks/useActivity";
 
 function Acknowledgements() {
   const { context, extra } = useActivity();

@@ -5,13 +5,13 @@ import { useKartei } from "../../hooks/useKartei";
 import { useTheme } from "@mui/system";
 import { useDarkmode } from "../../hooks/useDarkmode";
 import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
-import { useActivity } from "../../components/RoutedApp";
 import { useConfirm } from "material-ui-confirm";
 import { useKPlugin, useMdPlugin } from "../../plugin/kplugin";
+import { useActivity } from "../../hooks/useActivity";
 
 function SettingsActivity() {
   const confirm = useConfirm();
-  const { context, extra } = useActivity();
+  const { context, extra, settings } = useActivity();
   const [mdplugin, setMdPlugin] = useMdPlugin();
   const [kplugins, setKPlugin] = useKPlugin();
 
@@ -20,8 +20,8 @@ function SettingsActivity() {
   const theme = useTheme();
 
   // Prefs
-  const [darkmode, setDarkmode] = useDarkmode();
-  const [cards, setCards] = useKartei();
+  const [darkmode, setDarkmode] = settings.useDarkmode();
+  const [cards, setCards] = settings.useKartei();
 
   const renderToolbar = () => {
     return (

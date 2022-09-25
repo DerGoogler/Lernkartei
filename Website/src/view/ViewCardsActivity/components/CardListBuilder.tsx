@@ -9,8 +9,8 @@ import { os } from "../../../native/Os";
 import { Fragment } from "react";
 import { useConfirm } from "material-ui-confirm";
 import { useKartei } from "../../../hooks/useKartei";
-import { useActivity } from "../../../components/RoutedApp";
 import React from "react";
+import { useActivity } from "../../../hooks/useActivity";
 
 type Props = {
   search: string;
@@ -28,7 +28,7 @@ const CardListBuilder = (props: Props) => {
   const Lrender = (map: Array<Karten>, search: string) => {
     const filteredCards = map.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
     return filteredCards.map((card, index) => (
-      <StyledCard key={`item_${index}`} elevation={0}>
+      <StyledCard key={index} elevation={0}>
         <Box sx={{ p: 2, display: "flex" }}>
           <Stack
             spacing={0.5}

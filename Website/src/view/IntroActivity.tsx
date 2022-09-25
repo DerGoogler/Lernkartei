@@ -5,7 +5,7 @@ import { App } from "./App";
 import { Icon } from "../components/Icon";
 import { os } from "../native/Os";
 import { useNativeStorage } from "../native/SharedPreferences";
-import { useActivity } from "../components/RoutedApp";
+import { useActivity } from "../hooks/useActivity";
 
 function IntroActivity() {
   const { context, extra } = useActivity();
