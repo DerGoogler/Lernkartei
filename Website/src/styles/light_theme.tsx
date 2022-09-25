@@ -3703,9 +3703,9 @@ export const LightTheme = (theme: Theme): any => ({
       borderRadius: "0",
     },
     ".progress-circular": {
-      height: "32px",
+      height: "40px",
       position: "relative",
-      width: "32px",
+      width: "40px",
       webkitTransform: "rotate(270deg)",
       transform: "rotate(270deg)",
       webkitAnimation: "none",
@@ -3774,7 +3774,7 @@ export const LightTheme = (theme: Theme): any => ({
       stroke: "transparent",
     },
     ".progress-circular--material__primary": {
-      stroke: "#4a148c",
+      stroke: theme.palette.primary.main,
     },
     ".progress-circular--material__secondary": {
       stroke: "#12005e",

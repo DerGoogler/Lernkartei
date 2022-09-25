@@ -9,8 +9,9 @@ import { ViewCardActivity } from "../../ViewCardsActivity";
 import AddActivity from "../../AddActivity";
 import { useKartei } from "../../../hooks/useKartei";
 import { useActivity } from "../../../components/RoutedApp";
+import React from "react";
 
-export function CardRenderer() {
+const GroupRenderer = React.memo((props) => {
   const activity = useActivity();
   const [cards, setCards] = useKartei();
 
@@ -111,4 +112,6 @@ export function CardRenderer() {
       ))}
     </Fragment>
   );
-}
+});
+
+export default GroupRenderer;

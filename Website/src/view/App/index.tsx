@@ -6,11 +6,14 @@ import AddActivity from "../AddActivity";
 import Material3 from "../../components/Material3";
 import { BuildConfig } from "../../native/BuildConfig";
 import { StyledSection } from "../../components/StyledSection";
-import { CardRenderer } from "./components/GroupRenderer";
+// import { CardRenderer } from "./components/GroupRenderer";
 import { useActivity } from "../../components/RoutedApp";
 import { os } from "../../native/Os";
 import { useKPlugin } from "../../plugin/kplugin";
 import evil from "../../plugin/evil";
+import { LoadingScreen } from "../../components/LoadingScreen";
+
+const CardRenderer = React.lazy(() => import("./components/GroupRenderer"));
 
 export function App() {
   const { context } = useActivity();
@@ -81,20 +84,7 @@ export function App() {
   return (
     <Page renderToolbar={renderToolbar} renderFixed={renderFixed}>
       <StyledSection>
-        <React.Suspense
-          fallback={
-            <ProgressCircular
-              indeterminate
-              style={{
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                WebkitTransform: "translate(-50%, -50%)",
-                transform: "translate(-50%, -50%)",
-              }}
-            />
-          }
-        >
+        <React.Suspense fallback={<LoadingScreen />}>
           <CardRenderer />
         </React.Suspense>
       </StyledSection>

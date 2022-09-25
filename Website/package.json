@@ -39,7 +39,7 @@
     "react": "^18.2.0",
     "react-ace": "^10.1.0",
     "react-device-detect": "^2.2.2",
-    "react-disappear": "^1.0.4",
+    "react-disappear": "1.0.4",
     "react-dom": "^18.2.0",
     "react-onsenui": "^1.13.0",
     "react-string-replace": "^1.1.0",

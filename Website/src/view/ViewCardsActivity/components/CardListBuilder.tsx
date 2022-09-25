@@ -10,12 +10,13 @@ import { Fragment } from "react";
 import { useConfirm } from "material-ui-confirm";
 import { useKartei } from "../../../hooks/useKartei";
 import { useActivity } from "../../../components/RoutedApp";
+import React from "react";
 
 type Props = {
   search: string;
 };
 
-export function CardListBuilder(props: Props) {
+const CardListBuilder = React.memo((props: Props) => {
   const { context, extra } = useActivity<any>();
 
   const { index: iindex } = extra;
@@ -26,106 +27,104 @@ export function CardListBuilder(props: Props) {
 
   const Lrender = (map: Array<Karten>, search: string) => {
     const filteredCards = map.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
-    return filteredCards.map((card, index) => {
-      return (
-        <StyledCard key={`item_${index}`} elevation={0}>
-          <Box sx={{ p: 2, display: "flex" }}>
-            <Stack
-              spacing={0.5}
-              style={{ flexGrow: 1 }}
+    return filteredCards.map((card, index) => (
+      <StyledCard key={`item_${index}`} elevation={0}>
+        <Box sx={{ p: 2, display: "flex" }}>
+          <Stack
+            spacing={0.5}
+            style={{ flexGrow: 1 }}
+            onClick={() => {
+              context.pushPage<typeof extra>({
+                component: DescriptonActivity,
+                props: {
+                  key: `card_${card.shortDescription}`,
+                  extra: {
+                    desc: card.description,
+                    shortDesc: card.shortDescription,
+                    index: index,
+                  },
+                },
+              });
+            }}
+          >
+            <Typography fontWeight={700}>
+              {reactStringReplace(card.shortDescription, /\*\*(\w+)\*\*/g, (match, i) => (
+                <strong>{match}</strong>
+              ))}
+            </Typography>
+            {/* <Typography variant="body2" color="text.secondary">
+#{index}
+</Typography> */}
+          </Stack>
+        </Box>
+        <Divider />
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
+          <Chip
+            size="small"
+            sx={{
+              bgcolor: "#eeeeee",
+            }}
+            label={`#${index}`}
+          />
+          <Stack spacing={0.8} direction="row">
+            <StyledIconButton
+              style={{ width: 30, height: 30 }}
               onClick={() => {
-                context.pushPage<typeof extra>({
-                  component: DescriptonActivity,
+                context.pushPage({
+                  component: AddCardToGroupActivity,
                   props: {
-                    key: `card_${card.shortDescription}`,
+                    key: `edit_${card.shortDescription}_${index}`,
                     extra: {
+                      card: null,
                       desc: card.description,
                       shortDesc: card.shortDescription,
                       index: index,
+                      cardIndex: iindex,
+                      edit: true,
                     },
                   },
                 });
               }}
             >
-              <Typography fontWeight={700}>
-                {reactStringReplace(card.shortDescription, /\*\*(\w+)\*\*/g, (match, i) => (
-                  <strong>{match}</strong>
-                ))}
-              </Typography>
-              {/* <Typography variant="body2" color="text.secondary">
-                #{index}
-              </Typography> */}
-            </Stack>
-          </Box>
-          <Divider />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
-            <Chip
-              size="small"
-              sx={{
-                bgcolor: "#eeeeee",
-              }}
-              label={`#${index}`}
-            />
-            <Stack spacing={0.8} direction="row">
-              <StyledIconButton
-                style={{ width: 30, height: 30 }}
-                onClick={() => {
-                  context.pushPage({
-                    component: AddCardToGroupActivity,
-                    props: {
-                      key: `edit_${card.shortDescription}_${index}`,
-                      extra: {
-                        card: null,
-                        desc: card.description,
-                        shortDesc: card.shortDescription,
-                        index: index,
-                        cardIndex: iindex,
-                        edit: true,
-                      },
-                    },
-                  });
-                }}
-              >
-                <EditRounded sx={{ fontSize: 14 }} />
-              </StyledIconButton>
+              <EditRounded sx={{ fontSize: 14 }} />
+            </StyledIconButton>
 
-              <StyledIconButton
-                style={{ width: 30, height: 30 }}
-                onClick={() => {
-                  confirm({
-                    title: "Löschen",
-                    description: (
-                      <span>
-                        Möchtest Du die <strong>Karte Nr.{index}</strong> löschen?
-                      </span>
-                    ),
-                    confirmationText: "Ja",
-                    cancellationText: "Nein",
+            <StyledIconButton
+              style={{ width: 30, height: 30 }}
+              onClick={() => {
+                confirm({
+                  title: "Löschen",
+                  description: (
+                    <span>
+                      Möchtest Du die <strong>Karte Nr.{index}</strong> löschen?
+                    </span>
+                  ),
+                  confirmationText: "Ja",
+                  cancellationText: "Nein",
+                })
+                  .then(() => {
+                    try {
+                      setCards((tmp) => {
+                        tmp[iindex].karten = tmp[iindex].karten.filter(
+                          (remv) => remv.shortDescription != card.shortDescription
+                        );
+                        return tmp;
+                      });
+
+                      os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
+                    } catch (error) {
+                      os.toast((error as Error).message, "short");
+                    }
                   })
-                    .then(() => {
-                      try {
-                        setCards((tmp) => {
-                          tmp[iindex].karten = tmp[iindex].karten.filter(
-                            (remv) => remv.shortDescription != card.shortDescription
-                          );
-                          return tmp;
-                        });
-
-                        os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
-                      } catch (error) {
-                        os.toast((error as Error).message, "short");
-                      }
-                    })
-                    .catch(() => {});
-                }}
-              >
-                <DeleteRounded sx={{ fontSize: 14 }} />
-              </StyledIconButton>
-            </Stack>
+                  .catch(() => {});
+              }}
+            >
+              <DeleteRounded sx={{ fontSize: 14 }} />
+            </StyledIconButton>
           </Stack>
-        </StyledCard>
-      );
-    });
+        </Stack>
+      </StyledCard>
+    ));
   };
 
   const resultsRender = [];
@@ -151,4 +150,6 @@ export function CardListBuilder(props: Props) {
   };
 
   return checkDeviceSize(<Fragment>{os.isTablet ? resultsRender : Lrender(karten, props.search)}</Fragment>);
-}
+});
+
+export default CardListBuilder;

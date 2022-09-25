@@ -9,7 +9,7 @@
     "strict": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "ES2020",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "target": "es5",

@@ -10,8 +10,11 @@ import { Searchbar } from "../../components/Searchbar";
 import { os } from "../../native/Os";
 import { StyledSection } from "../../components/StyledSection";
 import { useState } from "react";
-import { CardListBuilder } from "./components/CardListBuilder";
 import { useActivity } from "../../components/RoutedApp";
+import React from "react";
+import { LoadingScreen } from "../../components/LoadingScreen";
+
+const CardListBuilder = React.lazy(() => import("./components/CardListBuilder"));
 
 export function ViewCardActivity() {
   const { context, extra } = useActivity<any>();
@@ -76,7 +79,7 @@ export function ViewCardActivity() {
 
   return (
     <Page renderToolbar={renderToolbar} renderFixed={renderFixed}>
-      <Header>
+      {/* <Header>
         <HeaderTitle
           wrapper="div"
           onDisappear={(visible) => {
@@ -86,10 +89,12 @@ export function ViewCardActivity() {
           <div className="header-title">{title}</div>
           <div className="header-desc">{desc}</div>
         </HeaderTitle>
-      </Header>
+      </Header> */}
       <StyledSection>
         <Searchbar placeholder="Karten suchen ..." onSearchClick={(value) => setSearch(value)} />
-        <CardListBuilder search={search} />
+        <React.Suspense fallback={<LoadingScreen />}>
+          <CardListBuilder search={search} />
+        </React.Suspense>
       </StyledSection>
     </Page>
   );
