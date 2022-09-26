@@ -12,8 +12,6 @@ import Image from "../dapi/Image";
 import { Alert, Box, Chip, Container, Divider, Grid, Paper, Stack } from "@mui/material";
 import { StyledMarkdown } from "./StyledMarkdon";
 import styled from "@emotion/styled";
-import { parser } from "./parser";
-import { useMdPlugin } from "../../plugin/kplugin";
 
 type Props = {
   children: string;
@@ -22,16 +20,9 @@ type Props = {
 };
 
 export function Markup(props: Props) {
-  const [mdPlugins, setMdPlugins] = useMdPlugin();
-
   const StyledDivider = styled(Divider)({
     "h1, & h2, & h3, & h4, & h5, & h6": {
       border: "none",
-    },
-    "& .MuiDivider-fullWidth": {
-      "& .MuiDivider-root::before, & .MuiDivider-root::after": {
-        borderTop: "1px solid hsl(210, 18.2%, 87.1%)",
-      },
     },
   });
 
@@ -98,7 +89,7 @@ export function Markup(props: Props) {
             },
           },
         }}
-        children={parser(props.children, mdPlugins)}
+        children={props.children}
       />
     </StyledMarkdown>
   );

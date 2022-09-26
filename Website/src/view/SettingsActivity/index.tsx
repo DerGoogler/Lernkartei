@@ -1,19 +1,15 @@
 import { BackButton, ListHeader, ListItem, Page, Toolbar } from "react-onsenui";
 import { File } from "../../native/File";
 import { os } from "../../native/Os";
-import { useKartei } from "../../hooks/useKartei";
 import { useTheme } from "@mui/system";
 import { useDarkmode } from "../../hooks/useDarkmode";
 import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
 import { useConfirm } from "material-ui-confirm";
-import { useKPlugin, useMdPlugin } from "../../plugin/kplugin";
 import { useActivity } from "../../hooks/useActivity";
 
 function SettingsActivity() {
   const confirm = useConfirm();
   const { context, extra, settings } = useActivity();
-  const [mdplugin, setMdPlugin] = useMdPlugin();
-  const [kplugins, setKPlugin] = useKPlugin();
 
   os.useOnBackPressed(context.popPage);
 
@@ -93,49 +89,6 @@ function SettingsActivity() {
         <div className="center">
           <span className="list-item__title">Issues</span>
           <span className="list-item__subtitle">Track our issues</span>
-        </div>
-      </ListItem>
-      <ListHeader>Plugins</ListHeader>
-      <ListItem
-        tappable
-        modifier="chevron"
-        onClick={() => {
-          confirm({
-            title: "Delete plugins?",
-            description: "All plugins will be deleted",
-          })
-            .then(() => {
-              setKPlugin([]);
-            })
-            .catch(() => {
-              /* ... */
-            });
-        }}
-      >
-        <div className="center">
-          <span className="list-item__title">Remove All Plugins</span>
-          <span className="list-item__subtitle">Removes all plugins from this device</span>
-        </div>
-      </ListItem>
-      <ListItem
-        tappable
-        modifier="chevron"
-        onClick={() => {
-          confirm({
-            title: "Delete rules?",
-            description: "All rules will be deleted",
-          })
-            .then(() => {
-              setMdPlugin([]);
-            })
-            .catch(() => {
-              /* ... */
-            });
-        }}
-      >
-        <div className="center">
-          <span className="list-item__title">Remove All Md-Rules</span>
-          <span className="list-item__subtitle">This action is useless when the current plugin is saved</span>
         </div>
       </ListItem>
     </Page>

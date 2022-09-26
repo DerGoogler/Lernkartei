@@ -25,8 +25,6 @@ import { useConfirm } from "material-ui-confirm";
 import { os } from "../../native/Os";
 import { useKartei } from "../../hooks/useKartei";
 import { Markup } from "../../components/Markdown";
-import { Editor } from "./components/StyledAceEditor";
-import evil from "../../plugin/evil";
 import { useActivity } from "../../hooks/useActivity";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };

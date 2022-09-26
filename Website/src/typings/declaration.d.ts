@@ -1,11 +1,7 @@
 declare module "react-dom";
 declare module "print-html-block";
-declare module "safer-eval";
-
-declare module "!!raw-loader!*" {
-  const contents: string;
-  export = contents;
-}
+declare module "react-infinite-scroller";
+declare module "react-virtualized";
 
 declare module "*.css" {
   const content: Record<string, string>;

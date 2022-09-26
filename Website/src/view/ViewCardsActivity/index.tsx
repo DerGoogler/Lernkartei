@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Fade, styled } from "@mui/material";
 import { Disappear } from "react-disappear";
-import { Toolbar } from "react-onsenui";
+import { Toolbar, ToolbarButton } from "react-onsenui";
 import { BackButton, Page } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import Material3 from "../../components/Material3";
@@ -38,18 +38,8 @@ export function ViewCardActivity() {
             <span>{title}</span>
           </Fade>
         </div>
-      </Toolbar>
-    );
-  };
-
-  const renderFixed = () => {
-    const { title, cards, index } = extra;
-
-    return (
-      <Fade in={fabShow}>
-        <div>
-          <Material3.Fab
-            position="bottom right"
+        <div className="right">
+          <ToolbarButton
             onClick={() => {
               context.pushPage({
                 component: AddCardToGroupActivity,
@@ -64,21 +54,15 @@ export function ViewCardActivity() {
               });
             }}
           >
-            <Icon
-              icon={Add}
-              keepLight
-              style={{
-                height: "100%",
-              }}
-            />
-          </Material3.Fab>
+            <Icon icon={Add} keepLight />
+          </ToolbarButton>
         </div>
-      </Fade>
+      </Toolbar>
     );
   };
 
   return (
-    <Page renderToolbar={renderToolbar} renderFixed={renderFixed}>
+    <Page renderToolbar={renderToolbar}>
       <Header>
         <HeaderTitle
           wrapper="div"
