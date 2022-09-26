@@ -23,7 +23,7 @@ export function App() {
   //     os.close();
   //   }
   // });
-
+  os.useOnBackPressed(context.popPage);
   os.useOnResume(() => {
     console.log("User has been returned to the app");
   });
