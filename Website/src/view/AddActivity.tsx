@@ -64,13 +64,16 @@ function AddActivity() {
       if (!validGroup(group)) {
         os.toast("Bitte achte drauf, dass keine Leerzeichen verwendet werden, oder bindestriche", "short");
       } else {
-        if (cards.some((elem) => elem?.group === group)) {
-          os.toast(`Diese Gruppe is bereits vorhanden.`, "short");
-        } else {
-          setCards([...cards, obj]);
-          context.popPage();
-          os.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
-        }
+        setCards((tmp) => {
+          if (tmp.some((elem) => elem?.group === group)) {
+            os.toast(`Diese Gruppe is bereits vorhanden.`, "short");
+          } else {
+            tmp = [...tmp, obj];
+            context.popPage();
+            os.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
+          }
+          return tmp;
+        });
       }
     } catch (error) {
       alert((error as Error).message);
@@ -80,10 +83,11 @@ function AddActivity() {
   const handleEdit = () => {
     const { index } = extra;
 
-    let groups = cards;
-    groups[index].name = name;
-    groups[index].description = description;
-    setCards(groups);
+    setCards((groups) => {
+      groups[index].name = name;
+      groups[index].description = description;
+      return groups;
+    });
     context.popPage();
   };
 

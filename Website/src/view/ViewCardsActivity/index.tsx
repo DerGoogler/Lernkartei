@@ -25,7 +25,7 @@ export function ViewCardActivity() {
   const [titleShow, setTitleShow] = useState(true);
   const [search, setSearch] = useState("");
 
-  const { card, cards, index, title, desc } = extra;
+  const { index, title, desc } = extra;
 
   const renderToolbar = () => {
     return (
@@ -46,7 +46,6 @@ export function ViewCardActivity() {
                 props: {
                   key: "add",
                   extra: {
-                    card: cards,
                     index: index,
                     edit: false,
                   },

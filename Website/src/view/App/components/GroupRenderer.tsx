@@ -32,7 +32,6 @@ const GroupRenderer = () => {
                   props: {
                     key: `card_item_${card.group}`,
                     extra: {
-                      card: card.karten,
                       index: index,
                       title: card.name,
                       desc: card.description,

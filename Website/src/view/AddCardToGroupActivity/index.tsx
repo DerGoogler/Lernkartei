@@ -156,12 +156,12 @@ function AddCardToGroupActivity() {
           description: description,
         };
 
-        let tmp: Kartei[] = [];
-        tmp = cards;
-        tmp[index].karten.push(obj);
-        setCards(tmp);
-        context.popPage();
-        os.toast("Deine Karte wurde gespeichert.", "short");
+        setCards((tmp) => {
+          tmp[index].karten.push(obj);
+          context.popPage();
+          os.toast("Deine Karte wurde gespeichert.", "short");
+          return tmp;
+        });
       } catch (error) {
         alert((error as Error).message);
       }
@@ -171,17 +171,17 @@ function AddCardToGroupActivity() {
   };
 
   const handleEdit = () => {
-    let tmp: Kartei[] = [];
-    tmp = cards;
-    tmp[cardIndex].karten[index].shortDescription = shortDescription;
-    tmp[cardIndex].karten[index].description = description;
+    setCards((tmp) => {
+      tmp[cardIndex].karten[index].shortDescription = shortDescription;
+      tmp[cardIndex].karten[index].description = description;
 
-    if (shortDescription === "") {
-      ons.notification.alert("Kurz Beschreibung darf nicht leer sein!");
-    } else {
-      setCards(tmp);
-      context.popPage();
-    }
+      if (shortDescription === "") {
+        ons.notification.alert("Kurz Beschreibung darf nicht leer sein!");
+      } else {
+        context.popPage();
+      }
+      return tmp;
+    });
   };
 
   const handleShortDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
