@@ -1,6 +1,7 @@
 import { colors as kolors, Theme, ThemeOptions, createTheme } from "@mui/material";
 import { AccentColors } from "./hooks/useScheme";
 import { sharedpreferences } from "./native/SharedPreferences";
+import shadeColor from "./util/shadeColor";
 export { AccentColors } from "./hooks/useScheme";
 
 export const accent_colors: AccentColors = [
@@ -100,27 +101,72 @@ export const colors = {
 };
 
 export const default_scheme = sharedpreferences.getJSON<AccentColors[0]>("accent_scheme", accent_colors[0]);
+export const isDarkmode = sharedpreferences.getBoolean("darkmode", false);
 
+// export const theme = createTheme({
+//   shape: {
+//     borderRadius: 8,
+//   },
+//   palette: {
+//     mode: "light",
+//     primary: {
+//       light: colors[default_scheme.value][300],
+//       main: colors[default_scheme.value][900],
+//       // @ts-ignore
+//       // dark: colors[default_scheme.value][800],
+//       contrastText: colors.grey[900],
+//     },
+//     background: {
+//       default: "#fafafa",
+//     },
+//     divider: "#e5e8ec",
+//     secondary: {
+//       main: "#e5e8ec",
+//       contrastText: "",
+//     },
+//   },
+// });
 export const theme = createTheme({
   shape: {
     borderRadius: 8,
   },
-  palette: {
-    mode: "light",
-    primary: {
-      light: colors[default_scheme.value][300],
-      main: colors[default_scheme.value][900],
-      // @ts-ignore
-      // dark: colors[default_scheme.value][800],
-      contrastText: colors.grey[900],
-    },
-    background: {
-      default: "#fafafa",
-    },
-    divider: "#e5e8ec",
-    secondary: {
-      main: "#e5e8ec",
-      contrastText: "",
-    },
-  },
+  palette: !isDarkmode
+    ? {
+        mode: "light",
+        primary: {
+          light: colors[default_scheme.value][300],
+          main: colors[default_scheme.value][900],
+          // @ts-ignore
+          // dark: colors[default_scheme.value][800],
+          contrastText: colors.grey[900],
+        },
+        background: {
+          default: "#fafafa",
+        },
+        divider: "#e5e8ec",
+        secondary: {
+          main: "#e5e8ec",
+          light: "#eeeeee",
+          contrastText: "",
+        },
+      }
+    : {
+        mode: "dark",
+        primary: {
+          light: shadeColor(colors[default_scheme.value][300], -40),
+          main: shadeColor(colors[default_scheme.value][900], -40),
+          // @ts-ignore
+          // dark: colors[default_scheme.value][800],
+          contrastText: colors.grey[100],
+        },
+        background: {
+          default: shadeColor(colors[default_scheme.value][900], -80),
+        },
+        divider: shadeColor(colors[default_scheme.value][900], -100),
+        secondary: {
+          main: "#e5e8ec",
+          light: shadeColor(colors[default_scheme.value][900], -80),
+          contrastText: "",
+        },
+      },
 });

@@ -2,6 +2,8 @@ import * as React from "react";
 import { SearchRounded } from "@mui/icons-material";
 import { Button, SearchInput } from "react-onsenui";
 import { styled, useTheme } from "@mui/material";
+import { colors, default_scheme, isDarkmode } from "../theme";
+import shadeColor from "../util/shadeColor";
 
 type SearchbarProps = {
   onSearchClick: (value: string) => void;
@@ -27,9 +29,9 @@ const StyledSearchInput = styled(SearchInput)(({ theme }) => ({
   width: "100%",
   borderRight: "none",
   "& .search-input--material": {
-    border: `1px solid ${theme.palette.secondary.main}`,
+    border: `1px solid ${theme.palette.divider}`,
     borderRadius: `${theme.shape.borderRadius}px 0px 0px ${theme.shape.borderRadius}px`,
-    backgroundColor: "#fff",
+    backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -70) : "rgb(255, 255, 255)",
   },
 }));
 

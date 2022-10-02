@@ -41,7 +41,7 @@ const GroupRenderer = () => {
                 });
               }}
             >
-              <Typography key={index + 4} fontWeight={700}>
+              <Typography key={index + 4} fontWeight={700} color="text.primary">
                 {card.name}
               </Typography>
               <Typography key={index + 5} variant="body2" color="text.secondary">
@@ -60,9 +60,9 @@ const GroupRenderer = () => {
             <Chip
               key={index + 7}
               size="small"
-              sx={{
-                bgcolor: "#eeeeee",
-              }}
+              sx={(theme) => ({
+                bgcolor: theme.palette.secondary.light,
+              })}
               label={
                 card.karten.length != 0 && card.karten.length <= 1
                   ? `${card.karten.length} Karte`

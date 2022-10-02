@@ -6,6 +6,7 @@ import { useDarkmode } from "../../hooks/useDarkmode";
 import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
 import { useConfirm } from "material-ui-confirm";
 import { useActivity } from "../../hooks/useActivity";
+import Material3 from "../../components/Material3";
 
 function SettingsActivity() {
   const confirm = useConfirm();
@@ -33,7 +34,7 @@ function SettingsActivity() {
   return (
     <Page renderToolbar={renderToolbar}>
       <ListHeader>Aussehen</ListHeader>
-      {/* <ListItem>
+      <ListItem>
         <div className="center">
           <span className="list-item__title">Dunkler Modus (Beta)</span>
           <span className="list-item__subtitle">Design könnte nicht auf dem neuesten stand sein</span>
@@ -46,8 +47,9 @@ function SettingsActivity() {
             }}
           ></Material3.Switch>
         </div>
-      </ListItem> */}
-      {!darkmode && <AccentColorPickerItem />}
+      </ListItem>
+      {/* {!darkmode && <AccentColorPickerItem />} */}
+      <AccentColorPickerItem />
 
       <ListHeader>Karten / Gruppen</ListHeader>
       <ListItem

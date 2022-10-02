@@ -21,7 +21,7 @@ import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
 import React from "react";
 import { Context } from "../hooks/useActivity";
-import { colors, default_scheme } from "../theme";
+import { colors, default_scheme, theme } from "../theme";
 
 interface States {
   isSplitterOpen: boolean;
@@ -71,8 +71,8 @@ class RoutedApp<A = {}> extends Component<Props, States> {
 
   public componentDidMount() {
     // This depends on createTheme
-    os.setStatusBarColor(colors[default_scheme.value][900], false);
-    os.setNavigationBarColor("#fafafa");
+    os.setStatusBarColor(theme.palette.primary.main, false);
+    os.setNavigationBarColor(theme.palette.background.default);
   }
 
   private pushPage<A = {}>(props: PushPropsCore<A>): void {

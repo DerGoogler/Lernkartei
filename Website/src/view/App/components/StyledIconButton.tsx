@@ -1,4 +1,6 @@
 import { IconButton, styled } from "@mui/material";
+import { isDarkmode } from "../../../theme";
+import shadeColor from "../../../util/shadeColor";
 
 export const StyledIconButton = styled(IconButton)(({ theme }) => ({
   display: "inline-flex",
@@ -22,12 +24,12 @@ export const StyledIconButton = styled(IconButton)(({ theme }) => ({
   padding: "8px",
   overflow: "visible",
   transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-  border: "1px solid rgb(238, 238, 238)",
-  borderTopColor: "rgb(238, 238, 238)",
-  borderRightColor: "rgb(238, 238, 238)",
-  borderBottomColor: "rgb(238, 238, 238)",
-  borderLeftColor: "rgb(238, 238, 238)",
-  color: "rgb(66, 66, 66)",
+  border: `1px solid ${theme.palette.divider}`,
+  borderTopColor: theme.palette.divider,
+  borderRightColor: theme.palette.divider,
+  borderBottomColor: theme.palette.divider,
+  borderLeftColor: theme.palette.divider,
+  color: !isDarkmode ? "rgb(66, 66, 66)" : theme.palette.divider,
   borderRadius: theme.shape.borderRadius,
   alignSelf: "flex-start",
   ":hover": {

@@ -78,7 +78,7 @@ const CardListBuilder = (props: Props) => {
                 });
               }}
             >
-              <Typography fontWeight={700}>
+              <Typography fontWeight={700} color="text.primary">
                 {reactStringReplace(card.shortDescription, /\*\*(\w+)\*\*/g, (match, i) => (
                   <strong>{match}</strong>
                 ))}
@@ -92,9 +92,9 @@ const CardListBuilder = (props: Props) => {
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
             <Chip
               size="small"
-              sx={{
-                bgcolor: "#eeeeee",
-              }}
+              sx={(theme) => ({
+                bgcolor: theme.palette.secondary.light,
+              })}
               label={`#${index}`}
             />
             <Stack spacing={0.8} direction="row">

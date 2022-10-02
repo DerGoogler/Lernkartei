@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { useTheme } from "@mui/material";
 import { Theme } from "@mui/material";
+import { colors, default_scheme, isDarkmode } from "../../theme";
+import shadeColor from "../../util/shadeColor";
 
 interface Props {
   children?: React.ReactNode;
@@ -18,7 +20,7 @@ export const StyledMarkdown = (props: Props) => {
     msTextSizeAdjust: "100%",
     WebkitTextSizeAdjust: "100%",
     margin: "0",
-    color: "#24292f",
+    color: theme.palette.text.secondary,
     // backgroundColor: "#ffffff",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",\n    "Segoe UI Emoji"',
@@ -94,7 +96,7 @@ export const StyledMarkdown = (props: Props) => {
       height: "0.25em",
       padding: "0",
       margin: "24px 0",
-      backgroundColor: "#d0d7de",
+      backgroundColor: theme.palette.divider,
       border: "0",
       "&::before": { display: "table", content: '""' },
       "&::after": { display: "table", clear: "both", content: '""' },
@@ -151,12 +153,14 @@ export const StyledMarkdown = (props: Props) => {
       width: "max-content",
       maxWidth: "100%",
       overflow: "auto",
-      th: { fontWeight: 600, padding: "6px 13px", border: "1px solid #d0d7de" },
-      td: { padding: "6px 13px", border: "1px solid #d0d7de" },
+      th: { fontWeight: 600, padding: "6px 13px", border: `1px solid ${theme.palette.divider}` },
+      td: { padding: "6px 13px", border: `1px solid ${theme.palette.divider}` },
       tr: {
-        backgroundColor: "#ffffff",
+        backgroundColor: theme.palette.background.default,
         borderTop: `thin solid ${theme.palette.divider}`,
-        "&:nth-child(2n)": { backgroundColor: "#f6f8fa" },
+        "&:nth-child(2n)": {
+          backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -85) : "#f6f8fa",
+        },
       },
       img: { backgroundColor: "transparent" },
     },
@@ -262,8 +266,8 @@ export const StyledMarkdown = (props: Props) => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: "#f6f8fa",
-      borderRadius: "6px",
+      backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -85) : "#f6f8fa",
+      borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",
         maxWidth: "auto",
