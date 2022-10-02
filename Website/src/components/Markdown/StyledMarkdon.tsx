@@ -20,7 +20,7 @@ export const StyledMarkdown = (props: Props) => {
     msTextSizeAdjust: "100%",
     WebkitTextSizeAdjust: "100%",
     margin: "0",
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     // backgroundColor: "#ffffff",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",\n    "Segoe UI Emoji"',

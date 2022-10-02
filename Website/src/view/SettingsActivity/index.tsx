@@ -7,18 +7,19 @@ import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
 import { useConfirm } from "material-ui-confirm";
 import { useActivity } from "../../hooks/useActivity";
 import Material3 from "../../components/Material3";
+import { useKartei } from "../../hooks/useKartei";
 
 function SettingsActivity() {
   const confirm = useConfirm();
-  const { context, extra, settings } = useActivity();
+  const { context, extra } = useActivity();
 
   os.useOnBackPressed(context.popPage);
 
   const theme = useTheme();
 
   // Prefs
-  const [darkmode, setDarkmode] = settings.useDarkmode();
-  const [cards, setCards] = settings.useKartei();
+  const [darkmode, setDarkmode] = useDarkmode();
+  const [cards, setCards] = useKartei();
 
   const renderToolbar = () => {
     return (

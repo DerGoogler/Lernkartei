@@ -15,14 +15,13 @@ export const SettingsElements = {
 };
 
 export const Context = React.createContext({});
-export const Settings = React.createContext(SettingsElements);
+export const Extra = React.createContext({});
 
 export function useActivity<E = {}>() {
   const ctx = React.useContext(Context) as PushProps<E>;
-  const sts = React.useContext(Settings);
+  const etx = React.useContext(Extra) as E;
   return {
-    context: ctx.context,
-    settings: sts,
-    extra: ctx.extra,
+    context: ctx,
+    extra: etx,
   };
 }

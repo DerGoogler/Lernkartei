@@ -20,8 +20,9 @@ import drawerItems from "../util/drawerItem";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
 import React from "react";
-import { Context } from "../hooks/useActivity";
+import { Context, Extra } from "../hooks/useActivity";
 import { colors, default_scheme, theme } from "../theme";
+import { obj } from "googlers-tools";
 
 interface States {
   isSplitterOpen: boolean;
@@ -135,10 +136,13 @@ class RoutedApp<A = {}> extends Component<Props, States> {
 
   private renderPage = (route: any) => {
     const props = route.props || {};
+    const newProps = obj.omit(["extra", "context"], props);
     return (
-      <Context.Provider value={props}>
-        <route.component />
-      </Context.Provider>
+      <Extra.Provider value={props.extra}>
+        <Context.Provider value={props.context}>
+          <route.component {...newProps} />
+        </Context.Provider>
+      </Extra.Provider>
     );
   };
 

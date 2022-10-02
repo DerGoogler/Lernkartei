@@ -52,7 +52,7 @@ declare global {
 
   interface PushProps<E = {}> {
     readonly extra: E;
-    readonly context: {
+    // readonly context: {
       readonly popPage: () => void;
       readonly pushPage: <T>(props: PushPropsCore<T>) => void;
       readonly splitter: {
@@ -62,7 +62,7 @@ declare global {
       };
       readonly onBackPressed: (callback: () => void) => void;
       readonly onResume: (callback: () => void) => void;
-    };
+    // };
   }
 
   interface UseActivity<E = {}> {

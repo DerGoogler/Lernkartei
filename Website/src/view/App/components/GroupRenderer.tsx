@@ -12,7 +12,7 @@ import { TransitionGroup } from "react-transition-group";
 import { useActivity } from "../../../hooks/useActivity";
 
 const GroupRenderer = () => {
-  const activity = useActivity();
+  const { context } = useActivity();
   const [cards, setCards] = useKartei();
 
   const confirm = useConfirm();
@@ -27,7 +27,7 @@ const GroupRenderer = () => {
               spacing={0.5}
               style={{ flexGrow: 1 }}
               onClick={() => {
-                activity.context.pushPage<any>({
+                context.pushPage<any>({
                   component: ViewCardActivity,
                   props: {
                     key: `card_item_${card.group}`,
@@ -73,7 +73,7 @@ const GroupRenderer = () => {
                 key={index + 9}
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  activity.context.pushPage({
+                  context.pushPage({
                     component: AddActivity,
                     props: {
                       key: `edit_${card.name}_${index}`,

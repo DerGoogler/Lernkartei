@@ -6,9 +6,9 @@ import { AccentColors, useScheme } from "../../../hooks/useScheme";
 import { accent_colors } from "../../../theme";
 
 export function AccentColorPickerItem() {
-  const { context, extra, settings } = useActivity();
+  const { context, extra } = useActivity();
   const [open, setOpen] = React.useState(false);
-  const [scheme, setScheme] = settings.useScheme();
+  const [scheme, setScheme] = useScheme();
   const [value, setValue] = React.useState<AccentColors[0]>(scheme);
 
   const handleOpen = () => {
