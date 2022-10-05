@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useTheme } from "@mui/material";
 import { Theme } from "@mui/material";
-import { colors, default_scheme, isDarkmode } from "../../theme";
+import { colors, useDarkmode, useScheme } from "../../hooks/useDarkmode";
 import shadeColor from "../../util/shadeColor";
 
 interface Props {
@@ -15,6 +15,8 @@ interface T {
 
 export const StyledMarkdown = (props: Props) => {
   const theme = useTheme();
+  const { scheme, setScheme } = useScheme();
+  const { darkmode, setDarkmode } = useDarkmode();
 
   const Article = styled.article(({ theme }: T) => ({
     msTextSizeAdjust: "100%",
@@ -159,7 +161,7 @@ export const StyledMarkdown = (props: Props) => {
         backgroundColor: theme.palette.background.default,
         borderTop: `thin solid ${theme.palette.divider}`,
         "&:nth-child(2n)": {
-          backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -85) : "#f6f8fa",
+          backgroundColor: darkmode ? shadeColor(colors[scheme.value][900], -85) : "#f6f8fa",
         },
       },
       img: { backgroundColor: "transparent" },
@@ -266,7 +268,7 @@ export const StyledMarkdown = (props: Props) => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -85) : "#f6f8fa",
+      backgroundColor: darkmode ? shadeColor(colors[scheme.value][900], -85) : "#f6f8fa",
       borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",

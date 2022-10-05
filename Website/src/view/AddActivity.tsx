@@ -1,9 +1,11 @@
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import * as React from "react";
-import { BackButton, Button, Page, Toolbar } from "react-onsenui";
+import { BackButton, Page, Toolbar } from "react-onsenui";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 import { useActivity } from "../hooks/useActivity";
+import { ToolbarButton } from "../components/ToolbarButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 type Extra = {
   name: string;
@@ -29,7 +31,7 @@ function AddActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}>Back</BackButton>
+          <ToolbarButton icon={ArrowBackIcon} onClick={context.popPage} />
         </div>
         <div className="center">{!isEditMode ? "Neue Gruppe" : "Gruppe Bearbeiten"}</div>
       </Toolbar>
@@ -129,7 +131,13 @@ function AddActivity() {
             onChange={handleDescriptionChange}
           />
         </span>
-        <Button style={{ marginTop: 8 }} modifier="large" onClick={!isEditMode ? handleSave : handleEdit}>
+        <Button
+          style={{ marginTop: 8 }}
+          fullWidth
+          variant="contained"
+          disableElevation
+          onClick={!isEditMode ? handleSave : handleEdit}
+        >
           Speichern
         </Button>
       </section>

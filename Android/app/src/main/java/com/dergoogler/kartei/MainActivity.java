@@ -2,11 +2,20 @@ package com.dergoogler.kartei;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.webkit.WebViewAssetLoader;
+import androidx.webkit.WebViewClientCompat;
 
 import com.dergoogler.component.ModuleChromeClient;
 import com.dergoogler.component.ModuleView;
@@ -42,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        view.loadUrl("https://appassets.androidplatform.net/assets/web/index.html");
 
         // Options
         view.setJavaScriptEnabled(true);
@@ -53,8 +63,11 @@ public class MainActivity extends AppCompatActivity {
         view.setDomStorageEnabled(false);
         view.setUserAgentString("KARTEI");
 
-        // Content
-        view.loadUrl("file:///android_asset/web/index.html");
+        WebSettings webViewSettings = view.getSettings();
+        webViewSettings.setAllowFileAccessFromFileURLs(false);
+        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
+        webViewSettings.setAllowFileAccess(false);
+        webViewSettings.setAllowContentAccess(false);
 
         // Core
         view.addJavascriptInterface(new NativeOS(this), "os");
@@ -64,7 +77,18 @@ public class MainActivity extends AppCompatActivity {
         view.addJavascriptInterface(new NativeFile(), "file");
         view.addJavascriptInterface(new NativeUtils(), "utils");
 
-        view.setModuleChromeClient(new ModuleChromeClient() {
+        final WebViewAssetLoader assetLoader = new WebViewAssetLoader.Builder()
+                .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
+                .build();
+
+        view.setWebViewClient(new WebViewClientCompat() {
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                return assetLoader.shouldInterceptRequest(request.getUrl());
+            }
+        });
+
+        view.setModuleChromeClient(new WebChromeClient() {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
 

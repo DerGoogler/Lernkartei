@@ -1,6 +1,6 @@
 import { Native } from "./Native";
 
-export class Environment extends Native {
+export class environment extends Native {
   public constructor() {
     super();
     this.interface = "environment";
@@ -14,3 +14,5 @@ export class Environment extends Native {
     this.isAndroid ? this.getInterface.requestPermission(req) : null;
   }
 }
+
+export const Environment = new environment();

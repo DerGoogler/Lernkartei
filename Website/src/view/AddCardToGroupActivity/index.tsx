@@ -2,10 +2,10 @@ import printHtmlBlock from "print-html-block";
 import { Stack, styled, TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ons from "onsenui";
 import * as React from "react";
-import { BackButton, Page, Toolbar } from "react-onsenui";
+import { Page, Toolbar } from "react-onsenui";
 import AceEditor from "react-ace";
+import Button from "@mui/material/Button";
 import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
-import Material3 from "../../components/Material3";
 import {
   CheckRounded,
   CloseRounded,
@@ -26,6 +26,7 @@ import { os } from "../../native/Os";
 import { useKartei } from "../../hooks/useKartei";
 import { Markup } from "../../components/Markdown";
 import { useActivity } from "../../hooks/useActivity";
+import { BackButton } from "../../components/BackButton";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
@@ -118,7 +119,7 @@ function AddCardToGroupActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={handleBackButtonClick}>Back</BackButton>
+          <BackButton onClick={handleBackButtonClick} />
         </div>
         <div className="center">{edit ? "Karte bearbeiten" : "Neue Karte"}</div>
       </Toolbar>
@@ -219,9 +220,11 @@ function AddCardToGroupActivity() {
         >
           {formatTXT.map((El) => (
             <ToggleButton
-              style={{
-                border: "1px solid rgb(196, 196, 196)",
-              }}
+              // sx={(theme) => ({
+              //   border: `1px solid ${
+              //     theme.palette.mode === "light" ? "rgba(0, 0, 0, 0.42)" : "rgba(255, 255, 255, 0.7)"
+              //   }`,
+              // })}
               value={El.name}
               key={El.name}
               onClick={() => markdownRef.current?.trigger(El.name)}
@@ -280,11 +283,12 @@ function AddCardToGroupActivity() {
           alignItems="center"
           spacing={1}
         >
-          <Material3.Button modifier="large" onClick={edit ? handleEdit : handleSave}>
+          <Button fullWidth variant="contained" disableElevation onClick={edit ? handleEdit : handleSave}>
             Speichern
-          </Material3.Button>
-          <Material3.Button
-            modifier="large"
+          </Button>
+          <Button
+            fullWidth
+            variant="outlined"
             onClick={() => {
               if (!os.isAndroid && isDesktop) {
                 printHtmlBlock(".preview", {
@@ -306,8 +310,9 @@ function AddCardToGroupActivity() {
               }
             }}
           >
+            {" "}
             {!os.isAndroid && isDesktop ? "Drucken" : "Ansicht"}
-          </Material3.Button>
+          </Button>
         </Stack>
       </section>
     </Page>

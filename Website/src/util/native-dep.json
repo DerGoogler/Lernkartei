@@ -38,5 +38,13 @@
         "license": "null",
         "author": "null",
         "repository": "https://mvnrepository.com/artifact/org.nanohttpd/nanohttpd/2.3.1"
+    },
+    {
+        "name": "androidx.webkit:webkit",
+        "description": "androidx.webkit:webkit:1.5.0",
+        "version": "1.5.0",
+        "license": "null",
+        "author": "null",
+        "repository": "https://mvnrepository.com/artifact/androidx.webkit/webkit/1.5.0"
     }
 ]

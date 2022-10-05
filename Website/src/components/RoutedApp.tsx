@@ -21,7 +21,6 @@ import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
 import React from "react";
 import { Context, Extra } from "../hooks/useActivity";
-import { colors, default_scheme, theme } from "../theme";
 import { obj } from "googlers-tools";
 
 interface States {
@@ -70,10 +69,16 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     this.pushPage = this.pushPage.bind(this);
   }
 
+  private handleBackButton() {
+    this.popPage();
+  }
+
   public componentDidMount() {
-    // This depends on createTheme
-    os.setStatusBarColor(theme.palette.primary.main, false);
-    os.setNavigationBarColor(theme.palette.background.default);
+    os.addNativeEventListener("onbackbutton", this.handleBackButton);
+  }
+
+  public componentWillUnmount() {
+    os.removeNativeEventListener("onbackbutton", this.handleBackButton);
   }
 
   private pushPage<A = {}>(props: PushPropsCore<A>): void {
@@ -96,21 +101,25 @@ class RoutedApp<A = {}> extends Component<Props, States> {
       },
     };
 
+    const options = {};
+
     let routeConfig = this.state.routeConfig;
 
     routeConfig = RouterUtil.push({
-      routeConfig,
-      route,
+      routeConfig: routeConfig,
+      route: route,
+      options: options,
+      key: props.props.key,
     });
 
-    this.setState({ routeConfig });
+    this.setState({ routeConfig: routeConfig });
   }
 
   private popPage = (options = {}) => {
     let routeConfig = this.state.routeConfig;
 
     routeConfig = RouterUtil.pop({
-      routeConfig,
+      routeConfig: routeConfig,
       options: {
         ...options,
         animationOptions: {
@@ -121,17 +130,17 @@ class RoutedApp<A = {}> extends Component<Props, States> {
       },
     });
 
-    this.setState({ routeConfig });
+    this.setState({ routeConfig: routeConfig });
   };
 
   private onPostPush = () => {
     const routeConfig = RouterUtil.postPush(this.state.routeConfig);
-    this.setState({ routeConfig });
+    this.setState({ routeConfig: routeConfig });
   };
 
   private onPostPop = () => {
     const routeConfig = RouterUtil.postPop(this.state.routeConfig);
-    this.setState({ routeConfig });
+    this.setState({ routeConfig: routeConfig });
   };
 
   private renderPage = (route: any) => {

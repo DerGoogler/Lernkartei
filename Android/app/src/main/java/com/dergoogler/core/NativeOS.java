@@ -1,6 +1,7 @@
 package com.dergoogler.core;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -55,7 +56,15 @@ public class NativeOS {
                 .build();
         intentBuilder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, params);
         CustomTabsIntent customTabsIntent = intentBuilder.build();
-        customTabsIntent.launchUrl(this.ctx, uriUrl);
+
+        // It's not the best, but it should work
+        try {
+            customTabsIntent.launchUrl(this.ctx, uriUrl);
+        } catch (ActivityNotFoundException e) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(link));
+            this.ctx.startActivity(intent);
+        }
     }
 
     @JavascriptInterface

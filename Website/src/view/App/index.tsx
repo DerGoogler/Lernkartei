@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Page, Toolbar, ToolbarButton } from "react-onsenui";
+import { Page, Toolbar } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
@@ -9,6 +9,7 @@ import { StyledSection } from "../../components/StyledSection";
 import { os } from "../../native/Os";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useActivity } from "../../hooks/useActivity";
+import { ToolbarButton } from "../../components/ToolbarButton";
 
 const CardRenderer = React.lazy(() => import("./components/GroupRenderer"));
 
@@ -33,16 +34,16 @@ export function App() {
       <Toolbar modifier="noshadow">
         <div className="left">
           <ToolbarButton
+            icon={Menu}
             onClick={() => {
               context.splitter.show();
             }}
-          >
-            <Icon icon={Menu} keepLight />
-          </ToolbarButton>
+          />
         </div>
         <div className="center">Kartei {BuildConfig.DEBUG ? "Debug" : ""}</div>
         <div className="right">
           <ToolbarButton
+            icon={Add}
             onClick={() => {
               context.pushPage({
                 component: AddActivity,
@@ -52,9 +53,7 @@ export function App() {
                 },
               });
             }}
-          >
-            <Icon icon={Add} keepLight />
-          </ToolbarButton>
+          />
         </div>
       </Toolbar>
     );

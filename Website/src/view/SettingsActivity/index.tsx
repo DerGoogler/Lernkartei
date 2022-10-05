@@ -1,4 +1,4 @@
-import { BackButton, ListHeader, ListItem, Page, Toolbar } from "react-onsenui";
+import { ListHeader, ListItem, Page, Toolbar } from "react-onsenui";
 import { File } from "../../native/File";
 import { os } from "../../native/Os";
 import { useTheme } from "@mui/system";
@@ -8,6 +8,7 @@ import { useConfirm } from "material-ui-confirm";
 import { useActivity } from "../../hooks/useActivity";
 import Material3 from "../../components/Material3";
 import { useKartei } from "../../hooks/useKartei";
+import { BackButton } from "../../components/BackButton";
 
 function SettingsActivity() {
   const confirm = useConfirm();
@@ -18,14 +19,14 @@ function SettingsActivity() {
   const theme = useTheme();
 
   // Prefs
-  const [darkmode, setDarkmode] = useDarkmode();
+  const { darkmode, setDarkmode } = useDarkmode();
   const [cards, setCards] = useKartei();
 
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage} />
         </div>
         <div className="center">Einstellungen</div>
       </Toolbar>

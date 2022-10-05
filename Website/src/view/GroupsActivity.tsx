@@ -1,7 +1,8 @@
 import { DownloadRounded } from "@mui/icons-material";
 import axios from "axios";
 import * as React from "react";
-import { BackButton, List, ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
+import { List, ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
+import { BackButton } from "../components/BackButton";
 import { Icon } from "../components/Icon";
 import { useActivity } from "../hooks/useActivity";
 import { useKartei } from "../hooks/useKartei";
@@ -70,7 +71,7 @@ function GroupsActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage}/>
         </div>
         <div className="center">Gruppen</div>
       </Toolbar>

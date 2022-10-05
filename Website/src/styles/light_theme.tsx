@@ -2461,7 +2461,7 @@ export const LightTheme = () => {
           padding: "0 0 0 14px",
           margin: "0 0 -1px 0",
           // color: "#1f1f21",
-          color: theme.palette.primary.contrastText,
+          color: theme.palette.text.primary,
           transition: "background-color 0.2s linear",
         },
         ".list-item__top": {

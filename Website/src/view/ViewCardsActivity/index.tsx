@@ -2,9 +2,8 @@ import { Add } from "@mui/icons-material";
 import { Fade, styled } from "@mui/material";
 import { Disappear } from "react-disappear";
 import { Toolbar, ToolbarButton } from "react-onsenui";
-import { BackButton, Page } from "react-onsenui";
+import { Page } from "react-onsenui";
 import { Icon } from "../../components/Icon";
-import Material3 from "../../components/Material3";
 import AddCardToGroupActivity from "../AddCardToGroupActivity";
 import { Searchbar } from "../../components/Searchbar";
 import { os } from "../../native/Os";
@@ -13,6 +12,7 @@ import { useState } from "react";
 import React from "react";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useActivity } from "../../hooks/useActivity";
+import { BackButton } from "../../components/BackButton";
 
 const CardListBuilder = React.lazy(() => import("./components/CardListBuilder"));
 
@@ -31,7 +31,7 @@ export function ViewCardActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage} />
         </div>
         <div className="center">
           <Fade in={titleShow}>
@@ -74,7 +74,7 @@ export function ViewCardActivity() {
         </HeaderTitle>
       </Header>
       <StyledSection>
-        <Searchbar placeholder="Karten suchen ..." onSearchClick={(value) => setSearch(value)} />
+        <Searchbar placeholder="Karten suchen ..." onSearch={(val) => setSearch(val)} />
         <React.Suspense fallback={<LoadingScreen />}>
           <CardListBuilder search={search} />
         </React.Suspense>
