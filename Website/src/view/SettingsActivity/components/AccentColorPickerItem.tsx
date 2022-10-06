@@ -1,11 +1,15 @@
+import { ListItemButton } from "@mui/material";
 import React from "react";
 import { ListItem } from "react-onsenui";
 import { ConfirmationDialogRaw } from "../../../components/ConfirmationDialogRaw";
 import { useActivity } from "../../../hooks/useActivity";
 import { AccentColors, accent_colors, useScheme } from "../../../hooks/useDarkmode";
+import { useStrings } from "../../../hooks/useStrings";
+import { StyledListItemText } from "./StyledListItemText";
 
 export function AccentColorPickerItem() {
   const { context, extra } = useActivity();
+  const { strings } = useStrings();
   const [open, setOpen] = React.useState(false);
   const { scheme, setScheme } = useScheme();
   const [value, setValue] = React.useState<AccentColors[0]>(scheme);
@@ -25,12 +29,9 @@ export function AccentColorPickerItem() {
 
   return (
     <>
-      <ListItem onClick={handleOpen}>
-        <div className="center">
-          <span className="list-item__title">Akzentfarbe</span>
-          <span className="list-item__subtitle">{value.name}</span>
-        </div>
-      </ListItem>
+      <ListItemButton onClick={handleOpen}>
+        <StyledListItemText id="switch-list-label-wifi" primary={strings.accent_colors} secondary={value.name} />
+      </ListItemButton>
       <ConfirmationDialogRaw
         id="accent-menu"
         title="Farbakzent auswählen"

@@ -10,10 +10,12 @@ import AddActivity from "../../AddActivity";
 import { useKartei } from "../../../hooks/useKartei";
 import { TransitionGroup } from "react-transition-group";
 import { useActivity } from "../../../hooks/useActivity";
+import { useStrings } from "../../../hooks/useStrings";
 
 const GroupRenderer = () => {
   const { context } = useActivity();
   const { cards, setCards } = useKartei();
+  const { strings } = useStrings();
 
   const confirm = useConfirm();
 
@@ -64,8 +66,8 @@ const GroupRenderer = () => {
               })}
               label={
                 card.karten.length != 0 && card.karten.length <= 1
-                  ? `${card.karten.length} Karte`
-                  : `${card.karten.length} Karten`
+                  ? `${card.karten.length} ${strings.karte}`
+                  : `${card.karten.length} ${strings.karten}`
               }
             />
             <Stack key={index + 8} spacing={0.8} direction="row">
@@ -95,19 +97,22 @@ const GroupRenderer = () => {
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
                   confirm({
-                    title: "Löschen",
-                    description: (
-                      <span>
-                        Möchtest Du die <strong>{card.name}</strong>-Gruppe löschen?
-                      </span>
-                    ),
-                    confirmationText: "Ja",
-                    cancellationText: "Nein",
+                    title: strings.delete,
+                    description: strings.formatString(strings.delete_group_action, {
+                      id: card.name,
+                    }),
+                    confirmationText: strings.yes,
+                    cancellationText: strings.no,
                   })
                     .then(() => {
                       try {
                         setCards((_card) => _card.filter((remv) => remv.group != card.group));
-                        os.toast(`${card.name} wurde gelöscht.`, "short");
+                        os.toast(
+                          strings.formatString(strings.has_deleted_card, {
+                            name: card.name,
+                          }) as string,
+                          "short"
+                        );
                       } catch (error) {
                         os.toast((error as Error).message, "short");
                       }

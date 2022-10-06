@@ -6,6 +6,7 @@ import { useKartei } from "../hooks/useKartei";
 import { useActivity } from "../hooks/useActivity";
 import { ToolbarButton } from "../components/ToolbarButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useStrings } from "../hooks/useStrings";
 
 type Extra = {
   name: string;
@@ -24,6 +25,7 @@ function AddActivity() {
     !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
   );
   const { cards, setCards } = useKartei();
+  const { strings } = useStrings();
 
   os.useOnBackPressed(context.popPage);
 
@@ -33,7 +35,7 @@ function AddActivity() {
         <div className="left">
           <ToolbarButton icon={ArrowBackIcon} onClick={context.popPage} />
         </div>
-        <div className="center">{!isEditMode ? "Neue Gruppe" : "Gruppe Bearbeiten"}</div>
+        <div className="center">{!isEditMode ? strings.new_group : strings.edit_group}</div>
       </Toolbar>
     );
   };
@@ -64,15 +66,20 @@ function AddActivity() {
       };
 
       if (!validGroup(group)) {
-        os.toast("Bitte achte drauf, dass keine Leerzeichen verwendet werden, oder bindestriche", "short");
+        os.toast(strings.noUmlauts, "short");
       } else {
         setCards((tmp) => {
           if (tmp.some((elem) => elem?.group === group)) {
-            os.toast(`Diese Gruppe is bereits vorhanden.`, "short");
+            os.toast(strings.group_exist, "short");
           } else {
             tmp = [...tmp, obj];
             context.popPage();
-            os.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
+            os.toast(
+              strings.formatString(strings.group_saved, {
+                name: name,
+              }) as string,
+              "short"
+            );
           }
           return tmp;
         });
@@ -102,7 +109,7 @@ function AddActivity() {
               fullWidth
               // margin="dense"
               type="text"
-              label="Gruppe"
+              label={strings.group}
               value={group}
               variant="outlined"
               onChange={handleGroupChange}
@@ -114,7 +121,7 @@ function AddActivity() {
             fullWidth
             margin="dense"
             type="text"
-            label="Name"
+            label={strings.name}
             value={name}
             variant="outlined"
             onChange={handleNameChange}
@@ -125,7 +132,7 @@ function AddActivity() {
             fullWidth
             margin="dense"
             type="text"
-            label="Beschreibung"
+            label={strings.description}
             value={description}
             variant="outlined"
             onChange={handleDescriptionChange}
@@ -138,7 +145,7 @@ function AddActivity() {
           disableElevation
           onClick={!isEditMode ? handleSave : handleEdit}
         >
-          Speichern
+          {strings.save}
         </Button>
       </section>
     </Page>

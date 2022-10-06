@@ -1,16 +1,20 @@
 import { DownloadRounded } from "@mui/icons-material";
+import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
-import { List, ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
+import { ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
 import { BackButton } from "../components/BackButton";
 import { Icon } from "../components/Icon";
 import { useActivity } from "../hooks/useActivity";
 import { useKartei } from "../hooks/useKartei";
+import { useStrings } from "../hooks/useStrings";
 import { os } from "../native/Os";
+import { StyledListItemText } from "./SettingsActivity/components/StyledListItemText";
 
 function SetBuilder(): JSX.Element {
   const [getSets, setSets] = React.useState<Array<KarteiSetRoot>>([]);
   const { cards, setCards } = useKartei();
+  const { strings } = useStrings();
 
   React.useEffect(() => {
     axios
@@ -25,10 +29,15 @@ function SetBuilder(): JSX.Element {
       const data = response.data;
       setCards((tmp) => {
         if (tmp.some((elem) => elem?.group === data.group)) {
-          os.toast("Diese Gruppe ist bereits vorhanden", "short");
+          os.toast(strings.group_exist, "short");
         } else {
           tmp.push(data);
-          os.toast(`Erfolgreich "${data.name}" heruntergeladen`, "short");
+          os.toast(
+            strings.formatString(strings.group_downloaded, {
+              name: data.name,
+            }) as string,
+            "short"
+          );
         }
         return tmp;
       });
@@ -39,23 +48,25 @@ function SetBuilder(): JSX.Element {
     <React.Fragment>
       {getSets.map((group) => (
         <>
-          <ListHeader>{group.name}</ListHeader>
-          {group.sets.map((set) => (
-            <ListItem
-              tappable
-              onClick={() => {
-                setDownloader(set.cdn);
-              }}
-            >
-              <div className="center">
-                <span className="list-item__title">{set.name}</span>
-                <span className="list-item__subtitle">{set.desc}</span>
-              </div>
-              <div className="right">
-                <Icon icon={DownloadRounded} />
-              </div>
-            </ListItem>
-          ))}
+          <List
+            subheader={
+              <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
+                {strings["karten/groups"]}
+              </ListSubheader>
+            }
+          >
+            {group.sets.map((set) => (
+              <ListItemButton
+                onClick={() => {
+                  setDownloader(set.cdn);
+                }}
+              >
+                <StyledListItemText primary={set.name} secondary={set.desc} />
+                <DownloadRounded />
+              </ListItemButton>
+            ))}
+          </List>
+          <Divider />
         </>
       ))}
     </React.Fragment>
@@ -64,6 +75,7 @@ function SetBuilder(): JSX.Element {
 
 function GroupsActivity() {
   const { context, extra } = useActivity();
+  const { strings } = useStrings();
 
   os.useOnBackPressed(context.popPage);
 
@@ -71,9 +83,9 @@ function GroupsActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}/>
+          <BackButton onClick={context.popPage} />
         </div>
-        <div className="center">Gruppen</div>
+        <div className="center">{strings.groups}</div>
       </Toolbar>
     );
   };

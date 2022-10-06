@@ -11,6 +11,7 @@ import { ConfirmProvider } from "material-ui-confirm";
 import RoutedApp from "./components/RoutedApp";
 import { DarkModeProvider } from "./hooks/useDarkmode";
 import { KarteiProvider } from "./hooks/useKartei";
+import { StringProvider } from "./hooks/useStrings";
 
 dom.preventer(["contextmenu"]);
 ons.platform.select("android");
@@ -18,16 +19,18 @@ ons.platform.select("android");
 ons.ready(() => {
   rct.render(
     <React.StrictMode>
-      <KarteiProvider>
-        <DarkModeProvider>
-          <CssBaseline />
-          <LightTheme />
-          {/* @ts-ignore */}
-          <ConfirmProvider>
-            <RoutedApp />
-          </ConfirmProvider>
-        </DarkModeProvider>
-      </KarteiProvider>
+      <StringProvider>
+        <KarteiProvider>
+          <DarkModeProvider>
+            <CssBaseline />
+            <LightTheme />
+            {/* @ts-ignore */}
+            <ConfirmProvider>
+              <RoutedApp />
+            </ConfirmProvider>
+          </DarkModeProvider>
+        </KarteiProvider>
+      </StringProvider>
     </React.StrictMode>,
     "app"
   );

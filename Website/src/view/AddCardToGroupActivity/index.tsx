@@ -27,6 +27,7 @@ import { useKartei } from "../../hooks/useKartei";
 import { Markup } from "../../components/Markdown";
 import { useActivity } from "../../hooks/useActivity";
 import { BackButton } from "../../components/BackButton";
+import { useStrings } from "../../hooks/useStrings";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
@@ -102,6 +103,7 @@ function AddCardToGroupActivity() {
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
 
   const confirm = useConfirm();
+  const { strings } = useStrings();
   // **** Experimental
   // const handleBackButtonClick = (event?: React.MouseEvent<HTMLElement>) => {
   //   event?.preventDefault();
@@ -121,7 +123,7 @@ function AddCardToGroupActivity() {
         <div className="left">
           <BackButton onClick={handleBackButtonClick} />
         </div>
-        <div className="center">{edit ? "Karte bearbeiten" : "Neue Karte"}</div>
+        <div className="center">{edit ? strings.edit_card : strings.new_card}</div>
       </Toolbar>
     );
   };
@@ -160,14 +162,14 @@ function AddCardToGroupActivity() {
         setCards((tmp) => {
           tmp[index].karten.push(obj);
           context.popPage();
-          os.toast("Deine Karte wurde gespeichert.", "short");
+          os.toast(strings.card_saved, "short");
           return tmp;
         });
       } catch (error) {
         alert((error as Error).message);
       }
     } else {
-      os.toast("Kurz Beschreibung darf nicht leer sein!", "short");
+      os.toast(strings.shortDescriptionNoEmpty, "short");
     }
   };
 
@@ -177,7 +179,7 @@ function AddCardToGroupActivity() {
       tmp[cardIndex].karten[index].description = description;
 
       if (shortDescription === "") {
-        ons.notification.alert("Kurz Beschreibung darf nicht leer sein!");
+        ons.notification.alert(strings.shortDescriptionNoEmpty);
       } else {
         context.popPage();
       }
@@ -202,10 +204,10 @@ function AddCardToGroupActivity() {
             fullWidth
             // margin="dense"
             type="text"
-            label="Kurze Beschreibung"
+            label={strings.shortDescription}
             value={shortDescription}
             error={shortDescriptionError}
-            helperText={shortDescriptionError ? "Darf nicht leer sein" : ""}
+            helperText={shortDescriptionError ? strings.shortDescriptionNoEmpty : ""}
             variant="outlined"
             onChange={handleShortDescriptionChange}
           />
@@ -254,7 +256,7 @@ function AddCardToGroupActivity() {
                 }}
                 fullWidth
                 type="text"
-                label="Beschreibung"
+                label={strings.description}
                 value={description}
                 variant="outlined"
                 multiline
@@ -284,7 +286,7 @@ function AddCardToGroupActivity() {
           spacing={1}
         >
           <Button fullWidth variant="contained" disableElevation onClick={edit ? handleEdit : handleSave}>
-            Speichern
+            {strings.save}
           </Button>
           <Button
             fullWidth
@@ -311,7 +313,7 @@ function AddCardToGroupActivity() {
             }}
           >
             {" "}
-            {!os.isAndroid && isDesktop ? "Drucken" : "Ansicht"}
+            {!os.isAndroid && isDesktop ? strings.print : strings.preview}
           </Button>
         </Stack>
       </section>

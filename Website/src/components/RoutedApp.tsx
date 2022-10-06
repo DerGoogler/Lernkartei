@@ -15,13 +15,13 @@ import {
 } from "react-onsenui";
 import { App } from "../view/App";
 import { os } from "../native/Os";
-import drawerItems from "../util/drawerItem";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
 import React from "react";
 import { Context, Extra } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
 import { nativeStorage } from "../hooks/useNativeStorage";
+import { Drawer } from "../view/App/components/Drawer";
 
 interface States {
   isSplitterOpen: boolean;
@@ -192,29 +192,11 @@ class RoutedApp<A = {}> extends Component<Props, States> {
               onClose={this.hideSplitter.bind(this)}
               onOpen={this.showSplitter.bind(this)}
             >
-              <Page renderToolbar={this.renderSpliterToolbar}>
-                <List
-                  dataSource={drawerItems}
-                  renderRow={(item: DrawerListItems): JSX.Element => (
-                    <>
-                      <ListHeader key={item.title}>{item.title}</ListHeader>
-                      {item.content.map(
-                        (contentItem: DrawerListItemsContent): JSX.Element => (
-                          <>
-                            <ListItem
-                              key={`${item.title}_item`}
-                              {...contentItem}
-                              onClick={(event: React.MouseEvent<any, MouseEvent>) => {
-                                contentItem.onClick!(this.hideSplitter.bind(this), this.pushPage, event);
-                              }}
-                            />
-                          </>
-                        )
-                      )}
-                    </>
-                  )}
-                />
-              </Page>
+              <Drawer
+                renderToolbar={this.renderSpliterToolbar}
+                hideSplitter={this.hideSplitter.bind(this)}
+                pushPage={this.pushPage}
+              />
             </SplitterSide>
             <SplitterContent>
               <RouterNavigator

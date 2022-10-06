@@ -156,7 +156,6 @@ export const DarkModeProvider = (props: DarkModeProviderProps) => {
           secondary: {
             main: "#e5e8ec",
             light: "#eeeeee",
-            contrastText: "",
           },
         }
       : {
@@ -166,7 +165,6 @@ export const DarkModeProvider = (props: DarkModeProviderProps) => {
             main: shadeColor(colors[scheme.value][900], -40),
             // @ts-ignore
             // dark: colors[default_scheme.value][800],
-            contrastText: colors.grey[100],
           },
           background: {
             default: shadeColor(colors[scheme.value][900], -80),
@@ -175,7 +173,6 @@ export const DarkModeProvider = (props: DarkModeProviderProps) => {
           secondary: {
             main: "#e5e8ec",
             light: shadeColor(colors[scheme.value][900], -80),
-            contrastText: "",
           },
         },
   });
