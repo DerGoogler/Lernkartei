@@ -15,13 +15,13 @@ import {
 } from "react-onsenui";
 import { App } from "../view/App";
 import { os } from "../native/Os";
-import { sharedpreferences } from "../native/SharedPreferences";
 import drawerItems from "../util/drawerItem";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
 import React from "react";
 import { Context, Extra } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
+import { nativeStorage } from "../hooks/useNativeStorage";
 
 interface States {
   isSplitterOpen: boolean;
@@ -35,7 +35,7 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     super(props);
 
     const Intro = () => {
-      if (sharedpreferences.getBoolean("introFinised", false)) {
+      if (nativeStorage.getItem("introFinised") === "true") {
         return App;
       } else {
         return IntroActivity;

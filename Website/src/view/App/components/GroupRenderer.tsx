@@ -13,7 +13,7 @@ import { useActivity } from "../../../hooks/useActivity";
 
 const GroupRenderer = () => {
   const { context } = useActivity();
-  const [cards, setCards] = useKartei();
+  const { cards, setCards } = useKartei();
 
   const confirm = useConfirm();
 

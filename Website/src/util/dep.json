@@ -230,10 +230,19 @@
         "repository": "https://www.npmjs.com/package/use-file-picker"
     },
     {
+        "name": "usehooks-ts",
+        "description": "React hook library, ready to use, written in Typescript.",
+        "author": "Julien CARON <juliencaron@protonmail.com>",
+        "version": "2.7.2",
+        "license": "MIT",
+        "homepage": "https://usehooks-ts.com",
+        "repository": "https://www.npmjs.com/package/usehooks-ts"
+    },
+    {
         "name": "web-shared-preferences",
         "description": "An simple class to manage the loacal storage, including React like useString, useJSON and more!",
         "author": "Der_Googler",
-        "version": "1.3.1",
+        "version": "1.3.2",
         "license": "GPL-3.0",
         "homepage": "https://github.com/DerGoogler/SharedPreferences",
         "repository": "https://www.npmjs.com/package/web-shared-preferences"

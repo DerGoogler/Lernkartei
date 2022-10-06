@@ -98,7 +98,7 @@ function AddCardToGroupActivity() {
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
   const [description, setDescription] = React.useState(edit ? desc : "");
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
-  const [cards, setCards] = useKartei();
+  const { cards, setCards } = useKartei();
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
 
   const confirm = useConfirm();

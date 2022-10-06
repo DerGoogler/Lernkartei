@@ -23,7 +23,7 @@ function AddActivity() {
   const [description, setDescription] = React.useState(
     !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
   );
-  const [cards, setCards] = useKartei();
+  const { cards, setCards } = useKartei();
 
   os.useOnBackPressed(context.popPage);
 

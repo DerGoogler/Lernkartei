@@ -5,7 +5,7 @@ import { ListItem } from "react-onsenui";
 import { useKartei } from "../../../hooks/useKartei";
 
 export const ImportGroupsItem = () => {
-  const [cards, setCards] = useKartei();
+  const { cards, setCards } = useKartei();
   const [openFileSelector, { filesContent, loading }] = useFilePicker({
     readAs: "Text",
     accept: ".json",

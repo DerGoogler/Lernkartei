@@ -10,7 +10,7 @@ import { os } from "../native/Os";
 
 function SetBuilder(): JSX.Element {
   const [getSets, setSets] = React.useState<Array<KarteiSetRoot>>([]);
-  const [cards, setCards] = useKartei();
+  const { cards, setCards } = useKartei();
 
   React.useEffect(() => {
     axios

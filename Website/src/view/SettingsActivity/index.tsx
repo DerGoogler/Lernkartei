@@ -20,7 +20,7 @@ function SettingsActivity() {
 
   // Prefs
   const { darkmode, setDarkmode } = useDarkmode();
-  const [cards, setCards] = useKartei();
+  const { cards, setCards } = useKartei();
 
   const renderToolbar = () => {
     return (

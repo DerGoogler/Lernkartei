@@ -4,8 +4,8 @@ import { Carousel, CarouselItem, Page, Toolbar, ToolbarButton } from "react-onse
 import { App } from "./App";
 import { Icon } from "../components/Icon";
 import { os } from "../native/Os";
-import { useNativeStorage } from "../native/SharedPreferences";
 import { useActivity } from "../hooks/useActivity";
+import { useLocalStorage } from "usehooks-ts";
 
 function IntroActivity() {
   const { context, extra } = useActivity();
@@ -21,7 +21,7 @@ function IntroActivity() {
       bg: "#D7BDE2",
     },
   ]);
-  const [introFinised, setIntroFinised] = useNativeStorage.boolean("introFinised", false);
+  const [introFinised, setIntroFinised] = useLocalStorage("introFinised", false);
 
   os.useOnBackPressed(() => os.close());
 

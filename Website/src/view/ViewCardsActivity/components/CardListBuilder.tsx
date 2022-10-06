@@ -21,7 +21,7 @@ const CardListBuilder = (props: Props) => {
   const { context, extra } = useActivity<any>();
 
   const { index: iindex } = extra;
-  const [cards, setCards] = useKartei();
+  const { cards, setCards } = useKartei();
   const karten = cards[iindex].karten;
   const filteredCards = karten.filter((card) =>
     card.shortDescription.toLowerCase().includes(props.search.toLowerCase())

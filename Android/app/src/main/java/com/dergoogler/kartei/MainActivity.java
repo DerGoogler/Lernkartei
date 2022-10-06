@@ -2,7 +2,6 @@ package com.dergoogler.kartei;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.ConsoleMessage;
@@ -12,26 +11,22 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.webkit.WebViewAssetLoader;
 import androidx.webkit.WebViewClientCompat;
 
-import com.dergoogler.component.ModuleChromeClient;
 import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeFile;
 import com.dergoogler.core.NativeOS;
-import com.dergoogler.core.NativeSharedPreferences;
+import com.dergoogler.core.nativeStorage;
 import com.dergoogler.core.NativeUtils;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ModuleView view;
     private static Context mContext;
-    private NativeSharedPreferences nsp;
+    private nativeStorage nsp;
     private Server server;
 
 
@@ -43,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         view = findViewById(R.id.mmrl_view);
 
-        nsp = new NativeSharedPreferences(this);
-        try {
-            server = new Server(nsp.getString("katei", "[]"));
-            server.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        nsp = new nativeStorage(this);
+//        try {
+//            server = new Server(nsp.getString("katei", "[]"));
+//            server.start();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         view.loadUrl("https://appassets.androidplatform.net/assets/web/index.html");
 
@@ -71,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Core
         view.addJavascriptInterface(new NativeOS(this), "os");
-        view.addJavascriptInterface(new NativeSharedPreferences(this), "sharedpreferences");
+        view.addJavascriptInterface(new nativeStorage(this), "nativeStorage");
         view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
         view.addJavascriptInterface(nsp, "environment");
         view.addJavascriptInterface(new NativeFile(), "file");

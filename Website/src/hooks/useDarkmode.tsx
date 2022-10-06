@@ -1,10 +1,10 @@
-import { useNativeStorage } from "../native/SharedPreferences";
 import { Dispatch, SetPrefAction } from "web-shared-preferences";
 
 import React, { createContext, useContext, useEffect } from "react";
 import { colors as kolors, Theme, ThemeOptions, createTheme, ThemeProvider } from "@mui/material";
 import shadeColor from "../util/shadeColor";
 import { os } from "../native/Os";
+import { useNativeStorage } from "./useNativeStorage";
 
 export type AccentColors = Array<{
   name: string;
@@ -132,8 +132,8 @@ export const colors = {
 };
 
 export const DarkModeProvider = (props: DarkModeProviderProps) => {
-  const [darkmode, setDarkmode] = useNativeStorage.boolean("darkmode", false);
-  const [scheme, setScheme] = useNativeStorage.json<AccentColors[0]>("accent_scheme", accent_colors[0]);
+  const [darkmode, setDarkmode] = useNativeStorage("darkmode", false);
+  const [scheme, setScheme] = useNativeStorage<AccentColors[0]>("accent_scheme", accent_colors[0]);
 
   const theme = createTheme({
     shape: {
