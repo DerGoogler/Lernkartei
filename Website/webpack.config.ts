@@ -21,10 +21,6 @@ const config: Configuration = {
   module: {
     rules: [
       {
-        test: /\.hxml$/,
-        loader: "haxe-loader",
-      },
-      {
         test: /(d)?\.ts(x)?$/,
         loader: "ts-loader",
         exclude: /node_modules/,
