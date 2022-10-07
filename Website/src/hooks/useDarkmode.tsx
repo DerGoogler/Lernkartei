@@ -167,9 +167,9 @@ export const DarkModeProvider = (props: DarkModeProviderProps) => {
             // dark: colors[default_scheme.value][800],
           },
           background: {
-            default: shadeColor(colors[scheme.value][900], -80),
+            default: shadeColor(colors[scheme.value][900], -75),
           },
-          divider: shadeColor(colors[scheme.value][900], -100),
+          divider: shadeColor(colors[scheme.value][900], -85),
           secondary: {
             main: "#e5e8ec",
             light: shadeColor(colors[scheme.value][900], -80),

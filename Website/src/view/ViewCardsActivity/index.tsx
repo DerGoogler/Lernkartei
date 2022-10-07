@@ -1,31 +1,60 @@
 import { Add } from "@mui/icons-material";
-import { Fade, styled } from "@mui/material";
+import { Fade, List, ListItemButton, ListItemIcon, ListSubheader, styled } from "@mui/material";
 import { Disappear } from "react-disappear";
-import { Toolbar, ToolbarButton } from "react-onsenui";
+import { Toolbar } from "react-onsenui";
 import { Page } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import AddCardToGroupActivity from "../AddCardToGroupActivity";
 import { Searchbar } from "../../components/Searchbar";
 import { os } from "../../native/Os";
 import { StyledSection } from "../../components/StyledSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useActivity } from "../../hooks/useActivity";
 import { BackButton } from "../../components/BackButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import MenuItem from "@mui/material/MenuItem";
+import Divider from "@mui/material/Divider";
+import PublishIcon from "@mui/icons-material/Publish";
+import DownloadIcon from "@mui/icons-material/Download";
+import { StyledMenu } from "../../components/StyledMenu";
+import { ToolbarButton } from "../../components/ToolbarButton";
+import { BottomSheet } from "../../components/BottomSheet";
+import { StyledListItemText } from "../SettingsActivity/components/StyledListItemText";
+import { useStrings } from "../../hooks/useStrings";
+import { useKartei } from "../../hooks/useKartei";
+import { File } from "../../native/File";
+import Ajv from "ajv";
+import { useFilePicker } from "use-file-picker";
+import ons from "onsenui";
+import chooseFile from "./chooseFile";
+import { Exception } from "../../native/Error";
+import { useConfirm } from "material-ui-confirm";
 
 const CardListBuilder = React.lazy(() => import("./components/CardListBuilder"));
 
 export function ViewCardActivity() {
   const { context, extra } = useActivity<any>();
+  const { strings } = useStrings();
+  const { cards, setCards } = useKartei();
 
   os.useOnBackPressed(context.popPage);
+  const confirm = useConfirm();
 
-  const [fabShow, setFabShow] = useState(true);
   const [titleShow, setTitleShow] = useState(true);
   const [search, setSearch] = useState("");
+  const [open, setOpen] = useState(false);
 
-  const { index, title, desc } = extra;
+  const { index, group, title, desc } = extra;
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const renderToolbar = () => {
     return (
@@ -39,7 +68,107 @@ export function ViewCardActivity() {
           </Fade>
         </div>
         <div className="right">
-          <ToolbarButton
+          <ToolbarButton id="group-menu" icon={MoreVertIcon} onClick={handleOpen} />
+        </div>
+      </Toolbar>
+    );
+  };
+
+  const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
+
+  const schema = {
+    type: "object",
+    required: ["group", "name", "description", "karten"],
+    properties: {
+      group: {
+        type: "string",
+      },
+      name: {
+        type: "string",
+      },
+      description: {
+        type: "string",
+      },
+      karten: {
+        type: "array",
+        items: {
+          type: "object",
+          required: ["shortDescription", "description"],
+          properties: {
+            shortDescription: {
+              type: "string",
+            },
+            description: {
+              type: "string",
+            },
+          },
+        },
+      },
+    },
+  };
+
+  const handleFileChange = (event: any) => {
+    chooseFile(event, (event: any, file: any, input: any) => {
+      const validate = ajv.compile(schema);
+
+      const content = JSON.parse(event.target.result);
+
+      const valid = validate(content) as boolean;
+      if (valid) {
+        confirm({
+          title: "Override Import",
+          description:
+            "Beim Override Import werden alle Karten und Gruppen information überschrieben. Sei vorsichtig mit dieser Funktion!",
+          confirmationText: "Fortfahren",
+          cancellationText: "Abbrechen",
+        })
+          .then(() => {
+            setCards((t) => {
+              if (t[index].group === content.group) {
+                t[index] = content;
+              } else {
+                os.toast("Group does not matches the group id!", "short");
+              }
+              return t;
+            });
+          })
+          .catch(() => {});
+      } else {
+        alert(JSON.stringify(validate.errors, null, 2));
+      }
+      handleClose();
+    });
+  };
+
+  return (
+    <>
+      <Page renderToolbar={renderToolbar}>
+        <Header>
+          <HeaderTitle
+            wrapper="div"
+            onDisappear={(visible) => {
+              setTitleShow(!visible);
+            }}
+          >
+            <div className="header-title">{title}</div>
+            <div className="header-desc">{desc}</div>
+          </HeaderTitle>
+        </Header>
+        <StyledSection>
+          <Searchbar placeholder={strings.search_karten} onSearch={(val) => setSearch(val)} />
+          <React.Suspense fallback={<LoadingScreen />}>
+            <CardListBuilder search={search} />
+          </React.Suspense>
+        </StyledSection>
+      </Page>
+
+      <BottomSheet open={open} onCancel={handleClose}>
+        <List
+          subheader={
+            <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Addings</ListSubheader>
+          }
+        >
+          <ListItemButton
             onClick={() => {
               context.pushPage({
                 component: AddCardToGroupActivity,
@@ -51,35 +180,53 @@ export function ViewCardActivity() {
                   },
                 },
               });
+              handleClose();
             }}
           >
-            <Icon icon={Add} keepLight />
-          </ToolbarButton>
-        </div>
-      </Toolbar>
-    );
-  };
+            <ListItemIcon>
+              <PublishIcon />
+            </ListItemIcon>
+            <StyledListItemText primary={strings.new_card} />
+          </ListItemButton>
+        </List>
 
-  return (
-    <Page renderToolbar={renderToolbar}>
-      <Header>
-        <HeaderTitle
-          wrapper="div"
-          onDisappear={(visible) => {
-            setTitleShow(!visible);
-          }}
+        <Divider />
+        <List
+          subheader={
+            <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Manage Group</ListSubheader>
+          }
         >
-          <div className="header-title">{title}</div>
-          <div className="header-desc">{desc}</div>
-        </HeaderTitle>
-      </Header>
-      <StyledSection>
-        <Searchbar placeholder="Karten suchen ..." onSearch={(val) => setSearch(val)} />
-        <React.Suspense fallback={<LoadingScreen />}>
-          <CardListBuilder search={search} />
-        </React.Suspense>
-      </StyledSection>
-    </Page>
+          <label htmlFor={title + "_override-import"}>
+            <ListItemButton>
+              <ListItemIcon>
+                <PublishIcon />
+              </ListItemIcon>
+              <StyledListItemText primary="Override Import (Beta)" />
+            </ListItemButton>
+          </label>
+          <ListItemButton
+            onClick={() => {
+              const file = new File(`${title}.group.json`);
+              file.createJSON(cards[index], 4);
+            }}
+          >
+            <ListItemIcon>
+              <DownloadIcon />
+            </ListItemIcon>
+            <StyledListItemText primary="Export" />
+          </ListItemButton>
+        </List>
+      </BottomSheet>
+      <input
+        // ...
+        id={title + "_override-import"}
+        key={title + "_override-import"}
+        type="file"
+        style={{ display: "none", marginRight: "4px" }}
+        accept=".json"
+        onChange={handleFileChange}
+      />
+    </>
   );
 }
 

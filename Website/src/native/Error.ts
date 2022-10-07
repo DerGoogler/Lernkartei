@@ -5,9 +5,9 @@ export class RuntimeException extends Native {
     super();
     this.interface = "utils";
     if (this.isAndroid) {
-      throw this.getInterface.runtimeException(message);
+      this.getInterface.runtimeException(message);
     } else {
-      throw new Error(message);
+      new Error(message);
     }
   }
 }
@@ -17,9 +17,9 @@ export class Exception extends Native {
     super();
     this.interface = "utils";
     if (this.isAndroid) {
-      throw this.getInterface.exception(message);
+      this.getInterface.exception(message);
     } else {
-      throw new Error(message);
+      new Error(message);
     }
   }
 }

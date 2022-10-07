@@ -35,6 +35,7 @@ const GroupRenderer = () => {
                     key: `card_item_${card.group}`,
                     extra: {
                       index: index,
+                      group: card.group,
                       title: card.name,
                       desc: card.description,
                     },
