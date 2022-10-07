@@ -94,16 +94,16 @@ const formatTXT: TXTFormat[] = [
 
 function AddCardToGroupActivity() {
   const { context, extra } = useActivity<Extra>();
+  const { strings } = useStrings();
+  const { cards, setCards, actions } = useKartei();
 
   const { edit, desc, shortDesc, index, card, cardIndex } = extra;
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
   const [description, setDescription] = React.useState(edit ? desc : "");
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
-  const { cards, setCards } = useKartei();
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
 
   const confirm = useConfirm();
-  const { strings } = useStrings();
   // **** Experimental
   // const handleBackButtonClick = (event?: React.MouseEvent<HTMLElement>) => {
   //   event?.preventDefault();
@@ -159,11 +159,13 @@ function AddCardToGroupActivity() {
           description: description,
         };
 
-        setCards((tmp) => {
-          tmp[index].karten.push(obj);
-          context.popPage();
-          os.toast(strings.card_saved, "short");
-          return tmp;
+        actions.addKarte({
+          index: index,
+          data: obj,
+          callback() {
+            context.popPage();
+            os.toast(strings.card_saved, "short");
+          },
         });
       } catch (error) {
         alert((error as Error).message);

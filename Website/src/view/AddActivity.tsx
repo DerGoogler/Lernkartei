@@ -17,6 +17,8 @@ type Extra = {
 
 function AddActivity() {
   const { context, extra } = useActivity<Extra>();
+  const { setCards, actions } = useKartei();
+  const { strings } = useStrings();
 
   const isEditMode = extra.editGroup;
   const [group, setGroup] = React.useState("lernfeld_1");
@@ -24,8 +26,6 @@ function AddActivity() {
   const [description, setDescription] = React.useState(
     !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
   );
-  const { cards, setCards } = useKartei();
-  const { strings } = useStrings();
 
   os.useOnBackPressed(context.popPage);
 
@@ -68,11 +68,13 @@ function AddActivity() {
       if (!validGroup(group)) {
         os.toast(strings.noUmlauts, "short");
       } else {
-        setCards((tmp) => {
-          if (tmp.some((elem) => elem?.group === group)) {
+        actions.addGroup({
+          group: group,
+          data: obj,
+          onExists() {
             os.toast(strings.group_exist, "short");
-          } else {
-            tmp = [...tmp, obj];
+          },
+          callback() {
             context.popPage();
             os.toast(
               strings.formatString(strings.group_saved, {
@@ -80,8 +82,7 @@ function AddActivity() {
               }) as string,
               "short"
             );
-          }
-          return tmp;
+          },
         });
       }
     } catch (error) {

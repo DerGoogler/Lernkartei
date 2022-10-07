@@ -13,7 +13,7 @@ import { os } from "../native/Os";
 import { StyledListItemText } from "./SettingsActivity/components/StyledListItemText";
 
 function SetBuilder(): JSX.Element {
-  const { setCards } = useKartei();
+  const { setCards, actions } = useKartei();
   const { strings } = useStrings();
 
   const { data } = useFetch<KarteiSetRoot[]>(
@@ -23,19 +23,20 @@ function SetBuilder(): JSX.Element {
   const setDownloader = (url: string): void => {
     axios.get<Kartei>(url).then((response) => {
       const data = response.data;
-      setCards((tmp) => {
-        if (tmp.some((elem) => elem?.group === data.group)) {
+      actions.addGroup({
+        group: data.group,
+        data: data,
+        onExists: () => {
           os.toast(strings.group_exist, "short");
-        } else {
-          tmp.push(data);
+        },
+        callback: () => {
           os.toast(
             strings.formatString(strings.group_downloaded, {
               name: data.name,
             }) as string,
             "short"
           );
-        }
-        return tmp;
+        },
       });
     });
   };
