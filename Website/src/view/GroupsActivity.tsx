@@ -3,6 +3,7 @@ import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
 import { ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
+import { useFetch } from "usehooks-ts";
 import { BackButton } from "../components/BackButton";
 import { Icon } from "../components/Icon";
 import { useActivity } from "../hooks/useActivity";
@@ -12,17 +13,12 @@ import { os } from "../native/Os";
 import { StyledListItemText } from "./SettingsActivity/components/StyledListItemText";
 
 function SetBuilder(): JSX.Element {
-  const [getSets, setSets] = React.useState<Array<KarteiSetRoot>>([]);
-  const { cards, setCards } = useKartei();
+  const { setCards } = useKartei();
   const { strings } = useStrings();
 
-  React.useEffect(() => {
-    axios
-      .get("https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/index/sets.json")
-      .then((response) => {
-        setSets(response.data);
-      });
-  });
+  const { data } = useFetch<KarteiSetRoot[]>(
+    "https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/index/sets.json"
+  );
 
   const setDownloader = (url: string): void => {
     axios.get<Kartei>(url).then((response) => {
@@ -46,7 +42,7 @@ function SetBuilder(): JSX.Element {
 
   return (
     <React.Fragment>
-      {getSets.map((group) => (
+      {data?.map((group) => (
         <>
           <List
             subheader={
