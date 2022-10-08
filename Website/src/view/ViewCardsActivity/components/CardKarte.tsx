@@ -5,9 +5,8 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useConfirm } from "material-ui-confirm";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import reactStringReplace from "react-string-replace";
-import { Dispatch, SetPrefAction } from "web-shared-preferences";
 import { useActivity } from "../../../hooks/useActivity";
 import { useKartei } from "../../../hooks/useKartei";
 import { os } from "../../../native/Os";
@@ -19,7 +18,7 @@ import DescriptonActivity from "../../DescriptonActivity";
 interface Props {
   card: Karten;
   index: number;
-  setCards: Dispatch<SetPrefAction<Kartei[]>>;
+  setCards: Dispatch<SetStateAction<Kartei[]>>;
 }
 
 const CardKarte = ({ card, index, setCards }: Props) => {

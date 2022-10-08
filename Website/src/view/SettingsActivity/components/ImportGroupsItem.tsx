@@ -1,17 +1,16 @@
 import Ajv from "ajv";
 import ons from "onsenui";
-import { useFilePicker } from "use-file-picker";
 import { ListItem } from "react-onsenui";
 import { useKartei } from "../../../hooks/useKartei";
 
 export const ImportGroupsItem = () => {
   const { cards, setCards } = useKartei();
-  const [openFileSelector, { filesContent, loading }] = useFilePicker({
-    readAs: "Text",
-    accept: ".json",
-    multiple: true,
-    limitFilesConfig: { max: 1 },
-  });
+  // const [openFileSelector, { filesContent, loading }] = useFilePicker({
+  //   readAs: "Text",
+  //   accept: ".json",
+  //   multiple: true,
+  //   limitFilesConfig: { max: 1 },
+  // });
   const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
 
   const schema = {
@@ -49,9 +48,9 @@ export const ImportGroupsItem = () => {
   };
 
   const handleImport = () => {
-    openFileSelector();
+    // openFileSelector();
     try {
-      const content: any = JSON.parse(filesContent[0].content);
+      const content: any = "JSON.parse(filesContent[0].content)";
 
       const validate = ajv.compile(schema);
 

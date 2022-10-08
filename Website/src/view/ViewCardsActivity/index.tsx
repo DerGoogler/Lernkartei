@@ -18,7 +18,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import PublishIcon from "@mui/icons-material/Publish";
 import DownloadIcon from "@mui/icons-material/Download";
-import { StyledMenu } from "../../components/StyledMenu";
 import { ToolbarButton } from "../../components/ToolbarButton";
 import { BottomSheet } from "../../components/BottomSheet";
 import { StyledListItemText } from "../SettingsActivity/components/StyledListItemText";
@@ -26,10 +25,7 @@ import { useStrings } from "../../hooks/useStrings";
 import { useKartei } from "../../hooks/useKartei";
 import { File } from "../../native/File";
 import Ajv from "ajv";
-import { useFilePicker } from "use-file-picker";
-import ons from "onsenui";
 import chooseFile from "./chooseFile";
-import { Exception } from "../../native/Error";
 import { useConfirm } from "material-ui-confirm";
 
 const CardListBuilder = React.lazy(() => import("./components/CardListBuilder"));

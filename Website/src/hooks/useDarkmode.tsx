@@ -1,6 +1,5 @@
-import { Dispatch, SetPrefAction } from "web-shared-preferences";
 
-import React, { createContext, useContext, useEffect } from "react";
+import React, { createContext, Dispatch, SetStateAction, useContext, useEffect } from "react";
 import { colors as kolors, Theme, ThemeOptions, createTheme, ThemeProvider } from "@mui/material";
 import shadeColor from "../util/shadeColor";
 import { os } from "../native/Os";
@@ -13,20 +12,20 @@ export type AccentColors = Array<{
 
 export const DarkModeContext = createContext({
   darkmode: false,
-  setDarkmode: (state: SetPrefAction<boolean>) => {},
+  setDarkmode: (state: SetStateAction<boolean>) => {},
 });
 
 export const AccentSchemeContext = createContext({
   scheme: {} as any,
-  setScheme: (state: SetPrefAction<any>) => {},
+  setScheme: (state: SetStateAction<any>) => {},
 });
 
-export function useDarkmode(): { darkmode: boolean; setDarkmode: Dispatch<SetPrefAction<boolean>> } {
+export function useDarkmode(): { darkmode: boolean; setDarkmode: Dispatch<SetStateAction<boolean>> } {
   // @ts-ignore
   return useContext(DarkModeContext);
 }
 
-export function useScheme(): { scheme: any; setScheme: Dispatch<SetPrefAction<any>> } {
+export function useScheme(): { scheme: any; setScheme: Dispatch<SetStateAction<any>> } {
   // @ts-ignore
   return useContext(AccentSchemeContext);
 }
