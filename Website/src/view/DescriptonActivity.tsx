@@ -17,7 +17,7 @@ function DescriptonActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}/>
+          <BackButton onClick={context.popPage} />
         </div>
         <div className="center">#{index}</div>
       </Toolbar>
@@ -26,7 +26,7 @@ function DescriptonActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <Markup children={desc} />
+      <Markup children={`## ${shortDesc}\n\n${desc}`} />
     </Page>
   );
 }

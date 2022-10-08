@@ -48,7 +48,7 @@ class Os extends Native {
     if (this.isAndroid) {
       this.getInterface.makeToast(text, _duration);
     } else {
-      ons.notification.toast(text, { timeout: _duration, animation: "fall" });
+      ons.notification.toast(text, { timeout: _duration, animation: "ascend" });
     }
   }
 

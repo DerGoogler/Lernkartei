@@ -4474,8 +4474,10 @@ export const LightTheme = () => {
           right: "0",
           bottom: "0",
           margin: "0",
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          borderRadius: "0",
+          backgroundColor: theme.palette.primary.main,
+          borderRadius: 0,
+          boxShadow:
+            "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
           padding: "16px 24px",
         },
         ".toast--material__message": {

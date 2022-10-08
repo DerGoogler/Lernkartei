@@ -1,5 +1,5 @@
 import Markdown from "markdown-to-jsx";
-import Anchor from "../dapi/Anchor";
+import Anchor, { Open } from "../dapi/Anchor";
 import Video from "../dapi/Video";
 import Audio from "../dapi/Audio";
 import Checkmark from "../icons/Checkmark";
@@ -39,6 +39,9 @@ export function Markup(props: Props) {
           overrides: {
             a: {
               component: Anchor,
+            },
+            open: {
+              component: Open,
             },
             img: {
               component: Image,

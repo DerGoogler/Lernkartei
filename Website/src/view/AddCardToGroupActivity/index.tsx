@@ -273,7 +273,7 @@ function AddCardToGroupActivity() {
             </TextareaMarkdown.Wrapper>
             {!os.isAndroid && isDesktop && (
               <Preview className="preview">
-                <Markup children={description} />
+                <Markup children={`## ${shortDescription}\n\n${description}`} />
               </Preview>
             )}
           </Stack>

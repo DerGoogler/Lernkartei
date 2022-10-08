@@ -18,15 +18,21 @@ import DescriptonActivity from "../../DescriptonActivity";
 interface Props {
   card: Karten;
   index: number;
-  setCards: Dispatch<SetStateAction<Kartei[]>>;
+  actions: ReturnType<typeof useKartei>["actions"];
 }
 
-const CardKarte = ({ card, index, setCards }: Props) => {
+const CardKarte = ({ card, index, actions }: Props) => {
   const { context, extra } = useActivity<any>();
+  const { setCards } = useKartei();
 
   const { index: iindex } = extra;
 
   const confirm = useConfirm();
+
+  const data = {
+    shortDesc: card.shortDescription ? card.shortDescription : "Null",
+    desc: card.description ? card.description : "Null",
+  };
 
   return (
     <StyledCard key={index} elevation={0}>
@@ -48,7 +54,11 @@ const CardKarte = ({ card, index, setCards }: Props) => {
             });
           }}
         >
-          {/* <Typography fontWeight={700}>{card.shortDescription}</Typography> */}
+          <Typography fontWeight={700} color="text.primary">
+            {reactStringReplace(card.shortDescription, /\*\*(\w+)\*\*/g, (match, i) => (
+              <strong>{match}</strong>
+            ))}
+          </Typography>
           {/* <Typography variant="body2" color="text.secondary">
 #{index}
 </Typography> */}
@@ -58,9 +68,9 @@ const CardKarte = ({ card, index, setCards }: Props) => {
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
         <Chip
           size="small"
-          sx={{
-            bgcolor: "#eeeeee",
-          }}
+          sx={(theme) => ({
+            bgcolor: theme.palette.secondary.light,
+          })}
           label={`#${index}`}
         />
         <Stack spacing={0.8} direction="row">
@@ -101,14 +111,13 @@ const CardKarte = ({ card, index, setCards }: Props) => {
               })
                 .then(() => {
                   try {
-                    setCards((tmp) => {
-                      tmp[iindex].karten = tmp[iindex].karten.filter(
-                        (remv) => remv.shortDescription != card.shortDescription
-                      );
-                      return tmp;
+                    actions.removeKarte({
+                      index: iindex,
+                      shortDescription: card.shortDescription,
+                      callback() {
+                        os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
+                      },
                     });
-
-                    os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
                   } catch (error) {
                     os.toast((error as Error).message, "short");
                   }
