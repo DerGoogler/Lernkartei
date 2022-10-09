@@ -13,7 +13,7 @@ import { UI } from "@Native/components/UI";
 
 function IntroActivity() {
   const { context, extra } = useActivity();
-  const { scheme, shadeColor } = useTheme();
+  const { scheme, shadeColor, theme } = useTheme();
 
   const { _1, _2 } = Phones({
     screenColor: scheme[500],
@@ -84,7 +84,7 @@ function IntroActivity() {
   };
 
   return (
-    <UI.Navigationbar color={scheme[100]}>
+    <UI.Navigationbar color={scheme[100]} onUmmount={theme.palette.background.default}>
       <Page renderToolbar={renderToolbar}>
         <Carousel onPostChange={handleChange} index={getIndex} fullscreen swipeable autoScroll overscrollable>
           {getItems.map((item, index) => (
