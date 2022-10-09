@@ -10,6 +10,7 @@ const KarteiContext = React.createContext({
     addGroup: (data: AddGroupsData) => {},
     addKarte: (data: AddKarteData) => {},
     removeKarte: (data: RemoveKarteData) => {},
+    removeGroup: (data: RemoveGroupData) => {},
   },
 });
 
@@ -27,7 +28,6 @@ type AddGroupsData = {
   onExists?: () => void;
   callback?: () => void;
 };
-
 type AddKarteData = {
   index: number;
   data: Karten;
@@ -36,6 +36,10 @@ type AddKarteData = {
 type RemoveKarteData = {
   index: number;
   shortDescription: string;
+  callback?: () => void;
+};
+type RemoveGroupData = {
+  group: string;
   callback?: () => void;
 };
 
@@ -70,8 +74,16 @@ export const KarteiProvider = (props: KarteiProviderProps) => {
     });
   };
 
+  const removeGroup = (data: RemoveGroupData) => {
+    setCards((tmp) => {
+      tmp = tmp.filter((remv) => remv.group != data.group);
+      if (data.callback instanceof Function) data.callback();
+      return tmp;
+    });
+  };
+
   return (
-    <KarteiContext.Provider value={{ cards, setCards, actions: { addGroup, addKarte, removeKarte } }}>
+    <KarteiContext.Provider value={{ cards, setCards, actions: { addGroup, addKarte, removeKarte, removeGroup } }}>
       {props.children}
     </KarteiContext.Provider>
   );

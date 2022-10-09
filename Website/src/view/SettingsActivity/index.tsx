@@ -16,6 +16,7 @@ import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import { Divider, List, ListItem, ListItemButton, ListItemText, ListSubheader, Switch } from "@mui/material";
 import { StyledListItemText } from "./components/StyledListItemText";
+import { BuildConfig } from "@Native/BuildConfig";
 
 function SettingsActivity() {
   const confirm = useConfirm();
@@ -140,6 +141,14 @@ function SettingsActivity() {
           <StyledListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
         </ListItemButton>
       </List>
+
+      <Divider />
+
+      <ListItem>
+        <StyledListItemText
+          primary={`${BuildConfig.APPLICATION_ID} ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})`}
+        />
+      </ListItem>
     </Page>
   );
 }

@@ -5,11 +5,11 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 
 import { useEventCallback, useEventListener } from "usehooks-ts";
-import { os } from "../native/Os";
+import { os } from "@Native/Os";
 
 declare global {
   interface WindowEventMap {
-    "local-storage": CustomEvent;
+    "native-storage": CustomEvent;
   }
 }
 
@@ -102,19 +102,19 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
 
   // // See: useLocalStorage()
 
-  // useEventListener("local-storage", handleStorageChange);
+  // useEventListener("native-storage", handleStorageChange);
 
   return [storedValue, setValue];
 }
 
 // A wrapper for "JSON.parse()"" to support "undefined" value
 
-function parseJSON<T>(value: string | null): T | undefined {
+function parseJSON<T>(value: string | null): T | Error {
   try {
     return value === "undefined" ? undefined : JSON.parse(value ?? "");
-  } catch {
+  } catch (e) {
     console.log("parsing error on", { value });
 
-    return undefined;
+    return e as Error;
   }
 }

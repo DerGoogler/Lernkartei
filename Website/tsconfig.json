@@ -1,23 +1,33 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "declarationMap": false,
     "outDir": "./dist/",
     "typeRoots": ["src/typings/global.d.ts"],
     "sourceMap": true,
-    "lib": ["es2016", "DOM"],
-    "declaration": false,
     "strict": true,
     "noImplicitReturns": true,
     "noImplicitAny": false,
-    "module": "ES2020",
+    "module": "ES2022",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "target": "es5",
+    "types": ["node"],
+    "target": "es6",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "allowJs": true,
     "jsx": "react-jsx",
-    "types": ["node"]
+    "baseUrl": "./src",
+    "paths": {
+      "@Native/*": ["native/*"],
+      "@Components/*": ["components/*"],
+      "@Types/*": ["typings/*"],
+      "@Styles/*": ["styles/*"],
+      "@Views/*": ["views/*"],
+      "@Util/*": ["util/*"],
+      "@Hooks/*": ["hooks/*"]
+    }
   },
   "ts-node": {
     "compilerOptions": {

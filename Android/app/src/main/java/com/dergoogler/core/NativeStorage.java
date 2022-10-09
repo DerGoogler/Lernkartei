@@ -8,10 +8,10 @@ import android.webkit.JavascriptInterface;
 import androidx.annotation.NonNull;
 
 
-public class nativeStorage {
+public class NativeStorage {
     private final SharedPreferences localstorage;
 
-    public nativeStorage(@NonNull Context ctx) {
+    public NativeStorage(@NonNull Context ctx) {
         this.localstorage = ctx.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
     }
 

@@ -1,9 +1,9 @@
-
 import React, { createContext, Dispatch, SetStateAction, useContext, useEffect } from "react";
-import { colors as kolors, Theme, ThemeOptions, createTheme, ThemeProvider } from "@mui/material";
+import { colors as kolors, Theme, useTheme as useMom, createTheme, ThemeProvider } from "@mui/material";
 import shadeColor from "../util/shadeColor";
 import { os } from "../native/Os";
 import { useNativeStorage } from "./useNativeStorage";
+import { UI } from "@Native/components/UI";
 
 export type AccentColors = Array<{
   name: string;
@@ -130,6 +130,17 @@ export const colors = {
   yellow: kolors.yellow,
 };
 
+export const useTheme = () => {
+  const theme = useMom();
+  const { scheme } = useScheme();
+
+  return {
+    scheme: colors[scheme.value],
+    theme: theme,
+    shadeColor,
+  };
+};
+
 export const DarkModeProvider = (props: DarkModeProviderProps) => {
   const [darkmode, setDarkmode] = useNativeStorage("darkmode", false);
   const [scheme, setScheme] = useNativeStorage<AccentColors[0]>("accent_scheme", accent_colors[0]);
@@ -162,8 +173,7 @@ export const DarkModeProvider = (props: DarkModeProviderProps) => {
           primary: {
             light: shadeColor(colors[scheme.value][300], -10),
             main: shadeColor(colors[scheme.value][900], -40),
-            // @ts-ignore
-            // dark: colors[default_scheme.value][800],
+            // dark: colors[scheme.value][800],
           },
           background: {
             default: shadeColor(colors[scheme.value][900], -75),
@@ -172,20 +182,20 @@ export const DarkModeProvider = (props: DarkModeProviderProps) => {
           secondary: {
             main: "#e5e8ec",
             light: shadeColor(colors[scheme.value][900], -80),
+            dark: shadeColor(colors[scheme.value][800], -60),
           },
         },
   });
 
-  useEffect(() => {
-    os.setStatusBarColor(theme.palette.primary.main, false);
-    os.setNavigationBarColor(theme.palette.background.default);
-  }, [darkmode, scheme]);
-
   return (
-    <DarkModeContext.Provider value={{ darkmode, setDarkmode }}>
-      <AccentSchemeContext.Provider value={{ scheme, setScheme }}>
-        <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-      </AccentSchemeContext.Provider>
-    </DarkModeContext.Provider>
+    <UI.Statusbar color={theme.palette.primary.main} white={false}>
+      <UI.Navigationbar color={theme.palette.background.default}>
+        <DarkModeContext.Provider value={{ darkmode, setDarkmode }}>
+          <AccentSchemeContext.Provider value={{ scheme, setScheme }}>
+            <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+          </AccentSchemeContext.Provider>
+        </DarkModeContext.Provider>
+      </UI.Navigationbar>
+    </UI.Statusbar>
   );
 };

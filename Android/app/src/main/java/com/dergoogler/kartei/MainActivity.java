@@ -19,14 +19,14 @@ import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeFile;
 import com.dergoogler.core.NativeOS;
-import com.dergoogler.core.nativeStorage;
+import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.NativeUtils;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ModuleView view;
     private static Context mContext;
-    private nativeStorage nsp;
+    private NativeStorage nsp;
     private Server server;
 
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         view = findViewById(R.id.mmrl_view);
 
-        nsp = new nativeStorage(this);
+        nsp = new NativeStorage(this);
 //        try {
 //            server = new Server(nsp.getString("katei", "[]"));
 //            server.start();
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Core
         view.addJavascriptInterface(new NativeOS(this), "os");
-        view.addJavascriptInterface(new nativeStorage(this), "nativeStorage");
+        view.addJavascriptInterface(new NativeStorage(this), "nativeStorage");
         view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
         view.addJavascriptInterface(nsp, "environment");
         view.addJavascriptInterface(new NativeFile(), "file");

@@ -10,11 +10,14 @@ import { os } from "../../native/Os";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useActivity } from "../../hooks/useActivity";
 import { ToolbarButton } from "../../components/ToolbarButton";
-
-const CardRenderer = React.lazy(() => import("./components/GroupRenderer"));
+import { For } from "@Components/For";
+import { useKartei } from "../../hooks/useKartei";
+import { GroupCard } from "./components/GroupCard";
+import { Box } from "@mui/material";
 
 export function App() {
   const { context } = useActivity();
+  const { cards, actions } = useKartei();
 
   // These are native Android call, they won't be called on browsers
   // os.useOnBackPressed(() => {
@@ -62,9 +65,42 @@ export function App() {
   return (
     <Page renderToolbar={renderToolbar}>
       <StyledSection>
-        <React.Suspense fallback={<LoadingScreen />}>
-          <CardRenderer />
-        </React.Suspense>
+        <For
+          each={cards}
+          fallback={() => (
+            <Box
+              component="h4"
+              sx={(theme) => ({
+                color: theme.palette.secondary.dark,
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                textAlign: "center",
+                WebkitTransform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -50%)",
+              })}
+            >
+              Add new groups with the{" "}
+              <Icon
+                sx={(theme) => ({
+                  color: theme.palette.secondary.dark,
+                  verticalAlign: "middle",
+                })}
+                icon={Add}
+              />{" "}
+              icon
+            </Box>
+          )}
+          catch={(e: Error | undefined) => (
+            <Box sx={(theme) => ({ color: theme.palette.text.primary })}>
+              There was an error while parsing your cards! Seems that your cards have an invalid JSON Format.
+              <br />
+              ERROR: {e?.message}
+            </Box>
+          )}
+        >
+          {(card, index) => <GroupCard card={card} index={index} actions={actions} />}
+        </For>
       </StyledSection>
     </Page>
   );

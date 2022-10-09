@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Fade, List, ListItemButton, ListItemIcon, ListSubheader, styled } from "@mui/material";
+import { Box, Fade, List, ListItemButton, ListItemIcon, ListSubheader, Pagination, Stack, styled } from "@mui/material";
 import { Disappear } from "react-disappear";
 import { Toolbar } from "react-onsenui";
 import { Page } from "react-onsenui";
@@ -27,13 +27,16 @@ import { File } from "../../native/File";
 import Ajv from "ajv";
 import chooseFile from "./chooseFile";
 import { useConfirm } from "material-ui-confirm";
+import { For } from "@Components/For";
+import { usePagination } from "../../hooks/usePagination";
+import CardKarte from "./components/CardKarte";
 
-const CardListBuilder = React.lazy(() => import("./components/CardListBuilder"));
+// const CardListBuilder = React.lazy(() => import("./components/CardListBuilder"));
 
 export function ViewCardActivity() {
   const { context, extra } = useActivity<any>();
   const { strings } = useStrings();
-  const { cards, setCards } = useKartei();
+  const { cards, setCards, actions } = useKartei();
 
   os.useOnBackPressed(context.popPage);
   const confirm = useConfirm();
@@ -50,6 +53,20 @@ export function ViewCardActivity() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const karten = cards[index].karten;
+  const filteredCards = karten.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
+
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 20;
+
+  const count = Math.ceil(filteredCards.length / PER_PAGE);
+  const _DATA = usePagination(filteredCards, PER_PAGE);
+
+  const handleChange = (e: any, p: any) => {
+    setPage(p);
+    _DATA.jump(p);
   };
 
   const renderToolbar = () => {
@@ -152,9 +169,59 @@ export function ViewCardActivity() {
         </Header>
         <StyledSection>
           <Searchbar placeholder={strings.search_karten} onSearch={(val) => setSearch(val)} />
-          <React.Suspense fallback={<LoadingScreen />}>
-            <CardListBuilder search={search} />
-          </React.Suspense>
+
+          <Stack style={{ marginBottom: 8 }} direction="row" justifyContent="center" alignItems="center" spacing={2}>
+            <Pagination
+              count={count}
+              color="primary"
+              page={page}
+              variant="outlined"
+              shape="rounded"
+              onChange={handleChange}
+              showFirstButton
+              showLastButton
+            />
+          </Stack>
+          <For
+            each={_DATA.currentData()}
+            fallback={() => (
+              <Box
+                component="h4"
+                sx={(theme) => ({
+                  color: theme.palette.secondary.dark,
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  textAlign: "center",
+                  WebkitTransform: "translate(-50%, -50%)",
+                  transform: "translate(-50%, -50%)",
+                })}
+              >
+                To add new cards, click on the{" "}
+                <Icon
+                  sx={(theme) => ({
+                    color: theme.palette.secondary.dark,
+                    verticalAlign: "middle",
+                  })}
+                  icon={MoreVertIcon}
+                />{" "}
+                icon, and add a new card with the{" "}
+                <Icon
+                  sx={(theme) => ({
+                    color: theme.palette.secondary.dark,
+                    verticalAlign: "middle",
+                  })}
+                  icon={Add}
+                />{" "}
+                icon
+              </Box>
+            )}
+            catch={(e: Error | undefined) => (
+              <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>
+            )}
+          >
+            {(card, index) => <CardKarte actions={actions} card={card} index={index} />}
+          </For>
         </StyledSection>
       </Page>
 
@@ -180,7 +247,7 @@ export function ViewCardActivity() {
             }}
           >
             <ListItemIcon>
-              <PublishIcon />
+              <Add />
             </ListItemIcon>
             <StyledListItemText primary={strings.new_card} />
           </ListItemButton>

@@ -27,7 +27,7 @@ const config: Configuration = {
       },
       {
         test: /\.d.ts$/i,
-        use: 'raw-loader',
+        use: "raw-loader",
       },
       {
         test: /\.yaml$/,
@@ -80,6 +80,15 @@ const config: Configuration = {
   resolve: {
     alias: {
       openfl: resolve(__dirname, "node_modules/openfl/lib/openfl"),
+
+      "@Builders": resolve(__dirname, "src/builders/index.ts"),
+      "@Components": resolve(__dirname, "src/components"),
+      "@Native": resolve(__dirname, "src/native"),
+      "@Types": resolve(__dirname, "src/typings"),
+      "@Styles": resolve(__dirname, "src/styles"),
+      "@Views": resolve(__dirname, "src/views"),
+      "@Util": resolve(__dirname, "src/util"),
+      "@Hooks": resolve(__dirname, "src/hooks"),
     },
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
     extensions: [".js", ".jsx", ".ts", ".tsx", ".scss", ".sass", "css"],
