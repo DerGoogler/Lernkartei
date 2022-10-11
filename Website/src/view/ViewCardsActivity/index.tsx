@@ -30,6 +30,7 @@ import { useConfirm } from "material-ui-confirm";
 import { For } from "@Components/For";
 import { usePagination } from "../../hooks/usePagination";
 import CardKarte from "./components/CardKarte";
+import { Environment } from "@Native/Environment";
 
 // const CardListBuilder = React.lazy(() => import("./components/CardListBuilder"));
 
@@ -269,7 +270,7 @@ export function ViewCardActivity() {
           </label>
           <ListItemButton
             onClick={() => {
-              const file = new File(`${title}.group.json`);
+              const file = new File(`${group}.${Math.floor(Math.random() * 5000000)}.json`);
               file.createJSON(cards[index], 4);
             }}
           >

@@ -29,7 +29,7 @@ function SettingsActivity() {
 
   // Prefs
   const { darkmode, setDarkmode } = useDarkmode();
-  const { cards, setCards } = useKartei();
+  const { cards } = useKartei();
 
   const renderToolbar = () => {
     return (
@@ -97,17 +97,8 @@ function SettingsActivity() {
       >
         <ListItemButton
           onClick={() => {
-            if (os.isAndroid) {
-              os.open("http://localhost:4765/cards.json", {
-                target: "_blank",
-                features: {
-                  color: theme.palette.primary.main,
-                },
-              });
-            } else {
-              const file = new File("karten.json");
-              file.createJSON(cards, 4);
-            }
+            const file = new File(`karten.${Math.floor(Math.random() * 5000000)}.json`);
+            file.createJSON(cards, 4);
           }}
         >
           <StyledListItemText

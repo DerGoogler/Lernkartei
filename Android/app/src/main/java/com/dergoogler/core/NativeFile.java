@@ -1,6 +1,8 @@
 package com.dergoogler.core;
 
+import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import java.io.BufferedReader;
@@ -14,29 +16,35 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 public class NativeFile {
-    private final File ext = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+    public final File ext = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+//    private final Context ctx;
+
+//    public NativeFile(Context ctx) {
+//        this.ctx = ctx;
+//    }
+
+    private void createCreate(File file, String content) {
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(content.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @JavascriptInterface
     public void create(String file, String content) {
-        try {
-            File outFile1 = new File(ext + "/Kartei/" + file);
-            // Create File
-            boolean fileCreated = outFile1.createNewFile();
-            if (!fileCreated) {
-                Writer overWrite = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream(ext + "/Kartei/" + file, true), StandardCharsets.UTF_8), 10240);
-                overWrite.write(content);
-                overWrite.flush();
-                overWrite.close();
+        File d = new File(ext + "/Kartei/");
+        File f = new File(ext + "/Kartei/", file);
+        if (!d.exists()) {
+            if (d.mkdirs()) {
+                createCreate(f, content);
             }
-            Writer out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(outFile1, true), StandardCharsets.UTF_8), 10240);
-            out.write(content);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            createCreate(f, content);
         }
+
     }
 
     @JavascriptInterface

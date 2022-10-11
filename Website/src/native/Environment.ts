@@ -13,6 +13,14 @@ export class environment extends Native {
   public requestPermission(req: string): void {
     this.isAndroid ? this.getInterface.requestPermission(req) : null;
   }
+
+  public isExternalStorageReadOnly(): boolean {
+    return this.isAndroid ? this.getInterface.isExternalStorageReadOnly() : false;
+  }
+
+  public isExternalStorageAvailable(): boolean {
+    return this.isAndroid ? this.getInterface.isExternalStorageAvailable() : true;
+  }
 }
 
 export const Environment = new environment();
