@@ -4,42 +4,22 @@ import axios from "axios";
 import * as React from "react";
 import { ListHeader, ListItem, Page, ProgressCircular, Toolbar } from "react-onsenui";
 import { useFetch } from "usehooks-ts";
-import { BackButton } from "../components/BackButton";
-import { Icon } from "../components/Icon";
-import { useActivity } from "../hooks/useActivity";
-import { useKartei } from "../hooks/useKartei";
-import { useStrings } from "../hooks/useStrings";
-import { os } from "../native/Os";
-import { StyledListItemText } from "./SettingsActivity/components/StyledListItemText";
+import { BackButton } from "../../components/BackButton";
+import { Icon } from "../../components/Icon";
+import { useActivity } from "../../hooks/useActivity";
+import { useKartei } from "../../hooks/useKartei";
+import { useStrings } from "../../hooks/useStrings";
+import { os } from "../../native/Os";
+import { StyledListItemText } from "../SettingsActivity/components/StyledListItemText";
+import { Group } from "./components/Group";
 
 function SetBuilder(): JSX.Element {
-  const { setCards, actions } = useKartei();
+  const { cards, actions } = useKartei();
   const { strings } = useStrings();
 
   const { data } = useFetch<KarteiSetRoot[]>(
     "https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/index/sets.json"
   );
-
-  const setDownloader = (url: string): void => {
-    axios.get<Kartei>(url).then((response) => {
-      const data = response.data;
-      actions.addGroup({
-        group: data.group,
-        data: data,
-        onExists: () => {
-          os.toast(strings.group_exist, "short");
-        },
-        callback: () => {
-          os.toast(
-            strings.formatString(strings.group_downloaded, {
-              name: data.name,
-            }) as string,
-            "short"
-          );
-        },
-      });
-    });
-  };
 
   return (
     <React.Fragment>
@@ -48,19 +28,12 @@ function SetBuilder(): JSX.Element {
           <List
             subheader={
               <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
-                {strings["karten/groups"]}
+                {group.name}
               </ListSubheader>
             }
           >
             {group.sets.map((set) => (
-              <ListItemButton
-                onClick={() => {
-                  setDownloader(set.cdn);
-                }}
-              >
-                <StyledListItemText primary={set.name} secondary={set.desc} />
-                <DownloadRounded />
-              </ListItemButton>
+             <Group cards={cards} actions={actions} set={set}/>
             ))}
           </List>
           <Divider />
