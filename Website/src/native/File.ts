@@ -25,6 +25,9 @@ export class File extends Native {
   public read(): string {
     return this.isAndroid ? this.getInterface.read(this._path) : "null";
   }
+  public list(): string[] {
+    return this.isAndroid ? this.getInterface.list().split(",") : ["null"];
+  }
   public exists(): boolean {
     return this.isAndroid ? this.getInterface.exists(this._path) : true;
   }

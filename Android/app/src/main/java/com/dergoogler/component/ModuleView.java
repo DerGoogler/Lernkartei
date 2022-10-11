@@ -2,6 +2,7 @@ package com.dergoogler.component;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.webkit.WebViewClientCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -64,8 +65,15 @@ public class ModuleView extends WebView {
         webSettings.setUseWideViewPort(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setSaveFormData(true);
-        webSettings.setSaveFormData(true);
         webSettings.setEnableSmoothTransition(true);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setGeolocationEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
+        webSettings.setSupportMultipleWindows(true);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -73,7 +81,7 @@ public class ModuleView extends WebView {
         this.webSettings.setJavaScriptEnabled(enabled);
     }
 
-    public void setModuleViewClient(final ModuleViewClient client) {
+    public void setModuleViewClient(final WebViewClientCompat client) {
         super.setWebViewClient(client);
     }
 

@@ -1,27 +1,23 @@
 package com.dergoogler.core;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Environment;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 
 public class NativeFile {
     public final File ext = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-//    private final Context ctx;
+    private final Activity ctx;
 
-//    public NativeFile(Context ctx) {
-//        this.ctx = ctx;
-//    }
+    public NativeFile(Activity ctx) {
+        this.ctx = ctx;
+    }
 
     private void createCreate(File file, String content) {
         try {
@@ -48,6 +44,12 @@ public class NativeFile {
     }
 
     @JavascriptInterface
+    public String list() {
+        String[] modules = new File(ext + "/Kartei/").list();
+        return String.join(",", modules);
+    }
+
+    @JavascriptInterface
     public boolean exists(String file) {
         File f = new File(ext + "/Kartei/" + file);
         return f.exists();
@@ -59,9 +61,7 @@ public class NativeFile {
         return f.isDirectory();
     }
 
-    @JavascriptInterface
-    public String read(String file) {
-        File readfile = new File(ext + "/Kartei/" + file);
+    private String createRead(File readfile) {
         StringBuilder text = new StringBuilder();
         try {
             BufferedReader br = new BufferedReader(new FileReader(readfile));
@@ -76,5 +76,12 @@ public class NativeFile {
             e.printStackTrace();
         }
         return text.toString();
+    }
+
+    @JavascriptInterface
+    public String read(String file) {
+
+        File readfile = new File(ext + "/Kartei/" + file);
+        return createRead(readfile);
     }
 }

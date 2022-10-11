@@ -17,6 +17,8 @@ import NativeSelect from "@mui/material/NativeSelect";
 import { Divider, List, ListItem, ListItemButton, ListItemText, ListSubheader, Switch } from "@mui/material";
 import { StyledListItemText } from "./components/StyledListItemText";
 import { BuildConfig } from "@Native/BuildConfig";
+import { ImportGroupsItem } from "./components/ImportGroupsItem";
+import { ImportSingleGroupsItem } from "./components/ImportSingleGroupsItem";
 
 function SettingsActivity() {
   const confirm = useConfirm();
@@ -107,7 +109,8 @@ function SettingsActivity() {
             secondary="Alle Gruppen und Karten in einer Datei sichern"
           />
         </ListItemButton>
-        {/* <ImportGroupsItem />  */}
+        <ImportGroupsItem /> 
+        <ImportSingleGroupsItem /> 
       </List>
 
       <Divider />

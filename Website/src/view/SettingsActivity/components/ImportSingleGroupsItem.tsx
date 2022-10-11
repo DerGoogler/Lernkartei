@@ -1,31 +1,22 @@
 import { useActivity } from "@Hooks/useActivity";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import { os } from "@Native/Os";
 import Ajv from "ajv";
-import ons from "onsenui";
-import { ListItem } from "react-onsenui";
 import { FileChooserActivity } from "../../FileChooserActivity";
 import { useKartei } from "../../../hooks/useKartei";
 import { StyledListItemText } from "./StyledListItemText";
-import _schema from "@Util/groups.schema.json";
+import schema from "@Util/groups.schema.json";
 import { useRef } from "react";
-import { useConfirm } from "material-ui-confirm";
 import chooseFile from "../../FileChooserActivity/chooseFile";
+import { useStrings } from "@Hooks/useStrings";
 
-export const ImportGroupsItem = () => {
+export const ImportSingleGroupsItem = () => {
   const { context } = useActivity();
-  const { cards, setCards } = useKartei();
+  const { actions } = useKartei();
+  const { strings } = useStrings();
 
   const upload = useRef<HTMLInputElement>(null);
-  const confirm = useConfirm();
-
   const ajv = new Ajv();
-
-  const schema = {
-    type: "array",
-    items: _schema,
-  };
 
   const handleFileChange = (event: any) => {
     chooseFile(event, (event: any, file: any, input: any) => {
@@ -35,17 +26,16 @@ export const ImportGroupsItem = () => {
 
       const valid = validate(content) as boolean;
       if (valid) {
-        confirm({
-          title: "Import",
-          description:
-            "Beim Import werden alle Gruppen und Karten information überschrieben. Sei vorsichtig mit dieser Funktion!",
-          confirmationText: "Fortfahren",
-          cancellationText: "Abbrechen",
-        })
-          .then(() => {
-            setCards(content);
-          })
-          .catch(() => {});
+        actions.addGroup({
+          group: content.group,
+          data: content,
+          onExists: () => {
+            os.toast(strings.group_exist, "short");
+          },
+          callback: () => {
+            os.toast(`${content.group} has been added`, "short");
+          },
+        });
       } else {
         alert(JSON.stringify(validate.errors, null, 2));
       }
@@ -62,7 +52,7 @@ export const ImportGroupsItem = () => {
               props: {
                 key: "chooseFile",
                 extra: {
-                  useGroupsImport: true
+                  useGroupsImport: false,
                 },
               },
             });
@@ -71,7 +61,7 @@ export const ImportGroupsItem = () => {
           }
         }}
       >
-        <StyledListItemText primary="Import" secondary="Importiere zuvor gesicherte Gruppen und Karten" />
+        <StyledListItemText primary="Einzel-Import" secondary="Importiere eine einzelne Gruppe" />
       </ListItemButton>
       <input
         ref={upload}

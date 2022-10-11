@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Box, Fade, List, ListItemButton, ListItemIcon, ListSubheader, Pagination, Stack, styled } from "@mui/material";
+import { Box, Fade, Pagination, Stack, styled } from "@mui/material";
 import { Disappear } from "react-disappear";
 import { Toolbar } from "react-onsenui";
 import { Page } from "react-onsenui";
@@ -8,53 +8,30 @@ import AddCardToGroupActivity from "../AddCardToGroupActivity";
 import { Searchbar } from "../../components/Searchbar";
 import { os } from "../../native/Os";
 import { StyledSection } from "../../components/StyledSection";
-import { useEffect, useState } from "react";
-import React from "react";
-import { LoadingScreen } from "../../components/LoadingScreen";
+import { useState } from "react";
 import { useActivity } from "../../hooks/useActivity";
 import { BackButton } from "../../components/BackButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
-import PublishIcon from "@mui/icons-material/Publish";
 import DownloadIcon from "@mui/icons-material/Download";
 import { ToolbarButton } from "../../components/ToolbarButton";
-import { BottomSheet } from "../../components/BottomSheet";
-import { StyledListItemText } from "../SettingsActivity/components/StyledListItemText";
 import { useStrings } from "../../hooks/useStrings";
 import { useKartei } from "../../hooks/useKartei";
 import { File } from "../../native/File";
-import Ajv from "ajv";
-import chooseFile from "./chooseFile";
-import { useConfirm } from "material-ui-confirm";
 import { For } from "@Components/For";
 import { usePagination } from "../../hooks/usePagination";
 import CardKarte from "./components/CardKarte";
-import { Environment } from "@Native/Environment";
-
-// const CardListBuilder = React.lazy(() => import("./components/CardListBuilder"));
 
 export function ViewCardActivity() {
   const { context, extra } = useActivity<any>();
   const { strings } = useStrings();
-  const { cards, setCards, actions } = useKartei();
+  const { cards, actions } = useKartei();
 
   os.useOnBackPressed(context.popPage);
-  const confirm = useConfirm();
 
   const [titleShow, setTitleShow] = useState(true);
   const [search, setSearch] = useState("");
-  const [open, setOpen] = useState(false);
 
   const { index, group, title, desc } = extra;
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const karten = cards[index].karten;
   const filteredCards = karten.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
@@ -82,76 +59,36 @@ export function ViewCardActivity() {
           </Fade>
         </div>
         <div className="right">
-          <ToolbarButton id="group-menu" icon={MoreVertIcon} onClick={handleOpen} />
+          <ToolbarButton
+            icon={DownloadIcon}
+            onClick={() => {
+              try {
+                const file = new File(`${group}.${Math.floor(Math.random() * 5000000)}.json`);
+                file.createJSON(cards[index], 4);
+                os.toast("Groups has been successfully exported!", "short");
+              } catch (e) {
+                alert((e as Error).message);
+              }
+            }}
+          />
+          <ToolbarButton
+            icon={Add}
+            onClick={() => {
+              context.pushPage({
+                component: AddCardToGroupActivity,
+                props: {
+                  key: "add",
+                  extra: {
+                    index: index,
+                    edit: false,
+                  },
+                },
+              });
+            }}
+          />
         </div>
       </Toolbar>
     );
-  };
-
-  const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
-
-  const schema = {
-    type: "object",
-    required: ["group", "name", "description", "karten"],
-    properties: {
-      group: {
-        type: "string",
-      },
-      name: {
-        type: "string",
-      },
-      description: {
-        type: "string",
-      },
-      karten: {
-        type: "array",
-        items: {
-          type: "object",
-          required: ["shortDescription", "description"],
-          properties: {
-            shortDescription: {
-              type: "string",
-            },
-            description: {
-              type: "string",
-            },
-          },
-        },
-      },
-    },
-  };
-
-  const handleFileChange = (event: any) => {
-    chooseFile(event, (event: any, file: any, input: any) => {
-      const validate = ajv.compile(schema);
-
-      const content = JSON.parse(event.target.result);
-
-      const valid = validate(content) as boolean;
-      if (valid) {
-        confirm({
-          title: "Override Import",
-          description:
-            "Beim Override Import werden alle Karten und Gruppen information überschrieben. Sei vorsichtig mit dieser Funktion!",
-          confirmationText: "Fortfahren",
-          cancellationText: "Abbrechen",
-        })
-          .then(() => {
-            setCards((t) => {
-              if (t[index].group === content.group) {
-                t[index] = content;
-              } else {
-                os.toast("Group does not matches the group id!", "short");
-              }
-              return t;
-            });
-          })
-          .catch(() => {});
-      } else {
-        alert(JSON.stringify(validate.errors, null, 2));
-      }
-      handleClose();
-    });
   };
 
   return (
@@ -225,71 +162,6 @@ export function ViewCardActivity() {
           </For>
         </StyledSection>
       </Page>
-
-      <BottomSheet open={open} onCancel={handleClose}>
-        <List
-          subheader={
-            <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Addings</ListSubheader>
-          }
-        >
-          <ListItemButton
-            onClick={() => {
-              context.pushPage({
-                component: AddCardToGroupActivity,
-                props: {
-                  key: "add",
-                  extra: {
-                    index: index,
-                    edit: false,
-                  },
-                },
-              });
-              handleClose();
-            }}
-          >
-            <ListItemIcon>
-              <Add />
-            </ListItemIcon>
-            <StyledListItemText primary={strings.new_card} />
-          </ListItemButton>
-        </List>
-
-        <Divider />
-        <List
-          subheader={
-            <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Manage Group</ListSubheader>
-          }
-        >
-          <label htmlFor={title + "_override-import"}>
-            <ListItemButton>
-              <ListItemIcon>
-                <PublishIcon />
-              </ListItemIcon>
-              <StyledListItemText primary="Override Import (Beta)" />
-            </ListItemButton>
-          </label>
-          <ListItemButton
-            onClick={() => {
-              const file = new File(`${group}.${Math.floor(Math.random() * 5000000)}.json`);
-              file.createJSON(cards[index], 4);
-            }}
-          >
-            <ListItemIcon>
-              <DownloadIcon />
-            </ListItemIcon>
-            <StyledListItemText primary="Export" />
-          </ListItemButton>
-        </List>
-      </BottomSheet>
-      <input
-        // ...
-        id={title + "_override-import"}
-        key={title + "_override-import"}
-        type="file"
-        style={{ display: "none", marginRight: "4px" }}
-        accept=".json"
-        onChange={handleFileChange}
-      />
     </>
   );
 }

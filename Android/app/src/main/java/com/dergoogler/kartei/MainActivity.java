@@ -1,10 +1,13 @@
 package com.dergoogler.kartei;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.ConsoleMessage;
+import android.webkit.PermissionRequest;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -15,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.webkit.WebViewAssetLoader;
 import androidx.webkit.WebViewClientCompat;
 
+import com.dergoogler.component.ModuleChromeClient;
 import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeFile;
@@ -25,9 +29,6 @@ import com.dergoogler.core.NativeUtils;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ModuleView view;
-    private static Context mContext;
-    private NativeStorage nsp;
-    private Server server;
 
 
     @Override
@@ -35,16 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext = getApplicationContext();
         view = findViewById(R.id.mmrl_view);
-
-        nsp = new NativeStorage(this);
-//        try {
-//            server = new Server(nsp.getString("katei", "[]"));
-//            server.start();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
         view.loadUrl("https://appassets.androidplatform.net/assets/web/index.html");
 
@@ -68,15 +60,15 @@ public class MainActivity extends AppCompatActivity {
         view.addJavascriptInterface(new NativeOS(this), "os");
         view.addJavascriptInterface(new NativeStorage(this), "nativeStorage");
         view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
-        view.addJavascriptInterface(nsp, "environment");
-        view.addJavascriptInterface(new NativeFile(), "file");
+        view.addJavascriptInterface(new NativeStorage(this), "environment");
+        view.addJavascriptInterface(new NativeFile(this), "file");
         view.addJavascriptInterface(new NativeUtils(), "utils");
 
         final WebViewAssetLoader assetLoader = new WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
                 .build();
 
-        view.setWebViewClient(new WebViewClientCompat() {
+        view.setModuleViewClient(new WebViewClientCompat() {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 return assetLoader.shouldInterceptRequest(request.getUrl());
@@ -110,12 +102,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        server.stop();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         view.eventDispatcher("onresume");
@@ -124,9 +110,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         view.eventDispatcher("onbackbutton");
-    }
-
-    public static Context getAppContext() {
-        return mContext;
     }
 }
