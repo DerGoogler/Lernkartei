@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const Group = ({ set, cards, actions }: Props) => {
-  const { data } = useFetch<Kartei>(set.cdn);
+  const { data, error } = useFetch<Kartei>(set.cdn);
   const { strings } = useStrings();
 
   const [isDownloaded, setIsDownloaded] = useState(false);
@@ -47,6 +47,8 @@ export const Group = ({ set, cards, actions }: Props) => {
       os.toast("There was an error while downloading the group", "short");
     }
   };
+
+  if (typeof error !== "undefined") return null;
 
   return (
     <ListItemButton onClick={setDownloader}>
