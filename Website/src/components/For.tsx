@@ -25,5 +25,12 @@ export function For<T, U extends JSX.Element>(props: ForProps<T, U>) {
     }
   };
 
-  return <React.Suspense fallback={<LoadingScreen />}>{handler()}</React.Suspense>;
+  return (
+    <React.Suspense
+      key={Math.floor(Math.random() * 3010)}
+      fallback={<LoadingScreen key={Math.floor(Math.random() * 5000)} />}
+    >
+      {handler()}
+    </React.Suspense>
+  );
 }

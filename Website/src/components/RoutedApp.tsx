@@ -130,8 +130,8 @@ const RoutedApp = (): JSX.Element => {
     const props = route.props || {};
     const newProps = obj.omit(["extra", "context"], props);
     return (
-      <Extra.Provider value={props.extra}>
-        <Context.Provider value={props.context}>
+      <Extra.Provider key={props.key + "_extra"} value={props.extra}>
+        <Context.Provider key={props.key + "_context"} value={props.context}>
           <route.component {...newProps} />
         </Context.Provider>
       </Extra.Provider>
@@ -166,11 +166,7 @@ const RoutedApp = (): JSX.Element => {
             onClose={hideSplitter}
             onOpen={showSplitter}
           >
-            <Drawer
-              renderToolbar={renderSpliterToolbar}
-              hideSplitter={hideSplitter}
-              pushPage={pushPage}
-            />
+            <Drawer renderToolbar={renderSpliterToolbar} hideSplitter={hideSplitter} pushPage={pushPage} />
           </SplitterSide>
           <SplitterContent>
             <RouterNavigator

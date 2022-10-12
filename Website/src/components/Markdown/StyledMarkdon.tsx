@@ -329,7 +329,7 @@ export const StyledMarkdown = (props: Props) => {
     "&::before": { display: "table", content: '""' },
     "&::after": { display: "table", clear: "both", content: '""' },
     "> *": {
-      "&:first-child": { marginTop: "0 !important" },
+      "&:first-of-type": { marginTop: "0 !important" },
       "&:last-child": { marginBottom: "0 !important" },
     },
     "a:not([href])": { color: "inherit", textDecoration: "none" },
@@ -346,7 +346,7 @@ export const StyledMarkdown = (props: Props) => {
       marginBottom: "16px",
     },
     "blockquote >": {
-      ":first-child": { marginTop: "0" },
+      ":first-of-type": { marginTop: "0" },
       ":last-child": { marginBottom: "0" },
     },
     "sup > a": {
