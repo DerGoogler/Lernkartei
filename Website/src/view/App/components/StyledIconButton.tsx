@@ -1,9 +1,7 @@
 import { IconButton, IconButtonProps, styled } from "@mui/material";
 import { useDarkmode, useScheme } from "../../../hooks/useDarkmode";
-import shadeColor from "../../../util/shadeColor";
 
 export const StyledIconButton = (props: IconButtonProps) => {
-  const { scheme, setScheme } = useScheme();
   const { darkmode, setDarkmode } = useDarkmode();
 
   const C = styled(IconButton)(({ theme }) => ({
