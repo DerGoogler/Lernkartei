@@ -19,7 +19,6 @@ export function App() {
   const { context } = useActivity();
   const { cards, actions } = useKartei();
 
-  // These are native Android call, they won't be called on browsers
   // os.useOnBackPressed(() => {
   //   if (context.splitter.state()) {
   //     context.splitter.hide();
@@ -28,9 +27,9 @@ export function App() {
   //   }
   // });
   os.useOnBackPressed(context.popPage);
-  os.useOnResume(() => {
-    console.log("User has been returned to the app");
-  });
+  // os.useOnResume(() => {
+  //   console.log("User has been returned to the app");
+  // });
 
   const renderToolbar = () => {
     return (

@@ -17,6 +17,9 @@ dom.preventer(["contextmenu"]);
 ons.platform.select("android");
 
 ons.ready(() => {
+  // @ts-ignore
+  window.onbackbutton = new Event("onbackbutton");
+
   rct.render(
     <React.StrictMode>
       <StringProvider>

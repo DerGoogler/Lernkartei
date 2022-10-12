@@ -115,7 +115,7 @@
     {
         "name": "onsenui",
         "description": "HTML5 Mobile Framework & UI Components",
-        "version": "2.12.2",
+        "version": "2.12.3",
         "license": "Apache-2.0",
         "homepage": "https://onsen.io/",
         "repository": "https://www.npmjs.com/package/onsenui"
@@ -201,6 +201,15 @@
         "version": "1.1.0",
         "license": "MIT",
         "repository": "https://www.npmjs.com/package/react-string-replace"
+    },
+    {
+        "name": "react-to-print",
+        "description": "Print React components in the browser",
+        "author": "gregnb <gregnb@gmail.com>",
+        "version": "2.14.7",
+        "license": "MIT",
+        "homepage": "https://github.com/gregnb/react-to-print#readme",
+        "repository": "https://www.npmjs.com/package/react-to-print"
     },
     {
         "name": "styled-components",
