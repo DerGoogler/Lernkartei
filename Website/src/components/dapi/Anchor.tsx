@@ -1,4 +1,5 @@
-import { styled, useTheme } from "@mui/material";
+import { useTheme } from "@Hooks/useDarkmode";
+import { styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import { os } from "../../native/Os";
 import Acknowledgements from "../../view/Acknowledgements";
@@ -6,9 +7,10 @@ import { GroupsActivity } from "../../view/GroupsActivity";
 import SettingsActivity from "../../view/SettingsActivity";
 
 const StyledAnchor = styled("div")(({ theme }) => {
+  const { scheme } = useTheme();
   const s = {
     cursor: "pointer",
-    color: theme.palette.primary.main,
+    color: scheme[900],
     "& abbr[title]": {
       textDecoration: "none",
       cursor: "pointer",
@@ -28,7 +30,7 @@ const StyledAnchor = styled("div")(({ theme }) => {
 function Anchor(props: JSX.IntrinsicElements["a"]) {
   const { href, children, ...rest } = props;
 
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   return (
     <StyledAnchor>

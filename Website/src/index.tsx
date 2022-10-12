@@ -22,10 +22,9 @@ ons.ready(() => {
       <StringProvider>
         <KarteiProvider>
           <DarkModeProvider>
-            <CssBaseline />
-            <LightTheme />
-            {/* @ts-ignore */}
             <ConfirmProvider>
+              <CssBaseline />
+              <LightTheme />
               <RoutedApp />
             </ConfirmProvider>
           </DarkModeProvider>

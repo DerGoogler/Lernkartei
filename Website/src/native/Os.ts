@@ -1,5 +1,6 @@
 import ons from "onsenui";
-import React from "react";
+import React, { useCallback } from "react";
+import { useEventListener } from "usehooks-ts";
 import { Native } from "./Native";
 
 export namespace Os {
@@ -91,21 +92,11 @@ class Os extends Native {
     window.removeEventListener(type.toLowerCase(), callback, options);
   }
 
-  public useOnBackPressed(callback: () => void, deps?: any[]): void {
-    React.useEffect(() => {
-      this.addNativeEventListener("onbackbutton", callback, false);
-      return () => {
-        this.removeNativeEventListener("onbackbutton", callback, false);
-      };
-    }, deps?.concat([callback]));
+  public useOnBackPressed(callback: () => void): void {
+    useEventListener("onbackbutton", callback);
   }
   public useOnResume(callback: () => void): void {
-    React.useEffect(() => {
-      this.addNativeEventListener("onresume", callback, false);
-      return () => {
-        this.removeNativeEventListener("onresume", callback, false);
-      };
-    }, [callback]);
+    useEventListener("onresume", callback);
   }
 }
 
