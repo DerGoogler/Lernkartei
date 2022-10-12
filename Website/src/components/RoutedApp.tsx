@@ -1,5 +1,5 @@
 import { CloseRounded } from "@mui/icons-material";
-import { Component } from "react";
+import { Component, useState } from "react";
 import {
   List,
   ListHeader,
@@ -30,71 +30,76 @@ interface States {
 
 interface Props {}
 
-class RoutedApp<A = {}> extends Component<Props, States> {
-  public constructor(props: Props | Readonly<Props>) {
-    super(props);
+const Intro = () => {
+  if (nativeStorage.getItem("introFinised") === "true") {
+    return App;
+  } else {
+    return IntroActivity;
+  }
+};
 
-    const Intro = () => {
-      if (nativeStorage.getItem("introFinised") === "true") {
-        return App;
-      } else {
-        return IntroActivity;
-      }
-    };
+const RoutedApp = (): JSX.Element => {
+  const [isSplitterOpen, setIsSplitterOpen] = useState(false);
 
-    const routeConfig = RouterUtil.init([
-      {
-        component: Intro(),
-        props: {
-          key: "main",
-          context: {
-            pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
-            splitter: {
-              show: () => this.showSplitter(),
-              hide: () => this.hideSplitter(),
-              state: () => {
-                return this.state.isSplitterOpen;
-              },
+  const hideSplitter = () => {
+    setIsSplitterOpen(false);
+  };
+
+  const showSplitter = () => {
+    setIsSplitterOpen(true);
+  };
+
+  const ignoreThat = RouterUtil.init([
+    {
+      component: Intro(),
+      props: {
+        key: "main",
+        context: {
+          pushPage: (props: PushPropsCore) => pushPage(props),
+          splitter: {
+            show: () => showSplitter(),
+            hide: () => hideSplitter(),
+            state: () => {
+              return isSplitterOpen;
             },
           },
         },
       },
-    ]);
+    },
+  ]);
 
-    this.state = {
-      isSplitterOpen: false,
-      routeConfig,
-    };
+  const [routeConfig, setRouteConfig] = useState<any>(ignoreThat);
 
-    this.pushPage = this.pushPage.bind(this);
-  }
+  const popPage = (options = {}) => {
+    setRouteConfig((prev: any) =>
+      RouterUtil.pop({
+        routeConfig: prev,
+        options: {
+          ...options,
+          animationOptions: {
+            duration: 0.2,
+            timing: "ease-in",
+            animation: "fade-md",
+          },
+        },
+      })
+    );
+  };
 
-  private handleBackButton() {
-    this.popPage();
-  }
-
-  public componentDidMount() {
-    os.addNativeEventListener("onbackbutton", this.handleBackButton);
-  }
-
-  public componentWillUnmount() {
-    os.removeNativeEventListener("onbackbutton", this.handleBackButton);
-  }
-
-  private pushPage<A = {}>(props: PushPropsCore<A>): void {
+  const pushPage = (props: PushPropsCore): void => {
     const route = {
       component: props.component,
       props: {
         key: props.props.key,
         extra: props.props?.extra,
         context: {
-          popPage: () => this.popPage(),
-          pushPage: (props: PushPropsCore<A>) => this.pushPage<A>(props),
+          popPage: (options = {}) => popPage(options),
+          pushPage: (props: PushPropsCore) => pushPage(props),
           splitter: {
-            show: () => this.showSplitter(),
-            hide: () => this.hideSplitter(),
+            show: () => showSplitter(),
+            hide: () => hideSplitter(),
             state: () => {
-              return this.state.isSplitterOpen;
+              return isSplitterOpen;
             },
           },
         },
@@ -103,47 +108,25 @@ class RoutedApp<A = {}> extends Component<Props, States> {
 
     const options = {};
 
-    let routeConfig = this.state.routeConfig;
-
-    routeConfig = RouterUtil.push({
-      routeConfig: routeConfig,
-      route: route,
-      options: options,
-      key: props.props.key,
-    });
-
-    this.setState({ routeConfig: routeConfig });
-  }
-
-  private popPage = (options = {}) => {
-    let routeConfig = this.state.routeConfig;
-
-    routeConfig = RouterUtil.pop({
-      routeConfig: routeConfig,
-      options: {
-        ...options,
-        animationOptions: {
-          duration: 0.2,
-          timing: "ease-in",
-          animation: "fade-md",
-        },
-      },
-    });
-
-    this.setState({ routeConfig: routeConfig });
+    setRouteConfig((prev: any) =>
+      RouterUtil.push({
+        routeConfig: prev,
+        route: route,
+        options: options,
+        key: props.props.key,
+      })
+    );
   };
 
-  private onPostPush = () => {
-    const routeConfig = RouterUtil.postPush(this.state.routeConfig);
-    this.setState({ routeConfig: routeConfig });
+  const onPostPush = () => {
+    setRouteConfig((prev: any) => RouterUtil.postPush(prev));
   };
 
-  private onPostPop = () => {
-    const routeConfig = RouterUtil.postPop(this.state.routeConfig);
-    this.setState({ routeConfig: routeConfig });
+  const onPostPop = () => {
+    setRouteConfig((prev: any) => RouterUtil.postPop(prev));
   };
 
-  private renderPage = (route: any) => {
+  const renderPage = (route: any) => {
     const props = route.props || {};
     const newProps = obj.omit(["extra", "context"], props);
     return (
@@ -155,21 +138,13 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     );
   };
 
-  private hideSplitter() {
-    this.setState({ isSplitterOpen: false });
-  }
-
-  private showSplitter() {
-    this.setState({ isSplitterOpen: true });
-  }
-
-  private renderSpliterToolbar = () => {
+  const renderSpliterToolbar = () => {
     return (
       <>
         <Toolbar modifier="noshadow">
           <div className="center">Kartei</div>
           <div className="right">
-            <ToolbarButton onClick={this.hideSplitter.bind(this)}>
+            <ToolbarButton onClick={hideSplitter}>
               <Icon icon={CloseRounded} keepLight />
             </ToolbarButton>
           </div>
@@ -178,41 +153,39 @@ class RoutedApp<A = {}> extends Component<Props, States> {
     );
   };
 
-  public render = () => {
-    return (
-      <>
-        <Page>
-          <Splitter>
-            <SplitterSide
-              side="left"
-              width={250}
-              collapse={true}
-              swipeable={false}
-              isOpen={this.state.isSplitterOpen}
-              onClose={this.hideSplitter.bind(this)}
-              onOpen={this.showSplitter.bind(this)}
-            >
-              <Drawer
-                renderToolbar={this.renderSpliterToolbar}
-                hideSplitter={this.hideSplitter.bind(this)}
-                pushPage={this.pushPage}
-              />
-            </SplitterSide>
-            <SplitterContent>
-              <RouterNavigator
-                swipeable={true}
-                swipePop={(options: any) => this.popPage(options)}
-                routeConfig={this.state.routeConfig}
-                renderPage={this.renderPage}
-                onPostPush={() => this.onPostPush()}
-                onPostPop={() => this.onPostPop()}
-              />
-            </SplitterContent>
-          </Splitter>
-        </Page>
-      </>
-    );
-  };
-}
+  return (
+    <>
+      <Page>
+        <Splitter>
+          <SplitterSide
+            side="left"
+            width={250}
+            collapse={true}
+            swipeable={false}
+            isOpen={isSplitterOpen}
+            onClose={hideSplitter}
+            onOpen={showSplitter}
+          >
+            <Drawer
+              renderToolbar={renderSpliterToolbar}
+              hideSplitter={hideSplitter}
+              pushPage={pushPage}
+            />
+          </SplitterSide>
+          <SplitterContent>
+            <RouterNavigator
+              swipeable={true}
+              swipePop={(options: any) => popPage(options)}
+              routeConfig={routeConfig}
+              renderPage={renderPage}
+              onPostPush={() => onPostPush()}
+              onPostPop={() => onPostPop()}
+            />
+          </SplitterContent>
+        </Splitter>
+      </Page>
+    </>
+  );
+};
 
 export default RoutedApp;

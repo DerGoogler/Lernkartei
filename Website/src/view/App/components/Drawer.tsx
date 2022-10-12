@@ -9,7 +9,7 @@ import { StyledListItemText } from "../../SettingsActivity/components/StyledList
 type Props = {
   renderToolbar: () => JSX.Element;
   hideSplitter: () => void;
-  pushPage: <T>(props: PushPropsCore<T>) => void;
+  pushPage: (props: PushPropsCore) => void;
 };
 
 export const Drawer = (props: Props) => {
@@ -25,7 +25,7 @@ export const Drawer = (props: Props) => {
       >
         <ListItemButton
           onClick={() => {
-            pushPage<{}>({
+            pushPage({
               component: Acknowledgements,
               props: {
                 key: "acknowledgements",
@@ -39,7 +39,7 @@ export const Drawer = (props: Props) => {
         </ListItemButton>
         <ListItemButton
           onClick={() => {
-            pushPage<{}>({
+            pushPage({
               component: SettingsActivity,
               props: {
                 key: "settings",
@@ -53,7 +53,7 @@ export const Drawer = (props: Props) => {
         </ListItemButton>
         <ListItemButton
           onClick={() => {
-            pushPage<{}>({
+            pushPage({
               component: GroupsActivity,
               props: {
                 key: "sets",
