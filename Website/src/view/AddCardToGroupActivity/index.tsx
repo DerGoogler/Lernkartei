@@ -28,6 +28,7 @@ import { Markup } from "../../components/Markdown";
 import { useActivity } from "../../hooks/useActivity";
 import { BackButton } from "../../components/BackButton";
 import { useStrings } from "../../hooks/useStrings";
+import { useReactToPrint } from "react-to-print";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
@@ -102,6 +103,7 @@ function AddCardToGroupActivity() {
   const [description, setDescription] = React.useState(edit ? desc : "");
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
+  const printRef = React.useRef<HTMLDivElement>(null);
 
   const confirm = useConfirm();
   // **** Experimental
@@ -198,6 +200,35 @@ function AddCardToGroupActivity() {
     setDescription(e.target.value);
   };
 
+  const reactToPrintContent = React.useCallback(() => {
+    return printRef.current;
+  }, [printRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: "document",
+    removeAfterPrint: false,
+  });
+
+  const handlePreviewOrPrint = () => {
+    if (!os.isAndroid && isDesktop) {
+      handlePrint();
+    } else {
+      context.pushPage<any>({
+        component: DescriptonActivity,
+        props: {
+          key: `preview_${shortDescription}`,
+          extra: {
+            desc: description,
+            shortDesc: shortDescription,
+            index: "Preview",
+            cardIndex: index,
+          },
+        },
+      });
+    }
+  };
+
   return (
     <Page renderToolbar={renderToolbar}>
       <section style={{ padding: 8, height: "100%", width: "100%", display: "flex", flexDirection: "column" }}>
@@ -273,7 +304,7 @@ function AddCardToGroupActivity() {
             </TextareaMarkdown.Wrapper>
             {!os.isAndroid && isDesktop && (
               <Preview className="preview">
-                <Markup children={`## ${shortDescription}\n\n${description}`} />
+                <Markup ref={printRef} children={`## ${shortDescription}\n\n${description}`} />
               </Preview>
             )}
           </Stack>
@@ -290,30 +321,7 @@ function AddCardToGroupActivity() {
           <Button fullWidth variant="contained" disableElevation onClick={edit ? handleEdit : handleSave}>
             {strings.save}
           </Button>
-          <Button
-            fullWidth
-            variant="outlined"
-            onClick={() => {
-              if (!os.isAndroid && isDesktop) {
-                printHtmlBlock(".preview", {
-                  importStyle: true,
-                });
-              } else {
-                context.pushPage<any>({
-                  component: DescriptonActivity,
-                  props: {
-                    key: `preview_${shortDescription}`,
-                    extra: {
-                      desc: description,
-                      shortDesc: shortDescription,
-                      index: "Preview",
-                      cardIndex: index,
-                    },
-                  },
-                });
-              }
-            }}
-          >
+          <Button fullWidth variant="outlined" onClick={handlePreviewOrPrint}>
             {" "}
             {!os.isAndroid && isDesktop ? strings.print : strings.preview}
           </Button>

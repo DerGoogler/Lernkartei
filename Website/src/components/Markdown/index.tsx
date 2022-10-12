@@ -19,7 +19,7 @@ type Props = {
   styleMd?: React.CSSProperties;
 };
 
-export function Markup(props: Props) {
+export const Markup = React.forwardRef((props: Props, ref) => {
   const StyledDivider = styled(Divider)({
     "h1, & h2, & h3, & h4, & h5, & h6": {
       border: "none",
@@ -32,7 +32,10 @@ export function Markup(props: Props) {
   }));
 
   return (
-    <StyledMarkdown style={{ display: "inline-block", padding: "8px", height: "100%", width: "100%", ...props.style }}>
+    <StyledMarkdown
+      ref={ref as any}
+      style={{ display: "inline-block", padding: "8px", height: "100%", width: "100%", ...props.style }}
+    >
       <Markdown
         style={props.styleMd}
         options={{
@@ -96,4 +99,4 @@ export function Markup(props: Props) {
       />
     </StyledMarkdown>
   );
-}
+});

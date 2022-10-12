@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useTheme } from "@mui/material";
 import { Theme } from "@mui/material";
+import React from "react";
 import { colors, useDarkmode, useScheme } from "../../hooks/useDarkmode";
 import shadeColor from "../../util/shadeColor";
 
@@ -13,7 +14,7 @@ interface T {
   theme: Theme;
 }
 
-export const StyledMarkdown = (props: Props) => {
+export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
   const theme = useTheme();
   const { scheme, setScheme } = useScheme();
   const { darkmode, setDarkmode } = useDarkmode();
@@ -564,5 +565,5 @@ export const StyledMarkdown = (props: Props) => {
     ".hljs-char.escape_,\n  .hljs-link,\n  .hljs-params,\n  .hljs-property,\n  .hljs-punctuation,\n  .hljs-tag": {},
   }));
 
-  return <Article theme={theme} style={props.style} children={props.children} />;
-};
+  return <Article ref={ref as any} theme={theme} style={props.style} children={props.children} />;
+});
