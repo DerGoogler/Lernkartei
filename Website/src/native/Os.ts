@@ -91,23 +91,21 @@ class Os extends Native {
     window.removeEventListener(type.toLowerCase(), callback, options);
   }
 
-  public useOnBackPressed(callback: () => void): void {
+  public useOnBackPressed(callback: () => void, deps?: any[]): void {
     React.useEffect(() => {
       this.addNativeEventListener("onbackbutton", callback, false);
-
       return () => {
         this.removeNativeEventListener("onbackbutton", callback, false);
       };
-    }, []);
+    }, deps?.concat([callback]));
   }
   public useOnResume(callback: () => void): void {
     React.useEffect(() => {
       this.addNativeEventListener("onresume", callback, false);
-
       return () => {
         this.removeNativeEventListener("onresume", callback, false);
       };
-    }, []);
+    }, [callback]);
   }
 }
 
