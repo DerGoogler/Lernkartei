@@ -19,17 +19,13 @@ export function App() {
   const { context } = useActivity();
   const { cards, actions } = useKartei();
 
-  // os.useOnBackPressed(() => {
-  //   if (context.splitter.state()) {
-  //     context.splitter.hide();
-  //   } else {
-  //     os.close();
-  //   }
-  // });
-  os.useOnBackPressed(context.popPage);
-  // os.useOnResume(() => {
-  //   console.log("User has been returned to the app");
-  // });
+  os.useOnBackPressed(() => {
+    if (context.splitter.state()) {
+      context.splitter.hide();
+    } else {
+      os.close();
+    }
+  });
 
   const renderToolbar = () => {
     return (
