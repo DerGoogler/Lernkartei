@@ -12,27 +12,29 @@ import RoutedApp from "./components/RoutedApp";
 import { DarkModeProvider } from "./hooks/useDarkmode";
 import { KarteiProvider } from "./hooks/useKartei";
 import { StringProvider } from "./hooks/useStrings";
+import { Preventer, render } from "react-render-tools";
 
-dom.preventer(["contextmenu"]);
 ons.platform.select("android");
 
 ons.ready(() => {
   // @ts-ignore
   window.onbackbutton = new Event("onbackbutton");
 
-  rct.render(
+  render(
     <React.StrictMode>
-      <StringProvider>
-        <KarteiProvider>
-          <DarkModeProvider>
-            <ConfirmProvider>
-              <CssBaseline />
-              <LightTheme />
-              <RoutedApp />
-            </ConfirmProvider>
-          </DarkModeProvider>
-        </KarteiProvider>
-      </StringProvider>
+      <Preventer prevent="contextmenu">
+        <StringProvider>
+          <KarteiProvider>
+            <DarkModeProvider>
+              <ConfirmProvider>
+                <CssBaseline />
+                <LightTheme />
+                <RoutedApp />
+              </ConfirmProvider>
+            </DarkModeProvider>
+          </KarteiProvider>
+        </StringProvider>
+      </Preventer>
     </React.StrictMode>,
     "app"
   );

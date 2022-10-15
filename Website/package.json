@@ -42,6 +42,7 @@
     "react-disappear": "1.0.4",
     "react-dom": "^18.2.0",
     "react-onsenui": "^1.13.0",
+    "react-render-tools": "^1.0.1",
     "react-string-replace": "^1.1.0",
     "react-to-print": "^2.14.7",
     "styled-components": "^5.3.5",
