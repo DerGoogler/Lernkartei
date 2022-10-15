@@ -1,16 +1,14 @@
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
-import { Box, Chip, Collapse, Divider, Fade, List, Stack, Typography } from "@mui/material";
+import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useConfirm } from "material-ui-confirm";
 import { StyledCard } from "./StyledCard";
 import { StyledIconButton } from "./StyledIconButton";
-import { os } from "../../../native/Os";
-import { Fragment } from "react";
+import { os } from "@Native/Os";
 import { ViewCardActivity } from "../../ViewCardsActivity";
 import AddActivity from "../../AddActivity";
-import { useKartei } from "../../../hooks/useKartei";
-import { TransitionGroup } from "react-transition-group";
-import { useActivity } from "../../../hooks/useActivity";
-import { useStrings } from "../../../hooks/useStrings";
+import { useKartei } from "@Hooks/useKartei";
+import { useActivity } from "@Hooks/useActivity";
+import { useStrings } from "@Hooks/useStrings";
 
 interface Props {
   card: Kartei;
@@ -68,26 +66,28 @@ export const GroupCard = ({ card, index, actions }: Props) => {
           }
         />
         <Stack key={index + 8} spacing={0.8} direction="row">
-          <StyledIconButton
-            key={index + 9}
-            style={{ width: 30, height: 30 }}
-            onClick={() => {
-              context.pushPage({
-                component: AddActivity,
-                props: {
-                  key: `edit_${card.name}_${index}`,
-                  extra: {
-                    name: card.name,
-                    description: card.description,
-                    editGroup: true,
-                    index: index,
+          {!card.readonly && (
+            <StyledIconButton
+              key={index + 9}
+              style={{ width: 30, height: 30 }}
+              onClick={() => {
+                context.pushPage({
+                  component: AddActivity,
+                  props: {
+                    key: `edit_${card.name}_${index}`,
+                    extra: {
+                      name: card.name,
+                      description: card.description,
+                      editGroup: true,
+                      index: index,
+                    },
                   },
-                },
-              });
-            }}
-          >
-            <EditRounded key={index + 10} sx={{ fontSize: 14 }} />
-          </StyledIconButton>
+                });
+              }}
+            >
+              <EditRounded key={index + 10} sx={{ fontSize: 14 }} />
+            </StyledIconButton>
+          )}
 
           <StyledIconButton
             key={index + 11}

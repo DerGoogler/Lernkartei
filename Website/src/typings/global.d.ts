@@ -25,15 +25,17 @@ declare global {
     length: number;
   }
 
-  interface GroupOptions {}
+  interface Options {
+    readonly?: boolean;
+  }
 
-  interface Karten extends GroupOptions {
+  interface Karten extends Options {
     index?: number;
     shortDescription: string;
     description: string;
   }
 
-  interface Kartei extends GroupOptions {
+  interface Kartei extends Options {
     group: string;
     name: string;
     description: string;
@@ -53,15 +55,15 @@ declare global {
   interface PushProps<E = {}> {
     readonly extra: E;
     // readonly context: {
-      readonly popPage: () => void;
-      readonly pushPage: <T>(props: PushPropsCore<T>) => void;
-      readonly splitter: {
-        readonly show: () => void;
-        readonly hide: () => void;
-        readonly state: () => boolean;
-      };
-      readonly onBackPressed: (callback: () => void) => void;
-      readonly onResume: (callback: () => void) => void;
+    readonly popPage: () => void;
+    readonly pushPage: <T>(props: PushPropsCore<T>) => void;
+    readonly splitter: {
+      readonly show: () => void;
+      readonly hide: () => void;
+      readonly state: () => boolean;
+    };
+    readonly onBackPressed: (callback: () => void) => void;
+    readonly onResume: (callback: () => void) => void;
     // };
   }
 

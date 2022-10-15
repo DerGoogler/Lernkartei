@@ -74,59 +74,63 @@ const CardKarte = ({ card, index, actions }: Props) => {
           label={`#${index}`}
         />
         <Stack spacing={0.8} direction="row">
-          <StyledIconButton
-            style={{ width: 30, height: 30 }}
-            onClick={() => {
-              context.pushPage({
-                component: AddCardToGroupActivity,
-                props: {
-                  key: `edit_${card.shortDescription}_${index}`,
-                  extra: {
-                    card: null,
-                    desc: card.description,
-                    shortDesc: card.shortDescription,
-                    index: index,
-                    cardIndex: iindex,
-                    edit: true,
-                  },
-                },
-              });
-            }}
-          >
-            <EditRounded sx={{ fontSize: 14 }} />
-          </StyledIconButton>
-
-          <StyledIconButton
-            style={{ width: 30, height: 30 }}
-            onClick={() => {
-              confirm({
-                title: "Löschen",
-                description: (
-                  <span>
-                    Möchtest Du die <strong>Karte Nr.{index}</strong> löschen?
-                  </span>
-                ),
-                confirmationText: "Ja",
-                cancellationText: "Nein",
-              })
-                .then(() => {
-                  try {
-                    actions.removeKarte({
-                      index: iindex,
-                      shortDescription: card.shortDescription,
-                      callback() {
-                        os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
+          {!card.readonly && (
+            <>
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  context.pushPage({
+                    component: AddCardToGroupActivity,
+                    props: {
+                      key: `edit_${card.shortDescription}_${index}`,
+                      extra: {
+                        card: null,
+                        desc: card.description,
+                        shortDesc: card.shortDescription,
+                        index: index,
+                        cardIndex: iindex,
+                        edit: true,
                       },
-                    });
-                  } catch (error) {
-                    os.toast((error as Error).message, "short");
-                  }
-                })
-                .catch(() => {});
-            }}
-          >
-            <DeleteRounded sx={{ fontSize: 14 }} />
-          </StyledIconButton>
+                    },
+                  });
+                }}
+              >
+                <EditRounded sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  confirm({
+                    title: "Löschen",
+                    description: (
+                      <span>
+                        Möchtest Du die <strong>Karte Nr.{index}</strong> löschen?
+                      </span>
+                    ),
+                    confirmationText: "Ja",
+                    cancellationText: "Nein",
+                  })
+                    .then(() => {
+                      try {
+                        actions.removeKarte({
+                          index: iindex,
+                          shortDescription: card.shortDescription,
+                          callback() {
+                            os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
+                          },
+                        });
+                      } catch (error) {
+                        os.toast((error as Error).message, "short");
+                      }
+                    })
+                    .catch(() => {});
+                }}
+              >
+                <DeleteRounded sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+            </>
+          )}
         </Stack>
       </Stack>
     </StyledCard>
