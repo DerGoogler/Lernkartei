@@ -17,28 +17,14 @@ import { App } from "../view/App";
 import { os } from "../native/Os";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
-import React from "react";
 import { Context, Extra } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
-import { nativeStorage } from "../hooks/useNativeStorage";
+import { useNativeStorage } from "../hooks/useNativeStorage";
 import { Drawer } from "../view/App/components/Drawer";
 
-interface States {
-  isSplitterOpen: boolean;
-  routeConfig: any;
-}
-
-interface Props {}
-
-const Intro = () => {
-  if (nativeStorage.getItem("introFinised") === "true") {
-    return App;
-  } else {
-    return IntroActivity;
-  }
-};
-
 const RoutedApp = (): JSX.Element => {
+  const [introFinised, setIntroFinised] = useNativeStorage("introFinised", false);
+
   const [isSplitterOpen, setIsSplitterOpen] = useState(false);
 
   const hideSplitter = () => {
@@ -51,7 +37,7 @@ const RoutedApp = (): JSX.Element => {
 
   const ignoreThat = RouterUtil.init([
     {
-      component: Intro(),
+      component: introFinised ? App : IntroActivity,
       props: {
         key: "main",
         context: {
@@ -59,9 +45,7 @@ const RoutedApp = (): JSX.Element => {
           splitter: {
             show: () => showSplitter(),
             hide: () => hideSplitter(),
-            state: () => {
-              return isSplitterOpen;
-            },
+            state: isSplitterOpen,
           },
         },
       },
@@ -98,9 +82,7 @@ const RoutedApp = (): JSX.Element => {
           splitter: {
             show: () => showSplitter(),
             hide: () => hideSplitter(),
-            state: () => {
-              return isSplitterOpen;
-            },
+            state: isSplitterOpen,
           },
         },
       },

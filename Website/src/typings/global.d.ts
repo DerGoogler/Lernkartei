@@ -60,7 +60,7 @@ declare global {
     readonly splitter: {
       readonly show: () => void;
       readonly hide: () => void;
-      readonly state: () => boolean;
+      readonly state: boolean;
     };
     readonly onBackPressed: (callback: () => void) => void;
     readonly onResume: (callback: () => void) => void;
