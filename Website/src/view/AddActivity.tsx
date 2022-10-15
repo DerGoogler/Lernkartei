@@ -1,9 +1,12 @@
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import * as React from "react";
-import { BackButton, Button, Page, Toolbar } from "react-onsenui";
+import { BackButton, Page, Toolbar } from "react-onsenui";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 import { useActivity } from "../hooks/useActivity";
+import { ToolbarButton } from "../components/ToolbarButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useStrings } from "../hooks/useStrings";
 
 type Extra = {
   name: string;
@@ -14,6 +17,8 @@ type Extra = {
 
 function AddActivity() {
   const { context, extra } = useActivity<Extra>();
+  const { setCards, actions } = useKartei();
+  const { strings } = useStrings();
 
   const isEditMode = extra.editGroup;
   const [group, setGroup] = React.useState("lernfeld_1");
@@ -21,7 +26,6 @@ function AddActivity() {
   const [description, setDescription] = React.useState(
     !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
   );
-  const [cards, setCards] = useKartei();
 
   os.useOnBackPressed(context.popPage);
 
@@ -29,9 +33,9 @@ function AddActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}>Back</BackButton>
+          <ToolbarButton icon={ArrowBackIcon} onClick={context.popPage} />
         </div>
-        <div className="center">{!isEditMode ? "Neue Gruppe" : "Gruppe Bearbeiten"}</div>
+        <div className="center">{!isEditMode ? strings.new_group : strings.edit_group}</div>
       </Toolbar>
     );
   };
@@ -62,17 +66,23 @@ function AddActivity() {
       };
 
       if (!validGroup(group)) {
-        os.toast("Bitte achte drauf, dass keine Leerzeichen verwendet werden, oder bindestriche", "short");
+        os.toast(strings.noUmlauts, "short");
       } else {
-        setCards((tmp) => {
-          if (tmp.some((elem) => elem?.group === group)) {
-            os.toast(`Diese Gruppe is bereits vorhanden.`, "short");
-          } else {
-            tmp = [...tmp, obj];
+        actions.addGroup({
+          group: group,
+          data: obj,
+          onExists() {
+            os.toast(strings.group_exist, "short");
+          },
+          callback() {
             context.popPage();
-            os.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
-          }
-          return tmp;
+            os.toast(
+              strings.formatString(strings.group_saved, {
+                name: name,
+              }) as string,
+              "short"
+            );
+          },
         });
       }
     } catch (error) {
@@ -100,7 +110,7 @@ function AddActivity() {
               fullWidth
               // margin="dense"
               type="text"
-              label="Gruppe"
+              label={strings.group}
               value={group}
               variant="outlined"
               onChange={handleGroupChange}
@@ -112,7 +122,7 @@ function AddActivity() {
             fullWidth
             margin="dense"
             type="text"
-            label="Name"
+            label={strings.name}
             value={name}
             variant="outlined"
             onChange={handleNameChange}
@@ -123,14 +133,20 @@ function AddActivity() {
             fullWidth
             margin="dense"
             type="text"
-            label="Beschreibung"
+            label={strings.description}
             value={description}
             variant="outlined"
             onChange={handleDescriptionChange}
           />
         </span>
-        <Button style={{ marginTop: 8 }} modifier="large" onClick={!isEditMode ? handleSave : handleEdit}>
-          Speichern
+        <Button
+          style={{ marginTop: 8 }}
+          fullWidth
+          variant="contained"
+          disableElevation
+          onClick={!isEditMode ? handleSave : handleEdit}
+        >
+          {strings.save}
         </Button>
       </section>
     </Page>

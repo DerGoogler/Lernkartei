@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BackButton, Toolbar } from "react-onsenui";
+import { Toolbar } from "react-onsenui";
 import dep from "./../util/dep.json";
 import nativeDep from "./../util/native-dep.json";
 import { Packages } from "package-depend-list";
@@ -7,6 +7,7 @@ import { Card, CardContent, Typography, useTheme } from "@mui/material";
 import { Page } from "../components/onsenui/Page";
 import { os } from "../native/Os";
 import { useActivity } from "../hooks/useActivity";
+import { BackButton } from "../components/BackButton";
 
 function Acknowledgements() {
   const { context, extra } = useActivity();
@@ -25,7 +26,7 @@ function Acknowledgements() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage} />
         </div>
         <div className="center">Acknowledgements</div>
       </Toolbar>

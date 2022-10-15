@@ -2,10 +2,10 @@ import printHtmlBlock from "print-html-block";
 import { Stack, styled, TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ons from "onsenui";
 import * as React from "react";
-import { BackButton, Page, Toolbar } from "react-onsenui";
+import { Page, Toolbar } from "react-onsenui";
 import AceEditor from "react-ace";
+import Button from "@mui/material/Button";
 import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
-import Material3 from "../../components/Material3";
 import {
   CheckRounded,
   CloseRounded,
@@ -26,6 +26,9 @@ import { os } from "../../native/Os";
 import { useKartei } from "../../hooks/useKartei";
 import { Markup } from "../../components/Markdown";
 import { useActivity } from "../../hooks/useActivity";
+import { BackButton } from "../../components/BackButton";
+import { useStrings } from "../../hooks/useStrings";
+import { useReactToPrint } from "react-to-print";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
@@ -92,13 +95,15 @@ const formatTXT: TXTFormat[] = [
 
 function AddCardToGroupActivity() {
   const { context, extra } = useActivity<Extra>();
+  const { strings } = useStrings();
+  const { cards, setCards, actions } = useKartei();
 
   const { edit, desc, shortDesc, index, card, cardIndex } = extra;
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
   const [description, setDescription] = React.useState(edit ? desc : "");
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
-  const [cards, setCards] = useKartei();
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
+  const printRef = React.useRef<HTMLDivElement>(null);
 
   const confirm = useConfirm();
   // **** Experimental
@@ -118,9 +123,9 @@ function AddCardToGroupActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={handleBackButtonClick}>Back</BackButton>
+          <BackButton onClick={handleBackButtonClick} />
         </div>
-        <div className="center">{edit ? "Karte bearbeiten" : "Neue Karte"}</div>
+        <div className="center">{edit ? strings.edit_card : strings.new_card}</div>
       </Toolbar>
     );
   };
@@ -156,17 +161,19 @@ function AddCardToGroupActivity() {
           description: description,
         };
 
-        setCards((tmp) => {
-          tmp[index].karten.push(obj);
-          context.popPage();
-          os.toast("Deine Karte wurde gespeichert.", "short");
-          return tmp;
+        actions.addKarte({
+          index: index,
+          data: obj,
+          callback() {
+            context.popPage();
+            os.toast(strings.card_saved, "short");
+          },
         });
       } catch (error) {
         alert((error as Error).message);
       }
     } else {
-      os.toast("Kurz Beschreibung darf nicht leer sein!", "short");
+      os.toast(strings.shortDescriptionNoEmpty, "short");
     }
   };
 
@@ -176,7 +183,7 @@ function AddCardToGroupActivity() {
       tmp[cardIndex].karten[index].description = description;
 
       if (shortDescription === "") {
-        ons.notification.alert("Kurz Beschreibung darf nicht leer sein!");
+        ons.notification.alert(strings.shortDescriptionNoEmpty);
       } else {
         context.popPage();
       }
@@ -193,6 +200,35 @@ function AddCardToGroupActivity() {
     setDescription(e.target.value);
   };
 
+  const reactToPrintContent = React.useCallback(() => {
+    return printRef.current;
+  }, [printRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: "document",
+    removeAfterPrint: false,
+  });
+
+  const handlePreviewOrPrint = () => {
+    if (!os.isAndroid && isDesktop) {
+      handlePrint();
+    } else {
+      context.pushPage<any>({
+        component: DescriptonActivity,
+        props: {
+          key: `preview_${shortDescription}`,
+          extra: {
+            desc: description,
+            shortDesc: shortDescription,
+            index: "Preview",
+            cardIndex: index,
+          },
+        },
+      });
+    }
+  };
+
   return (
     <Page renderToolbar={renderToolbar}>
       <section style={{ padding: 8, height: "100%", width: "100%", display: "flex", flexDirection: "column" }}>
@@ -201,10 +237,10 @@ function AddCardToGroupActivity() {
             fullWidth
             // margin="dense"
             type="text"
-            label="Kurze Beschreibung"
+            label={strings.shortDescription}
             value={shortDescription}
             error={shortDescriptionError}
-            helperText={shortDescriptionError ? "Darf nicht leer sein" : ""}
+            helperText={shortDescriptionError ? strings.shortDescriptionNoEmpty : ""}
             variant="outlined"
             onChange={handleShortDescriptionChange}
           />
@@ -219,9 +255,11 @@ function AddCardToGroupActivity() {
         >
           {formatTXT.map((El) => (
             <ToggleButton
-              style={{
-                border: "1px solid rgb(196, 196, 196)",
-              }}
+              // sx={(theme) => ({
+              //   border: `1px solid ${
+              //     theme.palette.mode === "light" ? "rgba(0, 0, 0, 0.42)" : "rgba(255, 255, 255, 0.7)"
+              //   }`,
+              // })}
               value={El.name}
               key={El.name}
               onClick={() => markdownRef.current?.trigger(El.name)}
@@ -251,7 +289,7 @@ function AddCardToGroupActivity() {
                 }}
                 fullWidth
                 type="text"
-                label="Beschreibung"
+                label={strings.description}
                 value={description}
                 variant="outlined"
                 multiline
@@ -266,7 +304,7 @@ function AddCardToGroupActivity() {
             </TextareaMarkdown.Wrapper>
             {!os.isAndroid && isDesktop && (
               <Preview className="preview">
-                <Markup children={description} />
+                <Markup ref={printRef} children={`## ${shortDescription}\n\n${description}`} />
               </Preview>
             )}
           </Stack>
@@ -280,34 +318,13 @@ function AddCardToGroupActivity() {
           alignItems="center"
           spacing={1}
         >
-          <Material3.Button modifier="large" onClick={edit ? handleEdit : handleSave}>
-            Speichern
-          </Material3.Button>
-          <Material3.Button
-            modifier="large"
-            onClick={() => {
-              if (!os.isAndroid && isDesktop) {
-                printHtmlBlock(".preview", {
-                  importStyle: true,
-                });
-              } else {
-                context.pushPage<any>({
-                  component: DescriptonActivity,
-                  props: {
-                    key: `preview_${shortDescription}`,
-                    extra: {
-                      desc: description,
-                      shortDesc: shortDescription,
-                      index: "Preview",
-                      cardIndex: index,
-                    },
-                  },
-                });
-              }
-            }}
-          >
-            {!os.isAndroid && isDesktop ? "Drucken" : "Ansicht"}
-          </Material3.Button>
+          <Button fullWidth variant="contained" disableElevation onClick={edit ? handleEdit : handleSave}>
+            {strings.save}
+          </Button>
+          <Button fullWidth variant="outlined" onClick={handlePreviewOrPrint}>
+            {" "}
+            {!os.isAndroid && isDesktop ? strings.print : strings.preview}
+          </Button>
         </Stack>
       </section>
     </Page>

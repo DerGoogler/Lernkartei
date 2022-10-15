@@ -1,79 +1,85 @@
+import { useActivity } from "@Hooks/useActivity";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import { os } from "@Native/Os";
 import Ajv from "ajv";
 import ons from "onsenui";
-import { useFilePicker } from "use-file-picker";
 import { ListItem } from "react-onsenui";
+import { FileChooserActivity } from "../../FileChooserActivity";
 import { useKartei } from "../../../hooks/useKartei";
+import { StyledListItemText } from "./StyledListItemText";
+import _schema from "@Util/groups.schema.json";
+import { useRef } from "react";
+import { useConfirm } from "material-ui-confirm";
+import chooseFile from "../../FileChooserActivity/chooseFile";
 
 export const ImportGroupsItem = () => {
-  const [cards, setCards] = useKartei();
-  const [openFileSelector, { filesContent, loading }] = useFilePicker({
-    readAs: "Text",
-    accept: ".json",
-    multiple: true,
-    limitFilesConfig: { max: 1 },
-  });
-  const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
+  const { context } = useActivity();
+  const { cards, setCards } = useKartei();
+
+  const upload = useRef<HTMLInputElement>(null);
+  const confirm = useConfirm();
+
+  const ajv = new Ajv();
 
   const schema = {
     type: "array",
-    items: {
-      type: "object",
-      required: ["group", "name", "description", "karten"],
-      properties: {
-        group: {
-          type: "string",
-        },
-        name: {
-          type: "string",
-        },
-        description: {
-          type: "string",
-        },
-        karten: {
-          type: "array",
-          items: {
-            type: "object",
-            required: ["shortDescription", "description"],
-            properties: {
-              shortDescription: {
-                type: "string",
-              },
-              description: {
-                type: "string",
-              },
-            },
-          },
-        },
-      },
-    },
+    items: _schema,
   };
 
-  const handleImport = () => {
-    openFileSelector();
-    try {
-      const content: any = JSON.parse(filesContent[0].content);
-
+  const handleFileChange = (event: any) => {
+    chooseFile(event, (event: any, file: any, input: any) => {
       const validate = ajv.compile(schema);
 
-      const valid = validate(content);
-      if (!valid) {
-        setCards(content);
+      const content = JSON.parse(event.target.result);
+
+      const valid = validate(content) as boolean;
+      if (valid) {
+        confirm({
+          title: "Import",
+          description:
+            "Beim Import werden alle Gruppen und Karten information überschrieben. Sei vorsichtig mit dieser Funktion!",
+          confirmationText: "Fortfahren",
+          cancellationText: "Abbrechen",
+        })
+          .then(() => {
+            setCards(content);
+          })
+          .catch(() => {});
       } else {
-        ons.notification.alert(JSON.stringify(validate.errors));
+        alert(JSON.stringify(validate.errors, null, 2));
       }
-    } catch (error: any) {
-      ons.notification.alert(error.message);
-    }
+    });
   };
 
   return (
     <>
-      <ListItem onClick={handleImport}>
-        <div className="center">
-          <span className="list-item__title">Import</span>
-          <span className="list-item__subtitle">Importiere zuvor gesicherte Gruppen und Karten</span>
-        </div>
-      </ListItem>
+      <ListItemButton
+        onClick={() => {
+          if (os.isAndroid) {
+            context.pushPage({
+              component: FileChooserActivity,
+              props: {
+                key: "chooseFile",
+                extra: {
+                  useGroupsImport: true
+                },
+              },
+            });
+          } else {
+            upload.current?.click();
+          }
+        }}
+      >
+        <StyledListItemText primary="Import" secondary="Importiere zuvor gesicherte Gruppen und Karten" />
+      </ListItemButton>
+      <input
+        ref={upload}
+        type="file"
+        style={{ display: "none", marginRight: "4px" }}
+        accept=".json"
+        onChange={handleFileChange}
+      />
     </>
   );
 };

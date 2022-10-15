@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Page, Toolbar, ToolbarButton } from "react-onsenui";
+import { Page, Toolbar } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
@@ -9,23 +9,22 @@ import { StyledSection } from "../../components/StyledSection";
 import { os } from "../../native/Os";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { useActivity } from "../../hooks/useActivity";
-
-const CardRenderer = React.lazy(() => import("./components/GroupRenderer"));
+import { ToolbarButton } from "../../components/ToolbarButton";
+import { For } from "@Components/For";
+import { useKartei } from "../../hooks/useKartei";
+import { GroupCard } from "./components/GroupCard";
+import { Box } from "@mui/material";
 
 export function App() {
   const { context } = useActivity();
+  const { cards, actions } = useKartei();
 
-  // These are native Android call, they won't be called on browsers
-  // os.useOnBackPressed(() => {
-  //   if (context.splitter.state()) {
-  //     context.splitter.hide();
-  //   } else {
-  //     os.close();
-  //   }
-  // });
-  os.useOnBackPressed(context.popPage);
-  os.useOnResume(() => {
-    console.log("User has been returned to the app");
+  os.useOnBackPressed(() => {
+    if (context.splitter.state) {
+      context.splitter.hide();
+    } else {
+      os.close();
+    }
   });
 
   const renderToolbar = () => {
@@ -33,16 +32,16 @@ export function App() {
       <Toolbar modifier="noshadow">
         <div className="left">
           <ToolbarButton
+            icon={Menu}
             onClick={() => {
               context.splitter.show();
             }}
-          >
-            <Icon icon={Menu} keepLight />
-          </ToolbarButton>
+          />
         </div>
         <div className="center">Kartei {BuildConfig.DEBUG ? "Debug" : ""}</div>
         <div className="right">
           <ToolbarButton
+            icon={Add}
             onClick={() => {
               context.pushPage({
                 component: AddActivity,
@@ -52,9 +51,7 @@ export function App() {
                 },
               });
             }}
-          >
-            <Icon icon={Add} keepLight />
-          </ToolbarButton>
+          />
         </div>
       </Toolbar>
     );
@@ -63,9 +60,42 @@ export function App() {
   return (
     <Page renderToolbar={renderToolbar}>
       <StyledSection>
-        <React.Suspense fallback={<LoadingScreen />}>
-          <CardRenderer />
-        </React.Suspense>
+        <For
+          each={cards}
+          fallback={() => (
+            <Box
+              component="h4"
+              sx={(theme) => ({
+                color: theme.palette.secondary.dark,
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                textAlign: "center",
+                WebkitTransform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -50%)",
+              })}
+            >
+              Add new groups with the{" "}
+              <Icon
+                sx={(theme) => ({
+                  color: theme.palette.secondary.dark,
+                  verticalAlign: "middle",
+                })}
+                icon={Add}
+              />{" "}
+              icon
+            </Box>
+          )}
+          catch={(e: Error | undefined) => (
+            <Box sx={(theme) => ({ color: theme.palette.text.primary })}>
+              There was an error while parsing your cards! Seems that your cards have an invalid JSON Format.
+              <br />
+              ERROR: {e?.message}
+            </Box>
+          )}
+        >
+          {(card, index) => <GroupCard card={card} index={index} actions={actions} />}
+        </For>
       </StyledSection>
     </Page>
   );

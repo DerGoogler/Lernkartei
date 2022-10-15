@@ -5,9 +5,8 @@ import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useConfirm } from "material-ui-confirm";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import reactStringReplace from "react-string-replace";
-import { Dispatch, SetPrefAction } from "web-shared-preferences";
 import { useActivity } from "../../../hooks/useActivity";
 import { useKartei } from "../../../hooks/useKartei";
 import { os } from "../../../native/Os";
@@ -19,15 +18,21 @@ import DescriptonActivity from "../../DescriptonActivity";
 interface Props {
   card: Karten;
   index: number;
-  setCards: Dispatch<SetPrefAction<Kartei[]>>;
+  actions: ReturnType<typeof useKartei>["actions"];
 }
 
-const CardKarte = ({ card, index, setCards }: Props) => {
+const CardKarte = ({ card, index, actions }: Props) => {
   const { context, extra } = useActivity<any>();
+  const { setCards } = useKartei();
 
   const { index: iindex } = extra;
 
   const confirm = useConfirm();
+
+  const data = {
+    shortDesc: card.shortDescription ? card.shortDescription : "Null",
+    desc: card.description ? card.description : "Null",
+  };
 
   return (
     <StyledCard key={index} elevation={0}>
@@ -49,7 +54,11 @@ const CardKarte = ({ card, index, setCards }: Props) => {
             });
           }}
         >
-          {/* <Typography fontWeight={700}>{card.shortDescription}</Typography> */}
+          <Typography fontWeight={700} color="text.primary">
+            {reactStringReplace(card.shortDescription, /\*\*(\w+)\*\*/g, (match, i) => (
+              <strong>{match}</strong>
+            ))}
+          </Typography>
           {/* <Typography variant="body2" color="text.secondary">
 #{index}
 </Typography> */}
@@ -59,66 +68,69 @@ const CardKarte = ({ card, index, setCards }: Props) => {
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
         <Chip
           size="small"
-          sx={{
-            bgcolor: "#eeeeee",
-          }}
+          sx={(theme) => ({
+            bgcolor: theme.palette.secondary.light,
+          })}
           label={`#${index}`}
         />
         <Stack spacing={0.8} direction="row">
-          <StyledIconButton
-            style={{ width: 30, height: 30 }}
-            onClick={() => {
-              context.pushPage({
-                component: AddCardToGroupActivity,
-                props: {
-                  key: `edit_${card.shortDescription}_${index}`,
-                  extra: {
-                    card: null,
-                    desc: card.description,
-                    shortDesc: card.shortDescription,
-                    index: index,
-                    cardIndex: iindex,
-                    edit: true,
-                  },
-                },
-              });
-            }}
-          >
-            <EditRounded sx={{ fontSize: 14 }} />
-          </StyledIconButton>
+          {!card.readonly && (
+            <>
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  context.pushPage({
+                    component: AddCardToGroupActivity,
+                    props: {
+                      key: `edit_${card.shortDescription}_${index}`,
+                      extra: {
+                        card: null,
+                        desc: card.description,
+                        shortDesc: card.shortDescription,
+                        index: index,
+                        cardIndex: iindex,
+                        edit: true,
+                      },
+                    },
+                  });
+                }}
+              >
+                <EditRounded sx={{ fontSize: 14 }} />
+              </StyledIconButton>
 
-          <StyledIconButton
-            style={{ width: 30, height: 30 }}
-            onClick={() => {
-              confirm({
-                title: "Löschen",
-                description: (
-                  <span>
-                    Möchtest Du die <strong>Karte Nr.{index}</strong> löschen?
-                  </span>
-                ),
-                confirmationText: "Ja",
-                cancellationText: "Nein",
-              })
-                .then(() => {
-                  try {
-                    setCards((tmp) => {
-                      tmp[iindex].karten = tmp[iindex].karten.filter(
-                        (remv) => remv.shortDescription != card.shortDescription
-                      );
-                      return tmp;
-                    });
-
-                    os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
-                  } catch (error) {
-                    os.toast((error as Error).message, "short");
-                  }
-                })
-                .catch(() => {});
-            }}
-          >
-            <DeleteRounded sx={{ fontSize: 14 }} />
-          </StyledIconButton>
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  confirm({
+                    title: "Löschen",
+                    description: (
+                      <span>
+                        Möchtest Du die <strong>Karte Nr.{index}</strong> löschen?
+                      </span>
+                    ),
+                    confirmationText: "Ja",
+                    cancellationText: "Nein",
+                  })
+                    .then(() => {
+                      try {
+                        actions.removeKarte({
+                          index: iindex,
+                          shortDescription: card.shortDescription,
+                          callback() {
+                            os.toast(`Karte Nr.${index} wurde gelöscht.`, "short");
+                          },
+                        });
+                      } catch (error) {
+                        os.toast((error as Error).message, "short");
+                      }
+                    })
+                    .catch(() => {});
+                }}
+              >
+                <DeleteRounded sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+            </>
+          )}
         </Stack>
       </Stack>
     </StyledCard>

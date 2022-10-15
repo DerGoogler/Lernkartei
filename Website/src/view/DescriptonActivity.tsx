@@ -1,4 +1,5 @@
-import { BackButton, Page, Toolbar } from "react-onsenui";
+import { Page, Toolbar } from "react-onsenui";
+import { BackButton } from "../components/BackButton";
 import { Markup } from "../components/Markdown";
 import { useActivity } from "../hooks/useActivity";
 import { os } from "../native/Os";
@@ -16,7 +17,7 @@ function DescriptonActivity() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={context.popPage}>Back</BackButton>
+          <BackButton onClick={context.popPage} />
         </div>
         <div className="center">#{index}</div>
       </Toolbar>
@@ -25,7 +26,7 @@ function DescriptonActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <Markup children={desc} />
+      <Markup children={`## ${shortDesc}\n\n${desc}`} />
     </Page>
   );
 }
