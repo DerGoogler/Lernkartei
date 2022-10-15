@@ -93,7 +93,8 @@ class Os extends Native {
   }
 
   public useOnBackPressed(callback: () => void): void {
-    useEventListener("onbackbutton", callback);
+    // @ts-ignore
+    useEventListener("backbutton", callback);
   }
   public useOnResume(callback: () => void): void {
     useEventListener("onresume", callback);

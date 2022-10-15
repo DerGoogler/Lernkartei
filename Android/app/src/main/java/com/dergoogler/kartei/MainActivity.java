@@ -1,114 +1,112 @@
 package com.dergoogler.kartei;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.webkit.ConsoleMessage;
-import android.webkit.PermissionRequest;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
+import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.webkit.WebViewAssetLoader;
-import androidx.webkit.WebViewClientCompat;
-
-import com.dergoogler.component.ModuleChromeClient;
-import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeFile;
 import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.NativeUtils;
 
-public class MainActivity extends AppCompatActivity {
+import org.apache.cordova.CordovaActivity;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.CordovaWebViewImpl;
+import org.apache.cordova.CoreAndroid;
+import org.apache.cordova.LOG;
+import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewEngine;
+
+
+public class MainActivity extends CordovaActivity {
     private static final String TAG = "MainActivity";
-    private ModuleView view;
 
 
-    @Override
     @SuppressLint("SetJavaScriptEnabled")
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        view = findViewById(R.id.mmrl_view);
+        super.init();
 
-        view.loadUrl("https://appassets.androidplatform.net/assets/web/index.html");
+        WebView wv = (WebView) appView.getEngine().getView();
+        // enable Cordova apps to be started in the background
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
+            moveTaskToBack(true);
+        }
 
+        // Set by <content src="index.html" /> in config.xml
+        loadUrl(launchUrl);
+
+        WebSettings webViewSettings = wv.getSettings();
         // Options
-        view.setJavaScriptEnabled(true);
-        view.setAllowFileAccess(true);
-        view.setAllowContentAccess(true);
-        view.setAllowFileAccessFromFileURLs(true);
-        view.setAllowUniversalAccessFromFileURLs(true);
-        view.setDatabaseEnabled(true);
-        view.setDomStorageEnabled(false);
-        view.setUserAgentString("KARTEI");
-
-        WebSettings webViewSettings = view.getSettings();
+        webViewSettings.setJavaScriptEnabled(true);
+        webViewSettings.setAllowFileAccess(true);
+        webViewSettings.setAllowContentAccess(true);
+        webViewSettings.setAllowFileAccessFromFileURLs(true);
+        webViewSettings.setAllowUniversalAccessFromFileURLs(true);
+        webViewSettings.setDatabaseEnabled(true);
+        webViewSettings.setDomStorageEnabled(false);
+        webViewSettings.setUserAgentString("KARTEI");
         webViewSettings.setAllowFileAccessFromFileURLs(false);
         webViewSettings.setAllowUniversalAccessFromFileURLs(false);
         webViewSettings.setAllowFileAccess(false);
         webViewSettings.setAllowContentAccess(false);
 
         // Core
-        view.addJavascriptInterface(new NativeOS(this), "os");
-        view.addJavascriptInterface(new NativeStorage(this), "nativeStorage");
-        view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
-        view.addJavascriptInterface(new NativeStorage(this), "environment");
-        view.addJavascriptInterface(new NativeFile(this), "file");
-        view.addJavascriptInterface(new NativeUtils(), "utils");
-
-        final WebViewAssetLoader assetLoader = new WebViewAssetLoader.Builder()
-                .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                .build();
-
-        view.setModuleViewClient(new WebViewClientCompat() {
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                return assetLoader.shouldInterceptRequest(request.getUrl());
-            }
-        });
-
-        view.setModuleChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-
-                switch (consoleMessage.messageLevel()) {
-                    case TIP:
-                        Log.v(TAG, consoleMessage.message());
-                        break;
-                    case LOG:
-                        Log.i(TAG, consoleMessage.message());
-                        break;
-                    case WARNING:
-                        Log.w(TAG, consoleMessage.message());
-                        break;
-                    case ERROR:
-                        Log.e(TAG, consoleMessage.message());
-                        break;
-                    case DEBUG:
-                        Log.d(TAG, consoleMessage.message());
-                        break;
-                }
-                return super.onConsoleMessage(consoleMessage);
-            }
-        });
+        wv.addJavascriptInterface(new NativeOS(this), "os");
+        wv.addJavascriptInterface(new NativeStorage(this), "nativeStorage");
+        wv.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
+        wv.addJavascriptInterface(new NativeStorage(this), "environment");
+        wv.addJavascriptInterface(new NativeFile(this), "file");
+        wv.addJavascriptInterface(new NativeUtils(), "utils");
     }
+//
+//    @SuppressLint("SetJavaScriptEnabled")
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//        appView = findViewById(R.id.mmrl_view);
+//        super.init();
+//        loadUrl(launchUrl);
+//    }
+//
+//    @SuppressLint("SetJavaScriptEnabled")
+//    @Override
+//    protected CordovaWebView makeWebView() {
+//        WebSettings webViewSettings = appView.getSettings();
+//        // Options
+//        webViewSettings.setJavaScriptEnabled(true);
+//        webViewSettings.setAllowFileAccess(true);
+//        webViewSettings.setAllowContentAccess(true);
+//        webViewSettings.setAllowFileAccessFromFileURLs(true);
+//        webViewSettings.setAllowUniversalAccessFromFileURLs(true);
+//        webViewSettings.setDatabaseEnabled(true);
+//        webViewSettings.setDomStorageEnabled(false);
+//        webViewSettings.setUserAgentString("KARTEI");
+//        webViewSettings.setAllowFileAccessFromFileURLs(false);
+//        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
+//        webViewSettings.setAllowFileAccess(false);
+//        webViewSettings.setAllowContentAccess(false);
+//
+//        // Core
+//        appView.addJavascriptInterface(new NativeOS(this), "os");
+//        appView.addJavascriptInterface(new NativeStorage(this), "nativeStorage");
+//        appView.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
+//        appView.addJavascriptInterface(new NativeStorage(this), "environment");
+//        appView.addJavascriptInterface(new NativeFile(this), "file");
+//        appView.addJavascriptInterface(new NativeUtils(), "utils");
+//
+//        return new CordovaWebViewImpl(new SystemWebViewEngine(appView));
+//    }
+//
+//    @Override
+//    protected void createViews() {
+//    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        view.eventDispatcher("onresume");
-    }
 
-    @Override
-    public void onBackPressed() {
-        view.eventDispatcher("onbackbutton");
-    }
 }

@@ -10,7 +10,8 @@ export interface INative<T = any> {
 export class Native<T = any> implements INative<T> {
   private readonly userAgentAndroid = "KARTEI";
   public readonly userAgent = window.navigator.userAgent;
-  public readonly isAndroid = this.userAgentAndroid === this.userAgent ? true : false;
+  public readonly isAndroid =
+    this.userAgentAndroid === this.userAgent || window.hasOwnProperty("cordova") ? true : false;
   public readonly isTablet = this.IsTablet();
   public interface: string;
 

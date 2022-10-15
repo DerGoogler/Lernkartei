@@ -191,6 +191,15 @@
         "repository": "https://www.npmjs.com/package/react-onsenui"
     },
     {
+        "name": "react-render-tools",
+        "description": "Simple tools to make react render easier to use",
+        "author": "Der_Googler",
+        "version": "1.0.1",
+        "license": "GPL-3.0",
+        "homepage": "https://github.com/DerGoogler/react-render-tools",
+        "repository": "https://www.npmjs.com/package/react-render-tools"
+    },
+    {
         "name": "react-string-replace",
         "description": "String#replace for React components",
         "author": {
