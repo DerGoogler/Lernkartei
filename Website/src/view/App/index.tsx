@@ -14,9 +14,11 @@ import { For } from "@Components/For";
 import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
 import { Box } from "@mui/material";
+import { useStrings } from "@Hooks/useStrings";
 
 export function App() {
   const { context } = useActivity();
+  const { strings } = useStrings();
   const { cards, actions } = useKartei();
 
   os.useOnBackPressed(() => {
@@ -75,15 +77,18 @@ export function App() {
                 transform: "translate(-50%, -50%)",
               })}
             >
-              Add new groups with the{" "}
-              <Icon
-                sx={(theme) => ({
-                  color: theme.palette.secondary.dark,
-                  verticalAlign: "middle",
-                })}
-                icon={Add}
-              />{" "}
-              icon
+              {strings.formatString(strings.add_new_group, {
+               // @ts-ignore
+               Add: (
+                  <Icon
+                    sx={(theme) => ({
+                      color: theme.palette.secondary.dark,
+                      verticalAlign: "middle",
+                    })}
+                    icon={Add}
+                  />
+                ), 
+              })}
             </Box>
           )}
           catch={(e: Error | undefined) => (

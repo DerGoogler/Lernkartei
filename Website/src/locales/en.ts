@@ -14,6 +14,8 @@ export const EN_Locale = {
   description: "Descripton",
   save: "Save",
   settings: "Settings",
+  add_new_group: "Add new groups with the {Add} icon",
+  add_new_cards: "To add new cards, click on the {MoreVertIcon} icon, and add a new card with the {Add} icon",
 
   // Settings
   dark_mode: {
