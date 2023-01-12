@@ -18,9 +18,6 @@ export const Editor = (props: EditorProps) => {
     minHeight: "100%",
     position: "relative",
     "& .ace_editor": {
-      // font: "inherit",
-      // fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-      // letterSpacing: "inherit",
       borderRadius: theme.shape.borderRadius,
       borderStyle: "solid",
       borderWidth: "1px",

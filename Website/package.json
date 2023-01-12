@@ -5,6 +5,11 @@
   "main": "src/index.tsx",
   "author": "Der_Googler",
   "license": "GPL-3.0",
+  "config": {
+    "application_id": "com.dergoogler.kartei",
+    "version_name": "1.0.5",
+    "version_code": 105
+  },
   "scripts": {
     "start": "npm run start:dev",
     "start:dev": "webpack-dev-server --open --config webpack.dev.ts",

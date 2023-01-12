@@ -14,8 +14,6 @@ export const DE_Locale = {
   description: "Beschreibung",
   save: "Speichern",
   settings: "Einstellungen",
-  add_new_group: "Neue Gruppen mit dem Symbol {Add} hinzufügen",
-  add_new_cards: "Um neue Karten hinzuzufügen, klicken Sie auf das Symbol {MoreVertIcon}, und fügen Sie eine neue Karte mit dem Symbol {Add} hinzu",
 
   // Settings
   dark_mode: {

@@ -1,13 +1,10 @@
-import * as React from "react";
 import { Page, Toolbar } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
-import Material3 from "../../components/Material3";
 import { BuildConfig } from "../../native/BuildConfig";
 import { StyledSection } from "../../components/StyledSection";
 import { os } from "../../native/Os";
-import { LoadingScreen } from "../../components/LoadingScreen";
 import { useActivity } from "../../hooks/useActivity";
 import { ToolbarButton } from "../../components/ToolbarButton";
 import { For } from "@Components/For";
@@ -15,6 +12,8 @@ import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
 import { Box } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
+
+import { renderToStaticMarkup } from "react-dom/server";
 
 export function App() {
   const { context } = useActivity();
@@ -77,18 +76,17 @@ export function App() {
                 transform: "translate(-50%, -50%)",
               })}
             >
-              {strings.formatString(strings.add_new_group, {
-               // @ts-ignore
-               Add: (
-                  <Icon
-                    sx={(theme) => ({
-                      color: theme.palette.secondary.dark,
-                      verticalAlign: "middle",
-                    })}
-                    icon={Add}
-                  />
-                ), 
-              })}
+              Add new groups with the
+              {
+                <Icon
+                  sx={(theme) => ({
+                    color: theme.palette.secondary.dark,
+                    verticalAlign: "middle",
+                  })}
+                  icon={Add}
+                />
+              }
+              icon
             </Box>
           )}
           catch={(e: Error | undefined) => (

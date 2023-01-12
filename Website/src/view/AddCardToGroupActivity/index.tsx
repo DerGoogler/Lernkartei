@@ -1,9 +1,7 @@
-import printHtmlBlock from "print-html-block";
 import { Stack, styled, TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ons from "onsenui";
 import * as React from "react";
 import { Page, Toolbar } from "react-onsenui";
-import AceEditor from "react-ace";
 import Button from "@mui/material/Button";
 import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
 import {
@@ -20,7 +18,7 @@ import {
   WarningAmberRounded,
 } from "@mui/icons-material";
 import DescriptonActivity from "../DescriptonActivity";
-import { isDesktop, isMobile } from "react-device-detect";
+import { isDesktop } from "react-device-detect";
 import { useConfirm } from "material-ui-confirm";
 import { os } from "../../native/Os";
 import { useKartei } from "../../hooks/useKartei";
@@ -133,21 +131,18 @@ function AddCardToGroupActivity() {
     {
       name: "insert-checkmark",
       handler: ({ cursor }) => {
-        // MARKER - means a cursor position, or a selection range if specified two markers
         cursor.insert(`${cursor.MARKER}<checkmark/>${cursor.MARKER}`);
       },
     },
     {
       name: "insert-dangermark",
       handler: ({ cursor }) => {
-        // MARKER - means a cursor position, or a selection range if specified two markers
         cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
       },
     },
     {
       name: "insert-warnmark",
       handler: ({ cursor }) => {
-        // MARKER - means a cursor position, or a selection range if specified two markers
         cursor.insert(`${cursor.MARKER}<warnmark/>${cursor.MARKER}`);
       },
     },
@@ -235,7 +230,6 @@ function AddCardToGroupActivity() {
         <span>
           <TextField
             fullWidth
-            // margin="dense"
             type="text"
             label={strings.shortDescription}
             value={shortDescription}
@@ -255,11 +249,6 @@ function AddCardToGroupActivity() {
         >
           {formatTXT.map((El) => (
             <ToggleButton
-              // sx={(theme) => ({
-              //   border: `1px solid ${
-              //     theme.palette.mode === "light" ? "rgba(0, 0, 0, 0.42)" : "rgba(255, 255, 255, 0.7)"
-              //   }`,
-              // })}
               value={El.name}
               key={El.name}
               onClick={() => markdownRef.current?.trigger(El.name)}
@@ -340,7 +329,6 @@ const Preview = styled("div")(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   borderStyle: "solid",
   borderWidth: "1px",
-  // overflow: "hidden",
   minWidth: "0%",
   borderColor: "rgba(0, 0, 0, 0.23)",
   article: {
