@@ -42,4 +42,7 @@ export const EN_Locale = {
   delete: "Delete",
 
   has_deleted_card: '"{name}" has been deleted.',
+
+  login: "Login",
+  signin: "Sign in"
 };

@@ -21,9 +21,10 @@ import { Context, Extra } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
 import { useNativeStorage } from "../hooks/useNativeStorage";
 import { Drawer } from "../view/App/components/Drawer";
+import { useSettings } from "@Hooks/useSettings";
 
 const RoutedApp = (): JSX.Element => {
-  const [introFinised, setIntroFinised] = useNativeStorage("introFinised", false);
+  const { settings } = useSettings();
 
   const [isSplitterOpen, setIsSplitterOpen] = useState(false);
 
@@ -37,7 +38,7 @@ const RoutedApp = (): JSX.Element => {
 
   const ignoreThat = RouterUtil.init([
     {
-      component: introFinised ? App : IntroActivity,
+      component: settings.introFinised ? App : IntroActivity,
       props: {
         key: "main",
         context: {

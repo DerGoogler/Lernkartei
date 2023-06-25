@@ -12,8 +12,8 @@ import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
 import { Box } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
-
-import { renderToStaticMarkup } from "react-dom/server";
+import { onValue, ref } from "firebase/database";
+import React from "react";
 
 export function App() {
   const { context } = useActivity();

@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
-import { colors, useDarkmode, useScheme } from "../hooks/useDarkmode";
+import { colors, useSettings } from "../hooks/useSettings";
 
 type SearchbarProps = {
   onSearch: (val: string) => void;
@@ -48,8 +48,8 @@ const StyledSearchInput = (props: any) => {
 
 export const Searchbar = ({ placeholder, onSearch }: SearchbarProps) => {
   const theme = useTheme();
-  const { scheme, setScheme } = useScheme();
-  const { darkmode, setDarkmode } = useDarkmode();
+  // const { scheme, setScheme } = useScheme();
+  const { settings, setSettings } = useSettings();
   const [value, setVaule] = React.useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +74,9 @@ export const Searchbar = ({ placeholder, onSearch }: SearchbarProps) => {
           display: "flex",
           alignItems: "center",
           width: 400,
-          bgcolor: darkmode ? shadeColor(colors[scheme.value][900], -70) : "rgb(255, 255, 255)",
+          bgcolor: settings.darkmode
+            ? shadeColor(colors[settings.accent_scheme.value][900], -70)
+            : "rgb(255, 255, 255)",
         }}
       >
         <IconButton

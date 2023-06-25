@@ -6,7 +6,7 @@ import { Icon } from "../../components/Icon";
 import { os } from "../../native/Os";
 import { useActivity } from "../../hooks/useActivity";
 import { useNativeStorage } from "../../hooks/useNativeStorage";
-import { useTheme } from "../../hooks/useDarkmode";
+import { useSettings, useTheme } from "../../hooks/useSettings";
 import { Phones } from "./components/Phones";
 import { ToolbarButton } from "@Components/ToolbarButton";
 import { UI } from "@Native/components/UI";
@@ -48,7 +48,8 @@ function IntroActivity() {
       bg: scheme[100],
     },
   ]);
-  const [introFinised, setIntroFinised] = useNativeStorage("introFinised", false);
+
+  const { setSettings } = useSettings();
 
   os.useOnBackPressed(() => os.close());
 
@@ -66,7 +67,7 @@ function IntroActivity() {
               icon={Done}
               onClick={() => {
                 if (getIndex === 1) {
-                  setIntroFinised(true);
+                  setSettings({ introFinised: true });
                   context.pushPage({
                     component: App,
                     props: {

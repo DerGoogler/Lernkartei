@@ -3,7 +3,7 @@ import ons from "onsenui";
 import * as React from "react";
 import { Page, Toolbar } from "react-onsenui";
 import Button from "@mui/material/Button";
-import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
+import TextareaMarkdown, { Command, TextareaMarkdownRef, BUILT_IN_COMMANDS } from "textarea-markdown-editor";
 import {
   CheckRounded,
   CloseRounded,
@@ -27,15 +27,18 @@ import { useActivity } from "../../hooks/useActivity";
 import { BackButton } from "../../components/BackButton";
 import { useStrings } from "../../hooks/useStrings";
 import { useReactToPrint } from "react-to-print";
+import { Editor } from "./components/StyledAceEditor";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
+import { useSettings } from "@Hooks/useSettings";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
-type TXTFormat = {
-  name: string;
+interface CustomCommand extends Command {
   icon: React.ElementType;
   iconStyle?: React.CSSProperties;
-};
-const formatTXT: TXTFormat[] = [
+}
+
+const customTextareaCommands: CustomCommand[] = [
   {
     name: "bold",
     icon: FormatBoldRounded,
@@ -74,12 +77,18 @@ const formatTXT: TXTFormat[] = [
     iconStyle: {
       color: "#1a7f37",
     },
+    handler: ({ cursor }) => {
+      cursor.insert(`${cursor.MARKER}<checkmark/>${cursor.MARKER}`);
+    },
   },
   {
     name: "insert-warnmark",
     icon: WarningAmberRounded,
     iconStyle: {
       color: "#d29922",
+    },
+    handler: ({ cursor }) => {
+      cursor.insert(`${cursor.MARKER}<warnmark/>${cursor.MARKER}`);
     },
   },
   {
@@ -88,6 +97,9 @@ const formatTXT: TXTFormat[] = [
     iconStyle: {
       color: "#cf222e",
     },
+    handler: ({ cursor }) => {
+      cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
+    },
   },
 ];
 
@@ -95,6 +107,9 @@ function AddCardToGroupActivity() {
   const { context, extra } = useActivity<Extra>();
   const { strings } = useStrings();
   const { cards, setCards, actions } = useKartei();
+
+  // Settings
+  const { settings } = useSettings();
 
   const { edit, desc, shortDesc, index, card, cardIndex } = extra;
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
@@ -127,26 +142,6 @@ function AddCardToGroupActivity() {
       </Toolbar>
     );
   };
-  const customTextareaCommands: Command[] = [
-    {
-      name: "insert-checkmark",
-      handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<checkmark/>${cursor.MARKER}`);
-      },
-    },
-    {
-      name: "insert-dangermark",
-      handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
-      },
-    },
-    {
-      name: "insert-warnmark",
-      handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<warnmark/>${cursor.MARKER}`);
-      },
-    },
-  ];
 
   const handleSave = () => {
     if (shortDescription != "") {
@@ -247,12 +242,8 @@ function AddCardToGroupActivity() {
             overflow: "auto",
           }}
         >
-          {formatTXT.map((El) => (
-            <ToggleButton
-              value={El.name}
-              key={El.name}
-              onClick={() => markdownRef.current?.trigger(El.name)}
-            >
+          {customTextareaCommands.map((El) => (
+            <ToggleButton value={El.name} key={String(El.name)} onClick={() => markdownRef.current?.trigger(El.name)}>
               {/* @ts-ignore */}
               <El.icon style={El.iconStyle} />
             </ToggleButton>
@@ -270,26 +261,37 @@ function AddCardToGroupActivity() {
             spacing={1}
           >
             <TextareaMarkdown.Wrapper ref={markdownRef} commands={customTextareaCommands}>
-              <StyledTextField
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  width: "100%",
-                }}
-                fullWidth
-                type="text"
-                label={strings.description}
-                value={description}
-                variant="outlined"
-                multiline
-                rows={4}
-                inputProps={{
-                  style: {
+              {settings.__experimental_editor ? (
+                <Editor
+                  mode="markdown"
+                  onChange={(val: string) => {
+                    setDescription(val);
+                  }}
+                  value={description}
+                  placeholder={""}
+                />
+              ) : (
+                <StyledTextField
+                  style={{
+                    flex: 1,
                     height: "100%",
-                  },
-                }}
-                onChange={handleDescriptionChange}
-              />
+                    width: "100%",
+                  }}
+                  fullWidth
+                  type="text"
+                  label={strings.description}
+                  value={description}
+                  variant="outlined"
+                  multiline
+                  rows={4}
+                  inputProps={{
+                    style: {
+                      height: "100%",
+                    },
+                  }}
+                  onChange={handleDescriptionChange}
+                />
+              )}
             </TextareaMarkdown.Wrapper>
             {!os.isAndroid && isDesktop && (
               <Preview className="preview">

@@ -1,6 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import * as React from "react";
-import { BackButton, Page, Toolbar } from "react-onsenui";
+import { Page, Toolbar } from "react-onsenui";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 import { useActivity } from "../hooks/useActivity";
@@ -17,11 +17,12 @@ type Extra = {
 
 function AddActivity() {
   const { context, extra } = useActivity<Extra>();
+
   const { setCards, actions } = useKartei();
   const { strings } = useStrings();
 
   const isEditMode = extra.editGroup;
-  const [group, setGroup] = React.useState("lernfeld_1");
+  const [groupId, setGroupId] = React.useState("lernfeld_1");
   const [name, setName] = React.useState(!isEditMode ? "Lernfeld 1" : extra.name);
   const [description, setDescription] = React.useState(
     !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
@@ -45,7 +46,7 @@ function AddActivity() {
   };
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGroup(e.target.value.toLowerCase());
+    setGroupId(e.target.value.toLowerCase());
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,17 +60,17 @@ function AddActivity() {
   const handleSave = () => {
     try {
       const obj: Kartei = {
-        group: group,
+        group: groupId,
         name: name,
         description: description,
         karten: [],
       };
 
-      if (!validGroup(group)) {
+      if (!validGroup(groupId)) {
         os.toast(strings.noUmlauts, "short");
       } else {
         actions.addGroup({
-          group: group,
+          group: groupId,
           data: obj,
           onExists() {
             os.toast(strings.group_exist, "short");
@@ -111,7 +112,7 @@ function AddActivity() {
               // margin="dense"
               type="text"
               label={strings.group}
-              value={group}
+              value={groupId}
               variant="outlined"
               onChange={handleGroupChange}
             />

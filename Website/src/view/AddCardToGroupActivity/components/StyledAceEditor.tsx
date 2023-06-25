@@ -10,27 +10,27 @@ type EditorProps = {
   onChange?: (value: string, event?: any) => void;
 };
 
-export const Editor = (props: EditorProps) => {
-  const StyledAceEditor = styled("div")(({ theme }) => ({
-    height: "100%",
-    flex: 1,
-    width: "100%",
-    minHeight: "100%",
-    position: "relative",
-    "& .ace_editor": {
-      borderRadius: theme.shape.borderRadius,
-      borderStyle: "solid",
-      borderWidth: "1px",
-      borderColor: "rgba(0, 0, 0, 0.23)",
+const StyledAceEditor = styled("div")(({ theme }) => ({
+  height: "100%",
+  flex: 1,
+  width: "100%",
+  minHeight: "100%",
+  position: "relative",
+  "& .ace_editor": {
+    borderRadius: theme.shape.borderRadius,
+    borderStyle: "solid",
+    borderWidth: "1px",
+    borderColor: "rgba(0, 0, 0, 0.23)",
+  },
+  "& .ace-tm": {
+    backgroundColor: theme.palette.background.default,
+    "& .ace_gutter": {
+      backgroundColor: theme.palette.divider,
     },
-    "& .ace-tm": {
-      backgroundColor: theme.palette.background.default,
-      "& .ace_gutter": {
-        backgroundColor: theme.palette.divider,
-      },
-    },
-  }));
+  },
+}));
 
+export const Editor = (props: EditorProps) => {
   return (
     <>
       <StyledAceEditor>

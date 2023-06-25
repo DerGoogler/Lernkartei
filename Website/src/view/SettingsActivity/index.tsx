@@ -2,7 +2,7 @@ import { ListHeader, Page, Toolbar } from "react-onsenui";
 import { File } from "../../native/File";
 import { os } from "../../native/Os";
 import { useTheme } from "@mui/system";
-import { useDarkmode } from "../../hooks/useDarkmode";
+import { useSettings } from "../../hooks/useSettings";
 import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
 import { useConfirm } from "material-ui-confirm";
 import { useActivity } from "../../hooks/useActivity";
@@ -19,18 +19,19 @@ import { StyledListItemText } from "./components/StyledListItemText";
 import { BuildConfig } from "@Native/BuildConfig";
 import { ImportGroupsItem } from "./components/ImportGroupsItem";
 import { ImportSingleGroupsItem } from "./components/ImportSingleGroupsItem";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
 
 function SettingsActivity() {
   const confirm = useConfirm();
   const { context, extra } = useActivity();
-  const { strings, language, setLanguage } = useStrings();
+  const { strings } = useStrings();
 
   os.useOnBackPressed(context.popPage);
 
   const theme = useTheme();
 
   // Prefs
-  const { darkmode, setDarkmode } = useDarkmode();
+  const { settings, setSettings } = useSettings();
   const { cards } = useKartei();
 
   const renderToolbar = () => {
@@ -60,9 +61,9 @@ function SettingsActivity() {
           <Switch
             edge="end"
             onChange={(e: any) => {
-              setDarkmode(e.target.checked);
+              setSettings({ darkmode: e.target.checked });
             }}
-            checked={darkmode}
+            checked={settings.darkmode}
             inputProps={{
               "aria-labelledby": "switch-list-label-wifi",
             }}
@@ -74,13 +75,14 @@ function SettingsActivity() {
           <FormControl>
             <NativeSelect
               variant="outlined"
-              defaultValue={language}
+              defaultValue={settings.language}
               inputProps={{
                 name: "lang",
                 "aria-labelledby": "sts-language",
               }}
               onChange={(e) => {
-                setLanguage(e.target.value);
+                setSettings({ language: e.target.value });
+                // setLanguage(e.target.value);
               }}
             >
               <option value="de">German</option>
@@ -109,10 +111,42 @@ function SettingsActivity() {
             secondary="Alle Gruppen und Karten in einer Datei sichern"
           />
         </ListItemButton>
-        <ImportGroupsItem /> 
-        <ImportSingleGroupsItem /> 
+        <ImportGroupsItem />
+        <ImportSingleGroupsItem />
       </List>
 
+      <Divider />
+
+      <List
+        subheader={
+          <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Editor</ListSubheader>
+        }
+      >
+        <ListItem>
+          <StyledListItemText id="beta-editor" primary="Use Experim. Editor" secondary="May be unstable" />
+          <Switch
+            edge="end"
+            onChange={(e) => {
+              setSettings({ __experimental_editor: e.target.checked });
+            }}
+            checked={settings.__experimental_editor}
+            inputProps={{
+              "aria-labelledby": "beta-editor",
+            }}
+          />
+        </ListItem>
+
+        <ListItemButton
+          onClick={() => {
+            os.open("https://github.com/DerGoogler/Lernkartei/issues", {
+              target: "_blank",
+              features: {
+                color: theme.palette.primary.main,
+              },
+            });
+          }}
+        ></ListItemButton>
+      </List>
       <Divider />
 
       <List

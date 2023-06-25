@@ -1,8 +1,7 @@
-import { useTheme } from "@Hooks/useDarkmode";
+import { useTheme } from "@Hooks/useSettings";
 import { styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import { os } from "../../native/Os";
-import Acknowledgements from "../../view/Acknowledgements";
 import { GroupsActivity } from "../../view/GroupsActivity";
 import SettingsActivity from "../../view/SettingsActivity";
 
@@ -89,16 +88,6 @@ export function Open(props: any) {
                 },
               });
               break;
-            case "deps":
-              context.pushPage<{}>({
-                component: Acknowledgements,
-                props: {
-                  key: "acknowledgements",
-                  extra: {},
-                },
-              });
-              break;
-
             default:
               break;
           }

@@ -1,7 +1,7 @@
 import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
 import { useStrings } from "../../../hooks/useStrings";
-import Acknowledgements from "../../Acknowledgements";
+// import Acknowledgements from "../../Acknowledgements";
 import { GroupsActivity } from "../../GroupsActivity";
 import SettingsActivity from "../../SettingsActivity";
 import { StyledListItemText } from "../../SettingsActivity/components/StyledListItemText";
@@ -23,20 +23,6 @@ export const Drawer = (props: Props) => {
       <List
         subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>App</ListSubheader>}
       >
-        <ListItemButton
-          onClick={() => {
-            pushPage({
-              component: Acknowledgements,
-              props: {
-                key: "acknowledgements",
-                extra: {},
-              },
-            });
-            hide();
-          }}
-        >
-          <StyledListItemText primary="Acknowledgements" />
-        </ListItemButton>
         <ListItemButton
           onClick={() => {
             pushPage({

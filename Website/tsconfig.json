@@ -8,7 +8,7 @@
     "typeRoots": ["src/typings/global.d.ts"],
     "sourceMap": true,
     "strict": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noImplicitAny": false,
     "module": "ES2022",
     "allowSyntheticDefaultImports": true,
@@ -34,6 +34,6 @@
       "module": "CommonJS"
     }
   },
-  "include": ["./src/**/*", "dep.js", "./make_native.ts"],
+  "include": ["./src/**/*", "dep.mjs", "./make_native.ts"],
   "exclude": ["./src/view/TestPluginActivity/util/types.d.ts"]
 }

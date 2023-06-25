@@ -3,6 +3,7 @@ import LocalizedStrings from "localized-strings";
 import { DE_Locale } from "../locales/de";
 import { useNativeStorage } from "./useNativeStorage";
 import { EN_Locale } from "../locales/en";
+import { useSettings } from "./useSettings";
 
 const std = new LocalizedStrings(
   {
@@ -17,7 +18,6 @@ const std = new LocalizedStrings(
 const Strings = React.createContext({
   strings: std,
   language: "",
-  setLanguage: (state: SetStateAction<string>) => {},
 });
 
 export type StringProviderProps = {
@@ -25,15 +25,14 @@ export type StringProviderProps = {
 };
 
 export const StringProvider = (props: StringProviderProps) => {
-  const [language, setLanguage] = useNativeStorage("language", "de");
+  const { settings } = useSettings();
 
-  std.setLanguage(language);
+  std.setLanguage(settings.language);
   return (
     <Strings.Provider
       value={{
         strings: std,
-        language: language,
-        setLanguage: setLanguage,
+        language: settings.language,
       }}
     >
       {props.children}

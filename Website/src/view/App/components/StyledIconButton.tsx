@@ -1,8 +1,8 @@
 import { IconButton, IconButtonProps, styled } from "@mui/material";
-import { useDarkmode, useScheme } from "../../../hooks/useDarkmode";
+import { useSettings } from "../../../hooks/useSettings";
 
 export const StyledIconButton = (props: IconButtonProps) => {
-  const { darkmode, setDarkmode } = useDarkmode();
+  const { settings, setSettings } = useSettings();
 
   const C = styled(IconButton)(({ theme }) => ({
     display: "inline-flex",
@@ -31,7 +31,7 @@ export const StyledIconButton = (props: IconButtonProps) => {
     borderRightColor: theme.palette.divider,
     borderBottomColor: theme.palette.divider,
     borderLeftColor: theme.palette.divider,
-    color: !darkmode ? "rgb(66, 66, 66)" : theme.palette.divider,
+    color: !settings.darkmode ? "rgb(66, 66, 66)" : theme.palette.divider,
     borderRadius: theme.shape.borderRadius,
     alignSelf: "flex-start",
     ":hover": {

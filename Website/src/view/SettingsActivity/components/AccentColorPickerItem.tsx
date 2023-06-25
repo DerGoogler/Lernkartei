@@ -3,7 +3,7 @@ import React from "react";
 import { ListItem } from "react-onsenui";
 import { ConfirmationDialogRaw } from "../../../components/ConfirmationDialogRaw";
 import { useActivity } from "../../../hooks/useActivity";
-import { AccentColors, accent_colors, useScheme } from "../../../hooks/useDarkmode";
+import { Settings, accent_colors, useSettings } from "../../../hooks/useSettings";
 import { useStrings } from "../../../hooks/useStrings";
 import { StyledListItemText } from "./StyledListItemText";
 
@@ -11,8 +11,8 @@ export function AccentColorPickerItem() {
   const { context, extra } = useActivity();
   const { strings } = useStrings();
   const [open, setOpen] = React.useState(false);
-  const { scheme, setScheme } = useScheme();
-  const [value, setValue] = React.useState<AccentColors[0]>(scheme);
+  const { settings, setSettings } = useSettings();
+  const [value, setValue] = React.useState<Settings.AccentScheme[][0]>(settings.accent_scheme);
 
   const handleOpen = () => {
     setOpen(true);
@@ -23,7 +23,7 @@ export function AccentColorPickerItem() {
 
     if (val.name && val.value) {
       setValue(val);
-      setScheme(val);
+      setSettings({ accent_scheme: val });
     }
   };
 

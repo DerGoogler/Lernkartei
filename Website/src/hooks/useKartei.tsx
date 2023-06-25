@@ -1,7 +1,5 @@
 import React, { SetStateAction } from "react";
-import { os } from "../native/Os";
 import { useNativeStorage } from "./useNativeStorage";
-import { useStrings } from "./useStrings";
 
 const KarteiContext = React.createContext({
   cards: {} as Kartei[],
