@@ -1,29 +1,27 @@
-import { ListHeader, Page, Toolbar } from "react-onsenui";
+import { Page, Toolbar } from "react-onsenui";
 import { File } from "../../native/File";
 import { os } from "../../native/Os";
 import { useTheme } from "@mui/system";
 import { useSettings } from "../../hooks/useSettings";
 import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
-import { useConfirm } from "material-ui-confirm";
 import { useActivity } from "../../hooks/useActivity";
-import Material3 from "../../components/Material3";
 import { useKartei } from "../../hooks/useKartei";
 import { BackButton } from "../../components/BackButton";
 import { useStrings } from "../../hooks/useStrings";
+import SettingsIcon from "@mui/icons-material/Settings";
 
-import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
-import { Divider, List, ListItem, ListItemButton, ListItemText, ListSubheader, Switch } from "@mui/material";
+import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListSubheader, Switch } from "@mui/material";
 import { StyledListItemText } from "./components/StyledListItemText";
 import { BuildConfig } from "@Native/BuildConfig";
 import { ImportGroupsItem } from "./components/ImportGroupsItem";
 import { ImportSingleGroupsItem } from "./components/ImportSingleGroupsItem";
-import { useNativeStorage } from "@Hooks/useNativeStorage";
+import { Icon } from "@Components/Icon";
+import AceSettings from "./AceSettings";
 
 function SettingsActivity() {
-  const confirm = useConfirm();
-  const { context, extra } = useActivity();
+  const { context } = useActivity();
   const { strings } = useStrings();
 
   os.useOnBackPressed(context.popPage);
@@ -123,29 +121,31 @@ function SettingsActivity() {
         }
       >
         <ListItem>
-          <StyledListItemText id="beta-editor" primary="Use Experim. Editor" secondary="May be unstable" />
+          <StyledListItemText id="beta-editor" primary="Ace editor" secondary="Customizeable textarea" />
+          <ListItemIcon
+            onClick={() => {
+              context.pushPage({
+                component: AceSettings,
+                props: {
+                  key: "ace-settings",
+                  extra: {},
+                },
+              });
+            }}
+          >
+            <Icon icon={SettingsIcon} />
+          </ListItemIcon>
           <Switch
             edge="end"
             onChange={(e) => {
-              setSettings({ __experimental_editor: e.target.checked });
+              setSettings({ __ace_settings_enabled: e.target.checked });
             }}
-            checked={settings.__experimental_editor}
+            checked={settings.__ace_settings_enabled}
             inputProps={{
               "aria-labelledby": "beta-editor",
             }}
           />
         </ListItem>
-
-        <ListItemButton
-          onClick={() => {
-            os.open("https://github.com/DerGoogler/Lernkartei/issues", {
-              target: "_blank",
-              features: {
-                color: theme.palette.primary.main,
-              },
-            });
-          }}
-        ></ListItemButton>
       </List>
       <Divider />
 

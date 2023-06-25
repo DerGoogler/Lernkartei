@@ -67,7 +67,7 @@ function IntroActivity() {
               icon={Done}
               onClick={() => {
                 if (getIndex === 1) {
-                  setSettings({ introFinised: true });
+                  setSettings({ intro_finised: true });
                   context.pushPage({
                     component: App,
                     props: {

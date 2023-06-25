@@ -261,7 +261,7 @@ function AddCardToGroupActivity() {
             spacing={1}
           >
             <TextareaMarkdown.Wrapper ref={markdownRef} commands={customTextareaCommands}>
-              {settings.__experimental_editor ? (
+              {settings.__ace_settings_enabled ? (
                 <Editor
                   mode="markdown"
                   onChange={(val: string) => {

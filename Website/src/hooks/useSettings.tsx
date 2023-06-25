@@ -4,6 +4,7 @@ import shadeColor from "../util/shadeColor";
 import { os } from "../native/Os";
 import { SetValue, useNativeStorage } from "./useNativeStorage";
 import { UI } from "@Native/components/UI";
+import { defaultComposer } from "default-composer";
 
 export namespace Settings {
   export interface Context {
@@ -22,20 +23,13 @@ export namespace Settings {
     darkmode: boolean;
     language: Languages | string;
     accent_scheme: AccentScheme;
-    introFinised: boolean;
-    __experimental_editor: boolean;
+    intro_finised: boolean;
+    __ace_settings_enabled: boolean;
+    __ace_settings_show_gutter: boolean;
+    __ace_settings_highlight_active_line: boolean;
+    __ace_settings_show_line_numbers: boolean;
   }
 }
-
-// export const AccentSchemeContext = createContext({
-//   scheme: {} as any,
-//   setScheme: (state: SetStateAction<any>) => {},
-// });
-
-// export function useScheme(): { scheme: any; setScheme: Dispatch<SetStateAction<any>> } {
-//   // @ts-ignore
-//   return useContext(AccentSchemeContext);
-// }
 
 export const accent_colors: Settings.AccentScheme[] = [
   {
@@ -115,8 +109,11 @@ export const INITIAL_SETTINGS: Settings.Root = {
   darkmode: false,
   language: "de",
   accent_scheme: accent_colors[0],
-  introFinised: false,
-  __experimental_editor: false,
+  intro_finised: false,
+  __ace_settings_enabled: false,
+  __ace_settings_show_gutter: true,
+  __ace_settings_highlight_active_line: true,
+  __ace_settings_show_line_numbers: true,
 };
 
 export const colors = {
@@ -162,17 +159,7 @@ export const useTheme = () => {
 };
 
 export const SettingsProvider = (props: React.PropsWithChildren) => {
-  const [settings, _setSettings] = useNativeStorage<Settings.Root>("settings", INITIAL_SETTINGS);
-
-  // const [darkmode, setDarkmode] = useNativeStorage("darkmode", false);
-  // const [scheme, setScheme] = useNativeStorage<Settings.AccentScheme[][0]>("accent_scheme", accent_colors[0]);
-
-  const setSettings = (state: Partial<Settings.Root>) => {
-    _setSettings((prev) => ({
-      ...prev,
-      ...state,
-    }));
-  };
+  const [settings, setSettings] = useNativeStorage<Settings.Root>("settings", INITIAL_SETTINGS);
 
   const theme = createTheme({
     shape: {
@@ -217,14 +204,38 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
   });
 
   return (
-    <UI.Statusbar color={theme.palette.primary.main} white={false}>
-      <UI.Navigationbar color={theme.palette.background.default}>
-        <SettingsContext.Provider value={{ settings, setSettings }}>
-          {/* <AccentSchemeContext.Provider value={{ scheme, setScheme }}> */}
-          <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-          {/* </AccentSchemeContext.Provider> */}
-        </SettingsContext.Provider>
-      </UI.Navigationbar>
-    </UI.Statusbar>
+    <ThemeProvider theme={theme}>
+      <UI.Statusbar color={theme.palette.primary.main} white={false}>
+        <UI.Navigationbar color={theme.palette.background.default}>
+          <SettingsContext.Provider
+            value={{
+              settings: defaultComposer(INITIAL_SETTINGS, settings),
+              setSettings: (state: Partial<Settings.Root>) => {
+                setSettings((prev) => ({
+                  ...prev,
+                  ...state,
+                }));
+              },
+            }}
+            children={props.children}
+          />
+        </UI.Navigationbar>
+      </UI.Statusbar>
+    </ThemeProvider>
   );
 };
+
+function deepAssign(target, ...sources) {
+  for (const source of sources) {
+    for (let k in source) {
+      let vs = source[k],
+        vt = target[k];
+      if (Object(vs) == vs && Object(vt) === vt) {
+        target[k] = deepAssign(vt, vs);
+        continue;
+      }
+      target[k] = source[k];
+    }
+  }
+  return target;
+}

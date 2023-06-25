@@ -25,13 +25,13 @@ ons.ready(() => {
       <Preventer prevent="contextmenu">
         <StringProvider>
           <KarteiProvider>
-            <SettingsProvider>
-              <ConfirmProvider>
+            <ConfirmProvider>
+              <SettingsProvider>
                 <CssBaseline />
                 <LightTheme />
                 <RoutedApp />
-              </ConfirmProvider>
-            </SettingsProvider>
+              </SettingsProvider>
+            </ConfirmProvider>
           </KarteiProvider>
         </StringProvider>
       </Preventer>

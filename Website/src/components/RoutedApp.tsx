@@ -38,7 +38,7 @@ const RoutedApp = (): JSX.Element => {
 
   const ignoreThat = RouterUtil.init([
     {
-      component: settings.introFinised ? App : IntroActivity,
+      component: settings.intro_finised ? App : IntroActivity,
       props: {
         key: "main",
         context: {

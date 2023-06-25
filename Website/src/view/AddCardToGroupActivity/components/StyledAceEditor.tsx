@@ -2,6 +2,7 @@ import { styled } from "@mui/material";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/mode-json";
+import { useSettings } from "@Hooks/useSettings";
 
 type EditorProps = {
   mode: "json" | "markdown";
@@ -31,6 +32,8 @@ const StyledAceEditor = styled("div")(({ theme }) => ({
 }));
 
 export const Editor = (props: EditorProps) => {
+  const { settings } = useSettings();
+
   return (
     <>
       <StyledAceEditor>
@@ -44,7 +47,14 @@ export const Editor = (props: EditorProps) => {
           onChange={props.onChange}
           name="UNIQUE_ID_OF_DIV"
           editorProps={{ $blockScrolling: true }}
-          setOptions={{}}
+          showGutter={settings.__ace_settings_show_gutter}
+          highlightActiveLine={settings.__ace_settings_highlight_active_line}
+          setOptions={{
+            enableBasicAutocompletion: false,
+            enableLiveAutocompletion: false,
+            enableSnippets: false,
+            showLineNumbers: settings.__ace_settings_show_line_numbers,
+          }}
         />
       </StyledAceEditor>
     </>

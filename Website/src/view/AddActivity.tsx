@@ -7,6 +7,7 @@ import { useActivity } from "../hooks/useActivity";
 import { ToolbarButton } from "../components/ToolbarButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useStrings } from "../hooks/useStrings";
+import { useForm } from "@Hooks/useForm";
 
 type Extra = {
   name: string;
@@ -22,11 +23,14 @@ function AddActivity() {
   const { strings } = useStrings();
 
   const isEditMode = extra.editGroup;
-  const [groupId, setGroupId] = React.useState("lernfeld_1");
-  const [name, setName] = React.useState(!isEditMode ? "Lernfeld 1" : extra.name);
-  const [description, setDescription] = React.useState(
-    !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
-  );
+
+  const { handleChange, groupId, name, description } = useForm({
+    initialState: {
+      groupId: "lernfeld_1",
+      name: !isEditMode ? "Lernfeld 1" : extra.name,
+      description: !isEditMode ? "Güter annehmen und kontrolieren" : extra.description,
+    },
+  });
 
   os.useOnBackPressed(context.popPage);
 
@@ -42,19 +46,7 @@ function AddActivity() {
   };
 
   const validGroup = (group: string): boolean => {
-    return /^\w+$/.test(group);
-  };
-
-  const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGroupId(e.target.value.toLowerCase());
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
+    return /^[a-z0-9_\-]+$/g.test(group);
   };
 
   const handleSave = () => {
@@ -108,36 +100,39 @@ function AddActivity() {
         <span>
           {!isEditMode && (
             <TextField
+              name="groupId"
               fullWidth
               // margin="dense"
               type="text"
               label={strings.group}
               value={groupId}
               variant="outlined"
-              onChange={handleGroupChange}
+              onChange={handleChange}
             />
           )}
         </span>
         <span>
           <TextField
+            name="name"
             fullWidth
             margin="dense"
             type="text"
             label={strings.name}
             value={name}
             variant="outlined"
-            onChange={handleNameChange}
+            onChange={handleChange}
           />
         </span>
         <span>
           <TextField
+            name="description"
             fullWidth
             margin="dense"
             type="text"
             label={strings.description}
             value={description}
             variant="outlined"
-            onChange={handleDescriptionChange}
+            onChange={handleChange}
           />
         </span>
         <Button
