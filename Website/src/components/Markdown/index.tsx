@@ -8,7 +8,7 @@ import Warnmark from "../icons/Warnmark";
 import Icon from "@mui/material/Icon";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import Image from "../dapi/Image";
+import { Image, ImageWithCaption } from "../dapi/Image";
 import { Alert, Box, Chip, Container, Divider, Grid, Paper, Stack } from "@mui/material";
 import { StyledMarkdown } from "./StyledMarkdon";
 import styled from "@emotion/styled";
@@ -48,6 +48,9 @@ export const Markup = React.forwardRef((props: Props, ref) => {
             },
             img: {
               component: Image,
+            },
+            imgwithcap: {
+              component: ImageWithCaption,
             },
             video: {
               component: Video,
