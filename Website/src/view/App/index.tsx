@@ -10,7 +10,7 @@ import { ToolbarButton } from "../../components/ToolbarButton";
 import { For } from "@Components/For";
 import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
-import { Box } from "@mui/material";
+import { Alert, AlertTitle, Box } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
 import { onValue, ref } from "firebase/database";
 import React from "react";
@@ -61,6 +61,18 @@ export function App() {
   return (
     <Page renderToolbar={renderToolbar}>
       <StyledSection>
+        {!os.isAndroid && (
+          <Alert
+            severity="warning"
+            style={{
+              marginBottom: 8,
+            }}
+          >
+            <AlertTitle>{strings.warning}</AlertTitle>
+            {strings.warning_text_web_version}
+          </Alert>
+        )}
+
         <For
           each={cards}
           fallback={() => (

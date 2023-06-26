@@ -1,8 +1,8 @@
-import { Page, Toolbar } from "react-onsenui";
-import { BackButton } from "../components/BackButton";
-import { Markup } from "../components/Markdown";
-import { useActivity } from "../hooks/useActivity";
-import { os } from "../native/Os";
+import { ListItem, Page, Toolbar } from "react-onsenui";
+import { BackButton } from "@Components/BackButton";
+import { Markup } from "@Components/Markdown";
+import { useActivity } from "@Hooks/useActivity";
+import { os } from "@Native/Os";
 
 type Extra = { shortDesc: string; desc: string; index: number | string; cardIndex: number };
 
@@ -19,14 +19,14 @@ function DescriptonActivity() {
         <div className="left">
           <BackButton onClick={context.popPage} />
         </div>
-        <div className="center">#{index}</div>
+        <div className="center">{shortDesc}</div>
       </Toolbar>
     );
   };
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <Markup children={`## ${shortDesc}\n\n${desc}`} />
+      <Markup children={desc} />
     </Page>
   );
 }

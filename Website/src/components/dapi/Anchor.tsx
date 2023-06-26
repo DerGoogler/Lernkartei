@@ -4,16 +4,21 @@ import { useActivity } from "../../hooks/useActivity";
 import { os } from "../../native/Os";
 import { GroupsActivity } from "../../view/GroupsActivity";
 import SettingsActivity from "../../view/SettingsActivity";
+import { Icon } from "@Components/Icon";
+import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
+import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
 
 const StyledAnchor = styled("div")(({ theme }) => {
   const { scheme } = useTheme();
   const s = {
     cursor: "pointer",
     color: scheme[900],
-    "& abbr[title]": {
-      textDecoration: "none",
-      cursor: "pointer",
-    },
+    display: "flex",
+    alignItems: "center",
+    // "& abbr[title]": {
+    //   textDecoration: "none",
+    //   cursor: "pointer",
+    // },
     ":hover": {
       textDecoration: "underline",
     },
@@ -48,8 +53,14 @@ function Anchor(props: JSX.IntrinsicElements["a"]) {
         }}
         {...rest}
       >
-        {/* @ts-ignore */}
-        <abbr title={href}>{children}</abbr>
+        {children}{" "}
+        <Icon
+          icon={LaunchRoundedIcon}
+          sx={{
+            fontSize: 16,
+            marginLeft: "2px",
+          }}
+        />
       </div>
     </StyledAnchor>
   );
@@ -58,8 +69,6 @@ function Anchor(props: JSX.IntrinsicElements["a"]) {
 export function Open(props: any) {
   const { page, children, ...rest } = props;
   const { context } = useActivity();
-
-  const theme = useTheme();
 
   return (
     <StyledAnchor>
@@ -94,7 +103,14 @@ export function Open(props: any) {
         }}
         {...rest}
       >
-        {children}
+        {children}{" "}
+        <Icon
+          icon={NorthEastRoundedIcon}
+          sx={{
+            fontSize: 16,
+            marginLeft: "2px",
+          }}
+        />
       </div>
     </StyledAnchor>
   );

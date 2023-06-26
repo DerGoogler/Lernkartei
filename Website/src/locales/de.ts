@@ -43,6 +43,6 @@ export const DE_Locale = {
 
   has_deleted_card: '"{name}" wurde gelöscht.',
 
-  login: "Anmelden",
-  signin: "Einloggen"
+  warning: "Warnung",
+  warning_text_web_version: "Du benutzt aktuell die Web-Version von Lernkartei, was zum Datenverlust führen kann!",
 };

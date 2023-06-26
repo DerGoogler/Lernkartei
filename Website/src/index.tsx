@@ -23,17 +23,17 @@ ons.ready(() => {
   render(
     <React.StrictMode>
       <Preventer prevent="contextmenu">
-        <StringProvider>
-          <KarteiProvider>
-            <ConfirmProvider>
-              <SettingsProvider>
+        <SettingsProvider>
+          <StringProvider>
+            <KarteiProvider>
+              <ConfirmProvider>
                 <CssBaseline />
                 <LightTheme />
                 <RoutedApp />
-              </SettingsProvider>
-            </ConfirmProvider>
-          </KarteiProvider>
-        </StringProvider>
+              </ConfirmProvider>
+            </KarteiProvider>
+          </StringProvider>
+        </SettingsProvider>
       </Preventer>
     </React.StrictMode>,
     "app"

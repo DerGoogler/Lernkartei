@@ -17,7 +17,7 @@ const std = new LocalizedStrings(
 
 const Strings = React.createContext({
   strings: std,
-  language: "",
+  language: "de",
 });
 
 export type StringProviderProps = {
@@ -34,9 +34,8 @@ export const StringProvider = (props: StringProviderProps) => {
         strings: std,
         language: settings.language,
       }}
-    >
-      {props.children}
-    </Strings.Provider>
+      children={props.children}
+    />
   );
 };
 
