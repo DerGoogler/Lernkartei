@@ -12,6 +12,7 @@ import { Image, ImageWithCaption } from "../dapi/Image";
 import { Alert, Box, Chip, Container, Divider, Grid, Paper, Stack } from "@mui/material";
 import { StyledMarkdown } from "./StyledMarkdon";
 import styled from "@emotion/styled";
+import Require from "@Components/dapi/Require";
 
 type Props = {
   children: string;
@@ -95,6 +96,9 @@ export const Markup = React.forwardRef((props: Props, ref) => {
             },
             warnmark: {
               component: Warnmark,
+            },
+            require: {
+              component: Require,
             },
           },
         }}
