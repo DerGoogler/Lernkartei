@@ -98,7 +98,13 @@ function SettingsActivity() {
         <ListItemButton
           onClick={() => {
             const file = new File(`karten.${Math.floor(Math.random() * 5000000)}.json`);
-            file.createJSON(cards, 4);
+
+            try {
+              file.createJSON(cards, 4);
+              os.toast("Kartei karten erfolgreich exportiert", "short");
+            } catch (e) {
+              os.toast((e as Error).message, "short");
+            }
           }}
         >
           <StyledListItemText

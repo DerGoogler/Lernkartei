@@ -57,34 +57,36 @@ export function ViewCardActivity() {
           </Fade>
         </div>
         <div className="right">
-          <ToolbarButton
-            icon={DownloadIcon}
-            onClick={() => {
-              try {
-                const file = new File(`${group}.${Math.floor(Math.random() * 5000000)}.json`);
-                file.createJSON(cards[index], 4);
-                os.toast("Groups has been successfully exported!", "short");
-              } catch (e) {
-                alert((e as Error).message);
-              }
-            }}
-          />
           {!readonly && (
-            <ToolbarButton
-              icon={Add}
-              onClick={() => {
-                context.pushPage({
-                  component: AddCardToGroupActivity,
-                  props: {
-                    key: "add",
-                    extra: {
-                      index: index,
-                      edit: false,
+            <>
+              <ToolbarButton
+                icon={DownloadIcon}
+                onClick={() => {
+                  try {
+                    const file = new File(`${group}.${Math.floor(Math.random() * 5000000)}.json`);
+                    file.createJSON(cards[index], 4);
+                    os.toast("Groups has been successfully exported!", "short");
+                  } catch (e) {
+                    alert((e as Error).message);
+                  }
+                }}
+              />
+              <ToolbarButton
+                icon={Add}
+                onClick={() => {
+                  context.pushPage({
+                    component: AddCardToGroupActivity,
+                    props: {
+                      key: "add",
+                      extra: {
+                        index: index,
+                        edit: false,
+                      },
                     },
-                  },
-                });
-              }}
-            />
+                  });
+                }}
+              />
+            </>
           )}
         </div>
       </Toolbar>

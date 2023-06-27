@@ -38,7 +38,7 @@ export const ImportGroupsItem = () => {
         confirm({
           title: "Import",
           description:
-            "Beim Import werden alle Gruppen und Karten information überschrieben. Sei vorsichtig mit dieser Funktion!",
+            "Beim Import werden alle Gruppen und Karten Information überschrieben. Sei vorsichtig mit dieser Funktion!",
           confirmationText: "Fortfahren",
           cancellationText: "Abbrechen",
         })
@@ -47,7 +47,7 @@ export const ImportGroupsItem = () => {
           })
           .catch(() => {});
       } else {
-        alert(JSON.stringify(validate.errors, null, 2));
+        os.toast("Das JSON Scheme stimmt nicht überein", "short");
       }
     });
   };
@@ -62,7 +62,7 @@ export const ImportGroupsItem = () => {
               props: {
                 key: "chooseFile",
                 extra: {
-                  useGroupsImport: true
+                  useGroupsImport: true,
                 },
               },
             });

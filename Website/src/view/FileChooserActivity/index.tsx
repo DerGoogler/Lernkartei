@@ -59,11 +59,11 @@ const FileComponent = ({ file, actions, setCards }: any) => {
           os.toast(strings.group_exist, "short");
         },
         callback: () => {
-          os.toast(`${content.group} has been added`, "short");
+          os.toast(`${content.name} has been added`, "short");
         },
       });
     } else {
-      alert(JSON.stringify(validate.errors, null, 2));
+      os.toast("Das JSON Scheme stimmt nicht überein", "short");
     }
   };
 
@@ -90,7 +90,7 @@ const FileComponent = ({ file, actions, setCards }: any) => {
         })
         .catch(() => {});
     } else {
-      alert(JSON.stringify(validate.errors, null, 2));
+      os.toast("Das JSON Scheme stimmt nicht überein", "short");
     }
   };
 
