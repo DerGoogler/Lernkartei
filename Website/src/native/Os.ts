@@ -92,12 +92,13 @@ class Os extends Native {
     window.removeEventListener(type.toLowerCase(), callback, options);
   }
 
-  public useOnBackPressed(callback: () => void): void {
-    // @ts-ignore
-    useEventListener("backbutton", callback);
-  }
-  public useOnResume(callback: () => void): void {
-    useEventListener("onresume", callback);
+  public useOnBackPressed(handler: (event: any) => void): void {
+    React.useEffect(() => {
+      document.addEventListener("backbutton", handler, true);
+      return () => {
+        document.removeEventListener("backbutton", handler, true);
+      };
+    }, []);
   }
 }
 

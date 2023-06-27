@@ -20,7 +20,8 @@ export function App() {
   const { strings } = useStrings();
   const { cards, actions } = useKartei();
 
-  os.useOnBackPressed(() => {
+  os.useOnBackPressed((event) => {
+    event.preventDefault();
     if (context.splitter.state) {
       context.splitter.hide();
     } else {

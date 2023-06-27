@@ -10,7 +10,7 @@ const Require = (props: RequireProps) => {
 
   const compareVer = (ver1, middle, ver2) => {
     const res = new Intl.Collator("en").compare(ver1, ver2);
-    let comp;
+    let comp: boolean = false;
 
     switch (middle) {
       case "=":

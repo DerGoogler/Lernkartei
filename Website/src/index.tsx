@@ -17,9 +17,6 @@ import { Preventer, render } from "react-render-tools";
 ons.platform.select("android");
 
 ons.ready(() => {
-  // @ts-ignore
-  window.onbackbutton = new Event("onbackbutton");
-
   render(
     <React.StrictMode>
       <Preventer prevent="contextmenu">

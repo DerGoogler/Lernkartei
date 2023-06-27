@@ -60,7 +60,7 @@ public class ModuleView extends WebView {
         this.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webSettings.setAppCacheEnabled(true);
+        // webSettings.setAppCacheEnabled(true);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setUseWideViewPort(true);
         webSettings.setDomStorageEnabled(true);
