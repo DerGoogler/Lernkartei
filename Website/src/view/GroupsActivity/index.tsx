@@ -18,8 +18,6 @@ function GroupsActivity() {
     "https://raw.githubusercontent.com/DerGoogler/cdn/master/others/kartei/index/sets.json"
   );
 
-  os.useOnBackPressed(context.popPage);
-
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">

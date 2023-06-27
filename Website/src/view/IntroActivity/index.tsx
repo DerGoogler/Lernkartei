@@ -51,7 +51,7 @@ function IntroActivity() {
 
   const { setSettings } = useSettings();
 
-  os.useOnBackPressed(() => os.close());
+  context.onBackPressed(() => os.close());
 
   const handleChange = (e: any) => {
     setIndex(e.activeIndex);

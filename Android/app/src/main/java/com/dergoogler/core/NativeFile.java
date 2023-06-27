@@ -80,7 +80,6 @@ public class NativeFile {
 
     @JavascriptInterface
     public String read(String file) {
-
         File readfile = new File(ext + "/Kartei/" + file);
         return createRead(readfile);
     }

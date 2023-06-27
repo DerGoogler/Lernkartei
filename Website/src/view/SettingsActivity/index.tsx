@@ -24,8 +24,6 @@ function SettingsActivity() {
   const { context } = useActivity();
   const { strings } = useStrings();
 
-  os.useOnBackPressed(context.popPage);
-
   const theme = useTheme();
 
   // Prefs

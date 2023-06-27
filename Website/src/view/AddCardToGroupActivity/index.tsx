@@ -129,14 +129,11 @@ function AddCardToGroupActivity() {
   // };
   // os.useOnBackPressed(handleBackButtonClick);
 
-  const handleBackButtonClick = context.popPage;
-  os.useOnBackPressed(handleBackButtonClick);
-
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <BackButton onClick={handleBackButtonClick} />
+          <BackButton onClick={context.popPage} />
         </div>
         <div className="center">{edit ? strings.edit_card : strings.new_card}</div>
       </Toolbar>

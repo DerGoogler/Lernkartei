@@ -1,6 +1,7 @@
 import { CloseRounded } from "@mui/icons-material";
 import { Component, useState } from "react";
 import {
+  Card,
   List,
   ListHeader,
   ListItem,
@@ -22,6 +23,8 @@ import { obj } from "googlers-tools";
 import { useNativeStorage } from "../hooks/useNativeStorage";
 import { Drawer } from "../view/App/components/Drawer";
 import { useSettings } from "@Hooks/useSettings";
+import React from "react";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 const RoutedApp = (): JSX.Element => {
   const { settings } = useSettings();
@@ -43,6 +46,7 @@ const RoutedApp = (): JSX.Element => {
         key: "main",
         context: {
           pushPage: (props: PushPropsCore) => pushPage(props),
+          onBackButton: (handler: EventListener) => onBackButton(handler),
           splitter: {
             show: () => showSplitter(),
             hide: () => hideSplitter(),
@@ -54,6 +58,15 @@ const RoutedApp = (): JSX.Element => {
   ]);
 
   const [routeConfig, setRouteConfig] = useState<any>(ignoreThat);
+
+  const onBackButton = (handler: (e: any) => void) => {
+    React.useEffect(() => {
+      document.addEventListener("backbutton", handler, true);
+      return () => {
+        document.removeEventListener("backbutton", handler, true);
+      };
+    }, [routeConfig]);
+  };
 
   const popPage = (options = {}) => {
     setRouteConfig((prev: any) =>
@@ -80,6 +93,7 @@ const RoutedApp = (): JSX.Element => {
         context: {
           popPage: (options = {}) => popPage(options),
           pushPage: (props: PushPropsCore) => pushPage(props),
+          onBackButton: (handler: EventListener) => onBackButton(handler),
           splitter: {
             show: () => showSplitter(),
             hide: () => hideSplitter(),
@@ -137,7 +151,35 @@ const RoutedApp = (): JSX.Element => {
   };
 
   return (
-    <>
+    <ErrorBoundary
+      fallback={(err, errInf) => {
+        return (
+          <Page
+            renderToolbar={() => {
+              return (
+                <Toolbar modifier="noshadow">
+                  <div className="center">We hit a brick!</div>
+                </Toolbar>
+              );
+            }}
+          >
+            <Card>{err.message}</Card>
+            <pre
+              style={{
+                backgroundColor: "#f6f8fa",
+                borderRadius: 6,
+                lineHeight: 1.45,
+                overflow: "auto",
+                padding: 16,
+                margin: 16,
+              }}
+            >
+              <code>{errInf.componentStack}</code>
+            </pre>
+          </Page>
+        );
+      }}
+    >
       <Page>
         <Splitter>
           <SplitterSide
@@ -163,7 +205,7 @@ const RoutedApp = (): JSX.Element => {
           </SplitterContent>
         </Splitter>
       </Page>
-    </>
+    </ErrorBoundary>
   );
 };
 

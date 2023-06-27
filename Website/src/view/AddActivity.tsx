@@ -32,8 +32,6 @@ function AddActivity() {
     },
   });
 
-  os.useOnBackPressed(context.popPage);
-
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">

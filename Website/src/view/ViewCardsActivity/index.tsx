@@ -26,12 +26,10 @@ export function ViewCardActivity() {
   const { strings } = useStrings();
   const { cards, actions } = useKartei();
 
-  os.useOnBackPressed(context.popPage);
-
   const [titleShow, setTitleShow] = useState(true);
   const [search, setSearch] = useState("");
 
-  const { index, group, title, desc } = extra;
+  const { index, group, title, desc, readonly } = extra;
 
   const karten = cards[index].karten;
   const filteredCards = karten.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
@@ -71,21 +69,23 @@ export function ViewCardActivity() {
               }
             }}
           />
-          <ToolbarButton
-            icon={Add}
-            onClick={() => {
-              context.pushPage({
-                component: AddCardToGroupActivity,
-                props: {
-                  key: "add",
-                  extra: {
-                    index: index,
-                    edit: false,
+          {!readonly && (
+            <ToolbarButton
+              icon={Add}
+              onClick={() => {
+                context.pushPage({
+                  component: AddCardToGroupActivity,
+                  props: {
+                    key: "add",
+                    extra: {
+                      index: index,
+                      edit: false,
+                    },
                   },
-                },
-              });
-            }}
-          />
+                });
+              }}
+            />
+          )}
         </div>
       </Toolbar>
     );

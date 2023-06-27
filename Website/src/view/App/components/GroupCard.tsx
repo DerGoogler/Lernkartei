@@ -38,6 +38,7 @@ export const GroupCard = ({ card, index, actions }: Props) => {
                   group: card.group,
                   title: card.name,
                   desc: card.description,
+                  readonly: card.readonly,
                 },
               },
             });

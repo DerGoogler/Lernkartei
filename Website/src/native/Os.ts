@@ -91,15 +91,6 @@ class Os extends Native {
     (window as any)[type] = new Event(type.toLowerCase());
     window.removeEventListener(type.toLowerCase(), callback, options);
   }
-
-  public useOnBackPressed(handler: (event: any) => void): void {
-    React.useEffect(() => {
-      document.addEventListener("backbutton", handler, true);
-      return () => {
-        document.removeEventListener("backbutton", handler, true);
-      };
-    }, []);
-  }
 }
 
 export const os: Os = new Os();

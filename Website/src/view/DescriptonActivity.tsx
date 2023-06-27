@@ -11,8 +11,6 @@ function DescriptonActivity() {
 
   const { desc, index, shortDesc, cardIndex } = extra;
 
-  os.useOnBackPressed(context.popPage);
-
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">

@@ -62,8 +62,8 @@ declare global {
       readonly hide: () => void;
       readonly state: boolean;
     };
-    readonly onBackPressed: (callback: () => void) => void;
-    readonly onResume: (callback: () => void) => void;
+    readonly onBackPressed: (handler: EventListener) => void;
+    readonly onResume: (handler: EventListener) => void;
     // };
   }
 

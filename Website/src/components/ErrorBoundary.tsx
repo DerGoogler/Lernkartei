@@ -1,57 +1,48 @@
 import React from "react";
-import { ErrorInfo, ReactNode } from "react";
-import { Page, Toolbar } from "react-onsenui";
 
-interface Props {
-  children: ReactNode;
+interface Props extends React.PropsWithChildren {
+  fallback: (error: Error, errorInfo: React.ErrorInfo) => JSX.Element;
 }
 
-interface States {
+interface State {
   hasError: boolean;
-  error: Error | string | null;
-  errorInfo: ErrorInfo | string | null;
+  error: Error;
+  errorInfo: React.ErrorInfo;
 }
 
-class ErrorBoundary extends React.Component<Props, States> {
-  constructor(props: Props | Readonly<Props>) {
+export class ErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       hasError: false,
-      error: null,
-      errorInfo: null,
+      error: {
+        name: "string",
+        message: "string",
+        stack: "string",
+      },
+      errorInfo: {
+        /**
+         * Captures which component contained the exception, and its ancestors.
+         */
+        componentStack: "string",
+      },
     };
   }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: any) {
     return { hasError: true };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    this.setState({
-      hasError: true,
-      error: error,
-      errorInfo: errorInfo,
-    });
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    this.setState({ error, errorInfo });
   }
 
-  public render(): JSX.Element {
-    const { hasError, errorInfo, error } = this.state;
-
-    if (hasError) {
-      return (
-        <Page
-          renderToolbar={() => (
-            <Toolbar>
-              <div className="center">Something went wrong</div>
-            </Toolbar>
-          )}
-        >
-          <p>{(errorInfo as ErrorInfo).componentStack}</p>
-        </Page>
-      );
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return this.props.fallback(this.state.error, this.state.errorInfo);
     }
-    return this.props.children as any;
+
+    return this.props.children;
   }
 }
-
-export default ErrorBoundary;

@@ -12,22 +12,11 @@ import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
 import { Alert, AlertTitle, Box } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
-import { onValue, ref } from "firebase/database";
-import React from "react";
 
 export function App() {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { cards, actions } = useKartei();
-
-  os.useOnBackPressed((event) => {
-    event.preventDefault();
-    if (context.splitter.state) {
-      context.splitter.hide();
-    } else {
-      os.close();
-    }
-  });
 
   const renderToolbar = () => {
     return (
