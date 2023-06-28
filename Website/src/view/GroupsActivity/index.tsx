@@ -31,37 +31,37 @@ function GroupsActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <React.Suspense
-        fallback={
-          <ProgressCircular
-            indeterminate
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              WebkitTransform: "translate(-50%, -50%)",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        }
-      >
-        {data?.map((group) => (
-          <>
-            <List
-              subheader={
-                <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
-                  {group.name}
-                </ListSubheader>
-              }
-            >
-              {group.sets.map((set) => (
-                <Group cards={cards} actions={actions} set={set} />
-              ))}
-            </List>
-            <Divider />
-          </>
-        ))}
-      </React.Suspense>
+      {!data ? (
+        <ProgressCircular
+          indeterminate
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            WebkitTransform: "translate(-50%, -50%)",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+      ) : (
+        <>
+          {data.map((group) => (
+            <>
+              <List
+                subheader={
+                  <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
+                    {group.name}
+                  </ListSubheader>
+                }
+              >
+                {group.sets.map((set) => (
+                  <Group cards={cards} actions={actions} set={set} />
+                ))}
+              </List>
+              <Divider />
+            </>
+          ))}
+        </>
+      )}
     </Page>
   );
 }
