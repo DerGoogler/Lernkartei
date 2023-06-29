@@ -14,6 +14,7 @@ import { useConfirm } from "material-ui-confirm";
 export const FileChooserActivity = () => {
   const { context } = useActivity<any>();
   const { setCards, actions } = useKartei();
+  const { strings } = useStrings();
 
   const renderToolbar = () => {
     return (
@@ -21,7 +22,7 @@ export const FileChooserActivity = () => {
         <div className="left">
           <BackButton onClick={context.popPage} />
         </div>
-        <div className="center">Choose file</div>
+        <div className="center">{strings.choose_file}</div>
       </Toolbar>
     );
   };
@@ -59,11 +60,16 @@ const FileComponent = ({ file, actions, setCards }: any) => {
           os.toast(strings.group_exist, "short");
         },
         callback: () => {
-          os.toast(`${content.name} has been added`, "short");
+          os.toast(
+            strings.formatString(strings.group_added, {
+              name: content.name,
+            }) as string,
+            "short"
+          );
         },
       });
     } else {
-      os.toast("Das JSON Scheme stimmt nicht überein", "short");
+      os.toast(strings.json_mismatch, "short");
     }
   };
 
@@ -80,17 +86,16 @@ const FileComponent = ({ file, actions, setCards }: any) => {
     if (valid) {
       confirm({
         title: "Import",
-        description:
-          "Beim Import werden alle Gruppen und Karten information überschrieben. Sei vorsichtig mit dieser Funktion!",
-        confirmationText: "Fortfahren",
-        cancellationText: "Abbrechen",
+        description: strings.import_description,
+        confirmationText: strings.continue,
+        cancellationText: strings.cancel,
       })
         .then(() => {
           setCards(content);
         })
         .catch(() => {});
     } else {
-      os.toast("Das JSON Scheme stimmt nicht überein", "short");
+      os.toast(strings.json_mismatch, "short");
     }
   };
 

@@ -45,7 +45,9 @@ function SettingsActivity() {
     <Page renderToolbar={renderToolbar}>
       <List
         subheader={
-          <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Aussehen</ListSubheader>
+          <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
+            {strings.appierence}
+          </ListSubheader>
         }
       >
         <ListItem>
@@ -110,7 +112,7 @@ function SettingsActivity() {
           <StyledListItemText
             id="switch-list-label-wifi"
             primary="Backup"
-            secondary="Alle Gruppen und Karten in einer Datei sichern"
+            secondary={strings.backup_settings_subtext}
           />
         </ListItemButton>
         <ImportGroupsItem />

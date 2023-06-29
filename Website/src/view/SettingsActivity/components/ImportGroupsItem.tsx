@@ -1,10 +1,7 @@
 import { useActivity } from "@Hooks/useActivity";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import { os } from "@Native/Os";
 import Ajv from "ajv";
-import ons from "onsenui";
-import { ListItem } from "react-onsenui";
 import { FileChooserActivity } from "../../FileChooserActivity";
 import { useKartei } from "../../../hooks/useKartei";
 import { StyledListItemText } from "./StyledListItemText";
@@ -12,10 +9,12 @@ import _schema from "@Util/groups.schema.json";
 import { useRef } from "react";
 import { useConfirm } from "material-ui-confirm";
 import chooseFile from "../../FileChooserActivity/chooseFile";
+import { useStrings } from "@Hooks/useStrings";
 
 export const ImportGroupsItem = () => {
   const { context } = useActivity();
-  const { cards, setCards } = useKartei();
+  const { setCards } = useKartei();
+  const { strings } = useStrings();
 
   const upload = useRef<HTMLInputElement>(null);
   const confirm = useConfirm();
@@ -37,17 +36,16 @@ export const ImportGroupsItem = () => {
       if (valid) {
         confirm({
           title: "Import",
-          description:
-            "Beim Import werden alle Gruppen und Karten Information überschrieben. Sei vorsichtig mit dieser Funktion!",
-          confirmationText: "Fortfahren",
-          cancellationText: "Abbrechen",
+          description: strings.import_description,
+          confirmationText: strings.continue,
+          cancellationText: strings.cancel,
         })
           .then(() => {
             setCards(content);
           })
           .catch(() => {});
       } else {
-        os.toast("Das JSON Scheme stimmt nicht überein", "short");
+        os.toast(strings.json_mismatch, "short");
       }
     });
   };
@@ -71,7 +69,7 @@ export const ImportGroupsItem = () => {
           }
         }}
       >
-        <StyledListItemText primary="Import" secondary="Importiere zuvor gesicherte Gruppen und Karten" />
+        <StyledListItemText primary="Import" secondary={strings.import_settings_subtext} />
       </ListItemButton>
       <input
         ref={upload}

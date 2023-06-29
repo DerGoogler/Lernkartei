@@ -33,11 +33,16 @@ export const ImportSingleGroupsItem = () => {
             os.toast(strings.group_exist, "short");
           },
           callback: () => {
-            os.toast(`${content.group} has been added`, "short");
+            os.toast(
+              strings.formatString(strings.group_added, {
+                name: content.name,
+              }) as string,
+              "short"
+            );
           },
         });
       } else {
-        alert(JSON.stringify(validate.errors, null, 2));
+        os.toast(strings.json_mismatch, "short");
       }
     });
   };
@@ -61,7 +66,7 @@ export const ImportSingleGroupsItem = () => {
           }
         }}
       >
-        <StyledListItemText primary="Einzel-Import" secondary="Importiere eine einzelne Gruppe" />
+        <StyledListItemText primary={strings.single_import} secondary={strings.single_import_settings_subtext} />
       </ListItemButton>
       <input
         ref={upload}
