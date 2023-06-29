@@ -1,9 +1,10 @@
-import { resolve, join } from "path";
-import { Configuration } from "webpack";
+import path, { resolve, join } from "path";
+import { Configuration, DefinePlugin } from "webpack";
 // Keep that for typings
 import webpackDevServer from "webpack-dev-server";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import * as fs from "fs";
 
 const defConfig: Configuration = {
   output: {
@@ -70,6 +71,9 @@ const config: Configuration = {
     maxAssetSize: 512000,
   },
   plugins: [
+    new DefinePlugin({
+      LICENSE: JSON.stringify(fs.readFileSync(path.join(__dirname, "./../LICENSE"), "utf-8")),
+    }),
     new MiniCssExtractPlugin({
       filename: "bundle/[name].bundle.css",
     }),

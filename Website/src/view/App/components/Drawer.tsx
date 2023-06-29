@@ -5,6 +5,7 @@ import { useStrings } from "../../../hooks/useStrings";
 import { GroupsActivity } from "../../GroupsActivity";
 import SettingsActivity from "../../SettingsActivity";
 import { StyledListItemText } from "../../SettingsActivity/components/StyledListItemText";
+import LicenseActivity from "./../../LicenseActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -50,6 +51,20 @@ export const Drawer = (props: Props) => {
           }}
         >
           <StyledListItemText primary={strings.groups} />
+        </ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: LicenseActivity,
+              props: {
+                key: "license",
+                extra: {},
+              },
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary="License" />
         </ListItemButton>
       </List>
       <Divider />
