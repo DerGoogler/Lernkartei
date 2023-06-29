@@ -34,6 +34,6 @@
       "module": "CommonJS"
     }
   },
-  "include": ["./src/**/*", "dep.mjs", "./make_native.ts"],
+  "include": ["./src/**/*", "dep.cjs", "./make_native.ts"],
   "exclude": ["./src/view/TestPluginActivity/util/types.d.ts"]
 }

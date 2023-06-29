@@ -12,11 +12,11 @@
   },
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev": "webpack-dev-server --open --config webpack.dev.ts",
-    "start:prod": "webpack-dev-server --open --config webpack.prod.ts",
-    "web:dev": "webpack --config webpack.dev.ts",
-    "web:prod": "npm run web:dev && webpack --config webpack.prod.ts && rm ./../Android/app/src/main/assets/www/**/*.map",
-    "app:dev": "npm run web:dev && cd ../Android && ./gradlew installDebug"
+    "start:dev": "npm run util:dep && webpack-dev-server --open --config webpack.dev.ts",
+    "start:prod": "npm run util:dep && webpack-dev-server --open --config webpack.prod.ts",
+    "web:dev": "npm run util:dep && webpack --config webpack.dev.ts",
+    "web:prod": "npm run util:dep && npm run web:dev && webpack --config webpack.prod.ts && rm ./../Android/app/src/main/assets/www/**/*.map",
+    "util:dep": "node dep.cjs"
   },
   "resolutions": {
     "react": "^18.2.0",
