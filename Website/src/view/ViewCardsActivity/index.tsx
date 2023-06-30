@@ -108,7 +108,7 @@ export function ViewCardActivity() {
           </HeaderTitle>
         </Header>
         <StyledSection>
-          <Searchbar placeholder={strings.search_karten} onSearch={(val) => setSearch(val)} />
+          <Searchbar placeholder={strings.search_karten} onChange={(e) => setSearch(e.target.value)} />
 
           <Stack style={{ marginBottom: 8 }} direction="row" justifyContent="center" alignItems="center" spacing={2}>
             <Pagination

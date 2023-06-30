@@ -13,7 +13,7 @@ import DirectionsIcon from "@mui/icons-material/Directions";
 import { colors, useSettings } from "../hooks/useSettings";
 
 type SearchbarProps = {
-  onSearch: (val: string) => void;
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   placeholder: string;
 };
 
@@ -46,7 +46,7 @@ const StyledSearchInput = (props: any) => {
   return <C {...props} />;
 };
 
-export const Searchbar = ({ placeholder, onSearch }: SearchbarProps) => {
+export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
   const theme = useTheme();
   // const { scheme, setScheme } = useScheme();
   const { settings, setSettings } = useSettings();
@@ -80,9 +80,9 @@ export const Searchbar = ({ placeholder, onSearch }: SearchbarProps) => {
         }}
       >
         <IconButton
-          onClick={() => {
-            onSearch(value);
-          }}
+          // onClick={() => {
+          //   onSearch(value);
+          // }}
           sx={{ p: "10px" }}
           aria-label="menu"
         >
@@ -94,15 +94,14 @@ export const Searchbar = ({ placeholder, onSearch }: SearchbarProps) => {
             placeholder={placeholder}
             inputProps={{
               "aria-label": placeholder,
-              onKeyDown: (e: any) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  onSearch(value);
-                }
-              },
+              // onKeyDown: (e: any) => {
+              //   if (e.key === "Enter") {
+              //     e.preventDefault();
+              //     onSearch(value);
+              //   }
+              // },
             }}
-            // @ts-ignore
-            onChange={handleChange}
+            onChange={onChange}
           />
         </FormControl>
       </Paper>
