@@ -112,7 +112,6 @@ export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
       maxWidth="xs"
       TransitionProps={{ onEntering: handleEntering }}
       open={open}
-      {...other}
     >
       <DialogTitle>{props.title}</DialogTitle>
       <DialogContent dividers>

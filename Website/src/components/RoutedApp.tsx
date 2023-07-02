@@ -1,5 +1,5 @@
 import { CloseRounded } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   Page,
@@ -20,6 +20,7 @@ import { Drawer } from "../view/App/components/Drawer";
 import { useSettings } from "@Hooks/useSettings";
 import React from "react";
 import { ErrorBoundary } from "./ErrorBoundary";
+import eruda from "eruda";
 
 const RoutedApp = (): JSX.Element => {
   const { settings } = useSettings();
@@ -33,6 +34,17 @@ const RoutedApp = (): JSX.Element => {
   const showSplitter = () => {
     setIsSplitterOpen(true);
   };
+
+  useEffect(() => {
+    if (settings.eruda_console_enabled) {
+      let el = document.createElement("div");
+      document.body.appendChild(el);
+      eruda.init({
+        container: el,
+        tool: ["console", "elements"],
+      });
+    }
+  }, [settings.eruda_console_enabled]);
 
   const ignoreThat = RouterUtil.init([
     {

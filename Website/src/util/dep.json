@@ -68,6 +68,15 @@
         "repository": "https://www.npmjs.com/package/default-composer"
     },
     {
+        "name": "eruda",
+        "description": "Console for Mobile Browsers",
+        "author": "redhoodsu",
+        "version": "3.0.0",
+        "license": "MIT",
+        "homepage": "https://eruda.liriliri.io/",
+        "repository": "https://www.npmjs.com/package/eruda"
+    },
+    {
         "name": "file-saver",
         "description": "An HTML5 saveAs() FileSaver implementation",
         "author": "Eli Grey <me@eligrey.com>",

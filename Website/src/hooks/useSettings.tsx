@@ -23,6 +23,7 @@ export namespace Settings {
     language: Languages;
     accent_scheme: AccentScheme;
     intro_finised: boolean;
+    eruda_console_enabled: boolean;
     __ace_settings_enabled: boolean;
     __ace_settings_show_gutter: boolean;
     __ace_settings_highlight_active_line: boolean;
@@ -109,6 +110,7 @@ export const INITIAL_SETTINGS: Settings.Root = {
   language: languages_map[0],
   accent_scheme: accent_colors[0],
   intro_finised: false,
+  eruda_console_enabled: false,
   __ace_settings_enabled: false,
   __ace_settings_show_gutter: true,
   __ace_settings_highlight_active_line: true,

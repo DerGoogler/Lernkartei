@@ -158,6 +158,20 @@ function SettingsActivity() {
         >
           <StyledListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
         </ListItemButton>
+
+        <ListItemButton>
+          <StyledListItemText id="switch-list-label-wifi" primary="Console" secondary="Useful for bugs" />
+          <Switch
+            edge="end"
+            onChange={(e) => {
+              setSettings({ eruda_console_enabled: e.target.checked });
+            }}
+            checked={settings.eruda_console_enabled}
+            inputProps={{
+              "aria-labelledby": "beta-editor",
+            }}
+          />
+        </ListItemButton>
       </List>
 
       <Divider />
