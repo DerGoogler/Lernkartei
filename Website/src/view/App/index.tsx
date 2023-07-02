@@ -69,7 +69,6 @@ export function App() {
         )}
 
         <Searchbar placeholder={strings.search_groups} onChange={(e) => setSearch(e.target.value)} />
-
         <For
           each={filteredGroups}
           fallback={() => (

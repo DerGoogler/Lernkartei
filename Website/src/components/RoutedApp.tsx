@@ -21,6 +21,9 @@ import { useSettings } from "@Hooks/useSettings";
 import React from "react";
 import { ErrorBoundary } from "./ErrorBoundary";
 import eruda from "eruda";
+import { StyledSection } from "./StyledSection";
+import { Button } from "@mui/material";
+import SettingsActivity from "./../view/SettingsActivity";
 
 const RoutedApp = (): JSX.Element => {
   const { settings } = useSettings();
@@ -34,17 +37,6 @@ const RoutedApp = (): JSX.Element => {
   const showSplitter = () => {
     setIsSplitterOpen(true);
   };
-
-  useEffect(() => {
-    if (settings.eruda_console_enabled) {
-      let el = document.createElement("div");
-      document.body.appendChild(el);
-      eruda.init({
-        container: el,
-        tool: ["console", "elements"],
-      });
-    }
-  }, [settings.eruda_console_enabled]);
 
   const ignoreThat = RouterUtil.init([
     {
@@ -134,11 +126,13 @@ const RoutedApp = (): JSX.Element => {
     const props = route.props || {};
     const newProps = obj.omit(["extra", "context"], props);
     return (
-      <Extra.Provider key={props.key + "_extra"} value={props.extra}>
-        <Context.Provider key={props.key + "_context"} value={props.context}>
-          <route.component {...newProps} />
-        </Context.Provider>
-      </Extra.Provider>
+      <ErrorBoundary fallback={fallback}>
+        <Extra.Provider key={props.key + "_extra"} value={props.extra}>
+          <Context.Provider key={props.key + "_context"} value={props.context}>
+            <route.component {...newProps} />
+          </Context.Provider>
+        </Extra.Provider>
+      </ErrorBoundary>
     );
   };
 
@@ -157,62 +151,81 @@ const RoutedApp = (): JSX.Element => {
     );
   };
 
-  return (
-    <ErrorBoundary
-      fallback={(err, errInf) => {
-        return (
-          <Page
-            renderToolbar={() => {
-              return (
-                <Toolbar modifier="noshadow">
-                  <div className="center">We hit a brick!</div>
-                </Toolbar>
-              );
-            }}
-          >
-            <Card>{err.message}</Card>
-            <pre
-              style={{
-                backgroundColor: "#f6f8fa",
-                borderRadius: 6,
-                lineHeight: 1.45,
-                overflow: "auto",
-                padding: 16,
-                margin: 16,
-              }}
-            >
-              <code>{errInf.componentStack}</code>
-            </pre>
-          </Page>
-        );
-      }}
-    >
-      <Page>
-        <Splitter>
-          <SplitterSide
-            side="left"
-            width={250}
-            collapse={true}
-            swipeable={false}
-            isOpen={isSplitterOpen}
-            onClose={hideSplitter}
-            onOpen={showSplitter}
-          >
-            <Drawer renderToolbar={renderSpliterToolbar} hideSplitter={hideSplitter} pushPage={pushPage} />
-          </SplitterSide>
-          <SplitterContent>
-            <RouterNavigator
-              swipeable={true}
-              swipePop={(options: any) => popPage(options)}
-              routeConfig={routeConfig}
-              renderPage={renderPage}
-              onPostPush={() => onPostPush()}
-              onPostPop={() => onPostPop()}
-            />
-          </SplitterContent>
-        </Splitter>
+  const fallback = (error: Error, errorInfo: React.ErrorInfo, resetErrorBoundary) => {
+    const style = {
+      backgroundColor: "#ebeced",
+      borderRadius: 6,
+      lineHeight: 1.45,
+      overflow: "auto",
+      padding: 16,
+    };
+
+    const handleOpenSettings = () => {
+      pushPage({
+        component: SettingsActivity,
+        props: {
+          key: "settings",
+          extra: {},
+        },
+      });
+    };
+
+    return (
+      <Page
+        renderToolbar={() => {
+          return (
+            <Toolbar modifier="noshadow">
+              <div className="center">We hit a brick!</div>
+            </Toolbar>
+          );
+        }}
+      >
+        <StyledSection>
+          <pre style={style}>
+            <span>{error.message}</span>
+          </pre>
+
+          <Button fullWidth variant="contained" disableElevation onClick={resetErrorBoundary}>
+            Try again
+          </Button>
+          <Button style={{ marginTop: 16 }} fullWidth variant="contained" disableElevation onClick={handleOpenSettings}>
+            Open settings
+          </Button>
+
+          <pre style={style}>
+            <code>{errorInfo.componentStack}</code>
+          </pre>
+        </StyledSection>
       </Page>
-    </ErrorBoundary>
+    );
+  };
+
+  return (
+    <Page>
+      <Splitter>
+        <SplitterSide
+          side="left"
+          width={250}
+          collapse={true}
+          swipeable={false}
+          isOpen={isSplitterOpen}
+          onClose={hideSplitter}
+          onOpen={showSplitter}
+        >
+          <Drawer renderToolbar={renderSpliterToolbar} hideSplitter={hideSplitter} pushPage={pushPage} />
+        </SplitterSide>
+        <SplitterContent>
+          <RouterNavigator
+            swipeable={true}
+            swipePop={(options: any) => popPage(options)}
+            routeConfig={routeConfig}
+            renderPage={renderPage}
+            onPostPush={() => onPostPush()}
+            onPostPop={() => onPostPop()}
+          />
+        </SplitterContent>
+      </Splitter>
+    </Page>
   );
 };
 

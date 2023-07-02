@@ -1,6 +1,5 @@
 import React from "react";
 import ons from "onsenui";
-import { dom, rct } from "googlers-tools";
 
 // Styles
 import "onsenui/css/onsenui.css";
@@ -18,21 +17,23 @@ ons.platform.select("android");
 
 ons.ready(() => {
   render(
-    <React.StrictMode>
-      <Preventer prevent="contextmenu">
+    <>
+      <React.StrictMode>
         <SettingsProvider>
-          <StringProvider>
-            <KarteiProvider>
-              <ConfirmProvider>
-                <CssBaseline />
-                <LightTheme />
-                <RoutedApp />
-              </ConfirmProvider>
-            </KarteiProvider>
-          </StringProvider>
+          <Preventer prevent="contextmenu">
+            <StringProvider>
+              <KarteiProvider>
+                <ConfirmProvider>
+                  <CssBaseline />
+                  <LightTheme />
+                  <RoutedApp />
+                </ConfirmProvider>
+              </KarteiProvider>
+            </StringProvider>
+          </Preventer>
         </SettingsProvider>
-      </Preventer>
-    </React.StrictMode>,
+      </React.StrictMode>
+    </>,
     "app"
   );
 });
