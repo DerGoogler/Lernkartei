@@ -9,7 +9,7 @@ import { useStrings } from "../../hooks/useStrings";
 import { os } from "../../native/Os";
 import { Group } from "./components/Group";
 
-function GroupsActivity() {
+function GroupsDownloadActivity() {
   const { context, extra } = useActivity();
   const { strings } = useStrings();
   const { cards, actions } = useKartei();
@@ -53,8 +53,8 @@ function GroupsActivity() {
                   </ListSubheader>
                 }
               >
-                {group.sets.map((set) => (
-                  <Group cards={cards} actions={actions} set={set} />
+                {group.sets.map((set, index) => (
+                  <Group key={String(set.name + index * 5)} cards={cards} actions={actions} set={set} />
                 ))}
               </List>
               <Divider />
@@ -66,4 +66,4 @@ function GroupsActivity() {
   );
 }
 
-export { GroupsActivity };
+export { GroupsDownloadActivity };

@@ -2,7 +2,7 @@ import { useTheme } from "@Hooks/useSettings";
 import { styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import { os } from "../../native/Os";
-import { GroupsActivity } from "../../view/GroupsActivity";
+import { GroupsDownloadActivity } from "../../view/GroupsDownloadActivity";
 import SettingsActivity from "../../view/SettingsActivity";
 import { Icon } from "@Components/Icon";
 import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
@@ -88,9 +88,10 @@ export function Open(props: any) {
               });
               break;
 
+            case "groupsdownload":
             case "groups":
               context.pushPage<{}>({
-                component: GroupsActivity,
+                component: GroupsDownloadActivity,
                 props: {
                   key: "sets",
                   extra: {},

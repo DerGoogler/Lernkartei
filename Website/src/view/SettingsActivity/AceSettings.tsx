@@ -1,25 +1,11 @@
-import { ListHeader, Page, Toolbar } from "react-onsenui";
-import { File } from "../../native/File";
-import { os } from "../../native/Os";
+import { Page, Toolbar } from "react-onsenui";
 import { useTheme } from "@mui/system";
 import { useSettings } from "../../hooks/useSettings";
-import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
-import { useConfirm } from "material-ui-confirm";
 import { useActivity } from "../../hooks/useActivity";
-import Material3 from "../../components/Material3";
-import { useKartei } from "../../hooks/useKartei";
 import { BackButton } from "../../components/BackButton";
 import { useStrings } from "../../hooks/useStrings";
-
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
-import { Divider, List, ListItem, ListItemButton, ListItemText, ListSubheader, Switch } from "@mui/material";
+import { List, ListItem, ListSubheader, Switch } from "@mui/material";
 import { StyledListItemText } from "./components/StyledListItemText";
-import { BuildConfig } from "@Native/BuildConfig";
-import { ImportGroupsItem } from "./components/ImportGroupsItem";
-import { ImportSingleGroupsItem } from "./components/ImportSingleGroupsItem";
-import { useNativeStorage } from "@Hooks/useNativeStorage";
 
 function AceSettings() {
   const { context } = useActivity();

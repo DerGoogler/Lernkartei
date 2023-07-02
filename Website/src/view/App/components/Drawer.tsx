@@ -2,7 +2,7 @@ import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
 import { useStrings } from "../../../hooks/useStrings";
 // import Acknowledgements from "../../Acknowledgements";
-import { GroupsActivity } from "../../GroupsActivity";
+import { GroupsDownloadActivity } from "../../GroupsDownloadActivity";
 import SettingsActivity from "../../SettingsActivity";
 import { StyledListItemText } from "../../SettingsActivity/components/StyledListItemText";
 import LicenseActivity from "./../../LicenseActivity";
@@ -42,7 +42,7 @@ export const Drawer = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: GroupsActivity,
+              component: GroupsDownloadActivity,
               props: {
                 key: "sets",
                 extra: {},

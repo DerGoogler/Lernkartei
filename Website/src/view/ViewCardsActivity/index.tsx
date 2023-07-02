@@ -30,9 +30,7 @@ export function ViewCardActivity() {
   const [search, setSearch] = useState("");
 
   const { index, group, title, desc, readonly } = extra;
-
-  const karten = cards[index].karten;
-  const filteredCards = karten.filter((card) => card.shortDescription.toLowerCase().includes(search.toLowerCase()));
+  const filteredCards = actions.filterCards(index, search);
 
   let [page, setPage] = useState(1);
   const PER_PAGE = 20;
@@ -118,8 +116,6 @@ export function ViewCardActivity() {
               variant="outlined"
               shape="rounded"
               onChange={handleChange}
-              showFirstButton
-              showLastButton
             />
           </Stack>
           <For

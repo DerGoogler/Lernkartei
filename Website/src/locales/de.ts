@@ -14,6 +14,7 @@ export const DE_Locale = {
   new_group: "Neue Gruppe",
   group: "Gruppe",
   groups: "Gruppen",
+  search_groups: "Gruppen suchen ...",
   group_exist: "Diese Gruppe is bereits vorhanden.",
   group_saved: 'Deine Gruppe "{name}" wurde gespeichert.',
   group_downloaded: 'Erfolgreich "{name}" heruntergeladen',

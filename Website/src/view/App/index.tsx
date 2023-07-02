@@ -12,11 +12,16 @@ import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
 import { Alert, AlertTitle, Box } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
+import { useState } from "react";
+import { Searchbar } from "@Components/Searchbar";
 
 export function App() {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { cards, actions } = useKartei();
+  const [search, setSearch] = useState("");
+
+  const filteredGroups = actions.filterGroups(search);
 
   const renderToolbar = () => {
     return (
@@ -63,8 +68,10 @@ export function App() {
           </Alert>
         )}
 
+        <Searchbar placeholder={strings.search_groups} onChange={(e) => setSearch(e.target.value)} />
+
         <For
-          each={cards}
+          each={filteredGroups}
           fallback={() => (
             <Box
               component="h4"

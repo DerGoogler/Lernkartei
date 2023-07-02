@@ -1,4 +1,4 @@
-import Markdown from "markdown-to-jsx";
+import Markdown, { MarkdownToJSX } from "markdown-to-jsx";
 import Anchor, { Open } from "../dapi/Anchor";
 import Video from "../dapi/Video";
 import Audio from "../dapi/Audio";
@@ -20,13 +20,75 @@ type Props = {
   styleMd?: React.CSSProperties;
 };
 
-export const Markup = React.forwardRef((props: Props, ref) => {
-  const StyledDivider = styled(Divider)({
-    "h1, & h2, & h3, & h4, & h5, & h6": {
-      border: "none",
-    },
-  });
+const StyledDivider = styled(Divider)({
+  "h1, & h2, & h3, & h4, & h5, & h6": {
+    border: "none",
+  },
+});
 
+export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
+  a: {
+    component: Anchor,
+  },
+  open: {
+    component: Open,
+  },
+  img: {
+    component: Image,
+  },
+  imgwithcap: {
+    component: ImageWithCaption,
+  },
+  video: {
+    component: Video,
+  },
+  divider: {
+    component: StyledDivider,
+  },
+  grid: {
+    component: Grid,
+  },
+  chip: {
+    component: Chip,
+  },
+  paper: {
+    component: Paper,
+  },
+  box: {
+    component: Box,
+  },
+  container: {
+    component: Container,
+  },
+  stack: {
+    component: Stack,
+  },
+  icon: {
+    component: (props: { i: string }) => {
+      return <Icon {...props}>{props.i}</Icon>;
+    },
+  },
+  typography: {
+    component: Typography,
+  },
+  audio: {
+    component: Audio,
+  },
+  checkmark: {
+    component: Checkmark,
+  },
+  dangermark: {
+    component: Dangermark,
+  },
+  warnmark: {
+    component: Warnmark,
+  },
+  require: {
+    component: Require,
+  },
+};
+
+export const Markup = React.forwardRef((props: Props, ref) => {
   const StyledAlert = styled(Alert)((props) => ({
     marginTop: 4,
     marginBottom: 4,
@@ -40,67 +102,7 @@ export const Markup = React.forwardRef((props: Props, ref) => {
       <Markdown
         style={props.styleMd}
         options={{
-          overrides: {
-            a: {
-              component: Anchor,
-            },
-            open: {
-              component: Open,
-            },
-            img: {
-              component: Image,
-            },
-            imgwithcap: {
-              component: ImageWithCaption,
-            },
-            video: {
-              component: Video,
-            },
-            divider: {
-              component: StyledDivider,
-            },
-            grid: {
-              component: Grid,
-            },
-            chip: {
-              component: Chip,
-            },
-            paper: {
-              component: Paper,
-            },
-            box: {
-              component: Box,
-            },
-            container: {
-              component: Container,
-            },
-            stack: {
-              component: Stack,
-            },
-            icon: {
-              component: (props: { i: string }) => {
-                return <Icon {...props}>{props.i}</Icon>;
-              },
-            },
-            typography: {
-              component: Typography,
-            },
-            audio: {
-              component: Audio,
-            },
-            checkmark: {
-              component: Checkmark,
-            },
-            dangermark: {
-              component: Dangermark,
-            },
-            warnmark: {
-              component: Warnmark,
-            },
-            require: {
-              component: Require,
-            },
-          },
+          overrides: MarkdownOverrides,
         }}
         children={props.children}
       />

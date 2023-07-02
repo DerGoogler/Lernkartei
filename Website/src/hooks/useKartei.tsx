@@ -1,7 +1,20 @@
 import React, { SetStateAction } from "react";
 import { useNativeStorage } from "./useNativeStorage";
 
-const KarteiContext = React.createContext({
+interface KarteiContext {
+  cards: Kartei[];
+  setCards: (state: SetStateAction<Kartei[]>) => void;
+  actions: {
+    addGroup: (data: AddGroupsData) => void;
+    addKarte: (data: AddKarteData) => void;
+    removeKarte: (data: RemoveKarteData) => void;
+    removeGroup: (data: RemoveGroupData) => void;
+    filterGroups: (value: string) => Kartei[];
+    filterCards: (index: number, value: string) => Karten[];
+  };
+}
+
+const KarteiContext = React.createContext<KarteiContext>({
   cards: {} as Kartei[],
   setCards: (state: SetStateAction<Kartei[]>) => {},
   actions: {
@@ -9,6 +22,10 @@ const KarteiContext = React.createContext({
     addKarte: (data: AddKarteData) => {},
     removeKarte: (data: RemoveKarteData) => {},
     removeGroup: (data: RemoveGroupData) => {},
+    // @ts-ignore
+    filterGroups: (value: string): Kartei[] => {},
+    // @ts-ignore
+    filterCards: (index: number, value: string): Karten[] => {},
   },
 });
 
@@ -80,8 +97,23 @@ export const KarteiProvider = (props: KarteiProviderProps) => {
     });
   };
 
+  const filterGroups = (value: string) => {
+    return cards.filter(
+      (group) =>
+        group.name.toLowerCase().includes(value.toLowerCase()) ||
+        group.group.toLowerCase().includes(value.toLowerCase()) ||
+        group.description.toLowerCase().includes(value.toLowerCase())
+    );
+  };
+
+  const filterCards = (index: number, value: string) => {
+    return cards[index].karten.filter((card) => card.shortDescription.toLowerCase().includes(value.toLowerCase()));
+  };
+
   return (
-    <KarteiContext.Provider value={{ cards, setCards, actions: { addGroup, addKarte, removeKarte, removeGroup } }}>
+    <KarteiContext.Provider
+      value={{ cards, setCards, actions: { addGroup, addKarte, removeKarte, removeGroup, filterGroups, filterCards } }}
+    >
       {props.children}
     </KarteiContext.Provider>
   );

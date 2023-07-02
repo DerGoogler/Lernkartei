@@ -1,10 +1,7 @@
 import { CloseRounded } from "@mui/icons-material";
-import { Component, useState } from "react";
+import { useState } from "react";
 import {
   Card,
-  List,
-  ListHeader,
-  ListItem,
   Page,
   RouterNavigator,
   RouterUtil,
@@ -15,12 +12,10 @@ import {
   ToolbarButton,
 } from "react-onsenui";
 import { App } from "../view/App";
-import { os } from "../native/Os";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
 import { Context, Extra } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
-import { useNativeStorage } from "../hooks/useNativeStorage";
 import { Drawer } from "../view/App/components/Drawer";
 import { useSettings } from "@Hooks/useSettings";
 import React from "react";

@@ -11,6 +11,7 @@ function Image(props: Props) {
   const { src, shadow, ...rest } = props;
 
   const StyledImage = styled("img")(({ theme }) => ({
+    width: "100%",
     borderRadius: theme.shape.borderRadius,
     boxShadow: theme.shadows[util.typeCheck<any>(shadow, "0")],
   }));
@@ -48,8 +49,8 @@ function ImageWithCaption(props: Props) {
     <StyledDiv {...rest}>
       <img src={src} alt={title} style={{ width: "100%" }} />
       <div>
-        <h3 style={{ margin: 0 }}>{title}</h3>
-        <p>{caption}</p>
+        {title && <h3 style={{ margin: 0 }}>{title}</h3>}
+        {caption && <p>{caption}</p>}
       </div>
     </StyledDiv>
   );
