@@ -4,19 +4,10 @@ import { DE_Locale } from "../locales/de";
 import { useNativeStorage } from "./useNativeStorage";
 import { EN_Locale } from "../locales/en";
 import { useSettings } from "./useSettings";
-
-const std = new LocalizedStrings(
-  {
-    de: DE_Locale,
-    en: EN_Locale,
-  },
-  {
-    /* options */
-  }
-);
+import { languages } from "./../locales/languages";
 
 const Strings = React.createContext({
-  strings: std,
+  strings: languages,
   language: "de",
 });
 
@@ -27,12 +18,12 @@ export type StringProviderProps = {
 export const StringProvider = (props: StringProviderProps) => {
   const { settings } = useSettings();
 
-  std.setLanguage(settings.language);
+  languages.setLanguage(settings.language.value);
   return (
     <Strings.Provider
       value={{
-        strings: std,
-        language: settings.language,
+        strings: languages,
+        language: settings.language.value,
       }}
       children={props.children}
     />

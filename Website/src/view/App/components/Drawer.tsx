@@ -85,7 +85,7 @@ export const Drawer = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary="License" />
+          <StyledListItemText primary={strings.license} />
         </ListItemButton>
       </List>
       <Divider />

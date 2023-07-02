@@ -99,7 +99,9 @@ export function App() {
             </Box>
           )}
         >
-          {(card, index) => <GroupCard card={card} index={index} actions={actions} />}
+          {(card, index) => (
+            <GroupCard key={String(card.name + index * 5)} card={card} index={index} actions={actions} />
+          )}
         </For>
       </StyledSection>
     </Page>

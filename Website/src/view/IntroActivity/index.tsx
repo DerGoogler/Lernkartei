@@ -2,10 +2,7 @@ import { Done } from "@mui/icons-material";
 import * as React from "react";
 import { Carousel, CarouselItem, Page, Toolbar } from "react-onsenui";
 import { App } from "../App";
-import { Icon } from "../../components/Icon";
-import { os } from "../../native/Os";
 import { useActivity } from "../../hooks/useActivity";
-import { useNativeStorage } from "../../hooks/useNativeStorage";
 import { useSettings, useTheme } from "../../hooks/useSettings";
 import { Phones } from "./components/Phones";
 import { ToolbarButton } from "@Components/ToolbarButton";
@@ -50,8 +47,6 @@ function IntroActivity() {
   ]);
 
   const { setSettings } = useSettings();
-
-  context.onBackPressed(() => os.close());
 
   const handleChange = (e: any) => {
     setIndex(e.activeIndex);

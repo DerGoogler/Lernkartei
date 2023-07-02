@@ -2,16 +2,12 @@ import { Page, Toolbar } from "react-onsenui";
 import { File } from "../../native/File";
 import { os } from "../../native/Os";
 import { useTheme } from "@mui/system";
-import { useSettings } from "../../hooks/useSettings";
-import { AccentColorPickerItem } from "./components/AccentColorPickerItem";
+import { accent_colors, useSettings } from "../../hooks/useSettings";
 import { useActivity } from "../../hooks/useActivity";
 import { useKartei } from "../../hooks/useKartei";
 import { BackButton } from "../../components/BackButton";
 import { useStrings } from "../../hooks/useStrings";
 import SettingsIcon from "@mui/icons-material/Settings";
-
-import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListSubheader, Switch } from "@mui/material";
 import { StyledListItemText } from "./components/StyledListItemText";
 import { BuildConfig } from "@Native/BuildConfig";
@@ -19,6 +15,8 @@ import { ImportGroupsItem } from "./components/ImportGroupsItem";
 import { ImportSingleGroupsItem } from "./components/ImportSingleGroupsItem";
 import { Icon } from "@Components/Icon";
 import AceSettings from "./AceSettings";
+import { PickerItem } from "./components/PickerItem";
+import { languages_map } from "./../../locales/languages";
 
 function SettingsActivity() {
   const { context } = useActivity();
@@ -67,27 +65,13 @@ function SettingsActivity() {
             }}
           />
         </ListItem>
-        <AccentColorPickerItem />
-        <ListItem>
-          <StyledListItemText id="sts-language" primary={strings.language} />
-          <FormControl>
-            <NativeSelect
-              variant="outlined"
-              defaultValue={settings.language}
-              inputProps={{
-                name: "lang",
-                "aria-labelledby": "sts-language",
-              }}
-              onChange={(e) => {
-                setSettings({ language: e.target.value });
-                // setLanguage(e.target.value);
-              }}
-            >
-              <option value="de">German</option>
-              <option value="en">English</option>
-            </NativeSelect>
-          </FormControl>
-        </ListItem>
+        <PickerItem
+          id="accent-color"
+          targetSetting="accent_scheme"
+          title={strings.accent_colors}
+          contentMap={accent_colors}
+        />
+        <PickerItem id="language" targetSetting="language" title={strings.language} contentMap={languages_map} />
       </List>
       <Divider />
       <List

@@ -33,9 +33,11 @@ export const EN_Locale = {
     sub_title: "Design does not match always the current.",
   },
   accent_colors: "Accent color",
+  accent_colors_select: "Select accent color",
   "karten/groups": "Cards / Groups",
   development: "Development",
   language: "Language",
+  language_select: "Select language",
   appierence: "Appierence",
 
   // Others
@@ -51,6 +53,7 @@ export const EN_Locale = {
   continue: "Continue",
   cancel: "Cancel",
   choose_file: "Choose a file",
+  license: "License",
 
   // Import / Export
   import_description:

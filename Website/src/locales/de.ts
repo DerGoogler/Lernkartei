@@ -33,9 +33,12 @@ export const DE_Locale = {
     sub_title: "Design könnte nicht auf dem neusten Stand sein",
   },
   accent_colors: "Akzentfarbe",
+  accent_colors_select: "Akzentfarbe auswählen",
   "karten/groups": "Karten / Gruppen",
   development: "Entwicklung",
   language: "Sprache",
+  language_select: "Sprache auswählen",
+  appierence: "Erscheinung",
 
   // Others
   noUmlauts: "Bitte achte darauf, dass keine Leerzeichen Umlaute oder bindestriche verwendet werden",
@@ -50,7 +53,7 @@ export const DE_Locale = {
   continue: "Fortfahren",
   cancel: "Abbrechen",
   choose_file: "Datei auswählen",
-  appierence: "Erscheinung",
+  license: "Lizenz",
 
   // Import / Export
   import_description:

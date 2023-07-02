@@ -5,14 +5,13 @@ import { os } from "../native/Os";
 import { SetValue, useNativeStorage } from "./useNativeStorage";
 import { UI } from "@Native/components/UI";
 import { defaultComposer } from "default-composer";
+import { Languages, languages_map } from "./../locales/languages";
 
 export namespace Settings {
   export interface Context {
     settings: Root;
     setSettings: (state: Partial<Settings.Root>) => void;
   }
-
-  export type Languages = "de" | "en";
 
   export type AccentScheme = {
     name: string;
@@ -21,7 +20,7 @@ export namespace Settings {
 
   export interface Root {
     darkmode: boolean;
-    language: Languages | string;
+    language: Languages;
     accent_scheme: AccentScheme;
     intro_finised: boolean;
     __ace_settings_enabled: boolean;
@@ -107,7 +106,7 @@ export const accent_colors: Settings.AccentScheme[] = [
 
 export const INITIAL_SETTINGS: Settings.Root = {
   darkmode: false,
-  language: "de",
+  language: languages_map[0],
   accent_scheme: accent_colors[0],
   intro_finised: false,
   __ace_settings_enabled: false,
@@ -224,18 +223,3 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
     </ThemeProvider>
   );
 };
-
-function deepAssign(target, ...sources) {
-  for (const source of sources) {
-    for (let k in source) {
-      let vs = source[k],
-        vt = target[k];
-      if (Object(vs) == vs && Object(vt) === vt) {
-        target[k] = deepAssign(vt, vs);
-        continue;
-      }
-      target[k] = source[k];
-    }
-  }
-  return target;
-}

@@ -160,7 +160,9 @@ export function ViewCardActivity() {
               <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>
             )}
           >
-            {(card, index) => <CardKarte actions={actions} card={card} index={index} />}
+            {(card, index) => (
+              <CardKarte key={String(card.shortDescription + index * 5)} actions={actions} card={card} index={index} />
+            )}
           </For>
         </StyledSection>
       </Page>

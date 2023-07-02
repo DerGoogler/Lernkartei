@@ -8,25 +8,78 @@ import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import React from "react";
 
+import { ListItemButton } from "@mui/material";
+import { useSettings } from "../../../hooks/useSettings";
+import { useStrings } from "../../../hooks/useStrings";
+import { StyledListItemText } from "./StyledListItemText";
+import { languages_map } from "../../../locales/languages";
+
+type ContentMap = {
+  name: string;
+  value: string;
+};
+
+interface PickerItemProps {
+  id: string;
+  contentMap: ContentMap[];
+  targetSetting: string;
+  title: string;
+}
+
+/**
+ * Remembers! The first item in the array will be the default.
+ * @param props
+ * @returns
+ */
+export function PickerItem(props: PickerItemProps) {
+  const [open, setOpen] = React.useState(false);
+  const { settings, setSettings } = useSettings();
+  const [value, setValue] = React.useState<ContentMap>(settings[props.targetSetting]);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (val: any) => {
+    setOpen(false);
+
+    if (val.name && val.value) {
+      setValue(val);
+      setSettings({ [props.targetSetting]: val });
+    }
+  };
+
+  return (
+    <>
+      <ListItemButton onClick={handleOpen}>
+        <StyledListItemText primary={props.title} secondary={settings[props.targetSetting].name} />
+      </ListItemButton>
+      <ConfirmationDialogRaw
+        id={props.id}
+        title={props.title}
+        keepMounted
+        open={open}
+        contentMap={props.contentMap}
+        onClose={handleClose}
+        value={value}
+      />
+    </>
+  );
+}
+
 export interface ConfirmationDialogRawProps {
   id: string;
   keepMounted: boolean;
   title: string;
-  value: {
-    name: string;
-    value: string;
-  };
+  value: ContentMap;
   open: boolean;
-  contentMap: Array<{
-    name: string;
-    value: string;
-  }>;
-  onClose: (val: { name: string; value: string } | null) => void;
+  contentMap: ContentMap[];
+  onClose: (val: ContentMap | null) => void;
 }
 
 export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
   const { onClose, value: valueProp, open, ...other } = props;
-  const [value, setValue] = React.useState(valueProp);
+  const [value, setValue] = React.useState<ContentMap>(valueProp);
   const radioGroupRef = React.useRef<HTMLElement>(null);
 
   React.useEffect(() => {
@@ -72,10 +125,10 @@ export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
         >
           {props.contentMap.map((option) => (
             <FormControlLabel
-              checked={option.value === value.value}
+              // checked={option.value === value.value}
               value={JSON.stringify({ name: option.name, value: option.value })}
               key={option.value}
-              control={<Radio />}
+              control={<Radio checked={option.value === value.value} />}
               label={option.name}
             />
           ))}
