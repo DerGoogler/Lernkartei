@@ -12,7 +12,7 @@ const StyledAnchor = styled("div")(({ theme }) => {
   const { scheme } = useTheme();
   const s = {
     cursor: "pointer",
-    color: scheme[900],
+    color: scheme[300],
     display: "flex",
     alignItems: "center",
     // "& abbr[title]": {
@@ -34,7 +34,7 @@ const StyledAnchor = styled("div")(({ theme }) => {
 function Anchor(props: JSX.IntrinsicElements["a"]) {
   const { href, children, ...rest } = props;
 
-  const { theme } = useTheme();
+  const { theme, scheme } = useTheme();
 
   return (
     <StyledAnchor>

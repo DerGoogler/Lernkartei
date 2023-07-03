@@ -7,6 +7,7 @@ import { os } from "@Native/Os";
 import { useEffect, useState } from "react";
 import { useFetch } from "usehooks-ts";
 import { StyledListItemText } from "../../SettingsActivity/components/StyledListItemText";
+import { Icon } from "@Components/Icon";
 
 interface Props {
   set: KarteiSet;
@@ -53,7 +54,7 @@ export const Group = ({ set, cards, actions }: Props) => {
   return (
     <ListItemButton onClick={setDownloader}>
       <StyledListItemText primary={set.name} secondary={set.desc} />
-      {isDownloaded ? <FileDownloadDoneIcon /> : <DownloadRounded />}
+      {isDownloaded ? <Icon keepLight icon={FileDownloadDoneIcon} /> : <Icon keepLight icon={DownloadRounded} />}
     </ListItemButton>
   );
 };

@@ -75,7 +75,7 @@ export function App() {
             <Box
               component="h4"
               sx={(theme) => ({
-                color: theme.palette.secondary.dark,
+                color: theme.palette.secondary.light,
                 position: "absolute",
                 left: "50%",
                 top: "50%",

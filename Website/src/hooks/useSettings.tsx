@@ -189,17 +189,18 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
           mode: "dark",
           primary: {
             light: shadeColor(colors[settings.accent_scheme.value][300], -10),
-            main: shadeColor(colors[settings.accent_scheme.value][900], -40),
-            // dark: colors[scheme.value][800],
+            main: shadeColor(colors[settings.accent_scheme.value][900], -29),
+            // dark: shadeColor(colors[settings.accent_scheme.value][800], -40),
           },
           background: {
             default: shadeColor(colors[settings.accent_scheme.value][900], -75),
           },
-          divider: shadeColor(colors[settings.accent_scheme.value][900], -85),
+          divider: shadeColor(colors[settings.accent_scheme.value][900], -55),
+          // divider: colors[settings.accent_scheme.value][900],
           secondary: {
             main: "#e5e8ec",
-            light: shadeColor(colors[settings.accent_scheme.value][900], -80),
-            dark: shadeColor(colors[settings.accent_scheme.value][800], -60),
+            light: shadeColor(colors[settings.accent_scheme.value][900], -50),
+            dark: shadeColor(colors[settings.accent_scheme.value][800], -70),
           },
         },
   });

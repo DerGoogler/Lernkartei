@@ -7,6 +7,7 @@ import { useSettings, useTheme } from "../../hooks/useSettings";
 import { Phones } from "./components/Phones";
 import { ToolbarButton } from "@Components/ToolbarButton";
 import { UI } from "@Native/components/UI";
+import { os } from "@Native/Os";
 
 function IntroActivity() {
   const { context, extra } = useActivity();
@@ -23,9 +24,9 @@ function IntroActivity() {
       text: (
         <div>
           <span style={{ position: "relative", zIndex: 9 }}>
-            Willkommen! In dieser App hast Du die Möglichkeit, diverse Themen in Gruppen als "Kartei" zu speichern. Du
-            kannst deine Gruppen und Karten jederzeit bearbeiten. Du solltest jedoch beachten, dass die Löschung der App
-            oder das leeren des Web-Speichers all deine Karten und Gruppen verloren gehen können.
+            In dieser App hast Du die Möglichkeit, diverse Themen in Gruppen als "Kartei" zu speichern. Du kannst deine
+            Gruppen und Karten jederzeit bearbeiten. Du solltest jedoch beachten, dass die Löschung der App (oder das
+            leeren des Web-Speichers) all deine Gruppen und Karten verloren gehen können.
           </span>
           <_1 style={{ zIndex: 1 }} />
         </div>
@@ -36,8 +37,8 @@ function IntroActivity() {
       text: (
         <div>
           <span style={{ position: "relative", zIndex: 9 }}>
-            Deine Gruppen und Karten werden in einer sogenannten JSON-Datei gespeichert (In Google findest Du mehr
-            drueber). Diese Datei wird wichtig sein, denn sie beinhaltet all deine Gruppen und Karten.
+            Deine Gruppen und Karten werden in einem sogenannten "JSON Format" gespeichert. Diese Datei wird wichtig
+            sein, denn sie beinhaltet all deine Gruppen und Karten.
           </span>
           <_2 />
         </div>
