@@ -1,3 +1,4 @@
+import React from "react";
 import { Page, Toolbar } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
@@ -12,16 +13,15 @@ import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
 import { Alert, AlertTitle, Box } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
-import { useState } from "react";
 import { Searchbar } from "@Components/Searchbar";
 
 export function App() {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { cards, actions } = useKartei();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = React.useState("");
 
-  const filteredGroups = actions.filterGroups(search);
+  const filteredGroups = React.useMemo(() => actions.filterGroups(search), [cards, search]);
 
   const renderToolbar = () => {
     return (

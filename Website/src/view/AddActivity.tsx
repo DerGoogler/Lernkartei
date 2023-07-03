@@ -84,12 +84,13 @@ function AddActivity() {
   const handleEdit = () => {
     const { index } = extra;
 
-    setCards((groups) => {
-      groups[index].name = name;
-      groups[index].description = description;
-      return groups;
+    actions.editGroup(index, {
+      name: name,
+      description: description,
+      callback() {
+        context.popPage();
+      },
     });
-    context.popPage();
   };
 
   return (

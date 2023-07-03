@@ -1,8 +1,4 @@
-import React, { SetStateAction } from "react";
-import LocalizedStrings from "localized-strings";
-import { DE_Locale } from "../locales/de";
-import { useNativeStorage } from "./useNativeStorage";
-import { EN_Locale } from "../locales/en";
+import React from "react";
 import { useSettings } from "./useSettings";
 import { languages } from "./../locales/languages";
 

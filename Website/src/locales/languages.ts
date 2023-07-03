@@ -4,8 +4,8 @@ import { EN_Locale } from "./en";
 
 export const languages = new LocalizedStrings(
   {
-    de: DE_Locale,
     en: EN_Locale,
+    de: DE_Locale,
   },
   {
     /* options */
@@ -19,11 +19,11 @@ export type Languages = {
 
 export const languages_map: Languages[] = [
   {
-    name: "German",
-    value: "de",
-  },
-  {
     name: "English",
     value: "en",
+  },
+  {
+    name: "German",
+    value: "de",
   },
 ];

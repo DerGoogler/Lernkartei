@@ -6,6 +6,7 @@ interface KarteiContext {
   setCards: (state: SetStateAction<Kartei[]>) => void;
   actions: {
     addGroup: (data: AddGroupsData) => void;
+    editGroup: (index: number, data: EditGroupsData) => void;
     addKarte: (data: AddKarteData) => void;
     removeKarte: (data: RemoveKarteData) => void;
     removeGroup: (data: RemoveGroupData) => void;
@@ -19,6 +20,7 @@ const KarteiContext = React.createContext<KarteiContext>({
   setCards: (state: SetStateAction<Kartei[]>) => {},
   actions: {
     addGroup: (data: AddGroupsData) => {},
+    editGroup: (index: number, data: EditGroupsData) => {},
     addKarte: (data: AddKarteData) => {},
     removeKarte: (data: RemoveKarteData) => {},
     removeGroup: (data: RemoveGroupData) => {},
@@ -43,6 +45,13 @@ type AddGroupsData = {
   onExists?: () => void;
   callback?: () => void;
 };
+
+type EditGroupsData = {
+  name: string;
+  description: string;
+  callback?: () => void;
+};
+
 type AddKarteData = {
   index: number;
   data: Karten;
@@ -69,6 +78,15 @@ export const KarteiProvider = (props: KarteiProviderProps) => {
         tmp = [...tmp, data.data];
         if (data.callback instanceof Function) data.callback();
       }
+      return tmp;
+    });
+  };
+
+  const editGroup = (index: number, data: EditGroupsData) => {
+    setCards((tmp) => {
+      tmp[index].name = data.name;
+      tmp[index].description = data.description;
+      if (data.callback instanceof Function) data.callback();
       return tmp;
     });
   };
@@ -112,7 +130,11 @@ export const KarteiProvider = (props: KarteiProviderProps) => {
 
   return (
     <KarteiContext.Provider
-      value={{ cards, setCards, actions: { addGroup, addKarte, removeKarte, removeGroup, filterGroups, filterCards } }}
+      value={{
+        cards,
+        setCards,
+        actions: { addGroup, editGroup, addKarte, removeKarte, removeGroup, filterGroups, filterCards },
+      }}
     >
       {props.children}
     </KarteiContext.Provider>

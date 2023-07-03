@@ -20,6 +20,7 @@ import { File } from "../../native/File";
 import { For } from "@Components/For";
 import { usePagination } from "../../hooks/usePagination";
 import CardKarte from "./components/CardKarte";
+import React from "react";
 
 export function ViewCardActivity() {
   const { context, extra } = useActivity<any>();
@@ -30,12 +31,13 @@ export function ViewCardActivity() {
   const [search, setSearch] = useState("");
 
   const { index, group, title, desc, readonly } = extra;
-  const filteredCards = actions.filterCards(index, search);
 
-  let [page, setPage] = useState(1);
+  const filteredCards = React.useMemo(() => actions.filterCards(index, search), [cards, search]);
+
+  const [page, setPage] = useState(1);
+
   const PER_PAGE = 20;
-
-  const count = Math.ceil(filteredCards.length / PER_PAGE);
+  const count = React.useMemo(() => Math.ceil(filteredCards.length / PER_PAGE), [filteredCards]);
   const _DATA = usePagination(filteredCards, PER_PAGE);
 
   const handleChange = (e: any, p: any) => {
