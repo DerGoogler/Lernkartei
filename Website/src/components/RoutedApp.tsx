@@ -24,6 +24,7 @@ import eruda from "eruda";
 import { StyledSection } from "./StyledSection";
 import { Button } from "@mui/material";
 import SettingsActivity from "./../view/SettingsActivity";
+import DangerEditActivity from "./../view/DangerEditActivity";
 
 const RoutedApp = (): JSX.Element => {
   const { settings } = useSettings();
@@ -38,9 +39,20 @@ const RoutedApp = (): JSX.Element => {
     setIsSplitterOpen(true);
   };
 
+  React.useEffect(() => {
+    if (settings.eruda_console_enabled) {
+      eruda.init();
+    } else {
+      if ((window as any).eruda) {
+        eruda.destroy();
+      }
+    }
+  }, [settings.eruda_console_enabled]);
+
   const ignoreThat = RouterUtil.init([
     {
       component: settings.intro_finised ? App : IntroActivity,
+      // component: DangerEditActivity,
       props: {
         key: "main",
         context: {

@@ -3,7 +3,7 @@ import ons from "onsenui";
 import * as React from "react";
 import { Page, Toolbar } from "react-onsenui";
 import Button from "@mui/material/Button";
-import TextareaMarkdown, { Command, TextareaMarkdownRef, BUILT_IN_COMMANDS } from "textarea-markdown-editor";
+import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
 import {
   CheckRounded,
   CloseRounded,
@@ -16,6 +16,8 @@ import {
   ImageRounded,
   LinkRounded,
   WarningAmberRounded,
+  Redo,
+  Undo,
 } from "@mui/icons-material";
 import DescriptonActivity from "../DescriptonActivity";
 import { isDesktop } from "react-device-detect";
@@ -28,7 +30,7 @@ import { BackButton } from "../../components/BackButton";
 import { useStrings } from "../../hooks/useStrings";
 import { useReactToPrint } from "react-to-print";
 import { Editor } from "./components/StyledAceEditor";
-import { useNativeStorage } from "@Hooks/useNativeStorage";
+import AceEditor from "react-ace";
 import { useSettings } from "@Hooks/useSettings";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
@@ -37,71 +39,6 @@ interface CustomCommand extends Command {
   icon: React.ElementType;
   iconStyle?: React.CSSProperties;
 }
-
-const customTextareaCommands: CustomCommand[] = [
-  {
-    name: "bold",
-    icon: FormatBoldRounded,
-  },
-  {
-    name: "italic",
-    icon: FormatItalicRounded,
-  },
-  {
-    name: "strike-through",
-    icon: FormatStrikethroughRounded,
-  },
-  {
-    name: "link",
-    icon: LinkRounded,
-  },
-  {
-    name: "image",
-    icon: ImageRounded,
-  },
-  {
-    name: "unordered-list",
-    icon: FormatListBulletedRounded,
-  },
-  {
-    name: "ordered-list",
-    icon: FormatListNumberedRounded,
-  },
-  {
-    name: "block-quotes",
-    icon: FormatQuoteRounded,
-  },
-  {
-    name: "insert-checkmark",
-    icon: CheckRounded,
-    iconStyle: {
-      color: "#1a7f37",
-    },
-    handler: ({ cursor }) => {
-      cursor.insert(`${cursor.MARKER}<checkmark/>${cursor.MARKER}`);
-    },
-  },
-  {
-    name: "insert-warnmark",
-    icon: WarningAmberRounded,
-    iconStyle: {
-      color: "#d29922",
-    },
-    handler: ({ cursor }) => {
-      cursor.insert(`${cursor.MARKER}<warnmark/>${cursor.MARKER}`);
-    },
-  },
-  {
-    name: "insert-dangermark",
-    icon: CloseRounded,
-    iconStyle: {
-      color: "#cf222e",
-    },
-    handler: ({ cursor }) => {
-      cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
-    },
-  },
-];
 
 function AddCardToGroupActivity() {
   const { context, extra } = useActivity<Extra>();
@@ -116,18 +53,99 @@ function AddCardToGroupActivity() {
   const [description, setDescription] = React.useState(edit ? desc : "");
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
+  const markdownRefAdvanced = React.useRef<AceEditor>(null);
   const printRef = React.useRef<HTMLDivElement>(null);
 
-  const confirm = useConfirm();
-  // **** Experimental
-  // const handleBackButtonClick = (event?: React.MouseEvent<HTMLElement>) => {
-  //   event?.preventDefault();
-  //   confirm({
-  //     title: "Verlassen?",
-  //     description: "Bist Du dir sicher, dass Du die Bearbeitung aufgeben willst?",
-  //   }).then(() => pageTools.popPage());
-  // };
-  // os.useOnBackPressed(handleBackButtonClick);
+  const customTextareaCommands = React.useMemo(() => {
+    const aceCommands: CustomCommand[] = [
+      {
+        name: "undo",
+        icon: Undo,
+        handler: ({ cursor }) => {
+          markdownRefAdvanced.current?.editor.undo();
+        },
+      },
+      {
+        name: "redo",
+        icon: Redo,
+
+        handler: ({ cursor }) => {
+          markdownRefAdvanced.current?.editor.redo();
+        },
+      },
+    ];
+
+    const defaultCommands: CustomCommand[] = [
+      {
+        name: "bold",
+        icon: FormatBoldRounded,
+      },
+      {
+        name: "italic",
+        icon: FormatItalicRounded,
+      },
+      {
+        name: "strike-through",
+        icon: FormatStrikethroughRounded,
+      },
+      {
+        name: "link",
+        icon: LinkRounded,
+      },
+      {
+        name: "image",
+        icon: ImageRounded,
+      },
+      {
+        name: "unordered-list",
+        icon: FormatListBulletedRounded,
+      },
+      {
+        name: "ordered-list",
+        icon: FormatListNumberedRounded,
+      },
+      {
+        name: "block-quotes",
+        icon: FormatQuoteRounded,
+      },
+      {
+        name: "insert-checkmark",
+        icon: CheckRounded,
+        iconStyle: {
+          color: "#1a7f37",
+        },
+        handler: ({ cursor }) => {
+          cursor.insert(`${cursor.MARKER}<checkmark/>${cursor.MARKER}`);
+        },
+      },
+      {
+        name: "insert-warnmark",
+        icon: WarningAmberRounded,
+        iconStyle: {
+          color: "#d29922",
+        },
+        handler: ({ cursor }) => {
+          cursor.insert(`${cursor.MARKER}<warnmark/>${cursor.MARKER}`);
+        },
+      },
+      {
+        name: "insert-dangermark",
+        icon: CloseRounded,
+        iconStyle: {
+          color: "#cf222e",
+        },
+        handler: ({ cursor }) => {
+          cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
+        },
+      },
+    ];
+
+    if (settings.__ace_settings_enabled) {
+      return [...aceCommands, ...defaultCommands];
+    } else {
+      return defaultCommands;
+    }
+  }, [settings.__ace_settings_enabled]);
 
   const renderToolbar = () => {
     return (
@@ -260,6 +278,7 @@ function AddCardToGroupActivity() {
             <TextareaMarkdown.Wrapper ref={markdownRef} commands={customTextareaCommands}>
               {settings.__ace_settings_enabled ? (
                 <Editor
+                  ref={markdownRefAdvanced}
                   mode="markdown"
                   onChange={(val: string) => {
                     setDescription(val);

@@ -8,6 +8,7 @@ declare global {
     os: any;
     sharedpreferences: any;
     utils: any;
+    nativeStorage: Storage;
   }
 
   interface GlobalEventHandlersEventMap {

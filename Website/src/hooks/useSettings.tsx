@@ -1,11 +1,11 @@
-import React, { createContext, Dispatch, SetStateAction, useContext, useEffect } from "react";
+import React, { createContext, useContext } from "react";
 import { colors as kolors, Theme, useTheme as useMom, createTheme, ThemeProvider } from "@mui/material";
 import shadeColor from "../util/shadeColor";
-import { os } from "../native/Os";
-import { SetValue, useNativeStorage } from "./useNativeStorage";
 import { UI } from "@Native/components/UI";
 import { defaultComposer } from "default-composer";
 import { Languages, languages_map } from "./../locales/languages";
+import { useLocalStorage } from "usehooks-ts";
+import { useNativeStorage } from "./useNativeStorage";
 
 export namespace Settings {
   export interface Context {

@@ -3,6 +3,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/mode-json";
 import { useSettings } from "@Hooks/useSettings";
+import React from "react";
 
 type EditorProps = {
   mode: "json" | "markdown";
@@ -31,13 +32,14 @@ const StyledAceEditor = styled("div")(({ theme }) => ({
   },
 }));
 
-export const Editor = (props: EditorProps) => {
+export const Editor = React.forwardRef<AceEditor, EditorProps>((props, ref) => {
   const { settings } = useSettings();
 
   return (
     <>
       <StyledAceEditor>
         <AceEditor
+          ref={ref}
           mode={props.mode}
           width="100%"
           height="100%"
@@ -49,14 +51,14 @@ export const Editor = (props: EditorProps) => {
           editorProps={{ $blockScrolling: true }}
           showGutter={settings.__ace_settings_show_gutter}
           highlightActiveLine={settings.__ace_settings_highlight_active_line}
+          enableBasicAutocompletion={false}
+          enableLiveAutocompletion={false}
+          enableSnippets={false}
           setOptions={{
-            enableBasicAutocompletion: false,
-            enableLiveAutocompletion: false,
-            enableSnippets: false,
             showLineNumbers: settings.__ace_settings_show_line_numbers,
           }}
         />
       </StyledAceEditor>
     </>
   );
-};
+});

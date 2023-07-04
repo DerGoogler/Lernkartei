@@ -27,6 +27,7 @@ export const EN_Locale = {
   description: "Descripton",
   save: "Save",
   settings: "Settings",
+  important: "Important",
 
   // Settings
   dark_mode: {
@@ -57,8 +58,7 @@ export const EN_Locale = {
   license: "License",
 
   // Import / Export
-  import_description:
-    "When importing, all group and card information will be overwritten. Be careful with this feature!",
+  import_description: "All group and card information will be overwritten. Be careful with this feature!",
   backup_settings_subtext: "Save all groups and maps in one file",
   import_settings_subtext: "Import previously saved groups and maps",
   single_import_settings_subtext: "Import a single group",

@@ -17,6 +17,7 @@ import { Icon } from "@Components/Icon";
 import AceSettings from "./AceSettings";
 import { PickerItem } from "./components/PickerItem";
 import { languages_map } from "./../../locales/languages";
+import DangerEditActivity from "../DangerEditActivity";
 
 function SettingsActivity() {
   const { context } = useActivity();
@@ -146,6 +147,37 @@ function SettingsActivity() {
           </ListSubheader>
         }
       >
+        <ListItem>
+          <StyledListItemText
+            onClick={() => {
+              context.pushPage({
+                component: DangerEditActivity,
+                props: {
+                  key: "danger-edit",
+                  extra: {},
+                },
+              });
+            }}
+            primary="Dangerus Card Editor"
+          />
+        </ListItem>
+        <ListItem>
+          <StyledListItemText
+            id="switch-list-label-eruda"
+            primary={"Eruda console"}
+            secondary={"Useful for development and bugs"}
+          />
+          <Switch
+            edge="end"
+            onChange={(e: any) => {
+              setSettings({ eruda_console_enabled: e.target.checked });
+            }}
+            checked={settings.eruda_console_enabled}
+            inputProps={{
+              "aria-labelledby": "switch-list-label-eruda",
+            }}
+          />
+        </ListItem>
         <ListItemButton
           onClick={() => {
             os.open("https://github.com/DerGoogler/Lernkartei/issues", {

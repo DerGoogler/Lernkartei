@@ -1,9 +1,11 @@
-import React, { SetStateAction } from "react";
+import React from "react";
+import { useLocalStorage } from "usehooks-ts";
 import { useNativeStorage } from "./useNativeStorage";
+import { SetStateAction } from "./useStateCallback";
 
 interface KarteiContext {
   cards: Kartei[];
-  setCards: (state: SetStateAction<Kartei[]>) => void;
+  setCards: (state: SetStateAction<Kartei[]>, callback?: (state: Kartei[]) => void) => void;
   actions: {
     addGroup: (data: AddGroupsData) => void;
     editGroup: (index: number, data: EditGroupsData) => void;
@@ -17,7 +19,7 @@ interface KarteiContext {
 
 const KarteiContext = React.createContext<KarteiContext>({
   cards: {} as Kartei[],
-  setCards: (state: SetStateAction<Kartei[]>) => {},
+  setCards: (state: SetStateAction<Kartei[]>, callback?: (state: Kartei[]) => void) => {},
   actions: {
     addGroup: (data: AddGroupsData) => {},
     editGroup: (index: number, data: EditGroupsData) => {},
@@ -43,28 +45,28 @@ type AddGroupsData = {
   group: string;
   data: Kartei;
   onExists?: () => void;
-  callback?: () => void;
+  callback?: (state: Kartei[]) => void;
 };
 
 type EditGroupsData = {
   name: string;
   description: string;
-  callback?: () => void;
+  callback?: (state: Kartei[]) => void;
 };
 
 type AddKarteData = {
   index: number;
   data: Karten;
-  callback?: () => void;
+  callback?: (state: Kartei[]) => void;
 };
 type RemoveKarteData = {
   index: number;
   shortDescription: string;
-  callback?: () => void;
+  callback?: (state: Kartei[]) => void;
 };
 type RemoveGroupData = {
   group: string;
-  callback?: () => void;
+  callback?: (state: Kartei[]) => void;
 };
 
 export const KarteiProvider = (props: KarteiProviderProps) => {
@@ -76,43 +78,38 @@ export const KarteiProvider = (props: KarteiProviderProps) => {
         if (data.onExists instanceof Function) data.onExists();
       } else {
         tmp = [...tmp, data.data];
-        if (data.callback instanceof Function) data.callback();
       }
       return tmp;
-    });
+    }, data.callback);
   };
 
   const editGroup = (index: number, data: EditGroupsData) => {
     setCards((tmp) => {
       tmp[index].name = data.name;
       tmp[index].description = data.description;
-      if (data.callback instanceof Function) data.callback();
       return tmp;
-    });
+    }, data.callback);
   };
 
   const addKarte = (data: AddKarteData) => {
     setCards((tmp) => {
       tmp[data.index].karten.push(data.data);
-      if (data.callback instanceof Function) data.callback();
       return tmp;
-    });
+    }, data.callback);
   };
 
   const removeKarte = (data: RemoveKarteData) => {
     setCards((tmp) => {
       tmp[data.index].karten = tmp[data.index].karten.filter((remv) => remv.shortDescription != data.shortDescription);
-      if (data.callback instanceof Function) data.callback();
       return tmp;
-    });
+    }, data.callback);
   };
 
   const removeGroup = (data: RemoveGroupData) => {
     setCards((tmp) => {
       tmp = tmp.filter((remv) => remv.group != data.group);
-      if (data.callback instanceof Function) data.callback();
       return tmp;
-    });
+    }, data.callback);
   };
 
   const filterGroups = (value: string) => {

@@ -87,7 +87,7 @@ function AddActivity() {
     actions.editGroup(index, {
       name: name,
       description: description,
-      callback() {
+      callback: () => {
         context.popPage();
       },
     });

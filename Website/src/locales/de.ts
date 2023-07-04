@@ -27,6 +27,7 @@ export const DE_Locale = {
   description: "Beschreibung",
   save: "Speichern",
   settings: "Einstellungen",
+  important: "Wichtig",
 
   // Settings
   dark_mode: {
@@ -58,7 +59,7 @@ export const DE_Locale = {
 
   // Import / Export
   import_description:
-    "Beim Import werden alle Gruppen und Karten information überschrieben. Sei vorsichtig mit dieser Funktion!",
+    "Es werden alle Gruppen und Karten information überschrieben. Sei vorsichtig mit dieser Funktion!",
   backup_settings_subtext: "Alle Gruppen und Karten in einer Datei sichern",
   import_settings_subtext: "Importiere zuvor gesicherte Gruppen und Karten",
   single_import_settings_subtext: "Importiere eine einzelne Gruppe",

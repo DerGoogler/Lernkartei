@@ -85,7 +85,7 @@ const FileComponent = ({ file, actions, setCards }: any) => {
 
     if (valid) {
       confirm({
-        title: "Import",
+        title: strings.important,
         description: strings.import_description,
         confirmationText: strings.continue,
         cancellationText: strings.cancel,

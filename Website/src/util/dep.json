@@ -113,6 +113,15 @@
         "repository": "https://www.npmjs.com/package/js-parse-markdown-metadata"
     },
     {
+        "name": "jsoneditor-react",
+        "description": "React implementation of https://github.com/josdejong/jsoneditor",
+        "author": "Ivan Kopeykin <ivan.kopeykin@gmail.com>",
+        "version": "3.1.2",
+        "license": "MIT",
+        "homepage": "https://github.com/vankop/jsoneditor-react#readme",
+        "repository": "https://www.npmjs.com/package/jsoneditor-react"
+    },
+    {
         "name": "localized-strings",
         "description": "Simple module to localize the strings of any JS based program using the same syntax used in the ReactLocalization and ReactNativeLocalization module, use 'npm run build' before publishing",
         "author": "Stefano Falda <stefano.falda@gmail.com> (http://www.babisoft.com)",
