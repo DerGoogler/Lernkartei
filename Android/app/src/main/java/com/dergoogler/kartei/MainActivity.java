@@ -64,49 +64,5 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeFile(this), "file");
         wv.addJavascriptInterface(new NativeUtils(), "utils");
     }
-//
-//    @SuppressLint("SetJavaScriptEnabled")
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        appView = findViewById(R.id.mmrl_view);
-//        super.init();
-//        loadUrl(launchUrl);
-//    }
-//
-//    @SuppressLint("SetJavaScriptEnabled")
-//    @Override
-//    protected CordovaWebView makeWebView() {
-//        WebSettings webViewSettings = appView.getSettings();
-//        // Options
-//        webViewSettings.setJavaScriptEnabled(true);
-//        webViewSettings.setAllowFileAccess(true);
-//        webViewSettings.setAllowContentAccess(true);
-//        webViewSettings.setAllowFileAccessFromFileURLs(true);
-//        webViewSettings.setAllowUniversalAccessFromFileURLs(true);
-//        webViewSettings.setDatabaseEnabled(true);
-//        webViewSettings.setDomStorageEnabled(false);
-//        webViewSettings.setUserAgentString("KARTEI");
-//        webViewSettings.setAllowFileAccessFromFileURLs(false);
-//        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
-//        webViewSettings.setAllowFileAccess(false);
-//        webViewSettings.setAllowContentAccess(false);
-//
-//        // Core
-//        appView.addJavascriptInterface(new NativeOS(this), "os");
-//        appView.addJavascriptInterface(new NativeStorage(this), "nativeStorage");
-//        appView.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
-//        appView.addJavascriptInterface(new NativeStorage(this), "environment");
-//        appView.addJavascriptInterface(new NativeFile(this), "file");
-//        appView.addJavascriptInterface(new NativeUtils(), "utils");
-//
-//        return new CordovaWebViewImpl(new SystemWebViewEngine(appView));
-//    }
-//
-//    @Override
-//    protected void createViews() {
-//    }
-
 
 }
