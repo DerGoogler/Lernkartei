@@ -179,16 +179,16 @@ function AddCardToGroupActivity() {
   };
 
   const handleEdit = () => {
-    setCards((tmp) => {
-      tmp[cardIndex].karten[index].shortDescription = shortDescription;
-      tmp[cardIndex].karten[index].description = description;
-
-      if (shortDescription === "") {
-        ons.notification.alert(strings.shortDescriptionNoEmpty);
-      } else {
-        context.popPage();
-      }
-      return tmp;
+    actions.editKarte(cardIndex, index, {
+      shortDescription: shortDescription,
+      description: description,
+      callback() {
+        if (shortDescription === "") {
+          ons.notification.alert(strings.shortDescriptionNoEmpty);
+        } else {
+          context.popPage();
+        }
+      },
     });
   };
 

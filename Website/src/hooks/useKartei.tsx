@@ -9,6 +9,7 @@ interface KarteiContext {
   actions: {
     addGroup: (data: AddGroupsData) => void;
     editGroup: (index: number, data: EditGroupsData) => void;
+    editKarte: (cardIndex: number, index: number, data: EditKarteData) => void;
     addKarte: (data: AddKarteData) => void;
     removeKarte: (data: RemoveKarteData) => void;
     removeGroup: (data: RemoveGroupData) => void;
@@ -23,6 +24,7 @@ const KarteiContext = React.createContext<KarteiContext>({
   actions: {
     addGroup: (data: AddGroupsData) => {},
     editGroup: (index: number, data: EditGroupsData) => {},
+    editKarte: (cardIndex: number, index: number, data: EditKarteData) => {},
     addKarte: (data: AddKarteData) => {},
     removeKarte: (data: RemoveKarteData) => {},
     removeGroup: (data: RemoveGroupData) => {},
@@ -50,6 +52,12 @@ type AddGroupsData = {
 
 type EditGroupsData = {
   name: string;
+  description: string;
+  callback?: (state: Kartei[]) => void;
+};
+
+type EditKarteData = {
+  shortDescription: string;
   description: string;
   callback?: (state: Kartei[]) => void;
 };
@@ -88,6 +96,14 @@ export const KarteiProvider = (props: KarteiProviderProps) => {
     setCards((tmp) => {
       tmp[index].name = data.name;
       tmp[index].description = data.description;
+      return tmp;
+    }, data.callback);
+  };
+
+  const editKarte = (cardIndex: number, index: number, data: EditKarteData) => {
+    setCards((tmp) => {
+      tmp[cardIndex].karten[index].shortDescription = data.shortDescription;
+      tmp[cardIndex].karten[index].description = data.description;
       return tmp;
     }, data.callback);
   };
@@ -131,7 +147,7 @@ export const KarteiProvider = (props: KarteiProviderProps) => {
       value={{
         cards,
         setCards,
-        actions: { addGroup, editGroup, addKarte, removeKarte, removeGroup, filterGroups, filterCards },
+        actions: { addGroup, editGroup, editKarte, addKarte, removeKarte, removeGroup, filterGroups, filterCards },
       }}
     >
       {props.children}

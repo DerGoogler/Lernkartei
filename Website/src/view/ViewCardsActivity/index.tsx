@@ -36,7 +36,7 @@ export function ViewCardActivity() {
   const [page, setPage] = useState(1);
 
   const PER_PAGE = 20;
-  const count = React.useMemo(() => Math.ceil(filteredCards.length / PER_PAGE), [filteredCards]);
+  const count = React.useMemo(() => Math.ceil(filteredCards.length / PER_PAGE), [filteredCards, search]);
   const _DATA = usePagination(filteredCards, PER_PAGE);
 
   const handleChange = (e: any, p: any) => {

@@ -19,7 +19,7 @@ interface HTMLPage {
   children?: React.ReactNode;
 }
 
-const HTMLPage = onsCustomElement<HTMLPage>("ons-page", {
+const HTMLPage = onsCustomElement<HTMLElement, HTMLPage>("ons-page", {
   notAttributes: ["onInfiniteScroll", "onDeviceBackButton"],
 });
 

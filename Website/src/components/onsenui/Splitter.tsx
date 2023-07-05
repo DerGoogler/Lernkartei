@@ -28,9 +28,11 @@ interface HTMLSplitterSide {
   children?: React.ReactNode;
 }
 
-const HTMLSplitter = onsCustomElement<HTMLSplitter>("ons-splitter", { notAttributes: ["onDeviceBackButton"] });
-const HTMLSplitterContent = onsCustomElement<HTMLSplitterContent>("ons-splitter-content");
-const HTMLSplitterSide = onsCustomElement<HTMLSplitterSide>("ons-splitter-side", {
+const HTMLSplitter = onsCustomElement<HTMLElement, HTMLSplitter>("ons-splitter", {
+  notAttributes: ["onDeviceBackButton"],
+});
+const HTMLSplitterContent = onsCustomElement<HTMLElement, HTMLSplitterContent>("ons-splitter-content");
+const HTMLSplitterSide = onsCustomElement<HTMLElement, HTMLSplitterSide>("ons-splitter-side", {
   deprecated: {
     onOpen: "onPostOpen",
     onClose: "onPostClose",

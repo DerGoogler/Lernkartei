@@ -1,6 +1,6 @@
 import { CloseRounded } from "@mui/icons-material";
 import { useState } from "react";
-import { Page, RouterNavigator, RouterUtil, Toolbar, ToolbarButton } from "react-onsenui";
+import { Page, RouterUtil, Toolbar, ToolbarButton } from "react-onsenui";
 import { App } from "../view/App";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
@@ -14,6 +14,7 @@ import { StyledSection } from "./StyledSection";
 import { Button } from "@mui/material";
 import SettingsActivity from "./../view/SettingsActivity";
 import { Splitter } from "./onsenui/Splitter";
+import { RouterNavigator } from "./onsenui/RouterNavigator";
 
 const RoutedApp = (): JSX.Element => {
   const { settings } = useSettings();

@@ -140,6 +140,7 @@ declare global {
       "ons-splitter": HTMLAttributes<HTMLElement>;
       "ons-splitter-content": HTMLAttributes<HTMLElement>;
       "ons-splitter-side": HTMLAttributes<HTMLElement>;
+      "ons-navigator": HTMLAttributes<HTMLElement>;
     }
   }
 }
