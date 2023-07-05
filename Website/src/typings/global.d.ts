@@ -134,9 +134,12 @@ declare global {
       "kartei-link-wrapper": HTMLAttributes<HTMLDivElement>;
 
       // Onsen Elements
-      "ons-toolbar-button": HTMLAttributes<HTMLElement>;
+      [`ons-toolbar-button`]: HTMLAttributes<HTMLElement>;
       "ons-toolbar": HTMLAttributes<HTMLElement>;
       "ons-page": HTMLAttributes<HTMLElement>;
+      "ons-splitter": HTMLAttributes<HTMLElement>;
+      "ons-splitter-content": HTMLAttributes<HTMLElement>;
+      "ons-splitter-side": HTMLAttributes<HTMLElement>;
     }
   }
 }

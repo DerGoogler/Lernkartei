@@ -25,8 +25,6 @@ interface HTMLToolbarButton {
 const HTMLToolbar = onsCustomElement<HTMLToolbar>("ons-toolbar", { notAttributes: ["visible"] });
 const HTMLToolbarButton = onsCustomElement<HTMLToolbarButton>("ons-toolbar-button");
 
-const _Toolbar = HTMLToolbar;
-
 const _ToolbarButton = React.forwardRef((props: HTMLToolbarButton, ref: React.Ref<HTMLElement>) => {
   return (
     <HTMLToolbarButton ref={ref} id={props.id} style={{ fontFamily: "unset" }} onClick={props.onClick}>
@@ -47,7 +45,7 @@ const _ToolbarRight = (props: React.PropsWithChildren) => {
   return <div className="right" children={props.children} />;
 };
 
-const Toolbar = Object.assign(_Toolbar, {
+const Toolbar = Object.assign(HTMLToolbar, {
   Button: _ToolbarButton,
   Left: _ToolbarLeft,
   Center: _ToolbarCenter,

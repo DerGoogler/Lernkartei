@@ -1,17 +1,6 @@
 import { CloseRounded } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import {
-  Card,
-  Page,
-  RouterNavigator,
-  RouterUtil,
-  Splitter,
-  SplitterContent,
-  SplitterMask,
-  SplitterSide,
-  Toolbar,
-  ToolbarButton,
-} from "react-onsenui";
+import { useState } from "react";
+import { Page, RouterNavigator, RouterUtil, Toolbar, ToolbarButton } from "react-onsenui";
 import { App } from "../view/App";
 import { IntroActivity } from "../view/IntroActivity";
 import { Icon } from "./Icon";
@@ -24,6 +13,7 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import { StyledSection } from "./StyledSection";
 import { Button } from "@mui/material";
 import SettingsActivity from "./../view/SettingsActivity";
+import { Splitter } from "./onsenui/Splitter";
 
 const RoutedApp = (): JSX.Element => {
   const { settings } = useSettings();
@@ -193,7 +183,7 @@ const RoutedApp = (): JSX.Element => {
   return (
     <Page>
       <Splitter>
-        <SplitterSide
+        <Splitter.Side
           side="left"
           width={250}
           collapse={true}
@@ -203,8 +193,8 @@ const RoutedApp = (): JSX.Element => {
           onOpen={showSplitter}
         >
           <Drawer renderToolbar={renderSpliterToolbar} hideSplitter={hideSplitter} pushPage={pushPage} />
-        </SplitterSide>
-        <SplitterContent>
+        </Splitter.Side>
+        <Splitter.Content>
           <RouterNavigator
             swipeable={true}
             swipePop={(options: any) => popPage(options)}
@@ -213,7 +203,7 @@ const RoutedApp = (): JSX.Element => {
             onPostPush={() => onPostPush()}
             onPostPop={() => onPostPop()}
           />
-        </SplitterContent>
+        </Splitter.Content>
       </Splitter>
     </Page>
   );
