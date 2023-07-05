@@ -32,10 +32,6 @@ function useCustomElementListener(ref, prop, handler) {
   }, [ref, handler]);
 }
 
-interface DefaultProps<T> extends React.PropsWithChildren, React.RefAttributes<T> {
-  style?: React.CSSProperties;
-}
-
 interface CustomElementOptions {
   notAttributes?: string[];
   deprecated?: {
@@ -73,14 +69,16 @@ export default function onsCustomElement<P = {}>(
   WrappedComponent: React.ComponentType<any> | keyof JSX.IntrinsicElements,
   options?: CustomElementOptions
 ) {
-  return React.forwardRef<HTMLElement, React.DetailedHTMLProps<React.HTMLAttributes<P>, P>>((props, _ref) => {
-    const ref = _ref || useRef();
+  return React.forwardRef<HTMLElement, React.DetailedHTMLProps<React.HTMLAttributes<P>, P> & P>(
+    (props, _ref) => {
+      const ref = _ref || useRef();
 
-    const { children, style, ...rest } = props;
-    const { properties } = useCustomElement<
-      Omit<React.DetailedHTMLProps<React.HTMLAttributes<P>, P>, "style" | "children">
-    >(rest, options, ref);
+      const { children, style, ...rest } = props;
+      const { properties } = useCustomElement<
+        Omit<React.DetailedHTMLProps<React.HTMLAttributes<P>, P>, "style" | "children">
+      >(rest, options, ref);
 
-    return <WrappedComponent ref={ref} style={style} children={children} {...properties} />;
-  });
+      return <WrappedComponent ref={ref} style={style} children={children} {...properties} />;
+    }
+  );
 }

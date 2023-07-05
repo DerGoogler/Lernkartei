@@ -78,9 +78,10 @@ export const KarteiProvider = (props: KarteiProviderProps) => {
         if (data.onExists instanceof Function) data.onExists();
       } else {
         tmp = [...tmp, data.data];
+        if (data.callback instanceof Function) data.callback(tmp);
       }
       return tmp;
-    }, data.callback);
+    });
   };
 
   const editGroup = (index: number, data: EditGroupsData) => {

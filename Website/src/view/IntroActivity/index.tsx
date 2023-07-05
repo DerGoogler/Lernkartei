@@ -1,13 +1,13 @@
 import { Done } from "@mui/icons-material";
 import * as React from "react";
-import { Carousel, CarouselItem, Page, Toolbar } from "react-onsenui";
+import { Carousel, CarouselItem, Page } from "react-onsenui";
 import { App } from "../App";
 import { useActivity } from "../../hooks/useActivity";
 import { useSettings, useTheme } from "../../hooks/useSettings";
 import { Phones } from "./components/Phones";
-import { ToolbarButton } from "@Components/onsenui/ToolbarButton";
 import { UI } from "@Native/components/UI";
 import { os } from "@Native/Os";
+import { Toolbar } from "@Components/onsenui/Toolbar";
 
 function IntroActivity() {
   const { context, extra } = useActivity();
@@ -56,10 +56,10 @@ function IntroActivity() {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="center">Intro</div>
-        <div className="right">
+        <Toolbar.Center>Intro</Toolbar.Center>
+        <Toolbar.Right>
           {getIndex === 1 && (
-            <ToolbarButton
+            <Toolbar.Button
               icon={Done}
               onClick={() => {
                 if (getIndex === 1) {
@@ -75,7 +75,7 @@ function IntroActivity() {
               }}
             />
           )}
-        </div>
+        </Toolbar.Right>
       </Toolbar>
     );
   };

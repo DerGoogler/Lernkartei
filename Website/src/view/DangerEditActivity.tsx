@@ -1,22 +1,18 @@
-import { Page, Toolbar } from "react-onsenui";
-import { BackButton } from "@Components/BackButton";
+import { Page } from "react-onsenui";
 import { useActivity } from "@Hooks/useActivity";
 import { StyledSection } from "@Components/StyledSection";
 import React from "react";
 import { useKartei } from "@Hooks/useKartei";
 import "jsoneditor-react/es/editor.min.css";
 import { JsonEditor as Editor } from "jsoneditor-react";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
-import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import SaveIcon from "@mui/icons-material/Save";
 import schema from "@Util/groups.schema.json";
 import Ajv from "ajv";
 import { useConfirm } from "material-ui-confirm";
 import { useStrings } from "@Hooks/useStrings";
 import { os } from "@Native/Os";
-import { ToolbarButton } from "@Components/onsenui/ToolbarButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Toolbar } from "@Components/onsenui/Toolbar";
 
 function DangerEditActivity() {
   const { context, extra } = useActivity();
@@ -28,12 +24,12 @@ function DangerEditActivity() {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={context.popPage} />
-        </div>
-        <div className="center">Dangerus Card Editor</div>
-        <div className="right">
-          <ToolbarButton
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>Dangerus Card Editor</Toolbar.Center>
+        <Toolbar.Right>
+          <Toolbar.Button
             icon={SaveIcon}
             onClick={() => {
               const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
@@ -61,7 +57,7 @@ function DangerEditActivity() {
               }
             }}
           />
-        </div>
+        </Toolbar.Right>
       </Toolbar>
     );
   };

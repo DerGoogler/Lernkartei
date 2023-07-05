@@ -1,13 +1,13 @@
 import { Button, TextField } from "@mui/material";
 import * as React from "react";
-import { Page, Toolbar } from "react-onsenui";
+import { Page } from "react-onsenui";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 import { useActivity } from "../hooks/useActivity";
-import { ToolbarButton } from "../components/onsenui/ToolbarButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useStrings } from "../hooks/useStrings";
 import { useForm } from "@Hooks/useForm";
+import { Toolbar } from "@Components/onsenui/Toolbar";
 
 type Extra = {
   name: string;
@@ -35,10 +35,10 @@ function AddActivity() {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <ToolbarButton icon={ArrowBackIcon} onClick={context.popPage} />
-        </div>
-        <div className="center">{!isEditMode ? strings.new_group : strings.edit_group}</div>
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>{!isEditMode ? strings.new_group : strings.edit_group}</Toolbar.Center>
       </Toolbar>
     );
   };

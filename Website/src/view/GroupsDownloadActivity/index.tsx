@@ -1,13 +1,13 @@
 import { Divider, List, ListSubheader } from "@mui/material";
 import * as React from "react";
-import { Page, ProgressCircular, Toolbar } from "react-onsenui";
+import { Page, ProgressCircular } from "react-onsenui";
 import { useFetch } from "usehooks-ts";
-import { BackButton } from "../../components/BackButton";
 import { useActivity } from "../../hooks/useActivity";
 import { useKartei } from "../../hooks/useKartei";
 import { useStrings } from "../../hooks/useStrings";
-import { os } from "../../native/Os";
 import { Group } from "./components/Group";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function GroupsDownloadActivity() {
   const { context, extra } = useActivity();
@@ -21,10 +21,10 @@ function GroupsDownloadActivity() {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={context.popPage} />
-        </div>
-        <div className="center">{strings.groups}</div>
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Right>{strings.groups}</Toolbar.Right>
       </Toolbar>
     );
   };

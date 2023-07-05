@@ -1,7 +1,6 @@
 import { Add } from "@mui/icons-material";
 import { Box, Fade, Pagination, Stack, styled } from "@mui/material";
 import { Disappear } from "react-disappear";
-import { Toolbar } from "react-onsenui";
 import { Page } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import AddCardToGroupActivity from "../AddCardToGroupActivity";
@@ -10,10 +9,8 @@ import { os } from "../../native/Os";
 import { StyledSection } from "../../components/StyledSection";
 import { useState } from "react";
 import { useActivity } from "../../hooks/useActivity";
-import { BackButton } from "../../components/BackButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DownloadIcon from "@mui/icons-material/Download";
-import { ToolbarButton } from "../../components/onsenui/ToolbarButton";
 import { useStrings } from "../../hooks/useStrings";
 import { useKartei } from "../../hooks/useKartei";
 import { File } from "../../native/File";
@@ -21,6 +18,8 @@ import { For } from "@Components/For";
 import { usePagination } from "../../hooks/usePagination";
 import CardKarte from "./components/CardKarte";
 import React from "react";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export function ViewCardActivity() {
   const { context, extra } = useActivity<any>();
@@ -48,18 +47,18 @@ export function ViewCardActivity() {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={context.popPage} />
-        </div>
-        <div className="center">
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>
           <Fade in={titleShow}>
             <span>{title}</span>
           </Fade>
-        </div>
-        <div className="right">
+        </Toolbar.Center>
+        <Toolbar.Right>
           {!readonly && (
             <>
-              <ToolbarButton
+              <Toolbar.Button
                 icon={DownloadIcon}
                 onClick={() => {
                   try {
@@ -71,7 +70,7 @@ export function ViewCardActivity() {
                   }
                 }}
               />
-              <ToolbarButton
+              <Toolbar.Button
                 icon={Add}
                 onClick={() => {
                   context.pushPage({
@@ -88,7 +87,7 @@ export function ViewCardActivity() {
               />
             </>
           )}
-        </div>
+        </Toolbar.Right>
       </Toolbar>
     );
   };

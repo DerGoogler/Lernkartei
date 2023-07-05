@@ -1,5 +1,5 @@
 import React from "react";
-import { Page, Toolbar } from "react-onsenui";
+import { Page } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
@@ -7,13 +7,13 @@ import { BuildConfig } from "../../native/BuildConfig";
 import { StyledSection } from "../../components/StyledSection";
 import { os } from "../../native/Os";
 import { useActivity } from "../../hooks/useActivity";
-import { ToolbarButton } from "../../components/onsenui/ToolbarButton";
 import { For } from "@Components/For";
 import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
 import { Alert, AlertTitle, Box } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
 import { Searchbar } from "@Components/Searchbar";
+import { Toolbar } from "@Components/onsenui/Toolbar";
 
 export function App() {
   const { context } = useActivity();
@@ -27,7 +27,7 @@ export function App() {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <ToolbarButton
+          <Toolbar.Button
             icon={Menu}
             onClick={() => {
               context.splitter.show();
@@ -36,7 +36,7 @@ export function App() {
         </div>
         <div className="center">Kartei {BuildConfig.DEBUG ? "Debug" : ""}</div>
         <div className="right">
-          <ToolbarButton
+          <Toolbar.Button
             icon={Add}
             onClick={() => {
               context.pushPage({

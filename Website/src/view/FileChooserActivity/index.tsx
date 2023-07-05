@@ -4,12 +4,13 @@ import { useStrings } from "@Hooks/useStrings";
 import ListItemButton from "@mui/material/ListItemButton";
 import { File } from "@Native/File";
 import { os } from "@Native/Os";
-import { Page, Toolbar } from "react-onsenui";
+import { Page } from "react-onsenui";
 import { StyledListItemText } from "../../view/SettingsActivity/components/StyledListItemText";
 import schema from "@Util/groups.schema.json";
 import Ajv from "ajv";
-import { BackButton } from "@Components/BackButton";
 import { useConfirm } from "material-ui-confirm";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export const FileChooserActivity = () => {
   const { context } = useActivity<any>();
@@ -19,10 +20,10 @@ export const FileChooserActivity = () => {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={context.popPage} />
-        </div>
-        <div className="center">{strings.choose_file}</div>
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>{strings.choose_file}</Toolbar.Center>
       </Toolbar>
     );
   };

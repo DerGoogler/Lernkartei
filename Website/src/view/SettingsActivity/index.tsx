@@ -1,11 +1,10 @@
-import { Page, Toolbar } from "react-onsenui";
+import { Page } from "react-onsenui";
 import { File } from "../../native/File";
 import { os } from "../../native/Os";
 import { useTheme } from "@mui/system";
 import { accent_colors, useSettings } from "../../hooks/useSettings";
 import { useActivity } from "../../hooks/useActivity";
 import { useKartei } from "../../hooks/useKartei";
-import { BackButton } from "../../components/BackButton";
 import { useStrings } from "../../hooks/useStrings";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListSubheader, Switch } from "@mui/material";
@@ -18,6 +17,8 @@ import AceSettings from "./AceSettings";
 import { PickerItem } from "./components/PickerItem";
 import { languages_map } from "./../../locales/languages";
 import DangerEditActivity from "../DangerEditActivity";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function SettingsActivity() {
   const { context } = useActivity();
@@ -32,10 +33,10 @@ function SettingsActivity() {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={context.popPage} />
-        </div>
-        <div className="center">{strings.settings}</div>
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>{strings.settings}</Toolbar.Center>
       </Toolbar>
     );
   };

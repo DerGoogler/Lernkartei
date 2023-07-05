@@ -135,6 +135,7 @@ declare global {
 
       // Onsen Elements
       "ons-toolbar-button": HTMLAttributes<HTMLElement>;
+      "ons-toolbar": HTMLAttributes<HTMLElement>;
     }
   }
 }

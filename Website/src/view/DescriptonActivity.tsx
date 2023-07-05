@@ -1,8 +1,9 @@
-import { Page, ProgressCircular, Toolbar } from "react-onsenui";
-import { BackButton } from "@Components/BackButton";
+import { Page, ProgressCircular } from "react-onsenui";
 import { Markup } from "@Components/Markdown";
 import { useActivity } from "@Hooks/useActivity";
 import React from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Toolbar } from "@Components/onsenui/Toolbar";
 
 type Extra = { shortDesc: string; desc: string | undefined; request: { use: boolean; url: string } | undefined };
 interface State<T> {
@@ -91,10 +92,10 @@ function DescriptonActivity() {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={context.popPage} />
-        </div>
-        <div className="center">{shortDesc}</div>
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>{shortDesc}</Toolbar.Center>
       </Toolbar>
     );
   };

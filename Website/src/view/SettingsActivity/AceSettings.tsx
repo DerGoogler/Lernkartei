@@ -1,11 +1,12 @@
-import { Page, Toolbar } from "react-onsenui";
+import { Page } from "react-onsenui";
 import { useTheme } from "@mui/system";
 import { useSettings } from "../../hooks/useSettings";
 import { useActivity } from "../../hooks/useActivity";
-import { BackButton } from "../../components/BackButton";
 import { useStrings } from "../../hooks/useStrings";
 import { List, ListItem, ListSubheader, Switch } from "@mui/material";
 import { StyledListItemText } from "./components/StyledListItemText";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function AceSettings() {
   const { context } = useActivity();
@@ -19,10 +20,10 @@ function AceSettings() {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={context.popPage} />
-        </div>
-        <div className="center">Ace Settings</div>
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>Ace Settings</Toolbar.Center>
       </Toolbar>
     );
   };
