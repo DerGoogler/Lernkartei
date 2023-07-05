@@ -230,7 +230,7 @@
         "name": "react-onsenui",
         "description": "Onsen UI - React Components for Hybrid Cordova/PhoneGap Apps with Material Design and iOS UI components",
         "author": "Onsen UI Team <team@monaca.io>",
-        "version": "1.13.2",
+        "version": "1.13.3",
         "license": "Apache-2.0",
         "homepage": "https://onsen.io/react/",
         "repository": "https://www.npmjs.com/package/react-onsenui"

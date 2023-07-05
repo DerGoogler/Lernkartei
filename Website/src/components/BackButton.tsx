@@ -1,5 +1,5 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { ToolbarButton } from "./ToolbarButton";
+import { ToolbarButton } from "./onsenui/ToolbarButton";
 
 export type BackButtonProps = {
   onClick: () => void;

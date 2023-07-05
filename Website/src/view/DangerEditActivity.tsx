@@ -16,7 +16,7 @@ import Ajv from "ajv";
 import { useConfirm } from "material-ui-confirm";
 import { useStrings } from "@Hooks/useStrings";
 import { os } from "@Native/Os";
-import { ToolbarButton } from "@Components/ToolbarButton";
+import { ToolbarButton } from "@Components/onsenui/ToolbarButton";
 
 function DangerEditActivity() {
   const { context, extra } = useActivity();

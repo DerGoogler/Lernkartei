@@ -7,6 +7,7 @@ import {
   RouterUtil,
   Splitter,
   SplitterContent,
+  SplitterMask,
   SplitterSide,
   Toolbar,
   ToolbarButton,
@@ -20,11 +21,9 @@ import { Drawer } from "../view/App/components/Drawer";
 import { useSettings } from "@Hooks/useSettings";
 import React from "react";
 import { ErrorBoundary } from "./ErrorBoundary";
-import eruda from "eruda";
 import { StyledSection } from "./StyledSection";
 import { Button } from "@mui/material";
 import SettingsActivity from "./../view/SettingsActivity";
-import DangerEditActivity from "./../view/DangerEditActivity";
 
 const RoutedApp = (): JSX.Element => {
   const { settings } = useSettings();
@@ -39,16 +38,6 @@ const RoutedApp = (): JSX.Element => {
     setIsSplitterOpen(true);
   };
 
-  React.useEffect(() => {
-    if (settings.eruda_console_enabled) {
-      eruda.init();
-    } else {
-      if ((window as any).eruda) {
-        eruda.destroy();
-      }
-    }
-  }, [settings.eruda_console_enabled]);
-
   const ignoreThat = RouterUtil.init([
     {
       component: settings.intro_finised ? App : IntroActivity,
@@ -57,7 +46,6 @@ const RoutedApp = (): JSX.Element => {
         key: "main",
         context: {
           pushPage: (props: PushPropsCore) => pushPage(props),
-          onBackButton: (handler: EventListener) => onBackButton(handler),
           splitter: {
             show: () => showSplitter(),
             hide: () => hideSplitter(),
@@ -69,15 +57,6 @@ const RoutedApp = (): JSX.Element => {
   ]);
 
   const [routeConfig, setRouteConfig] = useState<any>(ignoreThat);
-
-  const onBackButton = (handler: (e: any) => void) => {
-    React.useEffect(() => {
-      document.addEventListener("backbutton", handler, true);
-      return () => {
-        document.removeEventListener("backbutton", handler, true);
-      };
-    }, [routeConfig]);
-  };
 
   const popPage = (options = {}) => {
     setRouteConfig((prev: any) =>
@@ -104,7 +83,6 @@ const RoutedApp = (): JSX.Element => {
         context: {
           popPage: (options = {}) => popPage(options),
           pushPage: (props: PushPropsCore) => pushPage(props),
-          onBackButton: (handler: EventListener) => onBackButton(handler),
           splitter: {
             show: () => showSplitter(),
             hide: () => hideSplitter(),

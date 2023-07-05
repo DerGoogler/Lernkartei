@@ -13,7 +13,7 @@ import { useActivity } from "../../hooks/useActivity";
 import { BackButton } from "../../components/BackButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DownloadIcon from "@mui/icons-material/Download";
-import { ToolbarButton } from "../../components/ToolbarButton";
+import { ToolbarButton } from "../../components/onsenui/ToolbarButton";
 import { useStrings } from "../../hooks/useStrings";
 import { useKartei } from "../../hooks/useKartei";
 import { File } from "../../native/File";

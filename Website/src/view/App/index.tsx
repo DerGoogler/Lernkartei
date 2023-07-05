@@ -7,7 +7,7 @@ import { BuildConfig } from "../../native/BuildConfig";
 import { StyledSection } from "../../components/StyledSection";
 import { os } from "../../native/Os";
 import { useActivity } from "../../hooks/useActivity";
-import { ToolbarButton } from "../../components/ToolbarButton";
+import { ToolbarButton } from "../../components/onsenui/ToolbarButton";
 import { For } from "@Components/For";
 import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";

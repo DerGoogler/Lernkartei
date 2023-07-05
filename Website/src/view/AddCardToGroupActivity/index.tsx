@@ -21,7 +21,6 @@ import {
 } from "@mui/icons-material";
 import DescriptonActivity from "../DescriptonActivity";
 import { isDesktop } from "react-device-detect";
-import { useConfirm } from "material-ui-confirm";
 import { os } from "../../native/Os";
 import { useKartei } from "../../hooks/useKartei";
 import { Markup } from "../../components/Markdown";
@@ -56,26 +55,27 @@ function AddCardToGroupActivity() {
   const markdownRefAdvanced = React.useRef<AceEditor>(null);
   const printRef = React.useRef<HTMLDivElement>(null);
 
-  const customTextareaCommands = React.useMemo(() => {
-    const aceCommands: CustomCommand[] = [
-      {
-        name: "undo",
-        icon: Undo,
-        handler: ({ cursor }) => {
-          markdownRefAdvanced.current?.editor.undo();
-        },
-      },
-      {
-        name: "redo",
-        icon: Redo,
+  const customTextareaCommands: CustomCommand[] = React.useMemo(
+    () => [
+      ...(settings.__ace_settings_enabled
+        ? [
+            {
+              name: "undo",
+              icon: Undo,
+              handler: ({ cursor }) => {
+                markdownRefAdvanced.current?.editor.undo();
+              },
+            },
+            {
+              name: "redo",
+              icon: Redo,
 
-        handler: ({ cursor }) => {
-          markdownRefAdvanced.current?.editor.redo();
-        },
-      },
-    ];
-
-    const defaultCommands: CustomCommand[] = [
+              handler: ({ cursor }) => {
+                markdownRefAdvanced.current?.editor.redo();
+              },
+            },
+          ]
+        : []),
       {
         name: "bold",
         icon: FormatBoldRounded,
@@ -138,14 +138,9 @@ function AddCardToGroupActivity() {
           cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
         },
       },
-    ];
-
-    if (settings.__ace_settings_enabled) {
-      return [...aceCommands, ...defaultCommands];
-    } else {
-      return defaultCommands;
-    }
-  }, [settings.__ace_settings_enabled]);
+    ],
+    [settings.__ace_settings_enabled]
+  );
 
   const renderToolbar = () => {
     return (

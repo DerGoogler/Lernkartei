@@ -132,6 +132,9 @@ declare global {
       "license-card-license": HTMLAttributes<HTMLSpanElement>;
       karteilink: HTMLAttributes<HTMLDivElement>;
       "kartei-link-wrapper": HTMLAttributes<HTMLDivElement>;
+
+      // Onsen Elements
+      "ons-toolbar-button": HTMLAttributes<HTMLElement>;
     }
   }
 }

@@ -4,7 +4,7 @@ import { Page, Toolbar } from "react-onsenui";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 import { useActivity } from "../hooks/useActivity";
-import { ToolbarButton } from "../components/ToolbarButton";
+import { ToolbarButton } from "../components/onsenui/ToolbarButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useStrings } from "../hooks/useStrings";
 import { useForm } from "@Hooks/useForm";

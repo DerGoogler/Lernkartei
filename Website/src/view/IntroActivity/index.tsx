@@ -5,7 +5,7 @@ import { App } from "../App";
 import { useActivity } from "../../hooks/useActivity";
 import { useSettings, useTheme } from "../../hooks/useSettings";
 import { Phones } from "./components/Phones";
-import { ToolbarButton } from "@Components/ToolbarButton";
+import { ToolbarButton } from "@Components/onsenui/ToolbarButton";
 import { UI } from "@Native/components/UI";
 import { os } from "@Native/Os";
 
