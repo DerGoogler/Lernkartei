@@ -4,13 +4,13 @@ import { useStrings } from "@Hooks/useStrings";
 import ListItemButton from "@mui/material/ListItemButton";
 import { File } from "@Native/File";
 import { os } from "@Native/Os";
-import { Page } from "react-onsenui";
 import { StyledListItemText } from "../../view/SettingsActivity/components/StyledListItemText";
 import schema from "@Util/groups.schema.json";
 import Ajv from "ajv";
 import { useConfirm } from "material-ui-confirm";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Page } from "@Components/onsenui/Page";
 
 export const FileChooserActivity = () => {
   const { context } = useActivity<any>();

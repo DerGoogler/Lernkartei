@@ -1,4 +1,3 @@
-import { Page } from "react-onsenui";
 import { useTheme } from "@mui/system";
 import { useSettings } from "../../hooks/useSettings";
 import { useActivity } from "../../hooks/useActivity";
@@ -7,6 +6,7 @@ import { List, ListItem, ListSubheader, Switch } from "@mui/material";
 import { StyledListItemText } from "./components/StyledListItemText";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Page } from "@Components/onsenui/Page";
 
 function AceSettings() {
   const { context } = useActivity();

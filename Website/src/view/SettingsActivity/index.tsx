@@ -1,4 +1,3 @@
-import { Page } from "react-onsenui";
 import { File } from "../../native/File";
 import { os } from "../../native/Os";
 import { useTheme } from "@mui/system";
@@ -19,6 +18,7 @@ import { languages_map } from "./../../locales/languages";
 import DangerEditActivity from "../DangerEditActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Page } from "@Components/onsenui/Page";
 
 function SettingsActivity() {
   const { context } = useActivity();

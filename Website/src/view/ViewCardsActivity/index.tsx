@@ -1,7 +1,6 @@
 import { Add } from "@mui/icons-material";
 import { Box, Fade, Pagination, Stack, styled } from "@mui/material";
 import { Disappear } from "react-disappear";
-import { Page } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import AddCardToGroupActivity from "../AddCardToGroupActivity";
 import { Searchbar } from "../../components/Searchbar";
@@ -20,6 +19,7 @@ import CardKarte from "./components/CardKarte";
 import React from "react";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Page } from "@Components/onsenui/Page";
 
 export function ViewCardActivity() {
   const { context, extra } = useActivity<any>();
@@ -93,77 +93,75 @@ export function ViewCardActivity() {
   };
 
   return (
-    <>
-      <Page renderToolbar={renderToolbar}>
-        <Header>
-          <HeaderTitle
-            wrapper="div"
-            onDisappear={(visible) => {
-              setTitleShow(!visible);
-            }}
-          >
-            <div className="header-title">{title}</div>
-            <div className="header-desc">{desc}</div>
-          </HeaderTitle>
-        </Header>
-        <StyledSection>
-          <Searchbar placeholder={strings.search_karten} onChange={(e) => setSearch(e.target.value)} />
+    <Page renderToolbar={renderToolbar}>
+      <Header>
+        <HeaderTitle
+          wrapper="div"
+          onDisappear={(visible) => {
+            setTitleShow(!visible);
+          }}
+        >
+          <div className="header-title">{title}</div>
+          <div className="header-desc">{desc}</div>
+        </HeaderTitle>
+      </Header>
+      <StyledSection>
+        <Searchbar placeholder={strings.search_karten} onChange={(e) => setSearch(e.target.value)} />
 
-          <Stack style={{ marginBottom: 8 }} direction="row" justifyContent="center" alignItems="center" spacing={2}>
-            <Pagination
-              count={count}
-              color="primary"
-              page={page}
-              variant="outlined"
-              shape="rounded"
-              onChange={handleChange}
-            />
-          </Stack>
-          <For
-            each={_DATA.currentData()}
-            fallback={() => (
-              <Box
-                component="h4"
+        <Stack style={{ marginBottom: 8 }} direction="row" justifyContent="center" alignItems="center" spacing={2}>
+          <Pagination
+            count={count}
+            color="primary"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
+        </Stack>
+        <For
+          each={_DATA.currentData()}
+          fallback={() => (
+            <Box
+              component="h4"
+              sx={(theme) => ({
+                color: theme.palette.secondary.dark,
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                textAlign: "center",
+                WebkitTransform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -50%)",
+              })}
+            >
+              To add new cards, click on the{" "}
+              <Icon
                 sx={(theme) => ({
                   color: theme.palette.secondary.dark,
-                  position: "absolute",
-                  left: "50%",
-                  top: "50%",
-                  textAlign: "center",
-                  WebkitTransform: "translate(-50%, -50%)",
-                  transform: "translate(-50%, -50%)",
+                  verticalAlign: "middle",
                 })}
-              >
-                To add new cards, click on the{" "}
-                <Icon
-                  sx={(theme) => ({
-                    color: theme.palette.secondary.dark,
-                    verticalAlign: "middle",
-                  })}
-                  icon={MoreVertIcon}
-                />{" "}
-                icon, and add a new card with the{" "}
-                <Icon
-                  sx={(theme) => ({
-                    color: theme.palette.secondary.dark,
-                    verticalAlign: "middle",
-                  })}
-                  icon={Add}
-                />{" "}
-                icon
-              </Box>
-            )}
-            catch={(e: Error | undefined) => (
-              <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>
-            )}
-          >
-            {(card, index) => (
-              <CardKarte key={String(card.shortDescription + index * 5)} actions={actions} card={card} index={index} />
-            )}
-          </For>
-        </StyledSection>
-      </Page>
-    </>
+                icon={MoreVertIcon}
+              />{" "}
+              icon, and add a new card with the{" "}
+              <Icon
+                sx={(theme) => ({
+                  color: theme.palette.secondary.dark,
+                  verticalAlign: "middle",
+                })}
+                icon={Add}
+              />{" "}
+              icon
+            </Box>
+          )}
+          catch={(e: Error | undefined) => (
+            <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>
+          )}
+        >
+          {(card, index) => (
+            <CardKarte key={String(card.shortDescription + index * 5)} actions={actions} card={card} index={index} />
+          )}
+        </For>
+      </StyledSection>
+    </Page>
   );
 }
 

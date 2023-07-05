@@ -1,6 +1,6 @@
 import { Divider, List, ListSubheader } from "@mui/material";
 import * as React from "react";
-import { Page, ProgressCircular } from "react-onsenui";
+import { ProgressCircular } from "react-onsenui";
 import { useFetch } from "usehooks-ts";
 import { useActivity } from "../../hooks/useActivity";
 import { useKartei } from "../../hooks/useKartei";
@@ -8,6 +8,7 @@ import { useStrings } from "../../hooks/useStrings";
 import { Group } from "./components/Group";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Page } from "@Components/onsenui/Page";
 
 function GroupsDownloadActivity() {
   const { context, extra } = useActivity();
@@ -24,7 +25,7 @@ function GroupsDownloadActivity() {
         <Toolbar.Left>
           <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Right>{strings.groups}</Toolbar.Right>
+        <Toolbar.Center>{strings.groups}</Toolbar.Center>
       </Toolbar>
     );
   };

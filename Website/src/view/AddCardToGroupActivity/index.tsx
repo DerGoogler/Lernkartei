@@ -1,7 +1,6 @@
 import { Stack, styled, TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ons from "onsenui";
 import * as React from "react";
-import { Page } from "react-onsenui";
 import Button from "@mui/material/Button";
 import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
 import {
@@ -32,6 +31,7 @@ import AceEditor from "react-ace";
 import { useSettings } from "@Hooks/useSettings";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 

@@ -1,4 +1,3 @@
-import { Page } from "react-onsenui";
 import { useActivity } from "@Hooks/useActivity";
 import { StyledSection } from "@Components/StyledSection";
 import React from "react";
@@ -13,6 +12,7 @@ import { useStrings } from "@Hooks/useStrings";
 import { os } from "@Native/Os";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 function DangerEditActivity() {
   const { context, extra } = useActivity();

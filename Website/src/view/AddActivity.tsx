@@ -1,6 +1,4 @@
 import { Button, TextField } from "@mui/material";
-import * as React from "react";
-import { Page } from "react-onsenui";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 import { useActivity } from "../hooks/useActivity";
@@ -8,6 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useStrings } from "../hooks/useStrings";
 import { useForm } from "@Hooks/useForm";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 type Extra = {
   name: string;

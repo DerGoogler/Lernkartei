@@ -1,6 +1,6 @@
 import { Done } from "@mui/icons-material";
 import * as React from "react";
-import { Carousel, CarouselItem, Page } from "react-onsenui";
+import { Carousel, CarouselItem } from "react-onsenui";
 import { App } from "../App";
 import { useActivity } from "../../hooks/useActivity";
 import { useSettings, useTheme } from "../../hooks/useSettings";
@@ -8,6 +8,7 @@ import { Phones } from "./components/Phones";
 import { UI } from "@Native/components/UI";
 import { os } from "@Native/Os";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 function IntroActivity() {
   const { context, extra } = useActivity();

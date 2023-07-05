@@ -1,9 +1,10 @@
-import { Page, ProgressCircular } from "react-onsenui";
+import { ProgressCircular } from "react-onsenui";
 import { Markup } from "@Components/Markdown";
 import { useActivity } from "@Hooks/useActivity";
 import React from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 type Extra = { shortDesc: string; desc: string | undefined; request: { use: boolean; url: string } | undefined };
 interface State<T> {

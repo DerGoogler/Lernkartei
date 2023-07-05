@@ -1,5 +1,4 @@
 import React from "react";
-import { Page } from "react-onsenui";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
@@ -14,6 +13,7 @@ import { Alert, AlertTitle, Box } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
 import { Searchbar } from "@Components/Searchbar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 export function App() {
   const { context } = useActivity();

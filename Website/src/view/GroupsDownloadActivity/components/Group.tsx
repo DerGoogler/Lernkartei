@@ -54,7 +54,7 @@ export const Group = ({ set, cards, actions }: Props) => {
   return (
     <ListItemButton onClick={setDownloader}>
       <StyledListItemText primary={set.name} secondary={set.desc} />
-      {isDownloaded ? <Icon keepLight icon={FileDownloadDoneIcon} /> : <Icon keepLight icon={DownloadRounded} />}
+      {isDownloaded ? <Icon icon={FileDownloadDoneIcon} /> : <Icon icon={DownloadRounded} />}
     </ListItemButton>
   );
 };

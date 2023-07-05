@@ -22,10 +22,12 @@ interface HTMLToolbarButton {
   icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
 }
 
-const _Toolbar = onsCustomElement<HTMLToolbar>("ons-toolbar", { notAttributes: ["visible"] });
+const HTMLToolbar = onsCustomElement<HTMLToolbar>("ons-toolbar", { notAttributes: ["visible"] });
+const HTMLToolbarButton = onsCustomElement<HTMLToolbarButton>("ons-toolbar-button");
+
+const _Toolbar = HTMLToolbar;
 
 const _ToolbarButton = React.forwardRef((props: HTMLToolbarButton, ref: React.Ref<HTMLElement>) => {
-  const HTMLToolbarButton = onsCustomElement<HTMLToolbarButton>("ons-toolbar-button");
   return (
     <HTMLToolbarButton ref={ref} id={props.id} style={{ fontFamily: "unset" }} onClick={props.onClick}>
       {props.icon ? <Icon icon={props.icon} keepLight /> : <>{props.children}</>}
