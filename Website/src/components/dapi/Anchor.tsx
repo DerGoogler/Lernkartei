@@ -7,6 +7,7 @@ import SettingsActivity from "../../view/SettingsActivity";
 import { Icon } from "@Components/Icon";
 import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
+import DescriptonActivity from "../../view/DescriptonActivity";
 
 const StyledAnchor = styled("div")(({ theme }) => {
   const { scheme } = useTheme();
@@ -66,8 +67,14 @@ function Anchor(props: JSX.IntrinsicElements["a"]) {
   );
 }
 
-export function Open(props: any) {
-  const { page, children, ...rest } = props;
+interface OpenProps extends React.PropsWithChildren {
+  page: string;
+  url?: string;
+  title?: string;
+}
+
+export function Open(props: OpenProps) {
+  const { page, children } = props;
   const { context } = useActivity();
 
   return (
@@ -98,11 +105,29 @@ export function Open(props: any) {
                 },
               });
               break;
+            case "request":
+              if (!props.url) {
+                os.toast("Missing Url!", "short");
+              } else {
+                context.pushPage<{}>({
+                  component: DescriptonActivity,
+                  props: {
+                    key: `desc_open${Math.round(Math.random() * 56)}`,
+                    extra: {
+                      request: {
+                        use: true,
+                        url: props.url,
+                      },
+                      shortDesc: props.title,
+                    },
+                  },
+                });
+              }
+              break;
             default:
               break;
           }
         }}
-        {...rest}
       >
         {children}{" "}
         <Icon

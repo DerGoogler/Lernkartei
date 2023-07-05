@@ -85,7 +85,7 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
   },
   require: {
     component: Require,
-  },
+  }
 };
 
 export const Markup = React.forwardRef((props: Props, ref) => {

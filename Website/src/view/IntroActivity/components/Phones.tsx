@@ -41,27 +41,4 @@ export const Phones = (props: Partial<Props>) => {
     _2: C2,
   };
 };
-export const Phone2 = (props: Partial<Props>) => {
-  const C = styled("div")(({ theme }) => ({
-    position: "absolute",
-    right: "10%",
-    bottom: "-30%",
-    width: "300px",
-    height: "540px",
-    backgroundColor: props.caseColor || "#333",
-    borderRadius: "21px",
-    transform: "rotate(30deg)",
-    "::before": {
-      position: "absolute",
-      top: "10%",
-      right: "10px",
-      bottom: "10%",
-      left: "10px",
-      content: '""',
-      backgroundColor: props.screenColor || "rgba(255, 255, 255, 0.1)",
-      borderRadius: "5px",
-    },
-  }));
 
-  return <C />;
-};

@@ -1,12 +1,11 @@
 import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
 import { useStrings } from "../../../hooks/useStrings";
-// import Acknowledgements from "../../Acknowledgements";
 import { GroupsDownloadActivity } from "../../GroupsDownloadActivity";
 import SettingsActivity from "../../SettingsActivity";
 import { StyledListItemText } from "../../SettingsActivity/components/StyledListItemText";
-import LicenseActivity from "./../../LicenseActivity";
 import Acknowledgements from "./../../Acknowledgements";
+import DescriptonActivity from "./../../DescriptonActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -76,16 +75,62 @@ export const Drawer = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: LicenseActivity,
+              component: DescriptonActivity,
               props: {
                 key: "license",
-                extra: {},
+                extra: {
+                  request: {
+                    use: true,
+                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/LernKartei/License.md",
+                  },
+                  shortDesc: strings.license,
+                },
               },
             });
             hide();
           }}
         >
           <StyledListItemText primary={strings.license} />
+        </ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: DescriptonActivity,
+              props: {
+                key: "changelog",
+                extra: {
+                  request: {
+                    use: true,
+                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/LernKartei/Changelog.md",
+                  },
+                  shortDesc: "Changelog",
+                },
+              },
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary={"Changelog"} />
+        </ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: DescriptonActivity,
+              props: {
+                key: "privacy_policy",
+                extra: {
+                  request: {
+                    use: true,
+                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/LernKartei/Privacy-Policy.md",
+                  },
+                  shortDesc: "Privacy Policy",
+                },
+              },
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary={"Privacy Policy"} />
         </ListItemButton>
       </List>
       <Divider />
