@@ -2,7 +2,7 @@ import * as React from "react";
 import { SearchRounded } from "@mui/icons-material";
 import { Button, SearchInput } from "react-onsenui";
 import { FormControl, styled, useFormControl, useTheme } from "@mui/material";
-import shadeColor from "../util/shadeColor";
+import useShadeColor from "../hooks/useShadeColor";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
@@ -48,7 +48,7 @@ const StyledSearchInput = (props: any) => {
 
 export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
   const theme = useTheme();
-  // const { scheme, setScheme } = useScheme();
+  const shade = useShadeColor();
   const { settings, setSettings } = useSettings();
   const [value, setVaule] = React.useState("");
 
@@ -74,9 +74,7 @@ export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
           display: "flex",
           alignItems: "center",
           width: 400,
-          bgcolor: settings.darkmode
-            ? shadeColor(colors[settings.accent_scheme.value][900], -70)
-            : "rgb(255, 255, 255)",
+          bgcolor: settings.darkmode ? shade(colors[settings.accent_scheme.value][900], -70) : "rgb(255, 255, 255)",
         }}
       >
         <IconButton

@@ -53,6 +53,14 @@ class Os extends Native {
     }
   }
 
+  public androidSdk(): number {
+    if (this.isAndroid) {
+      return this.getInterface.androidSdk();
+    } else {
+      return 0;
+    }
+  }
+
   public getMonetColor(id: string): string {
     if (this.isAndroid) {
       return this.getInterface.getMonetColor(id);

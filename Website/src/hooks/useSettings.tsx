@@ -1,11 +1,13 @@
 import React, { createContext, useContext } from "react";
 import { colors as kolors, Theme, useTheme as useMom, createTheme, ThemeProvider } from "@mui/material";
-import shadeColor from "../util/shadeColor";
+import useShadeColor from "./useShadeColor";
 import { UI } from "@Native/components/UI";
 import { defaultComposer } from "default-composer";
 import { Languages, languages_map } from "./../locales/languages";
 import { useLocalStorage } from "usehooks-ts";
 import { useNativeStorage } from "./useNativeStorage";
+import { os } from "@Native/Os";
+import { BuildConfig } from "@Native/BuildConfig";
 
 export namespace Settings {
   export interface Context {
@@ -103,6 +105,17 @@ export const accent_colors: Settings.AccentScheme[] = [
     name: "Yellow",
     value: "yellow",
   },
+  // Only load if it is android platform and above android 12
+  ...(os.isAndroid
+    ? os.androidSdk() >= 31
+      ? [
+          {
+            name: "Monet (Android 12+)",
+            value: "monet",
+          },
+        ]
+      : []
+    : []),
 ];
 
 export const INITIAL_SETTINGS: Settings.Root = {
@@ -115,6 +128,19 @@ export const INITIAL_SETTINGS: Settings.Root = {
   __ace_settings_show_gutter: true,
   __ace_settings_highlight_active_line: true,
   __ace_settings_show_line_numbers: true,
+};
+
+const monet = {
+  50: os.getMonetColor("system_accent2_50"),
+  100: os.getMonetColor("system_accent2_100"),
+  200: os.getMonetColor("system_accent2_200"),
+  300: os.getMonetColor("system_accent2_300"),
+  400: os.getMonetColor("system_accent2_400"),
+  500: os.getMonetColor("system_accent2_500"),
+  600: os.getMonetColor("system_accent2_600"),
+  700: os.getMonetColor("system_accent2_700"),
+  800: os.getMonetColor("system_accent2_800"),
+  900: os.getMonetColor("system_accent2_900"),
 };
 
 export const colors = {
@@ -137,6 +163,8 @@ export const colors = {
   red: kolors.red,
   teal: kolors.teal,
   yellow: kolors.yellow,
+  // Only load if it is android platform and above android 12
+  ...(os.isAndroid ? (os.androidSdk() >= 31 ? { monet: monet } : {}) : {}),
 };
 
 export const SettingsContext = createContext<Settings.Context>({
@@ -155,12 +183,12 @@ export const useTheme = () => {
   return {
     scheme: colors[settings.accent_scheme.value],
     theme: theme,
-    shadeColor,
   };
 };
 
 export const SettingsProvider = (props: React.PropsWithChildren) => {
   const [settings, setSettings] = useNativeStorage<Settings.Root>("settings", INITIAL_SETTINGS);
+  const shade = useShadeColor();
 
   const theme = createTheme({
     shape: {
@@ -188,19 +216,18 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
       : {
           mode: "dark",
           primary: {
-            light: shadeColor(colors[settings.accent_scheme.value][300], -10),
-            main: shadeColor(colors[settings.accent_scheme.value][900], -29),
+            light: shade(colors[settings.accent_scheme.value][300], -10),
+            main: shade(colors[settings.accent_scheme.value][900], -29),
             // dark: shadeColor(colors[settings.accent_scheme.value][800], -40),
           },
           background: {
-            default: shadeColor(colors[settings.accent_scheme.value][900], -75),
+            default: shade(colors[settings.accent_scheme.value][800], -75),
           },
-          divider: shadeColor(colors[settings.accent_scheme.value][900], -55),
-          // divider: colors[settings.accent_scheme.value][900],
+          divider: shade(colors[settings.accent_scheme.value][900], -81),
           secondary: {
             main: "#e5e8ec",
-            light: shadeColor(colors[settings.accent_scheme.value][900], -50),
-            dark: shadeColor(colors[settings.accent_scheme.value][800], -70),
+            light: shade(colors[settings.accent_scheme.value][800], -66),
+            dark: shade(colors[settings.accent_scheme.value][800], -70),
           },
         },
   });

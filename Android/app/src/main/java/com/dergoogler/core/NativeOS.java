@@ -1,11 +1,13 @@
 package com.dergoogler.core;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -78,18 +80,30 @@ public class NativeOS {
     }
 
     @JavascriptInterface
+    public int androidSdk() {
+        return Build.VERSION.SDK_INT;
+    }
+
+    private static int manipulateColor(int color, float factor) {
+        int a = Color.alpha(color);
+        int r = Math.round(Color.red(color) * (100 + factor) / 100);
+        int g = Math.round(Color.green(color) * (100 + factor) / 100);
+        int b = Math.round(Color.blue(color) * (100 + factor) / 100);
+        return Color.argb(a,
+                Math.min(r,255),
+                Math.min(g,255),
+                Math.min(b,255));
+    }
+
+    @JavascriptInterface
     public String getMonetColor(String id) {
-        int nameResourceID = this.ctx.getResources().getIdentifier("@android:color/" + id,
+        @SuppressLint("DiscouragedApi") int nameResourceID = this.ctx.getResources().getIdentifier("@android:color/" + id,
                 "color", this.ctx.getApplicationInfo().packageName);
         if (nameResourceID == 0) {
             throw new IllegalArgumentException(
                     "No resource string found with name " + id);
         } else {
-            int color = ContextCompat.getColor(this.ctx, nameResourceID);
-            int red = Color.red(color);
-            int blue = Color.blue(color);
-            int green = Color.green(color);
-            return String.format("#%02x%02x%02x", red, green, blue);
+            return String.format("#%06x", manipulateColor(ContextCompat.getColor(this.ctx, nameResourceID) & 0xffffff, 75));
         }
     }
 

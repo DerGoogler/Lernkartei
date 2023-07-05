@@ -1,9 +1,11 @@
 import { Paper, PaperProps, styled } from "@mui/material";
-import { colors, useSettings } from "../../../hooks/useSettings";
-import shadeColor from "../../../util/shadeColor";
+import { colors, useSettings, useTheme } from "../../../hooks/useSettings";
+import useShadeColor from "../../../hooks/useShadeColor";
 
 export const StyledCard = (props: PaperProps): JSX.Element => {
   const { settings } = useSettings();
+  const { scheme } = useTheme();
+  const shade = useShadeColor();
 
   const C = styled(Paper)(({ theme }) => ({
     margin: "8px 0px 0px",
@@ -13,7 +15,7 @@ export const StyledCard = (props: PaperProps): JSX.Element => {
       backgroundImage: "none",
       overflow: "hidden",
       backgroundColor: settings.darkmode
-        ? shadeColor(colors[settings.accent_scheme.value][900], -70)
+        ? shade(scheme[900], -65) + "47"
         : "rgb(255, 255, 255)",
       border: `1px solid ${theme.palette.divider}`,
       transform: "translate(0px, -8px)",

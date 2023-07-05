@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material";
 import { Theme } from "@mui/material";
 import React from "react";
 import { colors, useSettings } from "../../hooks/useSettings";
-import shadeColor from "../../util/shadeColor";
+import useShadeColor from "../../hooks/useShadeColor";
 
 interface Props {
   children?: React.ReactNode;
@@ -17,7 +17,7 @@ interface T {
 export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
   const theme = useTheme();
   const { settings, setSettings } = useSettings();
-  // const { darkmode, setDarkmode } = useDarkmode();
+  const shade = useShadeColor();
 
   const Article = styled.article(({ theme }: T) => ({
     msTextSizeAdjust: "100%",
@@ -162,7 +162,7 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
         backgroundColor: theme.palette.background.default,
         borderTop: `thin solid ${theme.palette.divider}`,
         "&:nth-child(2n)": {
-          backgroundColor: settings.darkmode ? shadeColor(colors[settings.accent_scheme.value][900], -85) : "#f6f8fa",
+          backgroundColor: settings.darkmode ? shade(colors[settings.accent_scheme.value][900], -85) : "#f6f8fa",
         },
       },
       img: { backgroundColor: "transparent" },
@@ -269,7 +269,7 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: settings.darkmode ? shadeColor(colors[settings.accent_scheme.value][900], -85) : "#f6f8fa",
+      backgroundColor: settings.darkmode ? shade(colors[settings.accent_scheme.value][900], -85) : "#f6f8fa",
       borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",

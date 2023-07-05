@@ -11,7 +11,7 @@ import { os } from "@Native/Os";
 
 function IntroActivity() {
   const { context, extra } = useActivity();
-  const { scheme, shadeColor, theme } = useTheme();
+  const { scheme, theme } = useTheme();
 
   const { _1, _2 } = Phones({
     screenColor: scheme[500],
