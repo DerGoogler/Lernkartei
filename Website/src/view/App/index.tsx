@@ -9,7 +9,7 @@ import { useActivity } from "../../hooks/useActivity";
 import { For } from "@Components/For";
 import { useKartei } from "../../hooks/useKartei";
 import { GroupCard } from "./components/GroupCard";
-import { Alert, AlertTitle, Box } from "@mui/material";
+import { Alert, AlertTitle, Box, Link } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
 import { Searchbar } from "@Components/Searchbar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
@@ -64,7 +64,7 @@ export function App() {
             }}
           >
             <AlertTitle>{strings.warning}</AlertTitle>
-            {strings.warning_text_web_version}
+            {strings.warning_text_web_version} Download <Link href="https://play.google.com/store/apps/details?id=com.dergoogler.kartei">here</Link> the app
           </Alert>
         )}
 
