@@ -38,6 +38,7 @@ function Video(props: VideoProps) {
   }));
 
   switch (type) {
+    case "video/yt":
     case "video/youtube":
       return (
         <>

@@ -1,42 +1,52 @@
 package com.dergoogler.core;
 
+import android.app.Activity;
 import android.os.Environment;
 import android.webkit.JavascriptInterface;
 
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 
 public class NativeFile {
-    private final File ext = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+    public final File ext = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+    private final Activity ctx;
+
+    public NativeFile(Activity ctx) {
+        this.ctx = ctx;
+    }
+
+    private void createCreate(File file, String content) {
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(content.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @JavascriptInterface
     public void create(String file, String content) {
-        try {
-            File outFile1 = new File(ext + "/Kartei/" + file);
-            // Create File
-            boolean fileCreated = outFile1.createNewFile();
-            if (!fileCreated) {
-                Writer overWrite = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream(ext + "/Kartei/" + file, true), StandardCharsets.UTF_8), 10240);
-                overWrite.write(content);
-                overWrite.flush();
-                overWrite.close();
+        File d = new File(ext + "/Kartei/");
+        File f = new File(ext + "/Kartei/", file);
+        if (!d.exists()) {
+            if (d.mkdirs()) {
+                createCreate(f, content);
             }
-            Writer out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(outFile1, true), StandardCharsets.UTF_8), 10240);
-            out.write(content);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            createCreate(f, content);
         }
+
+    }
+
+    @JavascriptInterface
+    public String list() {
+        String[] modules = new File(ext + "/Kartei/").list();
+        return String.join(",", modules);
     }
 
     @JavascriptInterface
@@ -51,9 +61,7 @@ public class NativeFile {
         return f.isDirectory();
     }
 
-    @JavascriptInterface
-    public String read(String file) {
-        File readfile = new File(ext + "/Kartei/" + file);
+    private String createRead(File readfile) {
         StringBuilder text = new StringBuilder();
         try {
             BufferedReader br = new BufferedReader(new FileReader(readfile));
@@ -68,5 +76,11 @@ public class NativeFile {
             e.printStackTrace();
         }
         return text.toString();
+    }
+
+    @JavascriptInterface
+    public String read(String file) {
+        File readfile = new File(ext + "/Kartei/" + file);
+        return createRead(readfile);
     }
 }

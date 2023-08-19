@@ -1,48 +1,43 @@
-import * as React from "react";
-import { Page, Toolbar, ToolbarButton } from "react-onsenui";
+import React from "react";
 import { Icon } from "../../components/Icon";
 import { Add, Menu } from "@mui/icons-material";
 import AddActivity from "../AddActivity";
-import Material3 from "../../components/Material3";
 import { BuildConfig } from "../../native/BuildConfig";
 import { StyledSection } from "../../components/StyledSection";
 import { os } from "../../native/Os";
-import { LoadingScreen } from "../../components/LoadingScreen";
 import { useActivity } from "../../hooks/useActivity";
-
-const CardRenderer = React.lazy(() => import("./components/GroupRenderer"));
+import { For } from "@Components/For";
+import { useKartei } from "../../hooks/useKartei";
+import { GroupCard } from "./components/GroupCard";
+import { Alert, AlertTitle, Box, Link } from "@mui/material";
+import { useStrings } from "@Hooks/useStrings";
+import { Searchbar } from "@Components/Searchbar";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 export function App() {
   const { context } = useActivity();
+  const { strings } = useStrings();
+  const { cards, actions } = useKartei();
+  const [search, setSearch] = React.useState("");
 
-  // These are native Android call, they won't be called on browsers
-  // os.useOnBackPressed(() => {
-  //   if (context.splitter.state()) {
-  //     context.splitter.hide();
-  //   } else {
-  //     os.close();
-  //   }
-  // });
-  os.useOnBackPressed(context.popPage);
-  os.useOnResume(() => {
-    console.log("User has been returned to the app");
-  });
+  const filteredGroups = React.useMemo(() => actions.filterGroups(search), [cards, search]);
 
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
         <div className="left">
-          <ToolbarButton
+          <Toolbar.Button
+            icon={Menu}
             onClick={() => {
               context.splitter.show();
             }}
-          >
-            <Icon icon={Menu} keepLight />
-          </ToolbarButton>
+          />
         </div>
         <div className="center">Kartei {BuildConfig.DEBUG ? "Debug" : ""}</div>
         <div className="right">
-          <ToolbarButton
+          <Toolbar.Button
+            icon={Add}
             onClick={() => {
               context.pushPage({
                 component: AddActivity,
@@ -52,9 +47,7 @@ export function App() {
                 },
               });
             }}
-          >
-            <Icon icon={Add} keepLight />
-          </ToolbarButton>
+          />
         </div>
       </Toolbar>
     );
@@ -63,9 +56,59 @@ export function App() {
   return (
     <Page renderToolbar={renderToolbar}>
       <StyledSection>
-        <React.Suspense fallback={<LoadingScreen />}>
-          <CardRenderer />
-        </React.Suspense>
+        {!os.isAndroid && (
+          <Alert
+            severity="warning"
+            style={{
+              marginBottom: 8,
+            }}
+          >
+            <AlertTitle>{strings.warning}</AlertTitle>
+            {strings.warning_text_web_version} Download <Link href="https://play.google.com/store/apps/details?id=com.dergoogler.kartei">here</Link> the app
+          </Alert>
+        )}
+
+        <Searchbar placeholder={strings.search_groups} onChange={(e) => setSearch(e.target.value)} />
+        <For
+          each={filteredGroups}
+          fallback={() => (
+            <Box
+              component="h4"
+              sx={(theme) => ({
+                color: theme.palette.secondary.light,
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                textAlign: "center",
+                WebkitTransform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -50%)",
+              })}
+            >
+              Add new groups with the
+              {
+                <Icon
+                  sx={(theme) => ({
+                    color: theme.palette.secondary.dark,
+                    verticalAlign: "middle",
+                  })}
+                  icon={Add}
+                />
+              }
+              icon
+            </Box>
+          )}
+          catch={(e: Error | undefined) => (
+            <Box sx={(theme) => ({ color: theme.palette.text.primary })}>
+              There was an error while parsing your cards! Seems that your cards have an invalid JSON Format.
+              <br />
+              ERROR: {e?.message}
+            </Box>
+          )}
+        >
+          {(card, index) => (
+            <GroupCard key={String(card.name + index * 5)} card={card} index={index} actions={actions} />
+          )}
+        </For>
       </StyledSection>
     </Page>
   );

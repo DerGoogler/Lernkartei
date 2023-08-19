@@ -1,12 +1,19 @@
 import * as React from "react";
 import { SearchRounded } from "@mui/icons-material";
 import { Button, SearchInput } from "react-onsenui";
-import { styled, useTheme } from "@mui/material";
-import { colors, default_scheme, isDarkmode } from "../theme";
-import shadeColor from "../util/shadeColor";
+import { FormControl, styled, useFormControl, useTheme } from "@mui/material";
+import useShadeColor from "../hooks/useShadeColor";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import { colors, useSettings } from "../hooks/useSettings";
 
 type SearchbarProps = {
-  onSearchClick: (value: string) => void;
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   placeholder: string;
 };
 
@@ -25,20 +32,25 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledSearchInput = styled(SearchInput)(({ theme }) => ({
-  width: "100%",
-  borderRight: "none",
-  "& .search-input--material": {
-    border: `1px solid ${theme.palette.divider}`,
-    borderRadius: `${theme.shape.borderRadius}px 0px 0px ${theme.shape.borderRadius}px`,
-    backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -70) : "rgb(255, 255, 255)",
-  },
-}));
+const StyledSearchInput = (props: any) => {
+  const C = styled(SearchInput)(({ theme }) => ({
+    width: "100%",
+    borderRight: "none",
+    "& .search-input--material": {
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: `${theme.shape.borderRadius}px 0px 0px ${theme.shape.borderRadius}px`,
+      // backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -70) : "rgb(255, 255, 255)",
+    },
+  }));
 
-export const Searchbar = ({ placeholder, onSearchClick }: SearchbarProps) => {
+  return <C {...props} />;
+};
+
+export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
   const theme = useTheme();
-
-  const [value, setVaule] = React.useState<string>("");
+  const shade = useShadeColor();
+  const { settings, setSettings } = useSettings();
+  const [value, setVaule] = React.useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVaule(event.target.value);
@@ -54,29 +66,43 @@ export const Searchbar = ({ placeholder, onSearchClick }: SearchbarProps) => {
         width: "100%",
       }}
     >
-      <StyledSearchInput
-        placeholder={placeholder}
-        onKeyDown={(e: KeyboardEvent) => {
-          if (e.key === "Enter") {
-            onSearchClick(value);
-          }
-        }}
-        // @ts-ignore
-        onChange={handleChange}
-      />
-      <StyledButton
-        style={{
-          borderRadius: `0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px`,
-        }}
-        // @ts-ignore
-        onClick={() => {
-          onSearchClick(value);
+      <Paper
+        component="form"
+        variant="outlined"
+        sx={{
+          p: "2px 4px",
+          display: "flex",
+          alignItems: "center",
+          width: 400,
+          bgcolor: settings.darkmode ? shade(colors[settings.accent_scheme.value][900], -70) : "rgb(255, 255, 255)",
         }}
       >
-        <div>
-          <SearchRounded sx={{ color: "white" }} />
-        </div>
-      </StyledButton>
+        <IconButton
+          // onClick={() => {
+          //   onSearch(value);
+          // }}
+          sx={{ p: "10px" }}
+          aria-label="menu"
+        >
+          <SearchIcon />
+        </IconButton>
+        <FormControl fullWidth>
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder={placeholder}
+            inputProps={{
+              "aria-label": placeholder,
+              // onKeyDown: (e: any) => {
+              //   if (e.key === "Enter") {
+              //     e.preventDefault();
+              //     onSearch(value);
+              //   }
+              // },
+            }}
+            onChange={onChange}
+          />
+        </FormControl>
+      </Paper>
     </div>
   );
 };

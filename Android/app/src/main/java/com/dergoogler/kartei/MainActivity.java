@@ -1,113 +1,68 @@
 package com.dergoogler.kartei;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.webkit.ConsoleMessage;
+import android.view.KeyEvent;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.dergoogler.component.ModuleChromeClient;
-import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeFile;
 import com.dergoogler.core.NativeOS;
-import com.dergoogler.core.NativeSharedPreferences;
+import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.NativeUtils;
 
-import java.io.IOException;
+import org.apache.cordova.CordovaActivity;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.CordovaWebViewImpl;
+import org.apache.cordova.CoreAndroid;
+import org.apache.cordova.LOG;
+import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewEngine;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends CordovaActivity {
     private static final String TAG = "MainActivity";
-    private ModuleView view;
-    private static Context mContext;
-    private NativeSharedPreferences nsp;
-    private Server server;
 
 
-    @Override
     @SuppressLint("SetJavaScriptEnabled")
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mContext = getApplicationContext();
-        view = findViewById(R.id.mmrl_view);
+        super.init();
 
-        nsp = new NativeSharedPreferences(this);
-        try {
-            server = new Server(nsp.getString("katei", "[]"));
-            server.start();
-        } catch (IOException e) {
-            e.printStackTrace();
+        WebView wv = (WebView) appView.getEngine().getView();
+        // enable Cordova apps to be started in the background
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
+            moveTaskToBack(true);
         }
 
+        // Set by <content src="index.html" /> in config.xml
+        loadUrl(launchUrl);
 
+        WebSettings webViewSettings = wv.getSettings();
         // Options
-        view.setJavaScriptEnabled(true);
-        view.setAllowFileAccess(true);
-        view.setAllowContentAccess(true);
-        view.setAllowFileAccessFromFileURLs(true);
-        view.setAllowUniversalAccessFromFileURLs(true);
-        view.setDatabaseEnabled(true);
-        view.setDomStorageEnabled(false);
-        view.setUserAgentString("KARTEI");
-
-        // Content
-        view.loadUrl("file:///android_asset/web/index.html");
+        webViewSettings.setJavaScriptEnabled(true);
+        webViewSettings.setAllowFileAccess(true);
+        webViewSettings.setAllowContentAccess(true);
+        webViewSettings.setAllowFileAccessFromFileURLs(true);
+        webViewSettings.setAllowUniversalAccessFromFileURLs(true);
+        webViewSettings.setDatabaseEnabled(true);
+        webViewSettings.setDomStorageEnabled(false);
+        webViewSettings.setUserAgentString("KARTEI");
+        webViewSettings.setAllowFileAccessFromFileURLs(false);
+        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
+        webViewSettings.setAllowFileAccess(false);
+        webViewSettings.setAllowContentAccess(false);
 
         // Core
-        view.addJavascriptInterface(new NativeOS(this), "os");
-        view.addJavascriptInterface(new NativeSharedPreferences(this), "sharedpreferences");
-        view.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
-        view.addJavascriptInterface(nsp, "environment");
-        view.addJavascriptInterface(new NativeFile(), "file");
-        view.addJavascriptInterface(new NativeUtils(), "utils");
-
-        view.setModuleChromeClient(new ModuleChromeClient() {
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-
-                switch (consoleMessage.messageLevel()) {
-                    case TIP:
-                        Log.v(TAG, consoleMessage.message());
-                        break;
-                    case LOG:
-                        Log.i(TAG, consoleMessage.message());
-                        break;
-                    case WARNING:
-                        Log.w(TAG, consoleMessage.message());
-                        break;
-                    case ERROR:
-                        Log.e(TAG, consoleMessage.message());
-                        break;
-                    case DEBUG:
-                        Log.d(TAG, consoleMessage.message());
-                        break;
-                }
-                return super.onConsoleMessage(consoleMessage);
-            }
-        });
+        wv.addJavascriptInterface(new NativeOS(this), "os");
+        wv.addJavascriptInterface(new NativeStorage(this), "nativeStorage");
+        wv.addJavascriptInterface(new NativeBuildConfig(), "buildconfig");
+        wv.addJavascriptInterface(new NativeStorage(this), "environment");
+        wv.addJavascriptInterface(new NativeFile(this), "file");
+        wv.addJavascriptInterface(new NativeUtils(), "utils");
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        server.stop();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        view.eventDispatcher("onresume");
-    }
-
-    @Override
-    public void onBackPressed() {
-        view.eventDispatcher("onbackbutton");
-    }
-
-    public static Context getAppContext() {
-        return mContext;
-    }
 }

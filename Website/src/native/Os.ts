@@ -1,5 +1,6 @@
 import ons from "onsenui";
-import React from "react";
+import React, { useCallback } from "react";
+import { useEventListener } from "usehooks-ts";
 import { Native } from "./Native";
 
 export namespace Os {
@@ -48,7 +49,15 @@ class Os extends Native {
     if (this.isAndroid) {
       this.getInterface.makeToast(text, _duration);
     } else {
-      ons.notification.toast(text, { timeout: _duration, animation: "fall" });
+      ons.notification.toast(text, { timeout: _duration, animation: "ascend" });
+    }
+  }
+
+  public androidSdk(): number {
+    if (this.isAndroid) {
+      return this.getInterface.androidSdk();
+    } else {
+      return 0;
     }
   }
 
@@ -89,25 +98,6 @@ class Os extends Native {
   ): void {
     (window as any)[type] = new Event(type.toLowerCase());
     window.removeEventListener(type.toLowerCase(), callback, options);
-  }
-
-  public useOnBackPressed(callback: () => void): void {
-    React.useEffect(() => {
-      this.addNativeEventListener("onbackbutton", callback, false);
-
-      return () => {
-        this.removeNativeEventListener("onbackbutton", callback, false);
-      };
-    }, []);
-  }
-  public useOnResume(callback: () => void): void {
-    React.useEffect(() => {
-      this.addNativeEventListener("onresume", callback, false);
-
-      return () => {
-        this.removeNativeEventListener("onresume", callback, false);
-      };
-    }, []);
   }
 }
 

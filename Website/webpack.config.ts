@@ -1,14 +1,15 @@
-import { resolve, join } from "path";
-import { Configuration } from "webpack";
+import path, { resolve, join } from "path";
+import { Configuration, DefinePlugin } from "webpack";
 // Keep that for typings
 import webpackDevServer from "webpack-dev-server";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import * as fs from "fs";
 
 const defConfig: Configuration = {
   output: {
     filename: "bundle/[name].bundle.js",
-    path: resolve(__dirname, "./../Android/app/src/main/assets/web"),
+    path: resolve(__dirname, "./../Android/app/src/main/assets/www"),
     assetModuleFilename: "files/[name].[ext]",
   },
 };
@@ -21,17 +22,13 @@ const config: Configuration = {
   module: {
     rules: [
       {
-        test: /\.hxml$/,
-        loader: "haxe-loader",
-      },
-      {
         test: /(d)?\.ts(x)?$/,
         loader: "ts-loader",
         exclude: /node_modules/,
       },
       {
         test: /\.d.ts$/i,
-        use: 'raw-loader',
+        use: "raw-loader",
       },
       {
         test: /\.yaml$/,
@@ -74,6 +71,9 @@ const config: Configuration = {
     maxAssetSize: 512000,
   },
   plugins: [
+    new DefinePlugin({
+      LICENSE: JSON.stringify(fs.readFileSync(path.join(__dirname, "./../LICENSE"), "utf-8")),
+    }),
     new MiniCssExtractPlugin({
       filename: "bundle/[name].bundle.css",
     }),
@@ -84,6 +84,15 @@ const config: Configuration = {
   resolve: {
     alias: {
       openfl: resolve(__dirname, "node_modules/openfl/lib/openfl"),
+
+      "@Builders": resolve(__dirname, "src/builders/index.ts"),
+      "@Components": resolve(__dirname, "src/components"),
+      "@Native": resolve(__dirname, "src/native"),
+      "@Types": resolve(__dirname, "src/typings"),
+      "@Styles": resolve(__dirname, "src/styles"),
+      "@Views": resolve(__dirname, "src/views"),
+      "@Util": resolve(__dirname, "src/util"),
+      "@Hooks": resolve(__dirname, "src/hooks"),
     },
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
     extensions: [".js", ".jsx", ".ts", ".tsx", ".scss", ".sass", "css"],
@@ -91,12 +100,15 @@ const config: Configuration = {
 
   devServer: {
     static: {
-      directory: join(__dirname, "./../Android/app/src/main/assets/web"),
+      directory: join(__dirname, "./../Android/app/src/main/assets/www"),
     },
     open: false,
     compress: true,
     historyApiFallback: true,
     port: 9000,
+    client: {
+      overlay: false,
+    },
   },
 };
 

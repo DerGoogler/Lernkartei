@@ -702,7 +702,7 @@ export const LightTheme = () => {
             backgroundImage:
               "linear-gradient(0deg, transparent, transparent 50%, #ddd 50%),\r\n      linear-gradient(90deg, transparent, transparent 50%, #ddd 50%)",
           },
-          ".alert-dialog-button--rowfooter:first-child": {
+          ".alert-dialog-button--rowfooter:first-of-type": {
             borderTop: "none",
             backgroundSize: "100% 1px",
             backgroundRepeat: "no-repeat",
@@ -712,7 +712,7 @@ export const LightTheme = () => {
           ".alert-dialog-button--material": {
             background: "none",
           },
-          ".alert-dialog-button--rowfooter--material, .alert-dialog-button--rowfooter--material:first-child": {
+          ".alert-dialog-button--rowfooter--material, .alert-dialog-button--rowfooter--material:first-of-type": {
             background: "none",
           },
           ".alert-dialog-button--primal--material": {
@@ -798,7 +798,7 @@ export const LightTheme = () => {
           padding: "0",
           overflow: "visible",
         },
-        ".toolbar__center:first-child:last-child": {
+        ".toolbar__center:first-of-type:last-child": {
           width: "100%",
         },
         ".bottom-bar": {
@@ -907,7 +907,7 @@ export const LightTheme = () => {
           textAlign: "left",
           lineHeight: "56px",
         },
-        ".toolbar--material__center:first-child": {
+        ".toolbar--material__center:first-of-type": {
           marginLeft: "16px",
         },
         ".toolbar--material__center:last-child": {
@@ -1435,7 +1435,7 @@ export const LightTheme = () => {
           width: "100%",
           transition: "none",
         },
-        ".button-bar__item:first-child > .button-bar__button": {
+        ".button-bar__item:first-of-type > .button-bar__button": {
           borderLeftWidth: "1px",
           borderRadius: "4px 0 0 4px",
         },
@@ -1543,7 +1543,7 @@ export const LightTheme = () => {
           color: "#fff",
           transition: "none",
         },
-        ".segment__item:first-child > .segment__button": {
+        ".segment__item:first-of-type > .segment__button": {
           borderLeftWidth: "1px",
           borderRadius: "4px 0 0 4px",
         },
@@ -1582,7 +1582,7 @@ export const LightTheme = () => {
           borderRadius: "0",
           borderWidth: "0",
         },
-        ".segment--material__item:first-child > .segment--material__button, .segment--material__item:last-child > .segment--material__button":
+        ".segment--material__item:first-of-type > .segment--material__button, .segment--material__item:last-child > .segment--material__button":
           {
             borderRadius: "0",
             borderWidth: "0",
@@ -1709,7 +1709,7 @@ export const LightTheme = () => {
           margin: "0",
           fontWeight: "400",
         },
-        ".tabbar__label:first-child": {
+        ".tabbar__label:first-of-type": {
           fontSize: "16px",
           lineHeight: "49px",
           margin: "0",
@@ -1827,7 +1827,7 @@ export const LightTheme = () => {
           webkitFontSmoothing: "antialiased",
           fontWeight: "400",
         },
-        ".tabbar--material__label:first-child": {
+        ".tabbar--material__label:first-of-type": {
           fontFamily: '"Roboto", "Noto", sans-serif',
           webkitFontSmoothing: "antialiased",
           fontWeight: "500",
@@ -2461,7 +2461,7 @@ export const LightTheme = () => {
           padding: "0 0 0 14px",
           margin: "0 0 -1px 0",
           // color: "#1f1f21",
-          color: theme.palette.primary.contrastText,
+          color: theme.palette.text.primary,
           transition: "background-color 0.2s linear",
         },
         ".list-item__top": {
@@ -2672,7 +2672,7 @@ export const LightTheme = () => {
         ".list-item--material__subtitle": {
           marginTop: "4px",
         },
-        ".list-item--material:first-child": {
+        ".list-item--material:first-of-type": {
           boxShadow: "none",
         },
         ".list-item--material__left": {
@@ -3406,7 +3406,7 @@ export const LightTheme = () => {
           width: "100%",
           borderLeft: "1px solid #ddd",
         },
-        ".alert-dialog-button--rowfooter:first-child": {
+        ".alert-dialog-button--rowfooter:first-of-type": {
           borderLeft: "none",
         },
         ".alert-dialog-mask": {
@@ -3494,7 +3494,7 @@ export const LightTheme = () => {
         ".alert-dialog-button--material:active": {
           backgroundColor: "initial",
         },
-        ".alert-dialog-button--rowfooter--material, .alert-dialog-button--rowfooter--material:first-child": {
+        ".alert-dialog-button--rowfooter--material, .alert-dialog-button--rowfooter--material:first-of-type": {
           border: "0",
         },
         ".alert-dialog-button--primal--material": {
@@ -4240,7 +4240,7 @@ export const LightTheme = () => {
           backgroundPosition: "bottom",
           backgroundImage: "linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 100%)",
         },
-        ".action-sheet-button:first-child": {
+        ".action-sheet-button:first-of-type": {
           borderTopLeftRadius: "12px",
           borderTopRightRadius: "12px",
         },
@@ -4286,7 +4286,7 @@ export const LightTheme = () => {
           backgroundPosition: "bottom",
           backgroundImage: "linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 100%)",
         },
-        ".action-sheet-title:first-child": {
+        ".action-sheet-title:first-of-type": {
           borderTopLeftRadius: "12px",
           borderTopRightRadius: "12px",
         },
@@ -4324,7 +4324,7 @@ export const LightTheme = () => {
           color: "#686868",
           backgroundColor: "white",
         },
-        ".action-sheet-title--material:first-child": {
+        ".action-sheet-title--material:first-of-type": {
           borderRadius: "0",
         },
         ".action-sheet-button--material": {
@@ -4342,7 +4342,7 @@ export const LightTheme = () => {
 
           backgroundColor: "white",
         },
-        ".action-sheet-button--material:first-child": {
+        ".action-sheet-button--material:first-of-type": {
           borderRadius: "0",
         },
         ".action-sheet-button--material:nth-last-of-type(2)": {
@@ -4474,8 +4474,10 @@ export const LightTheme = () => {
           right: "0",
           bottom: "0",
           margin: "0",
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          borderRadius: "0",
+          backgroundColor: theme.palette.primary.main,
+          borderRadius: 0,
+          boxShadow:
+            "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
           padding: "16px 24px",
         },
         ".toast--material__message": {

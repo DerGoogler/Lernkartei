@@ -1,11 +1,8 @@
-import printHtmlBlock from "print-html-block";
 import { Stack, styled, TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ons from "onsenui";
 import * as React from "react";
-import { BackButton, Page, Toolbar } from "react-onsenui";
-import AceEditor from "react-ace";
+import Button from "@mui/material/Button";
 import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
-import Material3 from "../../components/Material3";
 import {
   CheckRounded,
   CloseRounded,
@@ -18,135 +15,144 @@ import {
   ImageRounded,
   LinkRounded,
   WarningAmberRounded,
+  Redo,
+  Undo,
 } from "@mui/icons-material";
 import DescriptonActivity from "../DescriptonActivity";
-import { isDesktop, isMobile } from "react-device-detect";
-import { useConfirm } from "material-ui-confirm";
+import { isDesktop } from "react-device-detect";
 import { os } from "../../native/Os";
 import { useKartei } from "../../hooks/useKartei";
 import { Markup } from "../../components/Markdown";
 import { useActivity } from "../../hooks/useActivity";
+import { useStrings } from "../../hooks/useStrings";
+import { useReactToPrint } from "react-to-print";
+import { Editor } from "./components/StyledAceEditor";
+import AceEditor from "react-ace";
+import { useSettings } from "@Hooks/useSettings";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 type Extra = { card: Karten; index: number; edit: boolean; cardIndex: number; shortDesc: string; desc: string };
 
-type TXTFormat = {
-  name: string;
+interface CustomCommand extends Command {
   icon: React.ElementType;
   iconStyle?: React.CSSProperties;
-};
-const formatTXT: TXTFormat[] = [
-  {
-    name: "bold",
-    icon: FormatBoldRounded,
-  },
-  {
-    name: "italic",
-    icon: FormatItalicRounded,
-  },
-  {
-    name: "strike-through",
-    icon: FormatStrikethroughRounded,
-  },
-  {
-    name: "link",
-    icon: LinkRounded,
-  },
-  {
-    name: "image",
-    icon: ImageRounded,
-  },
-  {
-    name: "unordered-list",
-    icon: FormatListBulletedRounded,
-  },
-  {
-    name: "ordered-list",
-    icon: FormatListNumberedRounded,
-  },
-  {
-    name: "block-quotes",
-    icon: FormatQuoteRounded,
-  },
-  {
-    name: "insert-checkmark",
-    icon: CheckRounded,
-    iconStyle: {
-      color: "#1a7f37",
-    },
-  },
-  {
-    name: "insert-warnmark",
-    icon: WarningAmberRounded,
-    iconStyle: {
-      color: "#d29922",
-    },
-  },
-  {
-    name: "insert-dangermark",
-    icon: CloseRounded,
-    iconStyle: {
-      color: "#cf222e",
-    },
-  },
-];
+}
 
 function AddCardToGroupActivity() {
   const { context, extra } = useActivity<Extra>();
+  const { strings } = useStrings();
+  const { cards, setCards, actions } = useKartei();
+
+  // Settings
+  const { settings } = useSettings();
 
   const { edit, desc, shortDesc, index, card, cardIndex } = extra;
   const [shortDescription, setShortDescription] = React.useState(edit ? shortDesc : "");
   const [description, setDescription] = React.useState(edit ? desc : "");
   const [shortDescriptionError, setShortDescriptionError] = React.useState(edit ? false : true);
-  const [cards, setCards] = useKartei();
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
+  const markdownRefAdvanced = React.useRef<AceEditor>(null);
+  const printRef = React.useRef<HTMLDivElement>(null);
 
-  const confirm = useConfirm();
-  // **** Experimental
-  // const handleBackButtonClick = (event?: React.MouseEvent<HTMLElement>) => {
-  //   event?.preventDefault();
-  //   confirm({
-  //     title: "Verlassen?",
-  //     description: "Bist Du dir sicher, dass Du die Bearbeitung aufgeben willst?",
-  //   }).then(() => pageTools.popPage());
-  // };
-  // os.useOnBackPressed(handleBackButtonClick);
+  const customTextareaCommands: CustomCommand[] = React.useMemo(
+    () => [
+      ...(settings.__ace_settings_enabled
+        ? [
+            {
+              name: "undo",
+              icon: Undo,
+              handler: ({ cursor }) => {
+                markdownRefAdvanced.current?.editor.undo();
+              },
+            },
+            {
+              name: "redo",
+              icon: Redo,
 
-  const handleBackButtonClick = context.popPage;
-  os.useOnBackPressed(handleBackButtonClick);
+              handler: ({ cursor }) => {
+                markdownRefAdvanced.current?.editor.redo();
+              },
+            },
+          ]
+        : []),
+      {
+        name: "bold",
+        icon: FormatBoldRounded,
+      },
+      {
+        name: "italic",
+        icon: FormatItalicRounded,
+      },
+      {
+        name: "strike-through",
+        icon: FormatStrikethroughRounded,
+      },
+      {
+        name: "link",
+        icon: LinkRounded,
+      },
+      {
+        name: "image",
+        icon: ImageRounded,
+      },
+      {
+        name: "unordered-list",
+        icon: FormatListBulletedRounded,
+      },
+      {
+        name: "ordered-list",
+        icon: FormatListNumberedRounded,
+      },
+      {
+        name: "block-quotes",
+        icon: FormatQuoteRounded,
+      },
+      {
+        name: "insert-checkmark",
+        icon: CheckRounded,
+        iconStyle: {
+          color: "#1a7f37",
+        },
+        handler: ({ cursor }) => {
+          cursor.insert(`${cursor.MARKER}<checkmark/>${cursor.MARKER}`);
+        },
+      },
+      {
+        name: "insert-warnmark",
+        icon: WarningAmberRounded,
+        iconStyle: {
+          color: "#d29922",
+        },
+        handler: ({ cursor }) => {
+          cursor.insert(`${cursor.MARKER}<warnmark/>${cursor.MARKER}`);
+        },
+      },
+      {
+        name: "insert-dangermark",
+        icon: CloseRounded,
+        iconStyle: {
+          color: "#cf222e",
+        },
+        handler: ({ cursor }) => {
+          cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
+        },
+      },
+    ],
+    [settings.__ace_settings_enabled]
+  );
 
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={handleBackButtonClick}>Back</BackButton>
-        </div>
-        <div className="center">{edit ? "Karte bearbeiten" : "Neue Karte"}</div>
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>{edit ? strings.edit_card : strings.new_card}</Toolbar.Center>
       </Toolbar>
     );
   };
-  const customTextareaCommands: Command[] = [
-    {
-      name: "insert-checkmark",
-      handler: ({ cursor }) => {
-        // MARKER - means a cursor position, or a selection range if specified two markers
-        cursor.insert(`${cursor.MARKER}<checkmark/>${cursor.MARKER}`);
-      },
-    },
-    {
-      name: "insert-dangermark",
-      handler: ({ cursor }) => {
-        // MARKER - means a cursor position, or a selection range if specified two markers
-        cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
-      },
-    },
-    {
-      name: "insert-warnmark",
-      handler: ({ cursor }) => {
-        // MARKER - means a cursor position, or a selection range if specified two markers
-        cursor.insert(`${cursor.MARKER}<warnmark/>${cursor.MARKER}`);
-      },
-    },
-  ];
 
   const handleSave = () => {
     if (shortDescription != "") {
@@ -156,31 +162,33 @@ function AddCardToGroupActivity() {
           description: description,
         };
 
-        setCards((tmp) => {
-          tmp[index].karten.push(obj);
-          context.popPage();
-          os.toast("Deine Karte wurde gespeichert.", "short");
-          return tmp;
+        actions.addKarte({
+          index: index,
+          data: obj,
+          callback() {
+            context.popPage();
+            os.toast(strings.card_saved, "short");
+          },
         });
       } catch (error) {
         alert((error as Error).message);
       }
     } else {
-      os.toast("Kurz Beschreibung darf nicht leer sein!", "short");
+      os.toast(strings.shortDescriptionNoEmpty, "short");
     }
   };
 
   const handleEdit = () => {
-    setCards((tmp) => {
-      tmp[cardIndex].karten[index].shortDescription = shortDescription;
-      tmp[cardIndex].karten[index].description = description;
-
-      if (shortDescription === "") {
-        ons.notification.alert("Kurz Beschreibung darf nicht leer sein!");
-      } else {
-        context.popPage();
-      }
-      return tmp;
+    actions.editKarte(cardIndex, index, {
+      shortDescription: shortDescription,
+      description: description,
+      callback() {
+        if (shortDescription === "") {
+          ons.notification.alert(strings.shortDescriptionNoEmpty);
+        } else {
+          context.popPage();
+        }
+      },
     });
   };
 
@@ -193,18 +201,46 @@ function AddCardToGroupActivity() {
     setDescription(e.target.value);
   };
 
+  const reactToPrintContent = React.useCallback(() => {
+    return printRef.current;
+  }, [printRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: "document",
+    removeAfterPrint: false,
+  });
+
+  const handlePreviewOrPrint = () => {
+    if (!os.isAndroid && isDesktop) {
+      handlePrint();
+    } else {
+      context.pushPage<any>({
+        component: DescriptonActivity,
+        props: {
+          key: `preview_${shortDescription}`,
+          extra: {
+            desc: description,
+            shortDesc: shortDescription,
+            index: "Preview",
+            cardIndex: index,
+          },
+        },
+      });
+    }
+  };
+
   return (
     <Page renderToolbar={renderToolbar}>
       <section style={{ padding: 8, height: "100%", width: "100%", display: "flex", flexDirection: "column" }}>
         <span>
           <TextField
             fullWidth
-            // margin="dense"
             type="text"
-            label="Kurze Beschreibung"
+            label={strings.shortDescription}
             value={shortDescription}
             error={shortDescriptionError}
-            helperText={shortDescriptionError ? "Darf nicht leer sein" : ""}
+            helperText={shortDescriptionError ? strings.shortDescriptionNoEmpty : ""}
             variant="outlined"
             onChange={handleShortDescriptionChange}
           />
@@ -217,15 +253,8 @@ function AddCardToGroupActivity() {
             overflow: "auto",
           }}
         >
-          {formatTXT.map((El) => (
-            <ToggleButton
-              style={{
-                border: "1px solid rgb(196, 196, 196)",
-              }}
-              value={El.name}
-              key={El.name}
-              onClick={() => markdownRef.current?.trigger(El.name)}
-            >
+          {customTextareaCommands.map((El) => (
+            <ToggleButton value={El.name} key={String(El.name)} onClick={() => markdownRef.current?.trigger(El.name)}>
               {/* @ts-ignore */}
               <El.icon style={El.iconStyle} />
             </ToggleButton>
@@ -243,30 +272,42 @@ function AddCardToGroupActivity() {
             spacing={1}
           >
             <TextareaMarkdown.Wrapper ref={markdownRef} commands={customTextareaCommands}>
-              <StyledTextField
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  width: "100%",
-                }}
-                fullWidth
-                type="text"
-                label="Beschreibung"
-                value={description}
-                variant="outlined"
-                multiline
-                rows={4}
-                inputProps={{
-                  style: {
+              {settings.__ace_settings_enabled ? (
+                <Editor
+                  ref={markdownRefAdvanced}
+                  mode="markdown"
+                  onChange={(val: string) => {
+                    setDescription(val);
+                  }}
+                  value={description}
+                  placeholder={""}
+                />
+              ) : (
+                <StyledTextField
+                  style={{
+                    flex: 1,
                     height: "100%",
-                  },
-                }}
-                onChange={handleDescriptionChange}
-              />
+                    width: "100%",
+                  }}
+                  fullWidth
+                  type="text"
+                  label={strings.description}
+                  value={description}
+                  variant="outlined"
+                  multiline
+                  rows={4}
+                  inputProps={{
+                    style: {
+                      height: "100%",
+                    },
+                  }}
+                  onChange={handleDescriptionChange}
+                />
+              )}
             </TextareaMarkdown.Wrapper>
             {!os.isAndroid && isDesktop && (
               <Preview className="preview">
-                <Markup children={description} />
+                <Markup ref={printRef} children={description} />
               </Preview>
             )}
           </Stack>
@@ -280,34 +321,13 @@ function AddCardToGroupActivity() {
           alignItems="center"
           spacing={1}
         >
-          <Material3.Button modifier="large" onClick={edit ? handleEdit : handleSave}>
-            Speichern
-          </Material3.Button>
-          <Material3.Button
-            modifier="large"
-            onClick={() => {
-              if (!os.isAndroid && isDesktop) {
-                printHtmlBlock(".preview", {
-                  importStyle: true,
-                });
-              } else {
-                context.pushPage<any>({
-                  component: DescriptonActivity,
-                  props: {
-                    key: `preview_${shortDescription}`,
-                    extra: {
-                      desc: description,
-                      shortDesc: shortDescription,
-                      index: "Preview",
-                      cardIndex: index,
-                    },
-                  },
-                });
-              }
-            }}
-          >
-            {!os.isAndroid && isDesktop ? "Drucken" : "Ansicht"}
-          </Material3.Button>
+          <Button fullWidth variant="contained" disableElevation onClick={edit ? handleEdit : handleSave}>
+            {strings.save}
+          </Button>
+          <Button fullWidth variant="outlined" onClick={handlePreviewOrPrint}>
+            {" "}
+            {!os.isAndroid && isDesktop ? strings.print : strings.preview}
+          </Button>
         </Stack>
       </section>
     </Page>
@@ -323,7 +343,6 @@ const Preview = styled("div")(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   borderStyle: "solid",
   borderWidth: "1px",
-  // overflow: "hidden",
   minWidth: "0%",
   borderColor: "rgba(0, 0, 0, 0.23)",
   article: {

@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import { useTheme } from "@mui/material";
 import { Theme } from "@mui/material";
-import { colors, default_scheme, isDarkmode } from "../../theme";
-import shadeColor from "../../util/shadeColor";
+import React from "react";
+import { colors, useSettings } from "../../hooks/useSettings";
+import useShadeColor from "../../hooks/useShadeColor";
 
 interface Props {
   children?: React.ReactNode;
@@ -13,8 +14,10 @@ interface T {
   theme: Theme;
 }
 
-export const StyledMarkdown = (props: Props) => {
+export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
   const theme = useTheme();
+  const { settings, setSettings } = useSettings();
+  const shade = useShadeColor();
 
   const Article = styled.article(({ theme }: T) => ({
     msTextSizeAdjust: "100%",
@@ -159,7 +162,7 @@ export const StyledMarkdown = (props: Props) => {
         backgroundColor: theme.palette.background.default,
         borderTop: `thin solid ${theme.palette.divider}`,
         "&:nth-child(2n)": {
-          backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -85) : "#f6f8fa",
+          backgroundColor: settings.darkmode ? shade(colors[settings.accent_scheme.value][900], -85) : "#f6f8fa",
         },
       },
       img: { backgroundColor: "transparent" },
@@ -266,7 +269,7 @@ export const StyledMarkdown = (props: Props) => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -85) : "#f6f8fa",
+      backgroundColor: settings.darkmode ? shade(colors[settings.accent_scheme.value][900], -85) : "#f6f8fa",
       borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",
@@ -327,7 +330,7 @@ export const StyledMarkdown = (props: Props) => {
     "&::before": { display: "table", content: '""' },
     "&::after": { display: "table", clear: "both", content: '""' },
     "> *": {
-      "&:first-child": { marginTop: "0 !important" },
+      "&:first-of-type": { marginTop: "0 !important" },
       "&:last-child": { marginBottom: "0 !important" },
     },
     "a:not([href])": { color: "inherit", textDecoration: "none" },
@@ -344,7 +347,7 @@ export const StyledMarkdown = (props: Props) => {
       marginBottom: "16px",
     },
     "blockquote >": {
-      ":first-child": { marginTop: "0" },
+      ":first-of-type": { marginTop: "0" },
       ":last-child": { marginBottom: "0" },
     },
     "sup > a": {
@@ -562,5 +565,5 @@ export const StyledMarkdown = (props: Props) => {
     ".hljs-char.escape_,\n  .hljs-link,\n  .hljs-params,\n  .hljs-property,\n  .hljs-punctuation,\n  .hljs-tag": {},
   }));
 
-  return <Article theme={theme} style={props.style} children={props.children} />;
-};
+  return <Article ref={ref as any} theme={theme} style={props.style} children={props.children} />;
+});

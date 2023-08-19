@@ -8,6 +8,7 @@ declare global {
     os: any;
     sharedpreferences: any;
     utils: any;
+    nativeStorage: Storage;
   }
 
   interface GlobalEventHandlersEventMap {
@@ -25,15 +26,17 @@ declare global {
     length: number;
   }
 
-  interface GroupOptions {}
+  interface Options {
+    readonly?: boolean;
+  }
 
-  interface Karten extends GroupOptions {
+  interface Karten extends Options {
     index?: number;
     shortDescription: string;
     description: string;
   }
 
-  interface Kartei extends GroupOptions {
+  interface Kartei extends Options {
     group: string;
     name: string;
     description: string;
@@ -53,15 +56,15 @@ declare global {
   interface PushProps<E = {}> {
     readonly extra: E;
     // readonly context: {
-      readonly popPage: () => void;
-      readonly pushPage: <T>(props: PushPropsCore<T>) => void;
-      readonly splitter: {
-        readonly show: () => void;
-        readonly hide: () => void;
-        readonly state: () => boolean;
-      };
-      readonly onBackPressed: (callback: () => void) => void;
-      readonly onResume: (callback: () => void) => void;
+    readonly popPage: () => void;
+    readonly pushPage: <T>(props: PushPropsCore<T>) => void;
+    readonly splitter: {
+      readonly show: () => void;
+      readonly hide: () => void;
+      readonly state: boolean;
+    };
+    readonly onBackPressed: (handler: EventListener) => void;
+    readonly onResume: (handler: EventListener) => void;
     // };
   }
 
@@ -129,6 +132,15 @@ declare global {
       "license-card-license": HTMLAttributes<HTMLSpanElement>;
       karteilink: HTMLAttributes<HTMLDivElement>;
       "kartei-link-wrapper": HTMLAttributes<HTMLDivElement>;
+
+      // Onsen Elements
+      [`ons-toolbar-button`]: HTMLAttributes<HTMLElement>;
+      "ons-toolbar": HTMLAttributes<HTMLElement>;
+      "ons-page": HTMLAttributes<HTMLElement>;
+      "ons-splitter": HTMLAttributes<HTMLElement>;
+      "ons-splitter-content": HTMLAttributes<HTMLElement>;
+      "ons-splitter-side": HTMLAttributes<HTMLElement>;
+      "ons-navigator": HTMLAttributes<HTMLElement>;
     }
   }
 }

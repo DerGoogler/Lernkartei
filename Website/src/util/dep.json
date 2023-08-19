@@ -2,14 +2,14 @@
     {
         "name": "@emotion/react",
         "author": "Emotion Contributors",
-        "version": "11.10.4",
+        "version": "11.10.5",
         "license": "MIT",
         "repository": "https://www.npmjs.com/package/@emotion/react"
     },
     {
         "name": "@emotion/styled",
         "description": "styled API for emotion",
-        "version": "11.10.4",
+        "version": "11.10.5",
         "license": "MIT",
         "repository": "https://www.npmjs.com/package/@emotion/styled"
     },
@@ -26,7 +26,7 @@
         "name": "@mui/icons-material",
         "description": "Material Design icons distributed as SVG React components.",
         "author": "MUI Team",
-        "version": "5.10.3",
+        "version": "5.11.0",
         "license": "MIT",
         "homepage": "https://mui.com/material-ui/material-icons/",
         "repository": "https://www.npmjs.com/package/@mui/icons-material"
@@ -35,7 +35,7 @@
         "name": "@mui/material",
         "description": "React components that implement Google's Material Design.",
         "author": "MUI Team",
-        "version": "5.10.5",
+        "version": "5.11.4",
         "license": "MIT",
         "homepage": "https://mui.com/material-ui/getting-started/overview/",
         "repository": "https://www.npmjs.com/package/@mui/material"
@@ -44,7 +44,7 @@
         "name": "ajv",
         "description": "Another JSON Schema Validator",
         "author": "Evgeny Poberezkin",
-        "version": "8.11.0",
+        "version": "8.12.0",
         "license": "MIT",
         "homepage": "https://ajv.js.org",
         "repository": "https://www.npmjs.com/package/ajv"
@@ -53,10 +53,28 @@
         "name": "axios",
         "description": "Promise based HTTP client for the browser and node.js",
         "author": "Matt Zabriskie",
-        "version": "0.27.2",
+        "version": "1.2.2",
         "license": "MIT",
         "homepage": "https://axios-http.com",
         "repository": "https://www.npmjs.com/package/axios"
+    },
+    {
+        "name": "default-composer",
+        "description": "A JavaScript library that allows you to set default values for nested objects",
+        "author": "Aral Roca <aral-rg@hotmail.com>",
+        "version": "0.4.0",
+        "license": "MIT",
+        "homepage": "https://github.com/aralroca/default-composer#readme",
+        "repository": "https://www.npmjs.com/package/default-composer"
+    },
+    {
+        "name": "eruda",
+        "description": "Console for Mobile Browsers",
+        "author": "redhoodsu",
+        "version": "3.0.0",
+        "license": "MIT",
+        "homepage": "https://eruda.liriliri.io/",
+        "repository": "https://www.npmjs.com/package/eruda"
     },
     {
         "name": "file-saver",
@@ -68,6 +86,15 @@
         "repository": "https://www.npmjs.com/package/file-saver"
     },
     {
+        "name": "firebase",
+        "description": "Firebase JavaScript library for web and Node.js",
+        "author": "Firebase <firebase-support@google.com> (https://firebase.google.com/)",
+        "version": "9.22.2",
+        "license": "Apache-2.0",
+        "homepage": "https://firebase.google.com/",
+        "repository": "https://www.npmjs.com/package/firebase"
+    },
+    {
         "name": "googlers-tools",
         "description": "My own tools / scripts that I use.",
         "author": "Der_Googler <jimmyboehm@dergoogler.com>",
@@ -77,10 +104,37 @@
         "repository": "https://www.npmjs.com/package/googlers-tools"
     },
     {
+        "name": "js-parse-markdown-metadata",
+        "description": "CommonJS module to parse metadata comments out of markdown and return object with 'metadata' and 'markdown' properties.",
+        "author": "Ryan K Harris",
+        "version": "1.0.4",
+        "license": "MIT",
+        "homepage": "https://github.com/ryankharris/js-parse-markdown-metadata#readme",
+        "repository": "https://www.npmjs.com/package/js-parse-markdown-metadata"
+    },
+    {
+        "name": "jsoneditor-react",
+        "description": "React implementation of https://github.com/josdejong/jsoneditor",
+        "author": "Ivan Kopeykin <ivan.kopeykin@gmail.com>",
+        "version": "3.1.2",
+        "license": "MIT",
+        "homepage": "https://github.com/vankop/jsoneditor-react#readme",
+        "repository": "https://www.npmjs.com/package/jsoneditor-react"
+    },
+    {
+        "name": "localized-strings",
+        "description": "Simple module to localize the strings of any JS based program using the same syntax used in the ReactLocalization and ReactNativeLocalization module, use 'npm run build' before publishing",
+        "author": "Stefano Falda <stefano.falda@gmail.com> (http://www.babisoft.com)",
+        "version": "0.2.4",
+        "license": "MIT",
+        "homepage": "https://github.com/stefalda/localized-strings#readme",
+        "repository": "https://www.npmjs.com/package/localized-strings"
+    },
+    {
         "name": "markdown-to-jsx",
         "description": "Convert markdown to JSX with ease for React and React-like projects. Super lightweight and highly configurable.",
         "author": "Evan Jacobs <probablyup@gmail.com>",
-        "version": "7.1.7",
+        "version": "7.1.8",
         "license": "MIT",
         "homepage": "https://probablyup.github.io/markdown-to-jsx",
         "repository": "https://www.npmjs.com/package/markdown-to-jsx"
@@ -89,7 +143,7 @@
         "name": "material-ui-confirm",
         "description": "Higher order component for straightforward use of @material-ui/core confirmation dialogs.",
         "author": "Jonatan Kłosko",
-        "version": "3.0.5",
+        "version": "3.0.7",
         "license": "MIT",
         "homepage": "https://github.com/jonatanklosko/material-ui-confirm",
         "repository": "https://www.npmjs.com/package/material-ui-confirm"
@@ -97,7 +151,7 @@
     {
         "name": "onsenui",
         "description": "HTML5 Mobile Framework & UI Components",
-        "version": "2.12.2",
+        "version": "2.12.8",
         "license": "Apache-2.0",
         "homepage": "https://onsen.io/",
         "repository": "https://www.npmjs.com/package/onsenui"
@@ -118,15 +172,6 @@
         "license": "MIT",
         "homepage": "https://github.com/denisoed/print-html-block",
         "repository": "https://www.npmjs.com/package/print-html-block"
-    },
-    {
-        "name": "print-js",
-        "description": "A tiny javascript library to help printing from the web.",
-        "author": "Rodrigo Vieira <rodrigo@crabbly.com>",
-        "version": "1.6.0",
-        "license": "MIT",
-        "homepage": "http://printjs.crabbly.com",
-        "repository": "https://www.npmjs.com/package/print-js"
     },
     {
         "name": "react",
@@ -173,13 +218,31 @@
         "repository": "https://www.npmjs.com/package/react-dom"
     },
     {
+        "name": "react-firebase-hooks",
+        "description": "React Hooks for Firebase",
+        "author": "CS Frequency Limited (https://csfrequency.com)",
+        "version": "5.1.1",
+        "license": "Apache-2.0",
+        "homepage": "https://github.com/csfrequency/react-firebase-hooks",
+        "repository": "https://www.npmjs.com/package/react-firebase-hooks"
+    },
+    {
         "name": "react-onsenui",
         "description": "Onsen UI - React Components for Hybrid Cordova/PhoneGap Apps with Material Design and iOS UI components",
         "author": "Onsen UI Team <team@monaca.io>",
-        "version": "1.13.0",
+        "version": "1.13.3",
         "license": "Apache-2.0",
         "homepage": "https://onsen.io/react/",
         "repository": "https://www.npmjs.com/package/react-onsenui"
+    },
+    {
+        "name": "react-render-tools",
+        "description": "Simple tools to make react render easier to use",
+        "author": "Der_Googler",
+        "version": "1.0.1",
+        "license": "GPL-3.0",
+        "homepage": "https://github.com/DerGoogler/react-render-tools",
+        "repository": "https://www.npmjs.com/package/react-render-tools"
     },
     {
         "name": "react-string-replace",
@@ -197,7 +260,7 @@
         "name": "react-to-print",
         "description": "Print React components in the browser",
         "author": "gregnb <gregnb@gmail.com>",
-        "version": "2.14.7",
+        "version": "2.14.11",
         "license": "MIT",
         "homepage": "https://github.com/gregnb/react-to-print#readme",
         "repository": "https://www.npmjs.com/package/react-to-print"
@@ -206,7 +269,7 @@
         "name": "styled-components",
         "description": "Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress",
         "author": "Glen Maddern",
-        "version": "5.3.5",
+        "version": "5.3.6",
         "license": "MIT",
         "homepage": "https://styled-components.com",
         "repository": "https://www.npmjs.com/package/styled-components"
@@ -215,27 +278,18 @@
         "name": "textarea-markdown-editor",
         "description": "UI headless React markdown editor using only textarea",
         "author": "Resetand",
-        "version": "1.0.1",
+        "version": "1.0.4",
         "license": "MIT",
         "homepage": "https://github.com/Resetand/markdown-textarea",
         "repository": "https://www.npmjs.com/package/textarea-markdown-editor"
     },
     {
-        "name": "use-file-picker",
-        "description": "Simple react hook to open browser file selector.",
-        "author": "Milosz Jankiewicz",
-        "version": "1.5.1",
+        "name": "usehooks-ts",
+        "description": "React hook library, ready to use, written in Typescript.",
+        "author": "Julien CARON <juliencaron@protonmail.com>",
+        "version": "2.9.1",
         "license": "MIT",
-        "homepage": "https://github.com/Jaaneek/useFilePicker",
-        "repository": "https://www.npmjs.com/package/use-file-picker"
-    },
-    {
-        "name": "web-shared-preferences",
-        "description": "An simple class to manage the loacal storage, including React like useString, useJSON and more!",
-        "author": "Der_Googler",
-        "version": "1.3.1",
-        "license": "GPL-3.0",
-        "homepage": "https://github.com/DerGoogler/SharedPreferences",
-        "repository": "https://www.npmjs.com/package/web-shared-preferences"
+        "homepage": "https://usehooks-ts.com",
+        "repository": "https://www.npmjs.com/package/usehooks-ts"
     }
 ]

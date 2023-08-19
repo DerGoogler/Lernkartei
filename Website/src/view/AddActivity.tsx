@@ -1,9 +1,12 @@
-import { TextField } from "@mui/material";
-import * as React from "react";
-import { BackButton, Button, Page, Toolbar } from "react-onsenui";
+import { Button, TextField } from "@mui/material";
 import { os } from "../native/Os";
 import { useKartei } from "../hooks/useKartei";
 import { useActivity } from "../hooks/useActivity";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useStrings } from "../hooks/useStrings";
+import { useForm } from "@Hooks/useForm";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 type Extra = {
   name: string;
@@ -15,64 +18,61 @@ type Extra = {
 function AddActivity() {
   const { context, extra } = useActivity<Extra>();
 
-  const isEditMode = extra.editGroup;
-  const [group, setGroup] = React.useState("lernfeld_1");
-  const [name, setName] = React.useState(!isEditMode ? "Lernfeld 1" : extra.name);
-  const [description, setDescription] = React.useState(
-    !isEditMode ? "Güter annehmen und kontrolieren" : extra.description
-  );
-  const [cards, setCards] = useKartei();
+  const { setCards, actions } = useKartei();
+  const { strings } = useStrings();
 
-  os.useOnBackPressed(context.popPage);
+  const isEditMode = extra.editGroup;
+
+  const { handleChange, groupId, name, description } = useForm({
+    initialState: {
+      groupId: "lernfeld_1",
+      name: !isEditMode ? "Lernfeld 1" : extra.name,
+      description: !isEditMode ? "Güter annehmen und kontrolieren" : extra.description,
+    },
+  });
 
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <div className="left">
-          <BackButton onClick={context.popPage}>Back</BackButton>
-        </div>
-        <div className="center">{!isEditMode ? "Neue Gruppe" : "Gruppe Bearbeiten"}</div>
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>{!isEditMode ? strings.new_group : strings.edit_group}</Toolbar.Center>
       </Toolbar>
     );
   };
 
   const validGroup = (group: string): boolean => {
-    return /^\w+$/.test(group);
-  };
-
-  const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGroup(e.target.value.toLowerCase());
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
+    return /^[a-z0-9_\-]+$/g.test(group);
   };
 
   const handleSave = () => {
     try {
       const obj: Kartei = {
-        group: group,
+        group: groupId,
         name: name,
         description: description,
         karten: [],
       };
 
-      if (!validGroup(group)) {
-        os.toast("Bitte achte drauf, dass keine Leerzeichen verwendet werden, oder bindestriche", "short");
+      if (!validGroup(groupId)) {
+        os.toast(strings.noUmlauts, "short");
       } else {
-        setCards((tmp) => {
-          if (tmp.some((elem) => elem?.group === group)) {
-            os.toast(`Diese Gruppe is bereits vorhanden.`, "short");
-          } else {
-            tmp = [...tmp, obj];
+        actions.addGroup({
+          group: groupId,
+          data: obj,
+          onExists() {
+            os.toast(strings.group_exist, "short");
+          },
+          callback() {
             context.popPage();
-            os.toast(`Deine Gruppe (${name}) wurde gespeichert.`, "short");
-          }
-          return tmp;
+            os.toast(
+              strings.formatString(strings.group_saved, {
+                name: name,
+              }) as string,
+              "short"
+            );
+          },
         });
       }
     } catch (error) {
@@ -83,12 +83,13 @@ function AddActivity() {
   const handleEdit = () => {
     const { index } = extra;
 
-    setCards((groups) => {
-      groups[index].name = name;
-      groups[index].description = description;
-      return groups;
+    actions.editGroup(index, {
+      name: name,
+      description: description,
+      callback: () => {
+        context.popPage();
+      },
     });
-    context.popPage();
   };
 
   return (
@@ -97,40 +98,49 @@ function AddActivity() {
         <span>
           {!isEditMode && (
             <TextField
+              name="groupId"
               fullWidth
               // margin="dense"
               type="text"
-              label="Gruppe"
-              value={group}
+              label={strings.group}
+              value={groupId}
               variant="outlined"
-              onChange={handleGroupChange}
+              onChange={handleChange}
             />
           )}
         </span>
         <span>
           <TextField
+            name="name"
             fullWidth
             margin="dense"
             type="text"
-            label="Name"
+            label={strings.name}
             value={name}
             variant="outlined"
-            onChange={handleNameChange}
+            onChange={handleChange}
           />
         </span>
         <span>
           <TextField
+            name="description"
             fullWidth
             margin="dense"
             type="text"
-            label="Beschreibung"
+            label={strings.description}
             value={description}
             variant="outlined"
-            onChange={handleDescriptionChange}
+            onChange={handleChange}
           />
         </span>
-        <Button style={{ marginTop: 8 }} modifier="large" onClick={!isEditMode ? handleSave : handleEdit}>
-          Speichern
+        <Button
+          style={{ marginTop: 8 }}
+          fullWidth
+          variant="contained"
+          disableElevation
+          onClick={!isEditMode ? handleSave : handleEdit}
+        >
+          {strings.save}
         </Button>
       </section>
     </Page>

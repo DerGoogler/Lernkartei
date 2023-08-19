@@ -3,6 +3,7 @@ package com.dergoogler.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.webkit.JavascriptInterface;
 
 import androidx.core.app.ActivityCompat;
@@ -32,6 +33,24 @@ public class NativeEnvironment {
 //        } else {
 //            ((Activity) this.ctx).requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
 //        }
+    }
+
+    @JavascriptInterface
+    public boolean isExternalStorageReadOnly() {
+        String extStorageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
+            return true;
+        }
+        return false;
+    }
+
+    @JavascriptInterface
+    public boolean isExternalStorageAvailable() {
+        String extStorageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
+            return true;
+        }
+        return false;
     }
 
 }
