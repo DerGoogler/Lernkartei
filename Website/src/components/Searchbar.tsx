@@ -86,7 +86,7 @@ export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
         >
           <SearchIcon />
         </IconButton>
-        <FormControl>
+        <FormControl fullWidth>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
             placeholder={placeholder}
